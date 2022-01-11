@@ -77,7 +77,7 @@
           </div>
           <div class="media-body">
             <h3 class="heading">Free Shipping</h3>
-            <span>한개만 구매하셔도, 모든 제품이 무료배송!</span>
+            <span>구띠샵은 모든 제품이 무료배송!</span>
           </div>
         </div>      
       </div>
@@ -88,7 +88,7 @@
           </div>
           <div class="media-body">
             <h3 class="heading">Superior Quality</h3>
-            <span>구디숍은 품질을 꼼꼼히 관리합니다.</span>
+            <span>구띠샵은 모든 상품을 세번 검수하며</br>가품일시 3배를 보상합니다.</span>
           </div>
         </div>      
       </div>
@@ -99,7 +99,7 @@
           </div>
           <div class="media-body">
             <h3 class="heading">Support</h3>
-            <span>24시간 고객만족센터를 운영합니다</span>
+            <span>구띠샵은 24시간 고객만족센터를 운영하고</br>AS책임을 보장합니다.</span>
           </div>
         </div>      
       </div>
@@ -116,7 +116,7 @@
 							<div class="category-wrap-2 ftco-animate img align-self-stretch d-flex" style="background-image: url(resources/images/category.jpg);">
 								<div class="text text-center">
 									<h2>GudeeShop</h2>
-									<p>고객님들의 건강한 삶을 위해서</p>
+									<p>NEW RELEASES</p>
 									<p><a href="productPageList?type=1&num=1" class="btn btn-primary">구매하기</a></p>
 								</div>
 							</div>

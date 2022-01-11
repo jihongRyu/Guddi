@@ -3,6 +3,7 @@ package com.guddi.shop.dao;
 import java.util.ArrayList;
 
 import com.guddi.shop.dto.CartDto;
+import com.guddi.shop.dto.EtcDto;
 import com.guddi.shop.dto.MemberDto;
 import com.guddi.shop.dto.PageDto;
 import com.guddi.shop.dto.ReviewQnaDto;
@@ -58,4 +59,7 @@ public interface MemberDao {
 	//cart장바구니 제품목록 select --ysh 
 	ArrayList<CartDto> getCartInfo(String userId);
 
+	MemberDto toLogin(MemberDto sdto);
+
+	int getCart(String userId);
 }
