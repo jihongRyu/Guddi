@@ -53,6 +53,7 @@
 				    <div class="col-md-5 pr-4 d-flex topper align-items-center text-lg-right">
 				    	<c:if test="${sessionScope.userId ne null}">				    	
 				        	<span class="text">  ${sessionScope.username} 님 환영합니다. </span>
+				        	
 				        </c:if>				        
 				    </div>				   
 				 </div>
@@ -95,7 +96,7 @@
 		  </c:if>		 
 		
 		  <c:if test="${sessionScope.mem_flg eq 2}">
-			<li class="nav-item"><a href="login" class="nav-link">제품내역</a></li>
+			<li class="nav-item"><a href="productMain" class="nav-link">제품내역</a></li>
 			<li class="nav-item"><a href="login" class="nav-link">Q&A내역</a></li>
 			<li class="nav-item"><a href="login" class="nav-link">리뷰내역</a></li>
 			<li class="nav-item"><a href="login" class="nav-link">주문정보</a></li>
