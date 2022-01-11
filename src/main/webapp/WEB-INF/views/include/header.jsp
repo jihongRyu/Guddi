@@ -107,10 +107,12 @@
           <c:if test="${sessionScope.userId ne null && sessionScope.mem_flg ne 2}">	
           <li class="nav-item"><a href="myPage?orderNum=1&reviewNum=1" class="nav-link">마이페이지</a></li>   
           </c:if>
+          <c:if test="${sessionScope.userId ne null && sessionScope.mem_flg ne 2}">	
+          <li class="nav-item"><a href="logout" class="nav-link">로그아웃</a></li>   
+          </c:if>
           <c:if test="${sessionScope.mem_flg ne 2}">
           <li class="nav-item"><a href="javascript:void(0);" onclick="toQna('${sessionScope.userId}');" class="nav-link">Q&A</a></li> 
           </c:if>
-        
         </ul>
       </div>
     </div>

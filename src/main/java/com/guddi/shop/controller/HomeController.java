@@ -25,6 +25,7 @@ public class HomeController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model, HttpSession session) {
+
 		logger.info("홈페이지 요청");	
 		
 		session.setAttribute("userId", "liujihong");
@@ -47,6 +48,8 @@ public class HomeController {
 		session.setAttribute("sellflg", sellflg);
 		session.setAttribute("answertype", answertype);		
 				
+		
+
 		return "index";
 	}
 	

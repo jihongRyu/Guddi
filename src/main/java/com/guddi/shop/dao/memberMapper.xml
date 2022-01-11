@@ -15,15 +15,7 @@
 			VALUES(#{userId},#{password},#{username},#{phone},#{email},#{zipcode},#{address},#{address_detail},#{mem_flg}
 			,#{birthday},#{gender},1,#{marketing_flg})
 	</insert>
-	
-	<select id="login" parameterType="com.guddi.shop.dto.MemberDto" resultType="com.guddi.shop.dto.MemberDto">	
-		 select userId, password, username, phone, email, zipcode, address, address_detail, regdate, mem_flg
-		 from member 
-		 where userId = #{userId} 
-		 and password = #{password}
-		 and mem_flg = 1 or mem_flg = 2 limit 1
-	</select>	
-	
+		
 	<!-- 회원탈퇴 -->
 	<update id="delete" >		
 		update member set mem_flg = 0 where userId = #{param1} 	
@@ -192,20 +184,31 @@
 			VALUES(#{userId},#{subject},#{quantity},#{price},#{unit},#{product_num})
 	</insert>
 	
-	<select id="getCart" resultType="int">
-		select COUNT(*) from cart where userId = #{param1}
-	</select>
-	
 	<select id="getCartInfo" resultType="com.guddi.shop.dto.CartDto">
-		select tc.userId, tc.subject, tc.quantity, tc.price, tc.unit, tc.product_num, tpp.newFileName 
+		<!--  select tc.userId, tc.subject, tc.quantity, tc.price, tc.unit, tc.product_num, tpp.newFileName 
 		from tb_cart tc inner join tb_product_photo tpp
 		on tc.product_num = tpp.product_num
-		where userId = #{param1}
+		where userId = #{param1}-->
+		select 1;
 	</select>
 	
 	<delete id="delCart" parameterType="com.guddi.shop.dto.CartDto">
 		delete from tb_cart where userId = #{userId} and product_num = #{product_num}
 	</delete>
+	
+	<select id="toLogin" parameterType="com.guddi.shop.dto.MemberDto" resultType="com.guddi.shop.dto.MemberDto">	
+		 SELECT userId, password, username, phone, email, zipcode, address, address_detail, regdate, mem_flg
+		 from member 
+		 where userId = #{userId} 
+		 and password = #{password}
+		 and mem_flg = 1 or mem_flg = 2 limit 1
+	</select>
+	
+	<select id="getCart" resultType="int">
+		select COUNT(*) from tb_cart where userId = #{param1}
+	</select>
+	
+	
 	
 
 	
