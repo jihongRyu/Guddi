@@ -232,7 +232,9 @@ public class MemberService {
 		// TODO Auto-generated method stub
 		dao.delReview(idx);
 	}
-
+	//고객정보수정,탈퇴관련, 마이페이지내 리뷰관련 End ryujihong 2022.01.10
+	
+	//로그인 Start yonghyeon 2022.01.11
 	public MemberDto login(HashMap<String, String> params) {
 		
 		logger.info("아이디/비밀번호 : {}",params.get("userId")+"/"+params.get("password"));
@@ -243,16 +245,17 @@ public class MemberService {
 		MemberDto dto = dao.toLogin(sdto);
 		return dto;
 	}
-
+	//로그인 end yonghyeon 2022.01.11
+	
+	//카트 수 가져오기 Start yonghyeon 2022.01.11
 	public int getCart(String userId) {
 		logger.info("카트수 찾기 실행! 아이디 : {}", userId);
 		return dao.getCart(userId);
 	}
-
+	//카트 수 가져오기 end yonghyeon 2022.01.11
 	
 
 
 	
-	//고객정보수정,탈퇴관련, 마이페이지내 리뷰관련 End ryujihong 2022.01.10
 	
 }
