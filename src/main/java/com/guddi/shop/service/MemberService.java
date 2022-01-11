@@ -1,0 +1,238 @@
+package com.guddi.shop.service;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import javax.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.guddi.shop.dao.MemberDao;
+import com.guddi.shop.dto.CartDto;
+import com.guddi.shop.dto.MemberDto;
+import com.guddi.shop.dto.PageDto;
+import com.guddi.shop.dto.ReviewQnaDto;
+
+@Service
+public class MemberService {
+	
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	@Autowired MemberDao dao;
+	
+	//Q&A Start ryujihong 2022.01.10
+	public int qnaSearchCount(String keyword, int answer_flg) {
+		// TODO Auto-generated method stub
+		
+		PageDto dto = new PageDto();
+		 
+		dto.setAnswer_flg(answer_flg);
+		dto.setKeyword(keyword);			
+		
+		return dao.qnaSearchCount(dto);
+	}
+
+	public ArrayList<ReviewQnaDto> qnaInfo(int displayPost, int postNum, String keyword, int answer_flg) {
+		// TODO Auto-generated method stub
+		
+		PageDto dto = new PageDto();
+		
+		dto.setAnswer_flg(answer_flg);
+		logger.info("getAnswer_flg : {}", dto.getAnswer_flg());
+		dto.setPostNum(postNum);
+		dto.setDisplayPost(displayPost);
+		dto.setKeyword(keyword);
+					
+		logger.info("postNum : {}", postNum);
+		return dao.qnaInfo(dto);		
+	}
+
+	public int doRegistQna(HashMap<String, String> params, HttpSession session) {
+		// TODO Auto-generated method stub
+		
+		ReviewQnaDto dto = new ReviewQnaDto();		
+		MemberDto udto = dao.findInfo((String)session.getAttribute("userId"));
+		
+		dto.setSubject(params.get("subject"));
+		dto.setContent(params.get("content"));
+		dto.setAnswer_type(params.get("answer_type"));
+		dto.setUserId((String)session.getAttribute("userId"));
+		dto.setU_idx(udto.getIdx());
+		
+		return dao.doRegistQna(dto);
+	}
+
+	public ReviewQnaDto getQnaDetail(String idx) {
+		// TODO Auto-generated method stub
+		return dao.getQnaDetail(idx);
+	}
+
+	public ReviewQnaDto getQnaAnswerDetail(String idx) {
+		// TODO Auto-generated method stub
+		return  dao.getQnaAnswerDetail(idx);
+	}
+
+	public ArrayList<ReviewQnaDto> getQnaType() {
+		// TODO Auto-generated method stub
+		return dao.getQnaType();
+	}
+
+	public ArrayList<ReviewQnaDto> getAnswerType() {
+		// TODO Auto-generated method stub
+		return dao.getAnswerType();
+	}
+
+	public int deleteQna(String idx) {
+		// TODO Auto-generated method stub
+		return dao.deleteQna(idx);
+	}
+
+	public int checkAnswer(String idx) {
+		// TODO Auto-generated method stub
+		return dao.checkAnswer(idx);
+	}
+
+	public int doUpdateQna(HashMap<String, String> params) {
+		// TODO Auto-generated method stub
+		ReviewQnaDto dto = new ReviewQnaDto();
+		dto.setContent(params.get("content"));
+		dto.setIdx(Integer.parseInt(params.get("idx")));
+		dto.setSubject(params.get("subject"));
+		
+		return dao.doUpdateQna(dto);
+	}
+	//Q&A Start ryujihong 2022.01.10
+	//고객정보수정,탈퇴관련, 마이페이지내 리뷰관련 Start ryujihong 2022.01.10
+	public MemberDto findInfo(String userId) {
+		// TODO Auto-generated method stub
+		return dao.findInfo(userId);
+	}
+	
+	public HashMap<String, Object> doPwCheck(String userId, String password) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		String result = dao.doPwCheck(userId, password);	
+		
+		boolean check =result == null? false:true;
+		map.put("result", check);
+		
+		return map;
+		// TODO Auto-generated method stub
+	}
+
+	public void updateInfo(HashMap<String, String> params) {
+		
+		MemberDto dto = new MemberDto();
+		dto.setUserId(params.get("userId"));
+		dto.setPassword(params.get("password"));
+		dto.setUsername(params.get("username"));
+		dto.setPhone(params.get("phone"));
+		dto.setEmail(params.get("email"));
+		dto.setZipcode(params.get("zipcode"));
+		dto.setAddress(params.get("address"));
+		dto.setAddress_detail(params.get("address_detail"));
+		
+		dto.setBirthday(params.get("birthday"));
+		dto.setGender(params.get("gender"));
+		
+		logger.info("마케팅 : " + params.get("checkbox2"));
+		
+		if (params.get("checkbox2")==null){
+			dto.setMarketing_flg(0);
+		} else if(params.get("checkbox2").equals("1")) {
+			dto.setMarketing_flg(1);
+		}
+		
+		dto.setPersonInfo_flg(1);
+		dto.setMem_flg(1);
+		
+		logger.info("마케팅2 : " + dto.getMarketing_flg());
+			
+		logger.info("회원가입 정보:{}",params.get("userId")+params.get("password")+params.get("username")+params.get("phone")
+		+params.get("email")+params.get("zipcode")+params.get("address")+params.get("address_detail"));
+		
+		dao.updateInfo(dto);
+		
+	}
+	
+	public int delete(String userId) {
+		// TODO Auto-generated method stub
+		
+		return dao.delete(userId);
+	}
+
+	public int orderSearchCount(String orderSearchType, String orderKeyword, String userId) {
+		// TODO Auto-generated method stub
+		PageDto dto = new PageDto();
+		  
+		dto.setUserid(userId);
+		dto.setKeyword(orderKeyword);
+		dto.setSearchType(orderSearchType);			
+		
+		return dao.orderSearchCount(dto);
+	}
+	
+	public int reviewSearchCount(String searchType, String keyword, String userId) {
+		// TODO Auto-generated method stub
+		
+		PageDto dto = new PageDto();
+		  
+		dto.setUserid(userId);
+		dto.setKeyword(keyword);
+		dto.setSearchType(searchType);
+		
+		return dao.reviewSearchCount(dto);
+	}
+
+	public ArrayList<CartDto> myPageOrderInfo(int displayPost, int postNum, String orderSearchType, String orderKeyword,
+			String userId) {
+		// TODO Auto-generated method stub
+		PageDto dto = new PageDto();
+		
+		dto.setUserid(userId);
+		logger.info("type : {}", dto.getType());
+		dto.setPostNum(postNum);
+		dto.setDisplayPost(displayPost);
+		dto.setKeyword(orderKeyword);
+		dto.setSearchType(orderSearchType);				
+		logger.info("postNum : {}", postNum);
+		return dao.myPageOrderInfo(dto);
+	
+	}
+
+
+	public ArrayList<ReviewQnaDto> myPageReviewInfo(int displayPost, int postNum, String orderSearchType,
+			String orderKeyword, String userId) {
+
+		PageDto dto = new PageDto();
+		
+		dto.setUserid(userId);
+		logger.info("type : {}", dto.getType());
+		dto.setPostNum(postNum);
+		dto.setDisplayPost(displayPost);
+		dto.setKeyword(orderKeyword);
+		dto.setSearchType(orderSearchType);				
+		logger.info("postNum : {}", postNum);
+		return dao.myPageReviewInfo(dto);
+	}
+
+	public ReviewQnaDto getReviewDetail(String idx) {
+		// TODO Auto-generated method stub
+		return dao.getReviewDetail(idx);
+	}
+
+	public ReviewQnaDto getReviewAnswerDetail(String idx) {
+		// TODO Auto-generated method stub
+		return dao.getReviewAnswerDetail(idx);
+	}
+
+	public void delReview(String idx) {
+		// TODO Auto-generated method stub
+		dao.delReview(idx);
+	}
+	
+	//고객정보수정,탈퇴관련, 마이페이지내 리뷰관련 End ryujihong 2022.01.10
+	
+}
