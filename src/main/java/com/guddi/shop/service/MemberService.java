@@ -232,6 +232,13 @@ public class MemberService {
 		// TODO Auto-generated method stub
 		dao.delReview(idx);
 	}
+
+	
+	
+	public ArrayList<CartDto> getCartInfo(String userId) {
+		logger.info("service"+userId);
+		return dao.getCartInfo(userId);
+	}
 	
 	//고객정보수정,탈퇴관련, 마이페이지내 리뷰관련 End ryujihong 2022.01.10
 	

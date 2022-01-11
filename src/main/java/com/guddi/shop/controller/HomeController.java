@@ -1,9 +1,5 @@
 package com.guddi.shop.controller;
 
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -23,8 +19,8 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model, HttpSession session) {
 		logger.info("홈페이지 요청");
-		
-		session.setAttribute("userId", "liujihong");	
+		// liujihong --> asd123 으로 수정 --ysh 사유 : 장바구니기능구현시 제품이 등록된 아이디로 세션
+		session.setAttribute("userId", "asd123");	
 		
 		return "index";
 	}

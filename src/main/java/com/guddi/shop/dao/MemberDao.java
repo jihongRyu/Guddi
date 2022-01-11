@@ -54,5 +54,8 @@ public interface MemberDao {
 
 	void delReview(String idx);	
 	//로그인 관련 end ryujihong 2022.01.10
+	
+	//cart장바구니 제품목록 select --ysh 
+	ArrayList<CartDto> getCartInfo(String userId);
 
 }
