@@ -232,6 +232,26 @@ public class MemberService {
 		// TODO Auto-generated method stub
 		dao.delReview(idx);
 	}
+
+	public MemberDto login(HashMap<String, String> params) {
+		
+		logger.info("아이디/비밀번호 : {}",params.get("userId")+"/"+params.get("password"));
+		MemberDto sdto = new MemberDto();
+		sdto.setUserId(params.get("userId"));
+		sdto.setPassword(params.get("password"));
+		
+		MemberDto dto = dao.toLogin(sdto);
+		return dto;
+	}
+
+	public int getCart(String userId) {
+		logger.info("카트수 찾기 실행! 아이디 : {}", userId);
+		return dao.getCart(userId);
+	}
+
+	
+
+
 	
 	//고객정보수정,탈퇴관련, 마이페이지내 리뷰관련 End ryujihong 2022.01.10
 	

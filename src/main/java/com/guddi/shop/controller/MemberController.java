@@ -336,6 +336,70 @@ public class MemberController {
 			
 			return "redirect:/myPage?userId="+session.getAttribute("userId")+"&orderNum=1&reviewNum=1";
 		}	
-	//고객정보수정,탈퇴관련, 마이페이지내 리뷰관련 End ryujihong 2022.01.10
-
+		//고객정보수정,탈퇴관련, 마이페이지내 리뷰관련 End ryujihong 2022.01.10
+		
+		
+		//로그인 페이지 이동 start yonghyeon 2022.01.11
+		@RequestMapping(value = "/toLogin", method = RequestMethod.GET)
+		public String toLogin(Model model) {
+			logger.info("로그인 페이지 요청");
+				
+			return "member/toLogin";
+		}
+		
+		//로그인 페이지 이동 end yonghyeon 2022.01.11
+		
+		//로그인 start yonghyeon 2022.01.11
+		@RequestMapping(value = "/doLogin", method = RequestMethod.POST)
+		public String doLogin(Model model, @RequestParam HashMap<String, String> params, HttpSession session) {
+			logger.info("doLogin 요청");
+			logger.info("아이디/비밀번호 : {}",params.get("userId")+"/"+params.get("password"));
+			
+			String page = "member/toLogin";
+			String msg = "아이디와 비밀번호를 확인해주세요.";
+			MemberDto dto = service.login(params);
+			
+			try {
+				logger.info("아이디 : {}" , dto.getUserId());
+				if(dto.getMem_flg()==0) {
+					msg = "탈퇴 회원입니다.";
+				}else if(dto.getUserId()!=null&&dto.getMem_flg()==1) {
+					page = "redirect:/";			
+					msg="";
+					/*int cartCnt = service.getCart(params.get("userId"));
+					logger.info("cartCnt 반환");
+					if(cartCnt == 0);{
+						cartCnt = 0;
+						logger.info("if문 실행");
+					}
+					session.setAttribute("cartCnt", cartCnt);
+					logger.info("session1 실행");*/
+					session.setAttribute("userId", dto.getUserId());
+					logger.info("session2 실행");
+					session.setAttribute("username", dto.getUsername());
+					logger.info("session3 실행");
+				}
+			}catch(Exception e){
+				logger.info("에러 발생");
+			}
+			model.addAttribute("msg",msg);
+				
+			return page;
+		}
+		//로그인 end yonghyeon 2022.01.11
+		
+		//로그아웃 start yonghyeon 2022.01.11
+		@RequestMapping(value = "/logout", method = RequestMethod.GET)
+		public String logout(Model model,HttpSession session) {
+			logger.info("로그아웃 요청");
+			
+			session.setAttribute("userId", null);
+			session.setAttribute("username", null);
+			session.setAttribute("cartCnt", null);
+			
+			return "redirect:/";
+		}
+		
+		//로그아웃 start yonghyeon 2022.01.11
+		
 }

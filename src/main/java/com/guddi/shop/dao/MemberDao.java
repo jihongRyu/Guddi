@@ -55,4 +55,11 @@ public interface MemberDao {
 	void delReview(String idx);	
 	//로그인 관련 end ryujihong 2022.01.10
 
+
+	MemberDto toLogin(MemberDto sdto);
+
+	int getCart(String userId);
+
+	
+
 }
