@@ -104,7 +104,7 @@
 			      <li><a href="qnaPage?qnaNum=${num}&answer_flg=${qnaAnswer_flg}#qnaList">${num}</a></li>			     
 			      </c:if>    		
 			      </c:forEach>
-			      <c:if test="${reviewPage.next}">
+			      <c:if test="${qnaPage.next}">
 			      <li><a href="qnaPage?qnaNum=${qnaPage.endPageNum + 1}&answer_flg=${qnaAnswer_flg}#qnaList">&gt;</a></li>
 			      </c:if>
 			    </ul>

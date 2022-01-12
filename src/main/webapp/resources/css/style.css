@@ -10157,3 +10157,35 @@ select::-ms-expand {
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out; 
 }
 
+.manager-table{	
+	color:black;
+	margin:auto;
+	background: #fff;
+	padding: 33px 60px 50px 50px;	
+	text-align:center;	
+}
+
+
+.manager-table table{
+  width:100%;
+  color:black;
+  line-height: 1.5;
+  margin : 20px 10px;
+  text-align:center;
+   vertical-align : middle;
+}
+
+.manager-table th{  
+  padding: 10px;
+  font-weight: bold;
+  vertical-align: top;
+  border: 1px solid #ccc;
+  vertical-align : middle;
+}
+
+.manager-table td{  
+  padding: 10px;
+  vertical-align: top;
+  border: 1px solid #ccc;	
+  vertical-align : middle;
+}
