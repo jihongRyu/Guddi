@@ -28,9 +28,6 @@ public class HomeController {
 
 		logger.info("홈페이지 요청");	
 		
-		session.setAttribute("userId", "liujihong");
-		session.setAttribute("mem_flg", "1");
-		session.setAttribute("username", "유지홍");
 		
 		//각종 카테고리를 가져와 세션에 저장
 		ArrayList<EtcDto> brandcategory = Service.getBrandcategory();
