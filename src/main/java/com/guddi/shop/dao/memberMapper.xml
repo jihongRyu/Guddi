@@ -201,7 +201,7 @@
 		 from member 
 		 where userId = #{userId} 
 		 and password = #{password}
-		 and mem_flg = 1 or mem_flg = 2 limit 1
+		
 	</select>
 	
 	<select id="getCart" resultType="int">

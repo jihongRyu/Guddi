@@ -29,5 +29,7 @@ public interface ManagerDao {
 
 	ArrayList<ProductDto> productList(PageDto dto);
 
+	void doUpdateProduct(ProductDto dto);
+
 
 }

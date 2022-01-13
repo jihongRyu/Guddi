@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.guddi.shop.dao.HomeDao;
 
-
 @Service
 public class HomeService {
 	

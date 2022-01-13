@@ -27,7 +27,7 @@ public class ManagerController {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired ManagerService service;
 	
-	//관리자페이지 제품 리스트, 수정 관련 Start ryujihong 2022.01.11
+	//관리자페이지 제품 리스트, 수정 관련 Start ryujihong 2022.01.12
 	@RequestMapping(value = "/productMain", method = RequestMethod.GET)
 	public String productMain(Model model, HttpSession session, @RequestParam("num") int num,  
 			@RequestParam(value="brand_type",required=false,defaultValue = "0") int brand_type, 
@@ -145,12 +145,22 @@ public class ManagerController {
 	}
 	
 	
-	//관리자페이지 제품 리스트, 수정 관련 End ryujihong 2022.01.11
+	//관리자페이지 제품 리스트, 수정 관련 End ryujihong 2022.01.12
+	//관리자페이지 제품  정보 수정 관련 Start ryujihong 2022.01.13
+	@RequestMapping(value = "/doUpdateProduct", method = RequestMethod.POST)
+	public String doUpdateProduct(Model model,  @RequestParam HashMap<String, String> params, HttpSession session) {	
+		logger.info("doUpdateProduct 요청");		
+		getCategory(session);
+		ArrayList<EtcDto> brandtypeInfo = (ArrayList<EtcDto>) session.getAttribute("brandcategory");
+		ArrayList<EtcDto> bagtypeInfo = (ArrayList<EtcDto>) session.getAttribute("bagtype");
+		int u_idx =(int) session.getAttribute("u_idx");
+		service.doUpdateProduct(params, session, brandtypeInfo, bagtypeInfo, u_idx);
+		
+		return "redirect:/productMain?num=1";
+	}
 	
-	
-	
-	
-	//각종  카테고리 정보를 가져오는 메서드 Start ryujihong 2022.01.11
+	//관리자페이지 제품  정보 수정 관련 End ryujihong 2022.01.13
+	//각종  카테고리 정보를 가져오는 메서드 Start ryujihong 2022.01.12
 	public void getCategory(HttpSession session){
 		
 		//각종 카테고리를 가져와 세션에 저장

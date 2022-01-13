@@ -399,6 +399,7 @@ public class MemberController {
 					logger.info("session3 실행");
 					session.setAttribute("mem_flg", dto.getMem_flg());
 					logger.info("session에서 mem_flg가져오기");
+					session.setAttribute("u_idx", dto.getIdx());
 				}
 				
 			}catch(Exception e){
@@ -419,6 +420,7 @@ public class MemberController {
 			session.setAttribute("username", null);
 			session.setAttribute("cartCnt", null);
 			session.setAttribute("mem_flg", null);
+			session.setAttribute("u_idx", null);
 			return "redirect:/";
 		}
 		
