@@ -366,6 +366,25 @@ public class MemberController {
 				}else if(dto.getUserId()!=null&&dto.getMem_flg()==1) {
 					page = "redirect:/";			
 					msg="";
+					//용현님 아래 코드 수정하셔야되요~
+					//int cartCnt = service.getCart(params.get("userId"));
+					int cartCnt = 0;
+					logger.info("cartCnt 반환");
+					if(cartCnt == 0);{
+						cartCnt = 0;
+						logger.info("if문 실행");
+					}
+					session.setAttribute("cartCnt", cartCnt);
+					logger.info("session1 실행");
+					session.setAttribute("userId", dto.getUserId());
+					logger.info("session2 실행");
+					session.setAttribute("username", dto.getUsername());
+					logger.info("session3 실행");
+					session.setAttribute("mem_flg", dto.getMem_flg());
+					logger.info("session에서 mem_flg가져오기");
+				}else if(dto.getUserId()!=null&&dto.getMem_flg()==2) {
+					page = "redirect:/";			
+					msg="";
 					/*int cartCnt = service.getCart(params.get("userId"));
 					logger.info("cartCnt 반환");
 					if(cartCnt == 0);{
@@ -378,7 +397,10 @@ public class MemberController {
 					logger.info("session2 실행");
 					session.setAttribute("username", dto.getUsername());
 					logger.info("session3 실행");
+					session.setAttribute("mem_flg", dto.getMem_flg());
+					logger.info("session에서 mem_flg가져오기");
 				}
+				
 			}catch(Exception e){
 				logger.info("에러 발생");
 			}
@@ -396,10 +418,39 @@ public class MemberController {
 			session.setAttribute("userId", null);
 			session.setAttribute("username", null);
 			session.setAttribute("cartCnt", null);
-			
+			session.setAttribute("mem_flg", null);
 			return "redirect:/";
 		}
 		
-		//로그아웃 start yonghyeon 2022.01.11
+		//로그아웃 end yonghyeon 2022.01.11
+		
+		//회원가입 start 도연 2022.01.10	
+		@RequestMapping(value = "/memberWrite", method = RequestMethod.GET)
+		public String memberWrite(Model model) {		
+			
+			logger.info("회원가입 페이지 요청");
+			
+			return "member/memberWrite";
+		}
+		
+		@RequestMapping(value = "/idCheck", method = RequestMethod.POST)
+		@ResponseBody
+		public HashMap<String, Object> idCheck(Model model, @RequestParam String userId) {		
+			
+			logger.info("idCheck 요청");
+			
+			return service.idCheck(userId);
+		}
+		
+		@RequestMapping(value = "/doMemberWrite", method = RequestMethod.POST)
+		public String doMemberWrite(Model model, @RequestParam HashMap<String, String> params) {		
+			
+			logger.info("doMemberWrite 요청");
+			
+			service.write(params);
+			
+			return "member/login";
+		}	
+		//회원가입 도연 end 2022.01.12
 		
 }

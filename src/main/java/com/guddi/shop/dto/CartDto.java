@@ -21,6 +21,8 @@ public class CartDto {
 //	address_detail varchar(30) 상세주소
 //	regdate date default current_date 주문 날짜
 //	order_num varchar(30) 주문번호
+
+
 	
 	
 	private String idx;
@@ -39,6 +41,7 @@ public class CartDto {
 	private String address_detail;
 	private Date regdate;
 	private String order_num;
+
 	
 	
 	public String getIdx() {
@@ -139,6 +142,7 @@ public class CartDto {
 	public void setTotalPrice(String totalPrice) {
 		this.totalPrice = totalPrice;
 	}
+
 
 	
 	
