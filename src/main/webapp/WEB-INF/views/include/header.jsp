@@ -53,7 +53,7 @@
 				    <div class="col-md-5 pr-4 d-flex topper align-items-center text-lg-right">
 				    	<c:if test="${sessionScope.userId ne null}">				    	
 				        	<span class="text"> 
-				        		${sessionScope.username} 님 환영합니다. <a class="text" href="logout"> 로그아웃</a> 
+				        		${sessionScope.username} 님 환영합니다. <a class="text" href="#" onclick="logout()"> 로그아웃</a> 
 				        	</span>
 				        				       	
 				        </c:if>	         
