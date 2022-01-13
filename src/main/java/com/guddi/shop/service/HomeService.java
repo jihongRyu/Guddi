@@ -12,7 +12,6 @@ import com.guddi.shop.dao.EtcDao;
 import com.guddi.shop.dao.HomeDao;
 import com.guddi.shop.dto.EtcDto;
 
-
 @Service
 public class HomeService {
 	

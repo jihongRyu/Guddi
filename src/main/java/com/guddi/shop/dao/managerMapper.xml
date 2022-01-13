@@ -73,6 +73,13 @@
  	limit #{displayPost}, #{postNum}
 	</select>
 	<!-- 관리자 제품내역 관련 Ryujihong 2022.01.12 End -->
-
+	<!-- 관리자 제품 정보 수정 관련 Ryujihong 2022.01.12 Start -->
+	<update id="doUpdateProduct">
+		UPDATE product SET product_name = #{product_name}, brand_name = #{brand_name}, bag_type=#{bag_type} 
+		, sell_flg = #{sell_flg}, new_flg = #{new_flg}, product_code = #{product_code}, product_content =#{product_content} 
+		,price = #{price} WHERE idx = #{idx}
+	</update>
+	<!-- 관리자 제품 정보 수정 관련 Ryujihong 2022.01.12 End -->
+	
 
 </mapper>

@@ -50,10 +50,11 @@
       <div class="col-lg-12 ftco-animate">		                 
 		      <div class="">		        
 		        <b><font size="3" color="BLACK">제품수정</font></b>   
-		        <br><br>		                       
-		        <form method="post" action="doRegistProduct" name="registForm" id="registForm" enctype="multipart/form-data">
+		        <br><br>
+		        <form method="post" action="doUpdateProduct" name="updateForm" id="updateForm" enctype="multipart/form-data">
+		        	<input type="hidden" value="${dto.idx}" name="idx" id="idx">
 					<label>제품명</label><br/>
-					<input class="form-control" type="text" name="subject" id="subject" 
+					<input class="form-control" type="text" name="product_name" id="product_name" 
 									placeholder="제품명을 입력해주세요." value="${dto.product_name }"/><br/>
 					
 					<label>브랜드</label><br/>
@@ -106,51 +107,15 @@
 						
 					<label>제품 상세설명</label><br/>
 					<textarea class="form-control" name="content" id="content" rows="10" placeholder="상세설명을 입력해주세요.">${dto.product_content }</textarea><br/>
-					
-					<label>이미지 내역</label>
-					<input type="button" id="inputImage" class="btn btn-primary" value="이미지 추가하기" onclick="addImage()">	
-				
-					<br/><br/>
-					<div class="col-md-12 ftco-animate">
-			     		<div class="cart-list">
-			  				<table class="table">
-			  			    <thead class="thead-primary">
-			  			      <tr class="text-center">
-			  			        <th>이미지명</th>
-			  			        <th>&nbsp;</th>
-			  			        <th>순서</th>
-			  			        <th>삭제</th>
-			  			      </tr>
-			  			     
-			  			    </thead>
-			  			    <tbody>
-			  			      <c:if test="${fn:length(imageDto)==0}">
-			  			      <tr class="text-center">
-			  			        <td colspan="4">등록된 이미지가 없습니다.</td>  			        
-			  			      </tr>
-			  			      </c:if>
-			  			      <c:forEach items="${imageDto}" var="imageList" varStatus="status">
-			  			      	  <input type="hidden" id="newFileName" name="newFileName" value="${imageList.newFileName}">
-				  			      <tr class="text-center">			  			      
-				  			        <td class="product-name"><h3 id="imageName">${imageList.oriFileName}</h3></td>  
-				  			        <td class="image-prod"><div class="img" id="image" style="background-image:url(resources/photo/${imageList.newFileName});"></div></td>	
-				  			        <td class="price"><input type="text" id="photo_num" name="photo_num" value="${status.index + 1}" placeholder="순서를 입력해주세요"></td>				  			        		        
-				  			        <td class="product-remove"><a onClick="delImage('${imageList.photo_num}')"><span class="ion-ios-close"></span></a></td>			  			       
-				  			      </tr>
-			  				  </c:forEach>	
-			  			    </tbody>
-			  			  </table>
-			  		  </div>
-			     	</div>
-					<br>				
+															
 					<br><br>
 					<div style="text-align:center;">
 					<button type="button" class="btn btn-primary" onclick="location.href='./'">취소</button>
-		       		<button type="button" class="btn btn-primary" onclick="check_input()">등록</button>			
+		       		<button type="button" class="btn btn-primary" onclick="check_input()">수정</button>			
 					</div>
 				</form>	        		      	
 		    </div>   		       
-      </div> <!-- .col-md-8 -->
+      </div>
     </div>
   </div>
 </section>
@@ -212,8 +177,7 @@ function makeProductCode(){
 			method: "POST",
 			dataType: "json", //내가 받아야할 결과 형태가 text, html, xml, json
 			
-			success: function(data){
-				console.log(data);
+			success: function(data){				
 				
 				if(data.newIdx!=null) {
 					
@@ -238,66 +202,67 @@ function makeProductCode(){
 					//제품코드에 새 idx 반영
 					var idx = data.newIdx;
 					var month = today.getMonth() + 1;  // 제품코드에  월 반영
-					var date = today.getDate();  // 제품코드에  날짜 반영		
-					
+					var date = today.getDate();  // 제품코드에  날짜 반영						
 					//제품코드 생성!
 					var product_code = brandCode + bagCode + month + date + idx;
 					$("#product_code").val(product_code);				
 					alert("상품번호 생성 성공!");
-				} 	
-				
+				} 					
 			},
 			error:function(){
 				alert("상품번호 생성실패! 관리자에게 문의해주세요.");
 			}
 		});
-		
-	}
-	
+	}	
 }
 
-function check_input() {
-	 
+function check_input() { 
  	
-    if (!document.registForm.subject.value){// login_form 이름을 가진 form 안의 id_val 의 value가 없으면
+    if (!document.updateForm.product_name.value){// login_form 이름을 가진 form 안의 id_val 의 value가 없으면
         alert("상품명 입력하세요!");
-        document.registForm.subject.focus();
+        document.updateForm.product_name.focus();
         // 화면 커서 이동
         return;
     }  	
-    if (document.registForm.brand_type.value==''){
+    if (document.updateForm.brand_type.value==''){
         alert("브랜드타입을 선택하세요!");
         // 화면 커서 이동
         return;
     } 
-    if (document.registForm.bag_type.value==''){
+    if (document.updateForm.bag_type.value==''){
         alert("종류타입을 선택하세요!");
         // 화면 커서 이동
         return;
     } 
-    if (!document.registForm.price.value){
+    if (!document.updateForm.price.value){
         alert("정가를 입력하세요!");
         // 화면 커서 이동
         return;
     }  
-    if (!document.registForm.new_flg.value==''){
+    if (document.updateForm.new_flg.value==''){
         alert("신상품 여부를 선택하세요!");
         // 화면 커서 이동
         return;
     }  sell_flg
-    if (!document.registForm.sell_flg.value==''){
+    if (document.updateForm.sell_flg.value==''){
         alert("판매 여부를 선택하세요!");
         // 화면 커서 이동
         return;
     }  sell_flg
   
-    if (!document.registForm.product_code.value){
+    if (!document.updateForm.product_code.value){
         alert("상품코드를 만들어주세요!");
         // 화면 커서 이동
         return;
     }
     
-    document.registForm.submit();
+    if (!document.updateForm.content.value){
+        alert("상세설명을 작성해주세요!");
+        // 화면 커서 이동
+        return;
+    }
+    
+    document.updateForm.submit();
     // 모두 확인 후 submit()
  }
  

@@ -25,40 +25,6 @@
 <link rel="stylesheet" href="resources/css/flaticon.css">
 <link rel="stylesheet" href="resources/css/icomoon.css">
 <link rel="stylesheet" href="resources/css/style.css">
-<style>
-.manager-table{	
-	color:black;
-	margin:auto;
-	background: #fff;
-	padding: 33px 60px 50px 50px;	
-	text-align:center;	
-}
-
-
-.manager-table table{
-  width:100%;
-  color:black;
-  line-height: 1.5;
-  margin : 20px 10px;
-  text-align:center;
-   vertical-align : middle;
-}
-
-.manager-table th{  
-  padding: 10px;
-  font-weight: bold;
-  vertical-align: top;
-  border: 1px solid #ccc;
-  vertical-align : middle;
-}
-
-.manager-table td{  
-  padding: 10px;
-  vertical-align: top;
-  border: 1px solid #ccc;	
-  vertical-align : middle;
-}
-</style>
 
 </head>
 <body>
@@ -148,8 +114,8 @@
 							<c:if test="${sellFlgList.idx eq list.sell_flg}"><th>${sellFlgList.sellname}</th></c:if>						
 						</c:forEach>
 			        	<th>${list.regdate}</th>
-			        	<th><a href="updateProduct?idx=${list.idx}">정보수정</a></th>
-			        	<th><a href="updateProductImage?idx=${list.idx}">이미지수정</a></th> 
+			        	<th><a href="updateProduct?idx=${list.idx}">수정하기</a></th>
+			        	<th><a href="updateProductImage?idx=${list.idx}">수정하기</a></th> 
 			        	<th><a href="javascript:void(0);" onclick="delProduct(${list.idx});">삭제</a></th>            		           		     
 			       </tr>			    
 		       </c:forEach>             
