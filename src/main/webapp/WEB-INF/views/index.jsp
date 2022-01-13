@@ -45,48 +45,20 @@
 
 <section id="home-section" class="hero">
 	  <div class="home-slider owl-carousel">
+	  <c:if test="${photos.size()>0}">
+	  <c:forEach items="${photos}" var="photo">
+	  <div class="slider-item" style="background-image: url(resources/photo/${photo.newFileName});">
+      	<div class="overlay"></div>
+        <div class="container">
+          <div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
+
+          </div>
+        </div>
+      </div>
+	  </c:forEach>
 	  
-	  <div class="slider-item" style="background-image: url(resource/images/${photo.newFileName});">
-      	<div class="overlay"></div>
-        <div class="container">
-          <div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
-
-            <div class="col-md-12 ftco-animate text-center">
-              <h2 class="subheading mb-4">저희는 신선한 채소 &amp; 과일만을 배달합니다.</h2>
-              <p><a href="#" class="btn btn-primary">상세보기</a></p>
-            </div>
-
-          </div>
-        </div>
-      </div>
+	  </c:if>
 	  
-      <div class="slider-item" style="background-image: url(resources/images/main-bg02.jpg);">
-      	<div class="overlay"></div>
-        <div class="container">
-          <div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
-
-            <div class="col-md-12 ftco-animate text-center">
-              <h2 class="subheading mb-4">저희는 신선한 채소 &amp; 과일만을 배달합니다.</h2>
-              <p><a href="#" class="btn btn-primary">상세보기</a></p>
-            </div>
-
-          </div>
-        </div>
-      </div>
-
-      <div class="slider-item" style="background-image: url(resources/images/main-bg03.jpg);">
-      	<div class="overlay"></div>
-        <div class="container">
-          <div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
-
-            <div class="col-sm-12 ftco-animate text-center">
-              <h2 class="subheading mb-4">저희는 신선한 채소 &amp; 과일만을 제공합니다.</h2>
-              <p><a href="#" class="btn btn-primary">상세보기</a></p>
-            </div>
-
-          </div>
-        </div>
-      </div>
     </div>
 </section>
 
@@ -138,28 +110,28 @@
 				<div class="col-md-12">
 					<div class="row">
 						<div class="col-md-3">
-							<div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url(resources/images/bag_01.jpg);">
+							<div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url(resources/photo/bag_01.jpg);">
 								<div class="text px-3 py-1">
 									<h2 class="mb-0"><a href="javascript:void(0);">신상품</a></h2>
 								</div>
 							</div>
 						</div>
 						<div class="col-md-3">
-							<div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url(resources/images/bag_01.jpg);">
+							<div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url(resources/photo/bag_01.jpg);">
 								<div class="text px-3 py-1">
 									<h2 class="mb-0"><a href="javascript:void(0);">신상품</a></h2>
 								</div>
 							</div>
 						</div>
 						<div class="col-md-3">
-							<div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url(resources/images/bag_01.jpg);">
+							<div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url(resources/photo/bag_01.jpg);">
 								<div class="text px-3 py-1">
 									<h2 class="mb-0"><a href="javascript:void(0);">신상품</a></h2>
 								</div>
 							</div>
 						</div>
 						<div class="col-md-3">
-							<div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url(resources/images/bag_01.jpg);">
+							<div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url(resources/photo/bag_01.jpg);">
 								<div class="text px-3 py-1">
 									<h2 class="mb-0"><a href="javascript:void(0);">신상품</a></h2>
 								</div>
@@ -168,28 +140,28 @@
 					</div>
 					<div class="row">
 						<div class="col-md-3">
-							<div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url(resources/images/bag_01.jpg);">
+							<div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url(resources/photo/bag_01.jpg);">
 								<div class="text px-3 py-1">
 									<h2 class="mb-0"><a href="javascript:void(0);">신상품</a></h2>
 								</div>
 							</div>
 						</div>
 						<div class="col-md-3">
-							<div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url(resources/images/bag_01.jpg);">
+							<div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url(resources/photo/bag_01.jpg);">
 								<div class="text px-3 py-1">
 									<h2 class="mb-0"><a href="javascript:void(0);">신상품</a></h2>
 								</div>
 							</div>
 						</div>
 						<div class="col-md-3">
-							<div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url(resources/images/bag_01.jpg);">
+							<div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url(resources/photo/bag_01.jpg);">
 								<div class="text px-3 py-1">
 									<h2 class="mb-0"><a href="javascript:void(0);">신상품</a></h2>
 								</div>
 							</div>
 						</div>
 						<div class="col-md-3">
-							<div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url(resources/images/bag_01.jpg);">
+							<div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url(resources/photo/bag_01.jpg);">
 								<div class="text px-3 py-1">
 									<h2 class="mb-0"><a href="javascript:void(0);">신상품</a></h2>
 								</div>
@@ -230,7 +202,11 @@
 </body>
   
   
-<script type="text/javascript"></script>
+<script type="text/javascript">
+
+
+
+</script>
   
   
 </html>
