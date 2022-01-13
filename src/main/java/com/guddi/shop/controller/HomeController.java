@@ -15,11 +15,11 @@ import com.guddi.shop.service.HomeService;
 
 
 
+
 @Controller
 public class HomeController {
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
-
 	
 	@Autowired HomeService service;
 
