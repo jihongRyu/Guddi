@@ -449,7 +449,7 @@ public class MemberController {
 			
 			service.write(params);
 			
-			return "member/login";
+			return "member/toLogin";
 		}	
 		//회원가입 도연 end 2022.01.12
 		

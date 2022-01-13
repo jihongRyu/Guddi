@@ -253,6 +253,7 @@ public class MemberService {
 		return dao.getCart(userId);
 	}
 	//카트 수 가져오기 end yonghyeon 2022.01.11
+	
 	//회원가입 도연 start 2022.01.10
 	public HashMap<String, Object> idCheck(String userId) {
 		
@@ -278,11 +279,16 @@ public class MemberService {
 		dto.setZipcode(params.get("zipcode"));
 		dto.setAddress(params.get("address"));
 		dto.setAddress_detail(params.get("address_detail"));
-		dto.setMem_flg(1);
+		dto.setBirthday(params.get("birthday"));
 		dto.setGender(params.get("gender"));
+		dto.setPersonInfo_flg(Integer.parseInt(params.get("personInfo_flg")));
+		dto.setMarketing_flg(Integer.parseInt(params.get("marketing_flg")));
+		dto.setMem_flg(1);
 		
 		logger.info("회원가입 정보 : {}"
-				, params.get("userId")+"/"+params.get("password")+"/"+params.get("username")+"/"+params.get("email")+"/"+params.get("zipcode")+"/"+params.get("address")+"/"+params.get("address_detail")+"/"+params.get("gender"));
+				, params.get("userId")+"/"+params.get("password")+"/"+params.get("username")+"/"+params.get("email")
+				+"/"+params.get("zipcode")+"/"+params.get("address")+"/"+params.get("address_detail")
+				+"/"+params.get("birthday")+"/"+params.get("gender")+"/"+params.get("personInfo_flg")+"/"+params.get("marketing_flg"));
 			
 		dao.write(dto);
 		
