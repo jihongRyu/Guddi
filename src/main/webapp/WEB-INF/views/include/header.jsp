@@ -77,11 +77,11 @@
           <li class="nav-item dropdown">
 	          <a class="nav-link dropdown-toggle" href="javascript:void(0);" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">카테고리</a>
 	          <div class="dropdown-menu" aria-labelledby="dropdown04">	         
-	          	<a class="dropdown-item" href="productMain">전체</a>
-	          	<a class="dropdown-item" href="productPageList?type=0&num=1">루이비통</a>
-	            <a class="dropdown-item" href="productPageList?type=1&num=1">루이까또즈</a>
-	            <a class="dropdown-item" href="productPageList?type=2&num=1">구찌</a>
-	            <a class="dropdown-item" href="productPageList?type=3&num=1">생로랑</a>           
+	          	<a class="dropdown-item" href="productPageList?brandIdx=0">전체</a>
+	          	<a class="dropdown-item" href="productPageList?brandIdx=1">루이비통</a>
+	            <a class="dropdown-item" href="productPageList?brandIdx=2">루이까또즈</a>
+	            <a class="dropdown-item" href="productPageList?brandIdx=3">구찌</a>
+	            <a class="dropdown-item" href="productPageList?brandIdx=4">생로랑</a>           
 	          </div>
           </li>
           </c:if>         

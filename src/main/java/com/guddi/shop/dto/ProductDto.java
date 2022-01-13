@@ -38,6 +38,7 @@ public class ProductDto {
 	private int b_idx;
 	private String oriFileName;
 	private String newFileName;
+	private int brand_idx;
 	
 	
 	
@@ -130,6 +131,12 @@ public class ProductDto {
 	}
 	public void setNewFileName(String newFileName) {
 		this.newFileName = newFileName;
+	}
+	public int getBrand_idx() {
+		return brand_idx;
+	}
+	public void setBrand_idx(int brand_idx) {
+		this.brand_idx = brand_idx;
 	}
 	
 
