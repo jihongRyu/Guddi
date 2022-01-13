@@ -1,14 +1,17 @@
 package com.guddi.shop.service;
 
 import java.util.ArrayList;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+
 import com.guddi.shop.dao.ProductDao;
+import com.guddi.shop.dto.EtcDto;
 import com.guddi.shop.dto.PageDto;
 import com.guddi.shop.dto.ProductDto;
-
 
 @Service
 public class ProductService {
@@ -44,5 +47,7 @@ public class ProductService {
 		return dao.listPageSearch(dto);
 	}
 	//2022.01.13 유지홍 제품 리스트 관련 소스 End
+
+
 
 }

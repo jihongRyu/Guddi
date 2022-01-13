@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+
 import com.guddi.shop.dto.EtcDto;
 import com.guddi.shop.dto.PageDto;
 import com.guddi.shop.dto.ProductDto;
@@ -101,3 +102,16 @@ public class ProductController {
 	
 	//2022.01.13 유지홍 제품 리스트 관련 소스 End
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
