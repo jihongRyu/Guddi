@@ -1,9 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <html>
 <head>
 <meta charset="UTF-8">
-<title>제품등록</title>
+<title>제품수정</title>
 <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 <!-- ckeditor -->
 <script src="resources/ckeditor/ckeditor.js"></script>	
@@ -34,8 +37,8 @@
 <section class="ftco-section contact-section bg-light">
   <div class="container">   
      <div class="col-md-12 ftco-animate text-center">
-      <p class="breadcrumbs"><span class="mr-2"><a href="./">홈</a></span>/<span>제품등록</span></p>
-      <h1 class="mb-0 bread">제품등록</h1>    
+      <p class="breadcrumbs"><span class="mr-2"><a href="./">홈</a></span>/<span>제품수정</span></p>
+      <h1 class="mb-0 bread">제품수정</h1>    
      </div>
   </div>
 </section>
@@ -46,18 +49,21 @@
     <div class="row">
       <div class="col-lg-12 ftco-animate">		                 
 		      <div class="">		        
-		        <b><font size="3" color="BLACK">제품등록</font></b>   
-		        <br><br>		                       
-		        <form method="post" action="doRegistProduct" name="registForm" id="registForm" enctype="multipart/form-data">
+		        <b><font size="3" color="BLACK">제품수정</font></b>   
+		        <br><br>
+		        <form method="post" action="doUpdateProduct" name="updateForm" id="updateForm" enctype="multipart/form-data">
+		        	<input type="hidden" value="${dto.idx}" name="idx" id="idx">
 					<label>제품명</label><br/>
-					<input class="form-control" type="text" name="subject" id="subject" placeholder="제품을 입력해주세요."/><br/>
+					<input class="form-control" type="text" name="product_name" id="product_name" 
+									placeholder="제품명을 입력해주세요." value="${dto.product_name }"/><br/>
 					
 					<label>브랜드</label><br/>
-					<select name="brand_type" id="brand_type" class="form-control" >
-						<option value="0" >브랜드를 선택해주세요.</option>
+					<select name="brand_type" id="brand_type" class="form-control"  >
+						<option value="" >브랜드를 선택해주세요.</option>
 				   		  <c:forEach items="${sessionScope.brandcategory}" var="list">
 				   		  	<c:if test="${list.brand_idx ne 0}">
-								<option value="${list.brand_idx }" >${list.brand_name }</option>
+								<option value="${list.brand_idx }" 
+								<c:if test="${list.brand_name eq dto.brand_name}">selected</c:if>>${list.brand_name }</option>
 							</c:if>
 						  </c:forEach>
 			   		</select><br/>					
@@ -67,7 +73,8 @@
 						<option value="" >제품타입을 선택해주세요.</option>
 				   		<c:forEach items="${sessionScope.bagtype}" var="list">
 				   		  	<c:if test="${list.type_idx ne 0}">
-								<option value="${list.type_idx }" >${list.type_name }</option>
+								<option value="${list.type_idx }" 
+								<c:if test="${list.type_name eq dto.bag_type}">selected</c:if>>${list.type_name }</option>
 							</c:if>
 						</c:forEach>
 			   		</select><br/>
@@ -76,7 +83,8 @@
 					<select name="new_flg" id="new_flg" class="form-control" >
 						<option value="" >신상품여부를 선택하세요.</option>	
 						<c:forEach items="${sessionScope.newflg}" var="list">
-							<option value="${list.idx}" >${list.newname}</option>
+							<option value="${list.idx}" 
+							<c:if test="${list.idx eq dto.new_flg}">selected</c:if>>${list.newname}</option>
 						</c:forEach>			   					   	
 			   		</select><br/>
 		
@@ -84,33 +92,30 @@
 					<select name="sell_flg" id="sell_flg" class="form-control" >
 						<option value="" >판매여부를 선택하세요.</option>
 						<c:forEach items="${sessionScope.sellflg}" var="list">				   		  
-							<option value="${list.idx }" >${list.sellname}</option>
+							<option value="${list.idx }" 
+							<c:if test="${list.idx eq dto.sell_flg}">selected</c:if>>${list.sellname}</option>
 						</c:forEach>				   	
 			   		</select><br/>
 			   		
 					<label>가격 : 단위 원, 원제외 등록</label><br/>
-					<input type="text" class="form-control" name="price" id="price" placeholder="정가를 입력해주세요."/><br/>
+					<input type="text" class="form-control" value="${dto.price }" name="price" id="price" placeholder="정가를 입력해주세요."/><br/>
 										
-					<label>제품번호</label>
-					<button type="button" class="btn btn-primary" onclick="makeProductNum()">제품번호발행</button>					
+					<label>제품코드</label>	
+					<button type="button" class="btn btn-primary" onclick="makeProductCode()">제품번호발행</button>							
 					<br/>
-					<input type="text" class="form-control" name="product_num" id="product_num" readonly placeholder="상품번호를 생성해주세요."/><br/>
+					<input type="text" class="form-control" value="${dto.product_code }" name="product_code" id="product_code" readonly placeholder="상품번호를 생성해주세요."/><br/>
 						
 					<label>제품 상세설명</label><br/>
-					<textarea class="form-control" name="content" id="content" rows="10" placeholder="상세설명을 입력해주세요."></textarea><br/>
-					
-					<label>이미지 등록</label>
-					<input class="form-control" type="file" name="files" id="files" style="border:none;"  multiple="multiple"/>	
-					
-					
+					<textarea class="form-control" name="content" id="content" rows="10" placeholder="상세설명을 입력해주세요.">${dto.product_content }</textarea><br/>
+															
 					<br><br>
 					<div style="text-align:center;">
 					<button type="button" class="btn btn-primary" onclick="location.href='./'">취소</button>
-		       		<button type="button" class="btn btn-primary" onclick="check_input()">등록</button>			
+		       		<button type="button" class="btn btn-primary" onclick="check_input()">수정</button>			
 					</div>
 				</form>	        		      	
 		    </div>   		       
-      </div> <!-- .col-md-8 -->
+      </div>
     </div>
   </div>
 </section>
@@ -152,8 +157,8 @@
 
 CKEDITOR.replace("content");
 
-//상품번호 생성 함수
-function makeProductNum(){
+//제품코드 생성 함수
+function makeProductCode(){
 	
 	if ($("#brand_type").val()=='0') {
 		alert("브랜드를 선택해주세요");
@@ -165,107 +170,103 @@ function makeProductNum(){
 		return;
 	}
 	
-	if (confirm("상품번호를 생성하시겠습니까?")) {
+	if (confirm("상품번호를 생성하시겠습니까?")) {	
 
 		$.ajax({
-			url: "makeProductNum", //호출할 파일명			
+			url: "makeProductCode", //호출할 파일명			
 			method: "POST",
 			dataType: "json", //내가 받아야할 결과 형태가 text, html, xml, json
 			
-			success: function(data){
-				console.log(data);
+			success: function(data){				
 				
-				if(data.result!=null) {
-					let today = new Date();  
-					let brandType;
-					let productType;
+				if(data.newIdx!=null) {
 					
-					if ($("#product_type").val()=='크로스백') {
-						productType = 'PC';
-					}else if ($("#product_type").val()=='백팩') {
-						productType = 'PB';
-					}else if ($("#product_type").val()=='핸드백') {
-						productType = 'PH';
-					}else if ($("#product_type").val()=='토트백') {
-						productType = 'PT';
-					}else if ($("#product_type").val()=='숄더백') {
-						productType = 'PS';
-					}else if ($("#product_type").val()=='기타') {
-						productType = 'PE';
+					let today = new Date();  
+					let brandCode;
+					let bagCode;
+					
+					//제품코드에 브랜드 코드 반영
+					for (var i = 0; i < data.brandType.length; i++) {						
+						if ($("#brand_type").val() == data.brandType[i].brand_idx) {
+							brandCode = data.brandType[i].brand_code;							
+						}
 					}
 					
-					if ($("#brand_type").val()=='샤넬') {
-						brandType = 'S';
-					}else if ($("#brand_type").val()=='루이비통') {
-						brandType = 'L';
-					}else if ($("#brand_type").val()=='에르메스') {
-						brandType = 'H';
-					}else if ($("#brand_type").val()=='보테가베네타') {
-						brandType = 'B';
-					}else if ($("#brand_type").val()=='기타') {
-						brandType = 'E';
+					//제품코드에 가방종류 코드 반영
+					for (var i = 0; i < data.bagType.length; i++) {
+						if ($("#bag_type").val() == data.bagType[i].type_idx) {
+							bagCode = data.bagType[i].type_code;
+						}						
 					}					
 					
-					var idx = data.result;
-					var month = today.getMonth() + 1;  // 월
-					var date = today.getDate();  // 날짜					
-					
-					var product_num = brandType + productType + month + date + idx;							
-					
-					$("#product_num").val(product_num);				
-					
+					//제품코드에 새 idx 반영
+					var idx = data.newIdx;
+					var month = today.getMonth() + 1;  // 제품코드에  월 반영
+					var date = today.getDate();  // 제품코드에  날짜 반영						
+					//제품코드 생성!
+					var product_code = brandCode + bagCode + month + date + idx;
+					$("#product_code").val(product_code);				
 					alert("상품번호 생성 성공!");
-					
-				} 	
-				
+				} 					
 			},
 			error:function(){
 				alert("상품번호 생성실패! 관리자에게 문의해주세요.");
 			}
 		});
-		
-	}
-	
+	}	
 }
 
-function check_input() {
-	 
+function check_input() { 
  	
-    if (!document.registForm.subject.value){// login_form 이름을 가진 form 안의 id_val 의 value가 없으면
+    if (!document.updateForm.product_name.value){// login_form 이름을 가진 form 안의 id_val 의 value가 없으면
         alert("상품명 입력하세요!");
-        document.registForm.subject.focus();
+        document.updateForm.product_name.focus();
         // 화면 커서 이동
         return;
     }  	
-    if (document.registForm.product_type.value=='0'){
-        alert("상품타입을 선택하세요!");
+    if (document.updateForm.brand_type.value==''){
+        alert("브랜드타입을 선택하세요!");
         // 화면 커서 이동
         return;
     } 
-    if (!document.registForm.unit.value){
-        alert("상품단위를 입력해주세요!");
+    if (document.updateForm.bag_type.value==''){
+        alert("종류타입을 선택하세요!");
         // 화면 커서 이동
         return;
-    }
-    if (!document.registForm.price.value){
+    } 
+    if (!document.updateForm.price.value){
         alert("정가를 입력하세요!");
         // 화면 커서 이동
         return;
-    }   
-    if (!document.registForm.salePrice.value){
-        alert("할인가를 입력하세요!");
+    }  
+    if (document.updateForm.new_flg.value==''){
+        alert("신상품 여부를 선택하세요!");
         // 화면 커서 이동
         return;
-    }
-    if (!document.registForm.product_num.value){
+    }  sell_flg
+    if (document.updateForm.sell_flg.value==''){
+        alert("판매 여부를 선택하세요!");
+        // 화면 커서 이동
+        return;
+    }  sell_flg
+  
+    if (!document.updateForm.product_code.value){
         alert("상품코드를 만들어주세요!");
         // 화면 커서 이동
         return;
     }
     
-    document.registForm.submit();
+    if (!document.updateForm.content.value){
+        alert("상세설명을 작성해주세요!");
+        // 화면 커서 이동
+        return;
+    }
+    
+    document.updateForm.submit();
     // 모두 확인 후 submit()
  }
+ 
+ 
 
 </script>
 </html>

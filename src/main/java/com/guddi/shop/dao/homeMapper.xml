@@ -5,25 +5,10 @@
 
 <mapper namespace="com.guddi.shop.dao.HomeDao">
 
-	<select id="getBrandcategory" resultType="com.guddi.shop.dto.EtcDto">
-		select brand_idx, brand_name  from brand where use_flg = 1
-	</select>
+<select id="photoList" resultType="com.guddi.shop.dto.EtcDto">	
+SELECT newFileName FROM mainimage  
+</select>
 	
-	<select id="getBagtype" resultType="com.guddi.shop.dto.EtcDto">
-		select type_idx , type_name  from bagtype where use_flg = 1
-	</select>
-	
-	<select id="getSellflg" resultType="com.guddi.shop.dto.EtcDto">
-		select idx, sellname  from sellflg where use_flg = 1
-	</select>
-	
-	<select id="getAnswertype" resultType="com.guddi.shop.dto.EtcDto">
-		select idx, answername from answertype where use_flg = 1
-	</select>
-	
-	<select id="getNewflg" resultType="com.guddi.shop.dto.EtcDto">
-		select idx, newname  from newflg where use_flg = 1
-	</select>
 
 
 </mapper>

@@ -11,6 +11,18 @@ public class PageDto {
 	//답변여부
 	private int answer_flg;
 	
+	//가방 타입
+	private int bag_type;
+	
+	//브랜드타입
+	private int brand_type;
+	
+	//가방 종류명
+	private String bag_name;
+		
+	//브랜드명
+	private String brand_name;
+	
 	//페이징 타입
 	private String pagingType;
 	
@@ -180,7 +192,40 @@ public class PageDto {
 	public void setAnswer_flg(int answer_flg) {
 		this.answer_flg = answer_flg;
 	}
-	
+
+	public int getBag_type() {
+		return bag_type;
+	}
+
+	public void setBag_type(int bag_type) {
+		this.bag_type = bag_type;
+	}
+
+	public int getBrand_type() {
+		return brand_type;
+	}
+
+	public void setBrand_type(int brand_type) {
+		this.brand_type = brand_type;
+	}
+
+	public String getBag_name() {
+		return bag_name;
+	}
+
+	public void setBag_name(String bag_name) {
+		this.bag_name = bag_name;
+	}
+
+	public String getBrand_name() {
+		return brand_name;
+	}
+
+	public void setBrand_name(String brand_name) {
+		this.brand_name = brand_name;
+	}
+
+
 	
 	
 	

@@ -21,7 +21,7 @@ public class ProductDto {
 //	u_idx int(100) 회원번호
 //	orifilename varchar(50) 저장시 본래 파일 이름
 //	newfilename varchar(50) 파일 이름
-	
+//	photo_num 이미지 순서
 	
 	private int idx;
 	private String brand_name;
@@ -38,6 +38,8 @@ public class ProductDto {
 	private int b_idx;
 	private String oriFileName;
 	private String newFileName;
+	private int brand_idx;
+	private int photo_num;
 	
 	
 	
@@ -131,8 +133,21 @@ public class ProductDto {
 	public void setNewFileName(String newFileName) {
 		this.newFileName = newFileName;
 	}
-	
 
+	public int getBrand_idx() {
+		return brand_idx;
+	}
+	public void setBrand_idx(int brand_idx) {
+		this.brand_idx = brand_idx;
+	}
+	public int getPhoto_num() {
+		return photo_num;
+	}
+	public void setPhoto_num(int photo_num) {
+		this.photo_num = photo_num;
+	}
+	
+ 
 	
 	
 }

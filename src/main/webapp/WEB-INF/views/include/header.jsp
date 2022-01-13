@@ -52,9 +52,11 @@
 				    </div>
 				    <div class="col-md-5 pr-4 d-flex topper align-items-center text-lg-right">
 				    	<c:if test="${sessionScope.userId ne null}">				    	
-				        	<span class="text">  ${sessionScope.username} 님 환영합니다. </span>
-				        	
-				        </c:if>				        
+				        	<span class="text"> 
+				        		${sessionScope.username} 님 환영합니다. <a class="text" href="#" onclick="logout()"> 로그아웃</a> 
+				        	</span>
+				        				       	
+				        </c:if>	         
 				    </div>				   
 				 </div>
 			 </div>
@@ -77,11 +79,11 @@
           <li class="nav-item dropdown">
 	          <a class="nav-link dropdown-toggle" href="javascript:void(0);" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">카테고리</a>
 	          <div class="dropdown-menu" aria-labelledby="dropdown04">	         
-	          	<a class="dropdown-item" href="productMain">전체</a>
-	          	<a class="dropdown-item" href="productPageList?type=0&num=1">루이비통</a>
-	            <a class="dropdown-item" href="productPageList?type=1&num=1">루이까또즈</a>
-	            <a class="dropdown-item" href="productPageList?type=2&num=1">구찌</a>
-	            <a class="dropdown-item" href="productPageList?type=3&num=1">생로랑</a>           
+	          	<a class="dropdown-item" href="productPageList?brandIdx=0">전체</a>
+	          	<a class="dropdown-item" href="productPageList?brandIdx=1">루이비통</a>
+	            <a class="dropdown-item" href="productPageList?brandIdx=2">루이까또즈</a>
+	            <a class="dropdown-item" href="productPageList?brandIdx=3">구찌</a>
+	            <a class="dropdown-item" href="productPageList?brandIdx=4">생로랑</a>           
 	          </div>
           </li>
           </c:if>         
@@ -96,20 +98,20 @@
 		  </c:if>		 
 		
 		  <c:if test="${sessionScope.mem_flg eq 2}">
-			<li class="nav-item"><a href="productMain" class="nav-link">제품내역</a></li>
+
+			<li class="nav-item"><a href="productMain?num=1" class="nav-link">제품내역</a></li>
 			<li class="nav-item"><a href="login" class="nav-link">Q&A내역</a></li>
 			<li class="nav-item"><a href="login" class="nav-link">리뷰내역</a></li>
 			<li class="nav-item"><a href="login" class="nav-link">주문정보</a></li>
 			<li class="nav-item"><a href="login" class="nav-link">회원목록</a></li>
 			<li class="nav-item"><a href="login" class="nav-link">배너이미지/카테고리관리</a></li>
+
 		  </c:if>	
           
           <c:if test="${sessionScope.userId ne null && sessionScope.mem_flg ne 2}">	
           <li class="nav-item"><a href="myPage?orderNum=1&reviewNum=1" class="nav-link">마이페이지</a></li>   
           </c:if>
-          <c:if test="${sessionScope.userId ne null && sessionScope.mem_flg ne 2}">	
-          <li class="nav-item"><a href="logout" class="nav-link">로그아웃</a></li>   
-          </c:if>
+
           <c:if test="${sessionScope.mem_flg ne 2}">
           <li class="nav-item"><a href="javascript:void(0);" onclick="toQna('${sessionScope.userId}');" class="nav-link">Q&A</a></li> 
           </c:if>
@@ -139,6 +141,8 @@
 </body>
 
 <script>
+console.log('${sessionScope.mem_flg}');
+
 
 function logout(){	
 	 
@@ -154,12 +158,10 @@ function logout(){
 
 function toQna(userid){
 	
-	alert("안됌?");
-	
 	if (userid==null) {
 		
 		alert("로그인을 해주세요");
-		location.href = "login";
+		location.href = "toLogin";
 		
 	} else {
 		

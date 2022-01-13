@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>채소</title>
+<title>제품 내역</title>
 <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -33,8 +33,8 @@
 <section class="ftco-section contact-section bg-light">
 	<div class="container">    
 	    <div class="col-md-12 ftco-animate text-center">	    	
-	    	<p class="breadcrumbs"><span class="mr-2"><a href="./">홈</a></span>/<span>관리메인페이지</span></p>
-	     	<h1 class="mb-0 bread">관리메인페이지</h1>      
+	    	<p class="breadcrumbs"><span class="mr-2"><a href="./">홈</a></span>/<span>제품내역관리</span></p>
+	     	<h1 class="mb-0 bread">제품내역관리</h1>      
 	    </div>
 	</div>
 </section>
@@ -46,56 +46,110 @@
 	     	
 	  </div>	 
   </div>
-  <div class="col-lg-10 ftco-animate myPage-table table-striped">
+  <div class="ftco-animate manager-table table-striped">
   	      	
 	  <form name = "mform" id = "mform" method="post">	                
 	      <div>		        
 	        <h3>제품 내역</h3>
-	        <br><br>		                       
-	        <table>
-	          <colgroup>
- 			    <col width="7%" />			   
-			    <col width="15%"/>
-			    <col width="15%"/>
-			    <col width="23%"/>
-			    <col width="20%"/>
-			    <col width="10%"/>
-			    <col width="10%"/>
-			  </colgroup>
-	             <tr>
+	        <br><br>		
+	        <div class="row text-center search-form" id="productList">
+			   <div class="col-md-4">
+		     		<select name="brand_type" class="form-control" onchange="changeListByBrand(this.value)">
+			    		<c:forEach var="list" items="${sessionScope.brandcategory}">
+			    			<option value="${list.brand_idx}" <c:if test="${brand_type eq list.brand_idx}">selected</c:if>>${list.brand_name}</option>	
+			    		</c:forEach>		
+			   		</select>
+			   </div>
+			   <div class="col-md-4">
+			      <div class=" mb-4">	
+				   <select name="bag_type" class="form-control" onchange="changeListByBag(this.value)">
+				   		<option value="">전체</option>	
+				   		<c:forEach var="list" items="${sessionScope.bagtype}">
+				    		<option value="${list.type_idx}" <c:if test="${bag_type eq list.type_idx}">selected</c:if>>${list.type_name}</option>	
+				   		</c:forEach>		
+				   </select>		
+			     </div>
+			   </div>
+			   <div class="col-md-4">
+			     <div class="mb-4">
+			     	<div class="form-group">                
+			             <a href="javascript:void(0);" onclick="changeListByProductName()" id="searchBtn"><span class="icon ion-ios-search"></span></a>
+			             <input type="text" class="form-control" id="keyword" name="keyword" value="${keyword }" placeholder="제품명 입력해주세요">
+			         </div>		
+			   	</div>
+			   </div>
+			 </div>                       
+	        <table>	         
+	             <tr style="background-color:#212529;color:white;">
 	             	<th>번호</th>	             	
 	             	<th>브랜드</th>
 	             	<th>종류</th>
 	             	<th>제품명</th>
-	             	<th>제품번호</th>
-	             	<th>수정하기</th>
-	             	<th>삭제하기</th>	             	           		     
+	             	<th>제품코드</th>
+	             	<th>가격</th>
+	             	<th>신상여부</th>
+	             	<th>판매여부</th>
+	             	<th>등록일</th>
+	             	<th>정보수정</th>
+	             	<th>이미지수정</th>
+	             	<th>삭제</th>	             	           		     
 	            </tr>
-	             <tr>
-	             	<td colspan="7">등록된 제품이 없습니다.</td>	             	             	           		     
-	            </tr>         
-	        </table>			
+	            <c:if test="${productList.size() == 0 }">   
+	            <tr>
+	             	<td colspan="12">등록된 제품이 없습니다.</td>	             	             	           		     
+	            </tr>
+	            </c:if>
+ 				<c:forEach items="${productList}" var="list">		       	  
+			       <tr>		       
+			        	<th>${list.idx}</th>
+			        	<th>${list.brand_name}</th>
+			        	<th>${list.bag_type}</th>
+			        	<th>${list.product_name}</th>
+			        	<th>${list.product_code}</th>
+			        	<th>${list.price}</th>
+						<c:forEach items="${sessionScope.newflg}" var="newFlgList">
+							<c:if test="${newFlgList.idx eq list.new_flg}"><th>${newFlgList.newname}</th></c:if>						
+						</c:forEach>
+			        	<c:forEach items="${sessionScope.sellflg}" var="sellFlgList">
+							<c:if test="${sellFlgList.idx eq list.sell_flg}"><th>${sellFlgList.sellname}</th></c:if>						
+						</c:forEach>
+			        	<th>${list.regdate}</th>
+			        	<th><a href="updateProduct?idx=${list.idx}">수정하기</a></th>
+			        	<th><a href="updateProductImage?idx=${list.idx}">수정하기</a></th> 
+			        	<th><a href="javascript:void(0);" onclick="delProduct(${list.idx});">삭제</a></th>            		           		     
+			       </tr>			    
+		       </c:forEach>             
+	        </table>
+	        <c:if test="${page.endPageNum > 1}">
+	        <div class="col text-center">
+		      <div class="block-27">
+		          <ul>
+			      <c:if test="${page.prev}">
+			      <li><a href="productMain?num=${page.startPageNum - 1}&brand_type=${brand_type}&bag_type=${bag_type}
+			      &keyword=${keyword}#productList">&lt;</a></li>
+			      </c:if>
+			      <c:forEach begin="${page.startPageNum}" end="${page.endPageNum}" var="num">
+			      <c:if test="${select == num}">
+			      <li class="active"><span>${num}</span></li>
+			      </c:if>
+			      <c:if test="${select != num}">
+			      <li><a href="productMain?num=${num}&brand_type=${brand_type}&bag_type=${bag_type}
+			      &keyword=${keyword}#productList">${num}</a></li>			     
+			      </c:if>    		
+			      </c:forEach>
+			      <c:if test="${page.next}">
+			      <li><a href="productMain?num=${page.endPageNum + 1}&brand_type=${brand_type}&bag_type=${bag_type}
+			      &keyword=${keyword}#productList">&gt;</a></li>
+			      </c:if>
+			    </ul>
+		      </div>
+       	   </div> 
+       	   </c:if>			
 	    </div>
  	</form>
- 	
- 	<div class="row mt-5">
-        <div class="col text-center">
-          <div class="block-27">
-            <ul>
-              <li><a href="#">&lt;</a></li>
-              <li class="active"><span>1</span></li>
-              <li><a href="#">2</a></li>
-              <li><a href="#">3</a></li>
-              <li><a href="#">4</a></li>
-              <li><a href="#">5</a></li>
-              <li><a href="#">&gt;</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>    
+
       <br>
       <input type="button" value="제품등록하기" class="btn btn-primary py-3 px-5" onclick="location.href='registProduct'">	 
-           
   </div>
   
   
@@ -144,17 +198,64 @@
 	    }
 	}
 	
-	function DoSearch() {
-	    
-		  let searchType = document.getElementsByName("searchType")[0].value;
-		  let keyword =  document.getElementsByName("keyword")[0].value;
-		  let type =  "${type_num}";  
+	function DoSearch() {    
+		 
+		  let keyword = $("#keyword").val();
+		  let bag_type =  $("#bag_type").val();
+		  let brand_type =  $("#brand_type").val();
 		  
-		  console.log(searchType);
-		  console.log(keyword);	  
-		  location.href = "productPageList?type="+ type + "&num=1" + "&searchType=" + searchType + "&keyword=" + keyword;
+		  console.log(keyword);
+		  console.log(bag_type);	 
+		  console.log(brand_type);	
+		  
+		  location.href = "productMain?num=1&bag_type=" + bag_type + "&brand_type=" + brand_type + 
+		  "&keyword=" +  keyword;
 	
 	};
+	
+
+	function delProduct(idx) {
+		
+		if (confirm("해당 제품을 삭제하시겠습니까?")) {
+			location.href='delProduct?idx='+idx;
+		}
+		
+	}
+
+
+	function changeListByBrand(brand_idx){	
+			
+		var brand_type = brand_idx;
+		var bag_type = ${bag_type}; 
+		var keyword = $('#keyword').val();	
+		
+		location.href = "productMain?num=1&bag_type=" + bag_type + "&brand_type=" + brand_type + 
+		  "&keyword=" +  keyword +"#productList";
+		
+	}
+	
+	function changeListByBag(type_idx){	
+		
+		var bag_type = type_idx;
+		var brand_type = ${brand_type};
+		var keyword = $('#keyword').val();	
+		
+		location.href = "productMain?num=1&bag_type=" + bag_type + "&brand_type=" + brand_type + 
+		  "&keyword=" +  keyword +"#productList";
+		
+	}
+
+
+	function changeListByProductName(){
+		
+		var bag_type = ${bag_type}; 
+		var brand_type = ${brand_type};
+		var keyword = $('#keyword').val();	
+		
+		location.href = "productMain?num=1&bag_type=" + bag_type + "&brand_type=" + brand_type + 
+		  "&keyword=" +  keyword +"#productList";
+		
+	}
 	
 	
 </script>

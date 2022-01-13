@@ -4,10 +4,9 @@ import java.util.ArrayList;
 
 import com.guddi.shop.dto.EtcDto;
 
-public interface HomeDao {
+public interface EtcDao {
 
-	ArrayList<EtcDto> photoList();
-
+	
 	
 
 }

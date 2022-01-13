@@ -68,4 +68,11 @@ public interface MemberDao {
 
 	int cartupdate(CartDto dto);
 
+	//회원가입 start 2022.01.10	
+	void write(MemberDto dto);
+
+	String idCheck(String param);
+	//회원가입 end 2022.01.12
+
+
 }
