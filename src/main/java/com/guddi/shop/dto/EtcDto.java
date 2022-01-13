@@ -2,6 +2,7 @@ package com.guddi.shop.dto;
 
 import java.sql.Date;
 
+
 //각종 카테고리 관련 Dto
 public class EtcDto {
 	
@@ -36,6 +37,7 @@ public class EtcDto {
 	public void setBrand_idx(int brand_idx) {
 		this.brand_idx = brand_idx;
 	}
+
 	public int getUse_flg() {
 		return use_flg;
 	}
@@ -48,6 +50,7 @@ public class EtcDto {
 	public void setRegdate(Date regdate) {
 		this.regdate = regdate;
 	}
+
 	public String getBrand_name() {
 		return brand_name;
 	}
@@ -108,4 +111,6 @@ public class EtcDto {
 	
 	
 
+
+	//메인 베너 이미지 등록
 }

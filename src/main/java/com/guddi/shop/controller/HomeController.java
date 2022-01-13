@@ -1,6 +1,5 @@
 package com.guddi.shop.controller;
 
-import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
 
@@ -12,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.guddi.shop.dto.EtcDto;
 import com.guddi.shop.service.HomeService;
 
 
@@ -21,7 +19,10 @@ import com.guddi.shop.service.HomeService;
 public class HomeController {
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
-	@Autowired HomeService Service;
+
+	
+	@Autowired HomeService service;
+
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model, HttpSession session) {
@@ -31,5 +32,7 @@ public class HomeController {
 
 		return "index";
 	}
+	
+	
 	
 }
