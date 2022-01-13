@@ -28,6 +28,20 @@
 <link rel="stylesheet" href="resources/css/style.css">
 
 </head>
+<style>
+.input_size_20{
+	width:20px;
+	height:20px;
+}
+.all_check_input{
+	margin: 18px 0 18px 18px;
+}
+.all_chcek_span{
+	padding-left: 8px;
+   	font-size: 20px;
+   	font-weight: bold;		
+}
+</style>
 <body>
 
 <jsp:include page="/WEB-INF/views/include/header.jsp"/>
@@ -68,60 +82,78 @@
   	<div class="row">
      	<div class="col-md-12 ftco-animate">
      		<div class="cart-list">
+     		<!-- 체크박스 전체 여부 -->
+				<div class="all_check_input_div">
+					<!-- <input type="checkbox" id ="all" class="all_check_input input_size_20" checked="checked"><span class="all_chcek_span">전체선택</span> -->
+					<input type="checkbox" id="cbx_chkAll" /><span class="all_chcek_span">전체선택</span>
+					<button onclick = "del()"> 체크된 리스트 삭제</button>
+				</div>
+				
   				<table class="table">
   			    <thead class="thead-primary">
   			    
   			      <tr class="text-center">
-  			        <th>삭제</th>
+  			        <th>선택</th>
   			        <th>이미지</th>
   			        <th>제품명</th>
   			        <th>수량</th>
   			        <th>제품가격</th>
-  			        <!-- <th>총 가격</th> -->
+  			       	<th>삭제</th>
   			      </tr>
   			     
   			    </thead>
   			    <tbody>
   			      <c:if test="${fn:length(list)==0}">
-  			      <tr class="text-center">
-  			        <td colspan="6">장바구니에 담긴 제품이 없습니다.</td>  			        
-  			      </tr>
+	  			      <tr class="text-center">
+	  			        <td colspan="6">장바구니에 담긴 제품이 없습니다.</td>  			        
+	  			      </tr>
   			      </c:if>
   			      
   			      
   			      <c:forEach items="${list}" var="list" varStatus="status">
   			      <tr class="text-center">
-  			        <%-- <td class="product-remove"><a onClick="delCart('${list.u_idx}')"><span class="ion-ios-close"></span></a></td>
-  			         --%>
+  			        <td class="cart_info_td">
+  			        
+  			        
+  			        	<input type="checkbox" class="individual_cart_checkbox input_size_20" name="chk" checked="checked" />
+  			        	<input type="hidden" class="individual_newFileName_input" value="${list.newFileName}">
+  			        	<input type="hidden" class="individual_product_name_input" value="${list.product_name}">
+  			        	<input type="hidden" class="individual_product_code_input" value="${list.product_code}">
+  			       	 	<input type="hidden" class="individual_quantity_input" value="${list.quantity}">
+  			        	<input type="hidden" class="individual_totalprice_input" value="${list.quantity*list.price}">
+  			       	 	<%-- <input type="hidden" class="individual_bookId_input" value="${ci.bookId}"> --%>
+  			  
+  			        
+  			        </td>
   			        <td class="image-prod"><div class="img" style="background-image:url(resources/photo/${list.newFileName});"></div></td>
   			        
   			        <td class="product-name">
   			        	<h3>${list.product_name}</h3>
   			        	<p>상품코드 : ${list.product_code}</p>
+  			      
   			        </td>
   			        
-  			        <td class="price">${list.price}</td>
   			        
   			        <td class="quantity">
-  			        
-  			        	<div class="input-group mb-3">
-  			        	<span class="input-group-btn mr-2">
-				             <button type="button" class="quantity-left-minus btn" onClick="minus(${status.index},${list.price})" data-field="">
-				                <i class="ion-ios-remove"></i>
-				             </button>
-				         </span>
-  		             	<input type="text" name="quantity${status.index}" id="quantity${status.index}"class="form-control input-number" 
-  		             		value="${list.quantity }" min="1" max="100" >
-  		          		<span class="input-group-btn ml-2">
-				             <button type="button" class="quantity-right-plus btn" onClick="plus(${status.index},${list.price})" data-field="">
-				                 <i class="ion-ios-add"></i>
-				              </button>
-				          </span>
-  		          		</div>
+  		             	<form method="post" action="cartupdate">
+  			        		<input type="text" name="quantity" id="quantity${status.index}"class="form-control input-number" 
+  		             		value="${list.quantity}" onchange="changeCount(this)" min="1" max="100">
+  		             	
+							<input type="hidden" name="product_name" value="${list.product_name}">
+							<input type="hidden" name="product_code" value="${list.product_code}">
+							<input type="hidden" name="userId" value="${userId}">
+						
+						   	<button type="submit" class="btn btn-info">수량번경</button>
+						</form>
+  		             		
   		          	</td>
   			        
-  			        <td class="total"><span id="price${status.index}">${list.quantity*list.price }</span> 원</td>
-  			        <c:set var= "total" value="${total + list.quantity*list.price}"/>
+  			        <td class="total"><fmt:formatNumber value="${list.quantity*list.price}" pattern="#,### 원" /></td>
+  			        
+  			        <c:set var= "total" value="${list.quantity*list.price}"/>
+  			        
+  			        <td class="product-remove"><a onClick="delCart('${list.idx}')"><span class="ion-ios-close"></span></a></td>
+  			        
   			      </tr>
   				  </c:forEach>
   			    
@@ -141,7 +173,7 @@
      			<h3></h3>
      			<p class="d-flex">
      				<span>구매가격</span>     				
-					<span id="totalPrice1">${total}</span>원
+					<span id="totalPrice" class="totalPrice_span"></span>원
      			</p>
      			<p class="d-flex">
      				<span>배송료</span>
@@ -150,16 +182,21 @@
      			<hr>
      			<p class="d-flex total-price">
      				<span>최종구매가격</span>
-     				<span id="totalPrice2">${total}</span>원
+     				<span id="totalPrice" class="totalPrice_span"></span>원
      			</p>
      		</div>
      		<div class="text-center">
-     		<form action="checkout" method="post" id="toCheckout" name="toCheckout">
-     		<input type="hidden" value="${total}" name="checkoutPrice" id="checkoutPrice">
-     		<input type="hidden" value="${sessionScope.userId}" name="userId" id="userId">
-     		<a href="./" class="btn btn-primary py-3 px-4">계속쇼핑하기</a>     		     		
-     		<a href="#" id="toCheckoutButton" class="btn btn-primary py-3 px-4">구매하기</a>
-     		</form>
+     		<form action="/order" method="get" class="order_form">
+
+	     		<input type="hidden" value="${total}" name="checkoutPrice" id="checkoutPrice">
+	     		<input type="hidden" value="${sessionScope.userId}" name="userId" id="userId">
+     		
+	     		<a href="./" class="btn btn-primary py-3 px-4">계속쇼핑하기</a>     		     		
+	     		<a href="#" id="order_btn" onclick="goOrder()" class="btn btn-primary py-3 px-4">결제하기</a>
+	    		
+			</form>
+			
+     		
      		</div>
      	</div>
      	</c:if> 
@@ -205,65 +242,126 @@
 </body>
 <script>
 
-$("#toCheckoutButton").click(function(){
-	
-	if (confirm("결제화면으로 넘어가시겠습니까?")) {
+/*
+// 결제하기 페이지로 이동 
+$("#order_btn").on("click", function(){
+	let form_contents ='';
+	let orderNumber = 0; // index값 역할을 할 orderNumber 변수 
+	$(".cart_info_td").each(function(index, element){ //상품의 데이터가 저장된 <input> 값들을 감싸고 있는 <td> 태그 반복해서 접근하는 메서드 
+		// bookId, bookCount변수를 선언하여 접근한 <td>태그 내부에 있는 <input> 태그의 값들로 초기화
+		let bookId = $(element).find(".individual_bookId_input").val();
+		let bookCount = $(element).find(".individual_bookCount_input").val();
+		let bookId_input = "<input name='orders[" + orderNumber + "].bookId' type='hidden' value='" + bookId + "'>";
+		form_contents += bookId_input;
 		
-		document.toCheckout.submit();
-		
-	}
+		let bookCount_input = "<input name='orders[" + orderNumber + "].bookCount' type='hidden' value='" + bookCount + "'>";
+		form_contents += bookCount_input;
+		orderNumber += 1;
+	});
+	$(".order_form").html(form_contents);
+	$(".order_form").submit();
 });
 
-function minus(index, price){
+*/
+
+$("#cbx_chkAll").click(function() {
+	if($("#cbx_chkAll").is(":checked")) $("input[name=chk]").prop("checked", true);
+	else $("input[name=chk]").prop("checked", false);
+});
+
+
+$("input[name=chk]").click(function() {
+	var total = $("input[name=chk]").length;
+	var checked = $("input[name=chk]:checked").length;
 	
-	var num = $("#quantity"+index).val();
-	var totalPrice = $("#totalPrice1").html();
+	if(total != checked) $("#cbx_chkAll").prop("checked", false);
+	else $("#cbx_chkAll").prop("checked", true); 
+});
+
+
+setTotal();
+function setTotal(){
+	let totalPrice=0;
+	$(".cart_info_td").each(function(index, element){
+		
+		if($(element).find(".individual_cart_checkbox").is(":checked") === true){	//체크여부
+			totalPrice += parseInt($(element).find(".individual_totalPrice_input").val());
+			
+		}
+	});
+	$(".totalPrice_span").text(totalPrice.toLocaleString());	
 	
-	var totalPriceMinusChangedPrice = totalPrice-(price*num);	
-	num--;
-	var newTotalPrice = totalPriceMinusChangedPrice + (num*price);
+};
+
+$(".individual_cart_checkbox").on("change", function(){
 	
-	if (num<1) {
-		alert("최소 구매수량은 1개입니다!");
-	}else{
-		$("#quantity"+index).val(num);
-		$("#price"+index).html(num*price);
-		$("#totalPrice1").html(newTotalPrice);
-		$("#totalPrice2").html(newTotalPrice);
-		$("#checkoutPrice").val(newTotalPrice);
-	}
+	setTotal($(".cart_info_td"));
+});
+
+$("#cbx_chkAll").on("change", function(){
+	
+	setTotal($(".cart_info_td"));
+});
+
+
+
+
+
+
+
+
+var delList = [];
+
+function del(){
+	
+	
+	$("input[type='checkbox']:checked").each(function (idx,item){
+		console.log(idx,$(this).val());	
+		delList.push($(this).val());
+	});
+	
+	console.log(delList);
+	
+	$.ajax({
+		type:'GET',
+		url:'checkedDelete',
+		data:{'delList' : delList},
+		dataType: 'JSON',
+		success: function (data) {
+			console.log(data);
+			alert(data.msg);
+			//ajax는 페이지를 새로고침 하지 않기 때문에, 적용된 내용을 확인하기 위해서는 리스트를 다시 그려야 한다.
+			//listCall();
+			//$("tbody").empty();
+			delList=[];
+		},
+		error:function(e){
+			console.log(e);
+		}
+		
+	});
 	
 	
 }
 
-function plus(index, price){	
-	
-	var num= $("#quantity"+index).val();
-	var totalPrice = $("#totalPrice1").html();	
-	
-	var totalPriceMinusChangedPrice = totalPrice-(price*num);	
-	num++;
-	var newTotalPrice = totalPriceMinusChangedPrice + (num*price);
-	
-	$("#quantity"+index).val(num);
-	$("#price"+index).html(num*price);
-	$("#totalPrice1").html(newTotalPrice);
-	$("#totalPrice2").html(newTotalPrice);
-	$("#checkoutPrice").val(newTotalPrice);
-	
-}
 
-function delCart(product_num){
+
+
+
+
+ //삭제 
+ 
+function delCart(idx){
 	
 	if (confirm("해당 제품을 카트에서 제외하시겠습니까?")) {
 		
-		var product_num = product_num;
+		var idx = idx;
 		
 		$.ajax({
 			url: "delCart", //호출할 파일명			
 			method: "POST",
 			dataType: "json", //내가 받아야할 결과 형태가 text, html, xml, json
-			data : {"product_num":product_num},
+			data : {"idx":idx},
 			success: function(data){
 				console.log(data);
 				
@@ -283,7 +381,34 @@ function delCart(product_num){
 		
 	}
 	
-}
+} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </script>
 </html>
