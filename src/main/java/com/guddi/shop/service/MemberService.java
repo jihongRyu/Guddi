@@ -253,7 +253,41 @@ public class MemberService {
 		return dao.getCart(userId);
 	}
 	//카트 수 가져오기 end yonghyeon 2022.01.11
-	
+	//회원가입 도연 start 2022.01.10
+	public HashMap<String, Object> idCheck(String userId) {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		String result = dao.idCheck(userId);
+		boolean check = result == null? false:true;
+		map.put("result", check);
+		
+		return map;
+	}
+
+
+	public void write(HashMap<String, String> params) {
+		logger.info("회원가입 서비스 요청");
+		
+		MemberDto dto = new MemberDto();
+		dto.setUserId(params.get("userId"));
+		dto.setPassword(params.get("password"));
+		dto.setUsername(params.get("username"));
+		dto.setPhone(params.get("phone"));
+		dto.setEmail(params.get("email"));
+		dto.setZipcode(params.get("zipcode"));
+		dto.setAddress(params.get("address"));
+		dto.setAddress_detail(params.get("address_detail"));
+		dto.setMem_flg(1);
+		dto.setGender(params.get("gender"));
+		
+		logger.info("회원가입 정보 : {}"
+				, params.get("userId")+"/"+params.get("password")+"/"+params.get("username")+"/"+params.get("email")+"/"+params.get("zipcode")+"/"+params.get("address")+"/"+params.get("address_detail")+"/"+params.get("gender"));
+			
+		dao.write(dto);
+		
+	}
+	//회원가입  도연 end 2022.01.12
 
 
 	

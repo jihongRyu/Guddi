@@ -5,16 +5,16 @@
 
 <mapper namespace="com.guddi.shop.dao.MemberDao">
 
-	<select id="idCheck" resultType="String">	
-		select userId from member where userId = #{param1}		
-	</select>
-		
+	<!-- 회원가입 도연 start 2022.01.10 -->
 	<insert id="write" parameterType="com.guddi.shop.dto.MemberDto">
-		INSERT INTO member (userId,password,username,phone,email,zipcode,address,address_detail,mem_flg
-			,birthday,gender,personInfo_flg,marketing_flg)
-			VALUES(#{userId},#{password},#{username},#{phone},#{email},#{zipcode},#{address},#{address_detail},#{mem_flg}
-			,#{birthday},#{gender},1,#{marketing_flg})
+		INSERT INTO member(userId,password,username,phone,email,zipcode,address,address_detail,mem_flg,gender)
+			VALUES(#{userId},#{password},#{username},#{phone},#{email},#{zipcode},#{address},#{address_detail},#{mem_flg},#{gender})
 	</insert>
+	
+	<select id="idCheck" resultType="String">
+		SELECT userId FROM member WHERE userId = #{param1}
+	</select>
+	<!-- 회원가입 도연 end 2022.01.12	 -->
 		
 	<!-- 회원탈퇴 -->
 	<update id="delete" >		
