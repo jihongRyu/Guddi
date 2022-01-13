@@ -378,7 +378,27 @@ public class MemberController {
 					logger.info("session2 실행");
 					session.setAttribute("username", dto.getUsername());
 					logger.info("session3 실행");
+					session.setAttribute("mem_flg", dto.getMem_flg());
+					logger.info("session에서 mem_flg가져오기");
+				}else if(dto.getUserId()!=null&&dto.getMem_flg()==2) {
+					page = "redirect:/";			
+					msg="";
+					/*int cartCnt = service.getCart(params.get("userId"));
+					logger.info("cartCnt 반환");
+					if(cartCnt == 0);{
+						cartCnt = 0;
+						logger.info("if문 실행");
+					}
+					session.setAttribute("cartCnt", cartCnt);
+					logger.info("session1 실행");*/
+					session.setAttribute("userId", dto.getUserId());
+					logger.info("session2 실행");
+					session.setAttribute("username", dto.getUsername());
+					logger.info("session3 실행");
+					session.setAttribute("mem_flg", dto.getMem_flg());
+					logger.info("session에서 mem_flg가져오기");
 				}
+				
 			}catch(Exception e){
 				logger.info("에러 발생");
 			}
@@ -396,7 +416,7 @@ public class MemberController {
 			session.setAttribute("userId", null);
 			session.setAttribute("username", null);
 			session.setAttribute("cartCnt", null);
-			
+			session.setAttribute("mem_flg", null);
 			return "redirect:/";
 		}
 		

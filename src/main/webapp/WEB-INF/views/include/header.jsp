@@ -95,18 +95,18 @@
 		  </c:if>		 
 		
 		  <c:if test="${sessionScope.mem_flg eq 2}">
-			<li class="nav-item"><a href="login" class="nav-link">제품내역</a></li>
-			<li class="nav-item"><a href="login" class="nav-link">Q&A내역</a></li>
-			<li class="nav-item"><a href="login" class="nav-link">리뷰내역</a></li>
-			<li class="nav-item"><a href="login" class="nav-link">주문정보</a></li>
-			<li class="nav-item"><a href="login" class="nav-link">회원목록</a></li>
-			<li class="nav-item"><a href="login" class="nav-link">배너이미지/카테고리관리</a></li>
+			<li class="nav-item"><a href="#" class="nav-link">제품내역</a></li>
+			<li class="nav-item"><a href="#" class="nav-link">Q&A내역</a></li>
+			<li class="nav-item"><a href="#" class="nav-link">리뷰내역</a></li>
+			<li class="nav-item"><a href="#" class="nav-link">주문정보</a></li>
+			<li class="nav-item"><a href="#" class="nav-link">회원목록</a></li>
+			<li class="nav-item"><a href="#" class="nav-link">배너이미지/카테고리관리</a></li>
 		  </c:if>	
           
           <c:if test="${sessionScope.userId ne null && sessionScope.mem_flg ne 2}">	
           <li class="nav-item"><a href="myPage?orderNum=1&reviewNum=1" class="nav-link">마이페이지</a></li>   
           </c:if>
-          <c:if test="${sessionScope.userId ne null && sessionScope.mem_flg ne 2}">	
+          <c:if test="${sessionScope.userId ne null}">	
           <li class="nav-item"><a href="logout" class="nav-link">로그아웃</a></li>   
           </c:if>
           <c:if test="${sessionScope.mem_flg ne 2}">
@@ -138,6 +138,8 @@
 </body>
 
 <script>
+console.log('${sessionScope.mem_flg}');
+
 
 function logout(){	
 	 
@@ -158,7 +160,7 @@ function toQna(userid){
 	if (userid==null) {
 		
 		alert("로그인을 해주세요");
-		location.href = "login";
+		location.href = "toLogin";
 		
 	} else {
 		
