@@ -366,14 +366,16 @@ public class MemberController {
 				}else if(dto.getUserId()!=null&&dto.getMem_flg()==1) {
 					page = "redirect:/";			
 					msg="";
-					/*int cartCnt = service.getCart(params.get("userId"));
+					//용현님 아래 코드 수정하셔야되요~
+					//int cartCnt = service.getCart(params.get("userId"));
+					int cartCnt = 0;
 					logger.info("cartCnt 반환");
 					if(cartCnt == 0);{
 						cartCnt = 0;
 						logger.info("if문 실행");
 					}
 					session.setAttribute("cartCnt", cartCnt);
-					logger.info("session1 실행");*/
+					logger.info("session1 실행");
 					session.setAttribute("userId", dto.getUserId());
 					logger.info("session2 실행");
 					session.setAttribute("username", dto.getUsername());

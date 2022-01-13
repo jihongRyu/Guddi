@@ -2,49 +2,42 @@ package com.guddi.shop.dto;
 
 import java.sql.Date;
 
+
+//각종 카테고리 관련 Dto
 public class EtcDto {
-	//메인 베너 이미지 등록
 	
-	//	idx int(100) auto_increment primary key 게시물 번호
-	// idx int(100) auto_increment primary key 인덱스
-	//u_idx int(100) 회원번호
-	//newFileName varchar(50) 저장명
-	//oriFileName varchar(50) 원본명
-	//use_flg int(2) 사용여부 (0=사용안함 1=사용)
-	//regdate date date default current_date 등록일자
 	
-	private int idx;
-	private int u_idx;
-	private String oriFileName;
-	private String newFileName;
+//	brand_idx int(20) 브랜드번호
+//	use_flg int(3) 사용여부
+//	regdate date default current_date 등록일
+//	brand_name varchar(30) 브랜드명
+//	type_idx int(20) 종류번호
+//	type_name varchar(30) 종류명
+//	brand_code varchar(10) 브랜드 코드 :  제품코드 생성을 위해 필요
+//	type_code varchar(10) 가방 코드 : 제품코드 생성을 위해 필요
+	
+
+	private int brand_idx;
 	private int use_flg;
 	private Date regdate;
+	private String brand_name;
+	private int type_idx;
+	private String type_name;
+	private String answername;
+	private int idx;
+	private String sellname;
+	private String newname;
+	private String brand_code;
+	private String type_code;
+
 	
-	
-	public int getIdx() {
-		return idx;
+	public int getBrand_idx() {
+		return brand_idx;
 	}
-	public void setIdx(int idx) {
-		this.idx = idx;
+	public void setBrand_idx(int brand_idx) {
+		this.brand_idx = brand_idx;
 	}
-	public int getU_idx() {
-		return u_idx;
-	}
-	public void setU_idx(int u_idx) {
-		this.u_idx = u_idx;
-	}
-	public String getOriFileName() {
-		return oriFileName;
-	}
-	public void setOriFileName(String oriFileName) {
-		this.oriFileName = oriFileName;
-	}
-	public String getNewFileName() {
-		return newFileName;
-	}
-	public void setNewFileName(String newFileName) {
-		this.newFileName = newFileName;
-	}
+
 	public int getUse_flg() {
 		return use_flg;
 	}
@@ -57,6 +50,67 @@ public class EtcDto {
 	public void setRegdate(Date regdate) {
 		this.regdate = regdate;
 	}
+
+	public String getBrand_name() {
+		return brand_name;
+	}
+	public void setBrand_name(String brand_name) {
+		this.brand_name = brand_name;
+	}
+	public int getType_idx() {
+		return type_idx;
+	}
+	public void setType_idx(int type_idx) {
+		this.type_idx = type_idx;
+	}
+	public String getType_name() {
+		return type_name;
+	}
+	public void setType_name(String type_name) {
+		this.type_name = type_name;
+	}
+	public String getAnswername() {
+		return answername;
+	}
+	public void setAnswername(String answername) {
+		this.answername = answername;
+	}
+	public int getIdx() {
+		return idx;
+	}
+	public void setIdx(int idx) {
+		this.idx = idx;
+	}
+	public String getSellname() {
+		return sellname;
+	}
+	public void setSellname(String sellname) {
+		this.sellname = sellname;
+	}
+	
+	
+	
+	public String getNewname() {
+		return newname;
+	}
+	public void setNewname(String newname) {
+		this.newname = newname;
+	}
+	public String getBrand_code() {
+		return brand_code;
+	}
+	public void setBrand_code(String brand_code) {
+		this.brand_code = brand_code;
+	}
+	public String getType_code() {
+		return type_code;
+	}
+	public void setType_code(String type_code) {
+		this.type_code = type_code;
+	}
+	
+	
+
 
 	//메인 베너 이미지 등록
 }

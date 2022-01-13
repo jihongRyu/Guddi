@@ -3,6 +3,7 @@ package com.guddi.shop.dao;
 import java.util.ArrayList;
 
 import com.guddi.shop.dto.CartDto;
+import com.guddi.shop.dto.EtcDto;
 import com.guddi.shop.dto.MemberDto;
 import com.guddi.shop.dto.PageDto;
 import com.guddi.shop.dto.ReviewQnaDto;
@@ -55,11 +56,7 @@ public interface MemberDao {
 	void delReview(String idx);	
 	//로그인 관련 end ryujihong 2022.01.10
 
-
 	MemberDto toLogin(MemberDto sdto);
 
 	int getCart(String userId);
-
-	
-
 }

@@ -111,7 +111,7 @@
 		update review set del_flg = 1 where idx = #{param1}
 	</update>
 	
-	<!--  총 갯수 + 검색 적용 -->
+	<!--  Qna 총 갯수 + 검색 적용 -->
 	<select id="qnaSearchCount" parameterType="com.guddi.shop.dto.PageDto" resultType="int">
  	select count(*) from qna
  	where 1=1
