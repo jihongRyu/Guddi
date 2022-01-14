@@ -29,8 +29,15 @@ public class EtcDto {
 	private String newname;
 	private String brand_code;
 	private String type_code;
+	private String newFileName;
 
 	
+	public String getNewFileName() {
+		return newFileName;
+	}
+	public void setNewFileName(String newFileName) {
+		this.newFileName = newFileName;
+	}
 	public int getBrand_idx() {
 		return brand_idx;
 	}

@@ -25,6 +25,20 @@ public class CartDto {
 
 	
 	
+	
+	/*뷰로부터 전달 받을 값 -20220112YSH start */
+	private int bookId;
+	    
+	private int bookCount;
+	
+	//db에서는 product_name , price ,quantity 를 꺼내온다. 
+	//private String totalPrice; >> 만든 값.
+	private int totalPrice_ysh;
+	public void initSaleTotal() {
+		this.totalPrice_ysh = this.totalPrice_ysh*this.bookCount;
+	}
+	/*end*/
+	
 	private String idx;
 	private String userId;
 	private String username;

@@ -6,6 +6,8 @@ import com.guddi.shop.dto.EtcDto;
 
 public interface HomeDao {
 
+	ArrayList<EtcDto> photoList();
+
 	
 
 }

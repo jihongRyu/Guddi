@@ -232,6 +232,13 @@ public class MemberService {
 		// TODO Auto-generated method stub
 		dao.delReview(idx);
 	}
+
+	
+	public ArrayList<CartDto> getCartInfo(String userId) {
+		logger.info("service"+userId);
+		return dao.getCartInfo(userId);
+	}
+	
 	//고객정보수정,탈퇴관련, 마이페이지내 리뷰관련 End ryujihong 2022.01.10
 	
 	//로그인 Start yonghyeon 2022.01.11
@@ -247,12 +254,34 @@ public class MemberService {
 	}
 	//로그인 end yonghyeon 2022.01.11
 	
+	
+	
+	
 	//카트 수 가져오기 Start yonghyeon 2022.01.11
 	public int getCart(String userId) {
 		logger.info("카트수 찾기 실행! 아이디 : {}", userId);
 		return dao.getCart(userId);
 	}
 	//카트 수 가져오기 end yonghyeon 2022.01.11
+
+
+	public int delCart(CartDto dto) {
+		// TODO Auto-generated method stub
+		return dao.delCart(dto);
+	}
+
+//	public void cartupdate(int quantity, String product_code, String userId) {
+//		dao.cartupdate(quantity,product_code,userId);
+//		logger.info("service : "+quantity+product_code+userId);
+//		
+//	}
+
+	public int cartupdate(CartDto dto) {
+		logger.info("service : "+dto);
+		return dao.cartupdate(dto);
+	}
+	
+
 	//회원가입 도연 start 2022.01.10
 	public HashMap<String, Object> idCheck(String userId) {
 		

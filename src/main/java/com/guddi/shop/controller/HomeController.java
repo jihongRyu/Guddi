@@ -1,6 +1,8 @@
 package com.guddi.shop.controller;
 
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -10,7 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.guddi.shop.dto.EtcDto;
 import com.guddi.shop.service.HomeService;
 
 
@@ -25,10 +29,13 @@ public class HomeController {
 
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Model model, HttpSession session) {
+	public String home(Model model, HttpSession session ) {
 
-		logger.info("홈페이지 요청");					
-		
+		logger.info("메인이미지 요청");					
+		ArrayList<EtcDto> photos = service.photoList();
+		logger.info("사진 수 :{}",photos.get(0).getNewFileName());
+		model.addAttribute("photos",photos);
+
 
 		return "index";
 	}
