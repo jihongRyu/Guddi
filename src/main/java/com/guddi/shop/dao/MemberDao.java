@@ -74,5 +74,7 @@ public interface MemberDao {
 	String idCheck(String param);
 	//회원가입 end 2022.01.12
 
+	ArrayList<CartDto> getTotalPrice(String userId);
+
 
 }

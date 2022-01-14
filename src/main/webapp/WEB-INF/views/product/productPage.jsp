@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+
 <html>
 <head>
 <meta charset="UTF-8">
@@ -88,7 +89,11 @@
 						<h3><a href="prudoutDtail?idx=${list.idx}">${list.product_name}</a></h3>
 						<div class="d-flex">
 							<div class="pricing">
-	    						<p class="price"><span class="mr-2 price-dc">${list.price}원</span></p>
+	    						<p class="price">
+	    							<span class="price-sale">₩ 
+	    								<fmt:formatNumber type="number" maxFractionDigits="3" value="${list.price}" />
+									</span>
+								</p>
 	    					</div>
     					</div>
     					<div class="bottom-area d-flex px-3">

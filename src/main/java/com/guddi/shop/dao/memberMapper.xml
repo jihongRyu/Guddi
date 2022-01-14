@@ -216,8 +216,10 @@
 		WHERE product_code = #{product_code} and userId=#{userId}
 	</update>
 	
-	
-	
+	<select id="getTotalPrice" resultType="com.guddi.shop.dto.CartDto">
+		select price, quantity from tb_order where userId = #{param1}
+	</select>
+
 	
 
 	

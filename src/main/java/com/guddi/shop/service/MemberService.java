@@ -318,6 +318,11 @@ public class MemberService {
 	}
 	//회원가입  도연 end 2022.01.12
 
+	public  ArrayList<CartDto> getTotalPrice(String userId) {
+		// TODO Auto-generated method stub
+		return dao.getTotalPrice(userId);
+	}
+
 
 	
 	
