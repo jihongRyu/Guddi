@@ -226,7 +226,7 @@
 	function changeListByBrand(brand_idx){	
 			
 		var brand_type = brand_idx;
-		var bag_type = ${bag_type}; 
+		var bag_type = "${bag_type}"; 
 		var keyword = $('#keyword').val();	
 		
 		location.href = "productMain?num=1&bag_type=" + bag_type + "&brand_type=" + brand_type + 
@@ -237,7 +237,7 @@
 	function changeListByBag(type_idx){	
 		
 		var bag_type = type_idx;
-		var brand_type = ${brand_type};
+		var brand_type = "${brand_type}";
 		var keyword = $('#keyword').val();	
 		
 		location.href = "productMain?num=1&bag_type=" + bag_type + "&brand_type=" + brand_type + 
@@ -248,8 +248,8 @@
 
 	function changeListByProductName(){
 		
-		var bag_type = ${bag_type}; 
-		var brand_type = ${brand_type};
+		var bag_type = "${bag_type}"; 
+		var brand_type = "${brand_type}";
 		var keyword = $('#keyword').val();	
 		
 		location.href = "productMain?num=1&bag_type=" + bag_type + "&brand_type=" + brand_type + 

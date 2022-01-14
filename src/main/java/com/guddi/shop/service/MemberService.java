@@ -44,7 +44,7 @@ public class MemberService {
 		dto.setPostNum(postNum);
 		dto.setDisplayPost(displayPost);
 		dto.setKeyword(keyword);
-					
+		logger.info("displayPost : {}", displayPost);	
 		logger.info("postNum : {}", postNum);
 		return dao.qnaInfo(dto);		
 	}

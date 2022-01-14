@@ -48,7 +48,7 @@ public class MemberController {
 		
 		//문의타입 한글화
 		ArrayList<ReviewQnaDto> getQnaTypeInfo = service.getQnaType();
-				
+		
 		//숫자를 글자로 변경. ex) 1--->상품
 		for (int i = 0; i < qnaList.size(); i++) {
 			int type = Integer.parseInt(qnaList.get(i).getAnswer_type());
