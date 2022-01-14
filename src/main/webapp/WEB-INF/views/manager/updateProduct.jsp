@@ -243,12 +243,12 @@ function check_input() {
         alert("신상품 여부를 선택하세요!");
         // 화면 커서 이동
         return;
-    }  sell_flg
+    }  
     if (document.updateForm.sell_flg.value==''){
         alert("판매 여부를 선택하세요!");
         // 화면 커서 이동
         return;
-    }  sell_flg
+    } 
   
     if (!document.updateForm.product_code.value){
         alert("상품코드를 만들어주세요!");

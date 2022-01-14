@@ -48,7 +48,7 @@ public class MemberController {
 		
 		//문의타입 한글화
 		ArrayList<ReviewQnaDto> getQnaTypeInfo = service.getQnaType();
-				
+		
 		//숫자를 글자로 변경. ex) 1--->상품
 		for (int i = 0; i < qnaList.size(); i++) {
 			int type = Integer.parseInt(qnaList.get(i).getAnswer_type());
@@ -229,9 +229,10 @@ public class MemberController {
 			
 			//총가격 계산
 			int totalPrice = 0;
-			for (int i = 0; i < orderList.size(); i++) {			
-				int price = Integer.parseInt(orderList.get(i).getPrice());
-				int quantity = orderList.get(i).getQuantity();			
+			ArrayList<CartDto> getTotalPrice = service.getTotalPrice(userId);
+			for (int i = 0; i < getTotalPrice.size(); i++) {			
+				int price = Integer.parseInt(getTotalPrice.get(i).getPrice());
+				int quantity = getTotalPrice.get(i).getQuantity();			
 				totalPrice += price*quantity;
 			}				
 			

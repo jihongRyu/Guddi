@@ -81,5 +81,26 @@
 	</update>
 	<!-- 관리자 제품 정보 수정 관련 Ryujihong 2022.01.12 End -->
 	
+	<!--관리자페이지 제품등록 Start ryujihong 2022.01.14 -->
+	<select id="getU_idx" resultType="int">
+		select idx from member where userId = #{userId}
+	</select>
+	
+	<insert id="doRegistProduct" 
+		useGeneratedKeys="true"
+		keyProperty="idx"
+		keyColumn="idx"
+		parameterType="com.guddi.shop.dto.ProductDto">
+		
+		insert into product (brand_name, bag_type, product_name, product_code, product_content, price, new_flg, sell_flg, brand_idx, del_flg, u_idx) 
+		values (#{brand_name}, #{bag_type}, #{product_name}, #{product_code}, #{product_content}, #{price}, #{new_flg}, #{sell_flg}, #{brand_idx}, 0, #{u_idx})
+	</insert>
+	
+	<insert id="doRegistPhoto" parameterType="com.guddi.shop.dto.ProductDto">
+		insert into product_photo (newFileName, oriFileName , b_idx, photo_num, u_idx) 
+		values (#{newFileName}, #{oriFileName}, #{b_idx}, #{photo_num}, #{u_idx})
+	</insert>
+	<!-- 관리자페이지 제품등록 End ryujihong 2022.01.14 -->
+	
 
 </mapper>

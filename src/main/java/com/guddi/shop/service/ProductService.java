@@ -20,29 +20,31 @@ public class ProductService {
 	@Autowired ProductDao dao;
 		
 	//2022.01.13 유지홍 제품 리스트 관련 소스 Start
-	public int searchCount(String searchType, String keyword, int type) {
+	public int searchCount(int brand_idx, String bag_name, String keyword) {
 		// TODO Auto-generated method stub
 		
 		PageDto dto = new PageDto();
 		  
-		dto.setType(type);
+		dto.setBrand_type(brand_idx);
 		dto.setKeyword(keyword);
-		dto.setSearchType(searchType);	
+		dto.setBag_name(bag_name);
 		
 		return dao.searchCount(dto);
 	}
 
-	public ArrayList<ProductDto> listPageSearch(int displayPost, int postNum, String searchType, String keyword, int type) {
+	public ArrayList<ProductDto> listPageSearch(int displayPost, int postNum, 
+			String keyword, int brand_idx, String bag_name) {
 		// TODO Auto-generated method stub
 		
 		PageDto dto = new PageDto();
 		
-		dto.setType(type);
-		logger.info("type : {}", dto.getType());
+		dto.setBag_name(bag_name);
+		dto.setBrand_type(brand_idx);
+		logger.info("displayPost : {}", displayPost);
+		logger.info("postNum : {}", postNum);
 		dto.setPostNum(postNum);
 		dto.setDisplayPost(displayPost);
-		dto.setKeyword(keyword);
-		dto.setSearchType(searchType);				
+		dto.setKeyword(keyword);		
 		
 		return dao.listPageSearch(dto);
 	}

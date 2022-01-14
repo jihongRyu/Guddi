@@ -154,7 +154,7 @@ function delReview(idx) {
 		location.href='delReview?idx='+idx;
 	}
 	
-}
+};
 
 
 function changeQnAListByFlg(answer_flg){	
@@ -163,7 +163,7 @@ function changeQnAListByFlg(answer_flg){
 	
 	location.href="qnaPage?qnaNum=1&answer_flg="+answer_flg+"#qnaList";
 	
-}
+};
 
 
 function changeQnAListById(){
@@ -173,7 +173,7 @@ function changeQnAListById(){
 	
 	location.href="qnaPage?qnaNum=1&answer_flg="+answer_flg+"&keyword="+keyword+"#qnaList";	
 	
-}
+};
 
 function registQna(){	
 	
@@ -184,7 +184,7 @@ function registQna(){
 	}
 	
 	
-}
+};
 
 
 

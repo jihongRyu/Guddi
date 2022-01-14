@@ -31,6 +31,7 @@ public class HomeController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model, HttpSession session ) {
+
 		logger.info("메인이미지 요청");
 		
 		ArrayList<ProductDto> dto = service.rankList();
@@ -42,6 +43,7 @@ public class HomeController {
 		model.addAttribute("photos",photos);
 		
 		
+
 
 		
 		return "index";
