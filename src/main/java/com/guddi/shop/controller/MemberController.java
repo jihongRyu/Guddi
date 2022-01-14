@@ -386,14 +386,6 @@ public class MemberController {
 				}else if(dto.getUserId()!=null&&dto.getMem_flg()==2) {
 					page = "redirect:/";			
 					msg="";
-					/*int cartCnt = service.getCart(params.get("userId"));
-					logger.info("cartCnt 반환");
-					if(cartCnt == 0);{
-						cartCnt = 0;
-						logger.info("if문 실행");
-					}
-					session.setAttribute("cartCnt", cartCnt);
-					logger.info("session1 실행");*/
 					session.setAttribute("userId", dto.getUserId());
 					logger.info("session2 실행");
 					session.setAttribute("username", dto.getUsername());

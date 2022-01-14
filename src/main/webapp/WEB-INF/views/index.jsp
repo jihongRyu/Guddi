@@ -14,6 +14,11 @@
 #newreleases{
 	font-size:35;
 }
+.mb-0{
+	font-size:20;
+	text-align:center;
+	font-weight: bold;
+}
 
 </style>
 
@@ -109,69 +114,25 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div class="row">
+					<c:forEach items="${rankList}" var="list">
 						<div class="col-md-3">
-							<div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url(resources/photo/bag_01.jpg);">
+						<div class="product">
+							<a href="detail?idx=${list.idx}" class="img-prod"><img class="img-fluid" src="resources/photo/${list.newFileName}" alt="Colorlib Template"></a>
 								<div class="text px-3 py-1">
 									<h2 class="mb-0"><a href="javascript:void(0);">신상품</a></h2>
 								</div>
+								<div class="overlay"></div>
 							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url(resources/photo/bag_01.jpg);">
-								<div class="text px-3 py-1">
-									<h2 class="mb-0"><a href="javascript:void(0);">신상품</a></h2>
-								</div>
 							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url(resources/photo/bag_01.jpg);">
-								<div class="text px-3 py-1">
-									<h2 class="mb-0"><a href="javascript:void(0);">신상품</a></h2>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url(resources/photo/bag_01.jpg);">
-								<div class="text px-3 py-1">
-									<h2 class="mb-0"><a href="javascript:void(0);">신상품</a></h2>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-3">
-							<div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url(resources/photo/bag_01.jpg);">
-								<div class="text px-3 py-1">
-									<h2 class="mb-0"><a href="javascript:void(0);">신상품</a></h2>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url(resources/photo/bag_01.jpg);">
-								<div class="text px-3 py-1">
-									<h2 class="mb-0"><a href="javascript:void(0);">신상품</a></h2>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url(resources/photo/bag_01.jpg);">
-								<div class="text px-3 py-1">
-									<h2 class="mb-0"><a href="javascript:void(0);">신상품</a></h2>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="category-wrap ftco-animate img mb-4 d-flex align-items-end" style="background-image: url(resources/photo/bag_01.jpg);">
-								<div class="text px-3 py-1">
-									<h2 class="mb-0"><a href="javascript:void(0);">신상품</a></h2>
-								</div>
-							</div>
+					</c:forEach>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		
 	</section>
+	
+	
 
 
 
