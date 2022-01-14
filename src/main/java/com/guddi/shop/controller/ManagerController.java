@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.guddi.shop.dto.EtcDto;
 import com.guddi.shop.dto.PageDto;
@@ -160,6 +161,40 @@ public class ManagerController {
 	}
 	
 	//관리자페이지 제품  정보 수정 관련 End ryujihong 2022.01.13
+	//2022.01.14 유지홍 제품 등록 관련 소스 Start
+	@RequestMapping(value = "/doRegistProduct", method = RequestMethod.POST)
+	public String doRegistProduct(Model model, @RequestParam HashMap<String, String> params
+			,@RequestParam MultipartFile[] files, HttpSession session) {
+		
+		getCategory(session);
+		ArrayList<EtcDto> brandtypeInfo = (ArrayList<EtcDto>) session.getAttribute("brandcategory");
+		ArrayList<EtcDto> bagtypeInfo = (ArrayList<EtcDto>) session.getAttribute("bagtype");
+		String userId = (String) session.getAttribute("userId");
+		int brand_idx = Integer.parseInt(params.get("brand_type"));
+		int bag_type = Integer.parseInt(params.get("bag_type"));
+		String brand_name = null;
+		String bag_name = null;
+		
+		
+			for (int i = 0; i < brandtypeInfo.size(); i++) {
+				if (brandtypeInfo.get(i).getBrand_idx()==brand_idx) {
+					brand_name = brandtypeInfo.get(i).getBrand_name();
+				}
+			}				
+			for (int i = 0; i < bagtypeInfo.size(); i++) {
+				if (bagtypeInfo.get(i).getType_idx()==bag_type) {
+					bag_name = bagtypeInfo.get(i).getType_name();
+				}
+			}		
+		
+		int idx = service.doRegistProduct(params, files, userId, brand_name, bag_name);		
+	
+		return "redirect:/productMain?num=1&brand_idx=0";
+	}
+	
+	
+	
+	//2022.01.14 유지홍 제품 등록 관련 소스 End
 	//각종  카테고리 정보를 가져오는 메서드 Start ryujihong 2022.01.12
 	public void getCategory(HttpSession session){
 		

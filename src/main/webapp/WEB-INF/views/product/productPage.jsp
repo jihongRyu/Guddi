@@ -112,18 +112,21 @@
 			<div class="block-27">
 			   <ul>
 			      <c:if test="${page.prev}">
-			      <li><a href="productPageList?num=${page.startPageNum - 1}&brand_idx=${brand_idx}">&lt;</a></li>
+			      <li><a href="productPage?num=${page.endPageNum - 1}&bag_type=${bag_type}
+			      &brand_idx=${brand_idx}&keyword=${keyword}">&lt;</a></li>
 			      </c:if>
 			      <c:forEach begin="${page.startPageNum}" end="${page.endPageNum}" var="num">
 			      <c:if test="${select == num}">
 			      <li class="active"><span>${num}</span></li>
 			      </c:if>
 			      <c:if test="${select != num}">
-			      <li><a href="productPageList?num=${num}&brand_idx=${brand_idx}">${num}</a></li>			     
+			      <li><a href="productPage?num=${num}&bag_type=${bag_type}
+			      &brand_idx=${brand_idx}&keyword=${keyword}">${num}</a></li>			     
 			      </c:if>    		
 			      </c:forEach>
 			      <c:if test="${page.next}">
-			      <li><a href="productPageList?num=${page.endPageNum + 1}&brand_idx=${brand_idx}">&gt;</a></li>
+			      <li><a href="productPage?num=${page.endPageNum + 1}&bag_type=${bag_type}
+			      &brand_idx=${brand_idx}&keyword=${keyword}">&gt;</a></li>
 			      </c:if>
 			   </ul>
 			 </div>
