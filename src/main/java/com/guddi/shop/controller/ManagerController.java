@@ -1,8 +1,14 @@
 package com.guddi.shop.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -10,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,6 +34,7 @@ public class ManagerController {
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired ManagerService service;
+	@Autowired ServletContext servletContext;
 	
 	//관리자페이지 제품 리스트, 수정 관련 Start ryujihong 2022.01.12
 	@RequestMapping(value = "/productMain", method = RequestMethod.GET)
@@ -112,6 +120,7 @@ public class ManagerController {
 		ArrayList<ProductDto> imageDto = service.productImageInfo(idx);		
 		
 		model.addAttribute("imageDto", imageDto);
+		model.addAttribute("idx", idx);
 		
 		return "manager/updateProductImage";
 	}
@@ -143,11 +152,11 @@ public class ManagerController {
 		logger.info("addimage 요청");		
 		
 		return "manager/addImage";
-	}
-	
+	}	
 	
 	//관리자페이지 제품 리스트, 수정 관련 End ryujihong 2022.01.12
-	//관리자페이지 제품  정보 수정 관련 Start ryujihong 2022.01.13
+	
+	//관리자페이지 제품  정보 수정 관련 Start ryujihong 2022.01.14
 	@RequestMapping(value = "/doUpdateProduct", method = RequestMethod.POST)
 	public String doUpdateProduct(Model model,  @RequestParam HashMap<String, String> params, HttpSession session) {	
 		logger.info("doUpdateProduct 요청");		
@@ -157,10 +166,78 @@ public class ManagerController {
 		int u_idx =(int) session.getAttribute("u_idx");
 		service.doUpdateProduct(params, session, brandtypeInfo, bagtypeInfo, u_idx);
 		
-		return "redirect:/productMain?num=1";
+		
+		return "redirect:/productMain?num=1&brand_idx=0";
 	}
 	
-	//관리자페이지 제품  정보 수정 관련 End ryujihong 2022.01.13
+	//이미지 삭제처리
+	@RequestMapping(value = "/delImage", method = RequestMethod.GET)
+	public String delImage(Model model,  @RequestParam int photoNum, @RequestParam int idx, @RequestParam String newFileName) {	
+		logger.info("delImage 요청");	
+		//Db에서 이미지정보삭제처리
+		int result = service.delImage(photoNum, idx);
+		
+		//실제 저장된 이미지 삭제처리
+		if (result>0) {			
+			String realPath = servletContext.getRealPath("/resources/photo");
+			
+			try {				
+				Path path = Paths.get(realPath +"/"+ newFileName);
+				logger.info("실제 경로 : {}",path);
+				Files.delete(path);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
+			
+			//photo_num재설정
+			ArrayList<ProductDto> dto = service.productImageInfo(idx);
+			for (int i = 0; i < dto.size(); i++) {
+				int newPhotoNum = i+1;
+				int oriPhotoNum = dto.get(i).getPhoto_num();
+				service.updatePhotoNum(newPhotoNum,oriPhotoNum) ;				
+			}
+		}		
+		return "redirect:/updateProductImage?idx="+idx;
+	}
+		
+	@RequestMapping(value = "/doAddImage", method = RequestMethod.POST)
+	@ResponseBody
+	public HashMap<String, Object> doAddImage(Model model, @RequestParam int idx, 
+			@RequestParam MultipartFile file, HttpSession session) {	
+		logger.info("doAddImage 요청");	
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		String userId = (String) session.getAttribute("userId");
+		int result = service.doAddImage(idx, file, userId);
+		
+		map.put("result", result);
+		
+		return map;
+		
+	}	
+	
+	@RequestMapping(value = "/updateImageOrder")
+	@ResponseBody
+	public HashMap<String, Object>  updateImageOrder(HttpServletRequest request) {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+	        
+	    String[] newOrder = request.getParameterValues("newOrder");
+	    String[] newFileName = request.getParameterValues("newFileName");
+	    
+	    int result = service.updateImageOrder(newOrder,newFileName);
+	    if (result>0) {
+	    	String resultMsg = "순서변경 성공!";
+	  	    map.put("result", resultMsg);
+	  	    System.out.println("Controller에서 보낸 MSG : "+ resultMsg);
+		}	  
+	        
+	    return map;
+	}
+	
+	//관리자페이지 제품  정보 수정 관련 End ryujihong 2022.01.14
+	
 	//2022.01.14 유지홍 제품 등록 관련 소스 Start
 	@RequestMapping(value = "/doRegistProduct", method = RequestMethod.POST)
 	public String doRegistProduct(Model model, @RequestParam HashMap<String, String> params
@@ -191,8 +268,6 @@ public class ManagerController {
 	
 		return "redirect:/productMain?num=1&brand_idx=0";
 	}
-	
-	
 	
 	//2022.01.14 유지홍 제품 등록 관련 소스 End
 	//각종  카테고리 정보를 가져오는 메서드 Start ryujihong 2022.01.12

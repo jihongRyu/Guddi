@@ -106,7 +106,7 @@
 			        	<th>${list.bag_type}</th>
 			        	<th>${list.product_name}</th>
 			        	<th>${list.product_code}</th>
-			        	<th>${list.price}</th>
+			        	<th>₩<fmt:formatNumber type="number" maxFractionDigits="3" value="${list.price}" /></th>
 						<c:forEach items="${sessionScope.newflg}" var="newFlgList">
 							<c:if test="${newFlgList.idx eq list.new_flg}"><th>${newFlgList.newname}</th></c:if>						
 						</c:forEach>

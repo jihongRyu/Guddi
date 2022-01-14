@@ -150,6 +150,65 @@ public class ManagerService {
 		dao.doUpdateProduct(dto);
 		
 	}
+	
+	public int delImage(int photoNum, int idx) {
+		// TODO Auto-generated method stub
+		return dao.delImage(photoNum, idx);
+	}
+	
+
+	public int doAddImage(int idx, MultipartFile file, String userId) {
+		// TODO Auto-generated method stub
+		
+		//U_idx 추출
+		int u_idx = dao.getU_idx(userId);
+		//photo_num가져오기
+		int photo_num = dao.getPhoto_num(idx);
+		int result =0;
+		//저장 경로
+		String realPath = servletContext.getRealPath("/resources/photo");
+				
+		String oriFileName = file.getOriginalFilename();
+		if (oriFileName.lastIndexOf(".")>0) {
+			String ext = oriFileName.substring(oriFileName.lastIndexOf("."));
+			String newFileName = System.currentTimeMillis() + ext;
+			logger.info(oriFileName +" >>>> "+ newFileName);
+			try {
+				Thread.sleep(1);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+					
+			ProductDto pdto = new ProductDto();
+			
+			pdto.setNewFileName(newFileName);
+			pdto.setOriFileName(oriFileName);
+			pdto.setB_idx(idx);
+			pdto.setU_idx(u_idx);
+			pdto.setPhoto_num(photo_num+1);		
+			
+			//이미지 DB에 등록
+			result = dao.doRegistPhoto(pdto);
+						
+			if (result>0) {
+				
+				try {
+					byte[] bytes = file.getBytes();
+					Path path = Paths.get(realPath +"/"+ newFileName);
+					Files.write(path, bytes);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}					
+			}	
+		}
+		
+		return result;
+		
+	}
+
+	
 	//관리자페이지 제품 리스트, 수정 관련 End ryujihong 2022.01.13
 	
 	//관리자페이지 제품등록 Start ryujihong 2022.01.14
@@ -230,4 +289,23 @@ public class ManagerService {
 	}
 	//관리자페이지 제품등록 End ryujihong 2022.01.14
 
+	public void updatePhotoNum(int newPhotoNum, int oriPhotoNum) {
+		// TODO Auto-generated method stub
+		dao.updatePhotoNum(newPhotoNum, oriPhotoNum);
+		
+	}
+
+	public int updateImageOrder(String[] newOrder, String[] newFileName) {
+		// TODO Auto-generated method stub
+	
+		int success = 0;
+		for (int i = 0; i < newOrder.length; i++) {
+			dao.updateImageOrder(Integer.parseInt(newOrder[i]), newFileName[i]);
+			success++;
+		}
+		
+		return success;
+	}
+
+	
 }

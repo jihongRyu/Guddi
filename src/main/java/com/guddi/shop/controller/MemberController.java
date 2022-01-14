@@ -368,8 +368,8 @@ public class MemberController {
 					page = "redirect:/";			
 					msg="";
 					//용현님 아래 코드 수정하셔야되요~
-					//int cartCnt = service.getCart(params.get("userId"));
-					int cartCnt = 0;
+					int cartCnt = service.getCart(params.get("userId"));
+					//int cartCnt = 0;
 					logger.info("cartCnt 반환");
 					if(cartCnt == 0);{
 						cartCnt = 0;

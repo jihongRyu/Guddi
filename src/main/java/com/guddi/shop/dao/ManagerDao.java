@@ -31,13 +31,24 @@ public interface ManagerDao {
 	ArrayList<ProductDto> productList(PageDto dto);
 
 	void doUpdateProduct(ProductDto dto);
+
+	int delImage(int photoNum, int idx);
 	//관리자페이지 제품리스트, 제품정보 수정 관련  End ryujihong 2022.01.13
 	
 	//관리자페이지 제품등록 Start ryujihong 2022.01.14
 	void doRegistProduct(ProductDto dto);	
 
 	int getU_idx(String userId);
+	
+	int getPhoto_num(int idx);
 
 	int doRegistPhoto(ProductDto pdto);
 	//관리자페이지 제품등록 End ryujihong 2022.01.14
+
+	void updatePhotoNum(int newPhotoNum, int oriPhotoNum);
+
+	void updateImageOrder(int newOrder, String newFileName);
+
+
+
 }
