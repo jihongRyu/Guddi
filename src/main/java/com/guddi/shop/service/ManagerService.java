@@ -309,11 +309,31 @@ public class ManagerService {
 	}
 	//관리자페이지 제품 리스트, 수정 관련 End ryujihong 2022.01.14
 	
-	//2022.01.15 유지홍 제품 삭제 관련 소스 Start
+	//2022.01.15 유지홍 제품 삭제, 관리자 Qna 관련 소스 Start
 	public int delProductInfo(String idx) {
 		// TODO Auto-generated method stub
 		return dao.delProductInfo(idx);
 	}
 
-	//2022.01.15 유지홍 제품 삭제 관련 소스 End
+	public int registQnaAnswer(int idx, String answer, String userId) {
+		// TODO Auto-generated method stub
+		return dao.registQnaAnswer(idx, answer, userId);
+	}
+
+	public void updateAnswerFlg(int idx) {
+		// TODO Auto-generated method stub
+		dao.updateAnswerFlg(idx);
+	}
+
+	public void doUpdateAnswer(String content, String userId,int q_idx) {
+		// TODO Auto-generated method stub
+		dao.doUpdateAnswer(content, userId, q_idx);
+	}
+
+	public void doDelAnswer(String userId, int a_idx) {
+		// TODO Auto-generated method stub
+		dao.doDelAnswer(userId, a_idx);
+	}
+
+	//2022.01.15 유지홍 제품 삭제, 관리자 Qna 관련 소스 End
 }

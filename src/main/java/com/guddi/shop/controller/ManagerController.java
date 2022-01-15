@@ -28,12 +28,14 @@ import com.guddi.shop.dto.PageDto;
 import com.guddi.shop.dto.ProductDto;
 import com.guddi.shop.dto.ReviewQnaDto;
 import com.guddi.shop.service.ManagerService;
+import com.guddi.shop.service.MemberService;
 
 @Controller
 public class ManagerController {	
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired ManagerService service;
+	@Autowired MemberService memService;
 	@Autowired ServletContext servletContext;
 	
 	//관리자페이지 제품 리스트, 수정 관련 Start ryujihong 2022.01.12
@@ -188,7 +190,7 @@ public class ManagerController {
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}	
+			}
 			
 			//photo_num재설정
 			ArrayList<ProductDto> dto = service.productImageInfo(idx);
@@ -305,6 +307,106 @@ public class ManagerController {
 	}
 	
 	//2022.01.15 유지홍 제품 삭제 관련 소스 End
+	
+	
+	//2022.01.15 유지홍 관리자 Qna관련 소스 Start
+	@RequestMapping(value = "/doAnswer", method = RequestMethod.POST)
+	public String doAnswer(Model model,  @RequestParam HashMap<String, String> params, HttpSession session) {	
+		logger.info("doAnswer 요청");		
+
+		int idx = Integer.parseInt(params.get("idx"));
+		String answer = params.get("answer");
+		String userId = (String) session.getAttribute("userId");
+		
+		int success = service.registQnaAnswer(idx, answer, userId);
+		
+		if (success>0) {
+			service.updateAnswerFlg(idx);			
+		}
+		
+		return "redirect:/qnaDetail?idx="+idx;
+	}
+	
+	@RequestMapping(value = "/updateAnswer", method = RequestMethod.GET)
+	public String updateAnswer(Model model,  @RequestParam String a_idx, @RequestParam String q_idx) {	
+		
+		logger.info("updateAnswer 요청");		
+		logger.info("a_idx : {}",a_idx);
+		logger.info("q_idx : {}",q_idx);
+		
+		ReviewQnaDto dto = memService.getQnaDetail(q_idx);
+		ReviewQnaDto aDto = memService.getQnaAnswerDetail(q_idx);
+		
+		logger.info("aDto.getContent() :{}", aDto.getContent());
+		
+		//문의타입 한글화
+		ArrayList<ReviewQnaDto> getQnaTypeInfo = memService.getQnaType();
+		
+		//숫자를 글자로 변경. ex) 1--->상품
+		int type = Integer.parseInt(dto.getAnswer_type());
+		for (int i = 0; i < getQnaTypeInfo.size(); i++) {
+			if (getQnaTypeInfo.get(i).getIdx()==type) {
+				dto.setAnswer_type(getQnaTypeInfo.get(i).getTypename());
+			}
+		}		
+		model.addAttribute("dto", dto);
+		model.addAttribute("qDto", aDto);
+		model.addAttribute("a_idx", a_idx);
+		model.addAttribute("q_idx", q_idx);		
+		
+		return "manager/updateAnswer";		
+
+		
+	}
+	
+	@RequestMapping(value = "/doUpdateAnswer", method = RequestMethod.POST)
+	public String doUpdateAnswer(Model model,  @RequestParam HashMap<String, String> params, HttpSession session) {	
+		logger.info("doAnswer 요청");		
+
+		int idx = Integer.parseInt(params.get("idx"));
+		int q_idx = Integer.parseInt(params.get("q_idx"));
+		String content = params.get("content");
+		String userId = (String) session.getAttribute("userId");
+		
+		logger.info("idx 요청 :{}",idx);		
+		logger.info("q_idx 요청 :{}",q_idx);		
+		logger.info("content 요청 :{}",content);		
+		logger.info("userId 요청 :{}",userId);	
+		
+		service.doUpdateAnswer(content, userId, idx);
+		
+		
+		return "redirect:/qnaDetail?idx="+idx;
+	}
+	
+	@RequestMapping(value = "/doDelAnswer", method = RequestMethod.GET)
+	public String doDelAnswer(Model model, @RequestParam String q_idx, @RequestParam String a_idx, HttpSession session) {	
+		logger.info("doDelAnswer 요청");		
+
+
+		String userId = (String) session.getAttribute("userId");
+	
+		logger.info("q_idx 요청 :{}",q_idx);		
+		logger.info("userId 요청 :{}",userId);	
+		
+		service.doDelAnswer(userId, Integer.parseInt(a_idx));
+		
+		
+		return "redirect:/qnaDetail?idx="+q_idx;
+	}
+	
+	//2022.01.15 유지홍 관리자 Qna관련 소스 End
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	//각종  카테고리 정보를 가져오는 메서드 Start ryujihong 2022.01.12
 	public void getCategory(HttpSession session){

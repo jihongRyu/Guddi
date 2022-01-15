@@ -50,11 +50,24 @@ public interface ManagerDao {
 	void updateImageOrder(int newOrder, String newFileName);
 	//관리자페이지 제품리스트, 제품정보 수정 관련  End ryujihong 2022.01.14
 	
-	//2022.01.15 유지홍 제품 삭제 관련 소스 Start
+	//2022.01.15 유지홍 제품 삭제,관리자 Qna 관련 소스 Start
 	int delProductInfo(String idx);
 	
+	int registQnaAnswer(int idx, String answer, String userId);
 	
-	//2022.01.15 유지홍 제품 삭제 관련 소스 End
+	void updateAnswerFlg(int idx);
+
+	void doUpdateAnswer(String content, String userId, int q_idx);
+
+	void doDelAnswer(String userId, int a_idx);
+	
+	
+	//2022.01.15 유지홍 제품 삭제, 관리자 Qna 관련 소스 End
+
+	
+	
+	
+	
 
 
 }

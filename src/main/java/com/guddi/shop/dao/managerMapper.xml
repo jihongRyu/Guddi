@@ -118,12 +118,27 @@
 		update product_photo set photo_num = #{param1} where photo_num = #{param2}
 	</update>
 	<!-- 관리자페이지 제품등록 End ryujihong 2022.01.14 -->
-	<!-- 2022.01.15 유지홍 제품 삭제 관련 소스 Start ryujihong 2022.01.14 -->
+	<!-- 2022.01.15 유지홍 제품 삭제, 관리자 Qna 관련 소스 Start ryujihong 2022.01.14 -->
 	<delete id="delProductInfo" >
 		delete from product where idx = #{idx}
 	</delete>
 	
-	<!-- 2022.01.15 유지홍 제품 삭제 관련 소스 Start ryujihong 2022.01.14 -->
+	<insert id="registQnaAnswer">
+		insert into qna_answer (q_idx, content, userId, del_flg) values(#{param1},#{param2},#{param3}, 0);
+	</insert>
 	
+	<update id="updateAnswerFlg">
+		update qna set answer_flg = 1 where idx = #{idx}
+	</update>
+	
+	<update id="doUpdateAnswer">
+		update qna_answer set content = #{param1}, userId = #{param2} where q_idx = #{param3}
+	</update>
+	
+	<update id="doDelAnswer">
+		update qna_answer set del_flg = 1, userId = #{param1} where idx = #{param2}
+	</update>
+	
+	<!-- 2022.01.15 유지홍 제품 삭제, 관리자 Qna 관련 소스 End ryujihong 2022.01.14 -->
 
 </mapper>

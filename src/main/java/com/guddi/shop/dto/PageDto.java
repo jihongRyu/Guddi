@@ -11,6 +11,9 @@ public class PageDto {
 	//답변여부
 	private int answer_flg;
 	
+	//문의타입
+	private int qnaType;
+	
 	//가방 타입
 	private int bag_type;
 	
@@ -223,6 +226,14 @@ public class PageDto {
 
 	public void setBrand_name(String brand_name) {
 		this.brand_name = brand_name;
+	}
+
+	public int getQnaType() {
+		return qnaType;
+	}
+
+	public void setQnaType(int qnaType) {
+		this.qnaType = qnaType;
 	}
 
 

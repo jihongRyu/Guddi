@@ -100,12 +100,11 @@
 		  <c:if test="${sessionScope.mem_flg eq 2}">
 
 			<li class="nav-item"><a href="productMain?num=1&brand_idx=0" class="nav-link">제품내역</a></li>
-			<li class="nav-item"><a href="login" class="nav-link">Q&A내역</a></li>
+			<li class="nav-item"><a href="qnaPage?qnaNum=1&answer_flg=2&qnaType=0" class="nav-link">Q&A내역</a></li>
 			<li class="nav-item"><a href="login" class="nav-link">리뷰내역</a></li>
 			<li class="nav-item"><a href="login" class="nav-link">주문정보</a></li>
 			<li class="nav-item"><a href="login" class="nav-link">회원목록</a></li>
 			<li class="nav-item"><a href="login" class="nav-link">배너이미지/카테고리관리</a></li>
-
 
 		  </c:if>	
           
@@ -166,7 +165,7 @@ function toQna(userid){
 		
 	} else {
 		
-		location.href = "qnaPage?qnaNum=1&answer_flg=2";
+		location.href = "qnaPage?qnaNum=1&answer_flg=2&qnaType=0";
 	}
 	
 	

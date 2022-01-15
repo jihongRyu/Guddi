@@ -31,8 +31,8 @@ public class MemberController {
 	
 	//Q&A Start ryujihong 2022.01.10
 	@RequestMapping(value = "/qnaPage", method = RequestMethod.GET)
-	public String qnaPage(Model model, @RequestParam("qnaNum") int qnaNum, @RequestParam("answer_flg") int answer_flg, 
-			@RequestParam(value = "keyword",required = false, defaultValue = "")String keyword ) {		
+	public String qnaPage(Model model, @RequestParam("qnaNum") int qnaNum, @RequestParam("answer_flg") int answer_flg,
+			@RequestParam("qnaType") int qnaType, @RequestParam(value="keyword",required=false,defaultValue="")String keyword ) {		
 		
 		logger.info("qnaPage 요청");		
 		PageDto qnaPage = new PageDto();
@@ -44,7 +44,7 @@ public class MemberController {
 		logger.info("qnaPage.getCount() : {}",qnaPage.getCount());
 		
 		ArrayList<ReviewQnaDto> qnaList = 
-				service.qnaInfo(qnaPage.getDisplayPost(), qnaPage.getPostNum(), keyword, answer_flg);
+				service.qnaInfo(qnaPage.getDisplayPost(), qnaPage.getPostNum(), keyword, answer_flg, qnaType);
 		
 		//문의타입 한글화
 		ArrayList<ReviewQnaDto> getQnaTypeInfo = service.getQnaType();
@@ -72,13 +72,18 @@ public class MemberController {
 			}	
 		}		
 		
+		
 		model.addAttribute("qnaList", qnaList); //리스트 보내기
 		model.addAttribute("qnaPage", qnaPage); //페이징처리
 		model.addAttribute("qnaSelect", qnaNum);//페이징처리		  
 		model.addAttribute("qnaKeyword", keyword); //검색어
 		model.addAttribute("qnaAnswer_flg", answer_flg); //검색어
 		model.addAttribute("getAnswerTypeInfo", getAnswerTypeInfo); //답변여부정보
-		
+		//Q&A페이지 관리자 기능 추가 Start ryujihong 2022.01.15
+		model.addAttribute("getQnaTypeInfo", getQnaTypeInfo); //문의타입 카테고리
+		model.addAttribute("qnaType", qnaType); //문의타입 
+		//Q&A페이지 관리자 기능 추가 End ryujihong 2022.01.15
+			
 		return "member/qnaPage";
 	}
 	
@@ -101,13 +106,13 @@ public class MemberController {
 		
 		service.doRegistQna(params, session);		
 		
-		return "redirect:/qnaPage?qnaNum=1&answer_flg=2";
+		return "redirect:/qnaPage?qnaNum=1&answer_flg=2&qnaType=0";
 	}
 	
 	@RequestMapping(value = "/qnaDetail", method = RequestMethod.GET)
 	public String qnaDetail(Model model, @RequestParam String idx) {		
 		
-		logger.info("registQna 요청 idx : {}",idx);
+		logger.info("qnaDetail 요청 idx : {}",idx);
 		
 		ReviewQnaDto dto = service.getQnaDetail(idx);
 		ReviewQnaDto aDto = service.getQnaAnswerDetail(idx);

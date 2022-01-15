@@ -34,12 +34,13 @@ public class MemberService {
 		return dao.qnaSearchCount(dto);
 	}
 
-	public ArrayList<ReviewQnaDto> qnaInfo(int displayPost, int postNum, String keyword, int answer_flg) {
+	public ArrayList<ReviewQnaDto> qnaInfo(int displayPost, int postNum, String keyword, int answer_flg, int qnaType) {
 		// TODO Auto-generated method stub
 		
 		PageDto dto = new PageDto();
 		
 		dto.setAnswer_flg(answer_flg);
+		dto.setQnaType(qnaType);
 		logger.info("getAnswer_flg : {}", dto.getAnswer_flg());
 		dto.setPostNum(postNum);
 		dto.setDisplayPost(displayPost);
