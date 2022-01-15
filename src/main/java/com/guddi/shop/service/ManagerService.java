@@ -295,6 +295,7 @@ public class ManagerService {
 		
 	}
 
+	//관리자페이지 제품 리스트, 수정 관련 End ryujihong 2022.01.14
 	public int updateImageOrder(String[] newOrder, String[] newFileName) {
 		// TODO Auto-generated method stub
 	
@@ -306,6 +307,13 @@ public class ManagerService {
 		
 		return success;
 	}
-
+	//관리자페이지 제품 리스트, 수정 관련 End ryujihong 2022.01.14
 	
+	//2022.01.15 유지홍 제품 삭제 관련 소스 Start
+	public int delProductInfo(String idx) {
+		// TODO Auto-generated method stub
+		return dao.delProductInfo(idx);
+	}
+
+	//2022.01.15 유지홍 제품 삭제 관련 소스 End
 }

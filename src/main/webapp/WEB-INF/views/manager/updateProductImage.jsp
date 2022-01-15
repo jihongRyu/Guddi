@@ -64,7 +64,7 @@
 			  			    <thead class="thead-primary">
 			  			      <tr class="text-center">
 			  			        <th>이미지명</th>
-			  			        <th>&nbsp;</th>
+			  			        <th>*첫번째이미지가 대표이미지입니다.</th>
 			  			        <th>순서</th>
 			  			        <th>삭제</th>
 			  			      </tr>			  			     

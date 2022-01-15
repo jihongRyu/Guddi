@@ -100,6 +100,7 @@
 					<textarea class="form-control" name="content" id="content" rows="10" placeholder="상세설명을 입력해주세요."></textarea><br/>
 									
 					<label>이미지 등록</label>
+					<label>*첫번째로 선택된 이미지가 대표이미지입니다.</label>
 					<input class="form-control" type="file" name="files" id="files" style="border:none;"  multiple="multiple"/>	
 										
 					<br><br>

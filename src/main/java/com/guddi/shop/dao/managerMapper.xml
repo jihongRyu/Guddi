@@ -118,6 +118,12 @@
 		update product_photo set photo_num = #{param1} where photo_num = #{param2}
 	</update>
 	<!-- 관리자페이지 제품등록 End ryujihong 2022.01.14 -->
+	<!-- 2022.01.15 유지홍 제품 삭제 관련 소스 Start ryujihong 2022.01.14 -->
+	<delete id="delProductInfo" >
+		delete from product where idx = #{idx}
+	</delete>
+	
+	<!-- 2022.01.15 유지홍 제품 삭제 관련 소스 Start ryujihong 2022.01.14 -->
 	
 
 </mapper>

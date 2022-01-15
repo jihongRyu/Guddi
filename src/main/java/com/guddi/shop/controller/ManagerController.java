@@ -270,6 +270,42 @@ public class ManagerController {
 	}
 	
 	//2022.01.14 유지홍 제품 등록 관련 소스 End
+	//2022.01.15 유지홍 제품 삭제 관련 소스 Start
+	@RequestMapping(value = "/delProduct")
+	@ResponseBody
+	public HashMap<String, Object>  delProduct(@RequestParam String idx) {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+	
+		//제품 이미지 정보 삭제 처리 
+		//1. 이미지 정보 추출
+		ArrayList<ProductDto> imageInfo = service.productImageInfo(Integer.parseInt(idx));
+			
+		//Db의 이미지 정보와 실제 저장된 이미지 파일 삭제 처리
+		for (int i = 0; i < imageInfo.size(); i++) {
+				
+			service.delImage(imageInfo.get(i).getPhoto_num(),imageInfo.get(i).getB_idx());
+			logger.info("이미지 삭제 imageInfo.get(i).getNewFileName() : {}",imageInfo.get(i).getNewFileName());
+			String realPath = servletContext.getRealPath("/resources/photo");			
+			try {				
+				Path path = Paths.get(realPath +"/"+ imageInfo.get(i).getNewFileName());
+				logger.info("실제 저장되었던 경로 : {}", path);
+				Files.delete(path);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
+		}
+		//제품 정보 삭제(이미지 제외)
+		int result = service.delProductInfo(idx);		
+	
+		map.put("result", result);
+	        
+	    return map;
+	}
+	
+	//2022.01.15 유지홍 제품 삭제 관련 소스 End
+	
 	//각종  카테고리 정보를 가져오는 메서드 Start ryujihong 2022.01.12
 	public void getCategory(HttpSession session){
 		
