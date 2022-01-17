@@ -407,11 +407,6 @@ public class ManagerController {
 	
 	
 	
-	
-	
-	
-	
-	
 	//각종  카테고리 정보를 가져오는 메서드 Start ryujihong 2022.01.12
 	public void getCategory(HttpSession session){
 		
