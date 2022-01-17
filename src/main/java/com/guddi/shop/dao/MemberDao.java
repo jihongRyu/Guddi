@@ -56,23 +56,25 @@ public interface MemberDao {
 	void delReview(String idx);	
 	//로그인 관련 end ryujihong 2022.01.10
 	//cart장바구니 제품목록 select --ysh 
-	ArrayList<CartDto> getCartInfo(String userId);
-
+	
 	MemberDto toLogin(MemberDto sdto);
-
-	int getCart(String userId);
-
-	int delCart(CartDto dto);
-
-	//int cartupdate(int quantity, String product_code, String userId);
-
-	int cartupdate(CartDto dto);
-
+	
 	//회원가입 start 2022.01.10	
 	void write(MemberDto dto);
 
 	String idCheck(String param);
 	//회원가입 end 2022.01.12
+
+
+	String doFindMemberId(String name, String email);
+
+	String temppasslogin(String userId, String email);
+
+	void temppassloginPw(String userId, String temppw);
+
+	String tempPass(String userpass);
+
+	int HeadergetCart(String userId);
 
 	ArrayList<CartDto> getTotalPrice(String userId);
 

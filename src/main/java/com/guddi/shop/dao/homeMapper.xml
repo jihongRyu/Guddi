@@ -15,7 +15,7 @@ SELECT a.idx
 ,b.oriFileName
 ,b.newFileName 
 FROM product a INNER JOIN product_photo b ON a.idx = b.b_idx
-where a.new_flg = 1 and b.photo_num = 1 and a.sell_flg = 1 order by a.regdate desc limit 8;
+where a.new_flg = 1 and b.photo_num = 1 and a.sell_flg = 1 order by a.regdate asc limit 8;
 </select>
 	
 
