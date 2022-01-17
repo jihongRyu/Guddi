@@ -3,6 +3,7 @@ package com.guddi.shop.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -80,14 +81,14 @@ public class CartController {
 				
 		return map;
 	}
-	@RequestMapping(value = "cartupdate", method = RequestMethod.POST)
+	@RequestMapping(value = "/cartupdate", method = RequestMethod.POST)
 	public String cartupdate(Model model , HttpSession session,@RequestParam int quantity,@RequestParam String product_code,@RequestParam String userId) {
 		logger.info("cart/update");
 		
 		CartDto dto = new CartDto();
 		logger.info(quantity+"/"+product_code+"/"+userId);
 		String userIdsession = (String) session.getAttribute("userId");
-		//if(dto.getUserId() ==userIdsession) { // 세션에있는 id와 받아온 id가 같으면 서비스실행
+		//if(dto.getUserId() == userIdsession) { // 세션에있는 id와 받아온 id가 같으면 서비스실행
 			dto.setQuantity(quantity);
 			dto.setProduct_code(product_code);
 			dto.setUserId(userId);
@@ -166,7 +167,31 @@ public class CartController {
 	
 	
 	
+	// 체크박스 실험 ysh START 220117
+	@RequestMapping(value = "/test_check", method = RequestMethod.POST)
+	@ResponseBody
+	public void testCheck(HttpServletRequest request) {
+	   
+		String[] valueArrTest = request.getParameterValues("valueArrTest");
+		for (String c : valueArrTest) {
+            logger.info(c);
+        }
+	    
+	    
+	    
+	}
+	@RequestMapping(value = "/checkout2", method = RequestMethod.POST)
+	public ArrayList<String> checkout2(Model model,@RequestParam(value = "valueArrTest[]") ArrayList<String> valueArr) {
+		
+		logger.info("checkout");
+		
+       
+		return valueArr;
+	}
+
 	
+	
+	// 체크박스 실험 ysh END 220117
 	
 	
 	
