@@ -49,15 +49,13 @@ public class CartController {
 		logger.info("cart 페이지 요청");
 		String userId = (String) session.getAttribute("userId");// 로그인 미완성으로 아이디를 session에 그냥 넣어줌 - 실행했는데 아이디가 넘어가지 않는다. 
 		logger.info("userId : {}", userId);
+		
 		if (userId!=null) {
 			ArrayList<CartDto> list = service.getCartInfo(userId);
-			
-			//ArrayList<CartDto> listImg = service.getCartInfoImg(userId);
-			
-			logger.info("상품코드 : {}",list.get(0).getProduct_name());
+		
+			//ArrayList<CartDto> listImg = service.getCartInfoImg(userId);					
 			model.addAttribute("list", list);
-			//model.addAttribute("listImg", listImg);
-			
+			//model.addAttribute("listImg", listImg);			
 			model.addAttribute("userId", userId);
 		}
 		return "cart/userCart";
@@ -184,11 +182,20 @@ public class CartController {
 	// 체크박스 실험 ysh START 220117
 	@RequestMapping(value = "/test_check", method = RequestMethod.POST)
 	@ResponseBody
-	public void testCheck(HttpServletRequest request) {
+	public String testCheck(Model model,HttpServletRequest request) {
 	   
 		
-	    
-	    
+
+		
+	    logger.info("test_check");
+	
+	    String[] valueArrTest = request.getParameterValues("valueArrTest");
+	
+    	for (String c : valueArrTest) {
+    		logger.info("제품 명 : "+c);
+    		model.addAttribute("c", c);
+    	}
+		return "cart/toOrder";
 	    
 	}
 	@RequestMapping(value = "/checkout2", method = RequestMethod.POST)

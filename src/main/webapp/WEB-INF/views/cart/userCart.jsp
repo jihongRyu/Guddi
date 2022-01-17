@@ -114,7 +114,9 @@
   			      <tr class="text-center">
   			        <td class="cart_info_td">
 
+
   			        	<input type="checkbox" class="individual_cart_checkbox input_size_20" name="chk" checked="checked" value="${list.product_name}" onclick="checkCall()"/>
+
 
   			        	<input type="hidden" class="individual_newFileName_input" value="${list.newFileName}">
   			        	<input type="hidden" class="individual_product_name_input" value="${list.product_name}">
@@ -191,20 +193,15 @@
      			</p>
      		</div>
      		<div class="text-center">
-     		<form action="checkout2" method="post" class="order_form" name="toCheckout">
 				<div class="order_btn_each">
 		     		<input type="hidden" value="${total}" name="checkoutPrice" id="checkoutPrice">
 		     		<input type="hidden" value="${sessionScope.userId}" name="userId" id="userId">
 		     		<input type="hidden" id="arrayParam" name="arrayParam"/>
-	     		
 		     		<a href="./" class="btn btn-primary py-3 px-4">계속쇼핑하기</a>     		     		
 		     		<!-- <a href="" id="order_btn" onclick="goOrder()" class="btn btn-primary py-3 px-4">결제하기</a> -->
-		    		<button type="submit" id="order_btn" class="btn btn-primary py-3 px-4">결제하기</button>
+		    		<button type="button" id="toCheckoutButton" class="btn btn-primary py-3 px-4" onclick="checkCall()">결제하기</button>
 		    		<!-- <a href="" id="toCheckoutButton" class="btn btn-primary py-3 px-4">결제하기</a> -->
 				</div>
-			</form>
-			
-     		
      		</div>
      	</div>
      	</c:if> 
@@ -250,34 +247,24 @@
 </body>
 <script>
 
-/* 
-$("#order_btn").on("click", function(){
-	$(".order_btn_each").each(function(index, element){ //상품의 데이터가 저장된 <input> 값들을 감싸고 있는 <td> 태그 반복해서 접근하는 메서드 
-		
-	});
-	$(".order_form").submit();
-});
-
- */
 
  
  
  // 배열 선언 여기에 이제 하나씩 넣을 것.
-var array = [];
-
-//if($('input:checkbox[name=chk]:checked')){
-	$('input:checkbox[name=chk]:checked').each(function(i) { // 체크된 체크박스의 value 값을 가지고 온다. 애초에 foreach로 값을 뽑아오니까 가능할것 
-	    array.push($(this).val());   
-	    console.log(array);
-	});
-//}
-
-
-$("#arrayParam").val(array);
 
 	
 	
 function checkCall() {
+	 
+	 var totalNum = $("input:checkbox[name=chk]:checked").length;	
+	 var array = new Array(totalNum);
+	 for(var i=0; i<totalNum; i++){                          
+		 array[i] = $("input:checkbox[name=chk]:checked").eq(i).val();			
+		}
+	 console.log(array);
+
+		$("#arrayParam").val(array);
+	
 	$.ajax({
 	    url: 'test_check'
 	    , type: 'post'
@@ -286,21 +273,22 @@ function checkCall() {
 	        valueArrTest: array
 	    }
 	    ,traditional : true
-		,success: function (data){
-			console.log(data);
-			console.log(array);
-			document.toCheckout.submit();
+		,success: function (c){
+			if (confirm(c+"제품을 선택하셧습니다. 결제화면으로 넘어가시겠습니까?")) {
+				
+			}
 		}
 	    
 	});
 }
+if(array[0]){
+	alert("선택하신 제품이 없습니다.");
+}
 /*test_check 요청 배열에 값 넘기기 test*/
-
 
 $("#toCheckoutButton").click(function(){
 	if (confirm("결제화면으로 넘어가시겠습니까?")) {
-		document.toCheckout.submit(); // toCheckout 을 submit 하면 checkout action ? 인듯 
-
+		document.toCheckout.submit(); 
 	}
 });
 
