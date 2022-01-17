@@ -35,24 +35,25 @@
   <div class="container">
     <div class="row block-9">
       <div class="login-form col-md-6 d-flex">
+      	<div class="bg-white p-5 contact-form"> 
 		      <div class="login-heading">
 		         <span>주문이 완료되었습니다!</span>	                      
-		      </div>
-	          <div class="form-group">
+		      </div><br>
+	          <div class="form-group text-center">
 	            <table>
 	            	<tr>
-	            		<tdW>주문번호</td>
+	            		<td>주문번호</td>
 	            	</tr>
 	            	<tr>
 	            		<td>${info.ordernum}</td>
 	            	</tr>
 	            </table>
+	          </div><br>
+	          <div class="form-group text-center">	            
+	            <input type="button" value="계속 쇼핑하기" class="btn btn-primary py-3 px-5" onclick="location.href='./'">
 	          </div>
-	          <div class="form-group text-center">
-	            <input type="button" value="마이페이지" class="btn btn-primary py-3 px-5" onclick="location.href='member/myPage.jsp'">
-	            <input type="button" value="계속 쇼핑하기" class="btn btn-primary py-3 px-5" onclick="location.href='index.jsp'">
-	          </div>
-      </div>      
+	      </div>
+       </div>      
     </div>
   </div>
 </section>
