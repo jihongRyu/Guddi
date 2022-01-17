@@ -67,7 +67,11 @@ public class CartService {
 		return dao.findInfo(userId);
 	}
 
-	
+	public ArrayList<CartDto> toOrder(String userId) {
+		// TODO Auto-generated method stub
+		logger.info("userId:{}", userId);
+		return dao. toOrder(userId);
+	}
 
 
 

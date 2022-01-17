@@ -17,6 +17,16 @@ public interface EtcDao {
 	int doUpateUseFlg(int use_flg, int idx);
 
 	ArrayList<EtcDto> getUseFlgInfo();
+
+	ArrayList<EtcDto> getSellFlgInfo();
+
+	int doRegistSellFlg(int newIdx, String sellname);
+
+	int getSellFlgIdx();
+
+	int doUpdateSellUseFlg(int use_flg, int idx);
+	
+	
 	
 	
 	

@@ -117,7 +117,6 @@
 
   			        	<input type="checkbox" class="individual_cart_checkbox input_size_20" name="chk" checked="checked" value="${list.product_name}" onclick="checkCall()"/>
 
-
   			        	<input type="hidden" class="individual_newFileName_input" value="${list.newFileName}">
   			        	<input type="hidden" class="individual_product_name_input" value="${list.product_name}">
   			        	<input type="hidden" class="individual_product_code_input" value="${list.product_code}">
@@ -199,7 +198,13 @@
 		     		<input type="hidden" id="arrayParam" name="arrayParam"/>
 		     		<a href="./" class="btn btn-primary py-3 px-4">계속쇼핑하기</a>     		     		
 		     		<!-- <a href="" id="order_btn" onclick="goOrder()" class="btn btn-primary py-3 px-4">결제하기</a> -->
+
 		    		<button type="button" id="toCheckoutButton" class="btn btn-primary py-3 px-4" onclick="checkCall()">결제하기</button>
+
+		    		<!--<button type="submit" id="order_btn" onclick="goOrder()" class="btn btn-primary py-3 px-4">결제하기</button>  -->
+
+		    		<!--  <button type="button" id="order_btn" class="btn btn-primary py-3 px-4" onclick="checkCall()">결제하기</button>-->
+
 		    		<!-- <a href="" id="toCheckoutButton" class="btn btn-primary py-3 px-4">결제하기</a> -->
 				</div>
      		</div>
@@ -274,9 +279,7 @@ function checkCall() {
 	    }
 	    ,traditional : true
 		,success: function (c){
-			if (confirm(c+"제품을 선택하셧습니다. 결제화면으로 넘어가시겠습니까?")) {
-				
-			}
+			
 		}
 	    
 	});
