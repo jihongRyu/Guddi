@@ -70,10 +70,11 @@
 <input type="button" class="cart-btn" value="장바구니"/>
 </form>
 </section>
+<section>
 	<div class="reviewupdateForm">
 		<div>제목<input type="text" class="reviewsubject"></div>
 		<div>내용<input type="text" class="reviewcontent"></div>
-		<input type="button" class="reviewupdatebutton"value="저장">
+		<input type="button" class="reviewupdatebutton" id="reviewupdate" value="저장">
 	</div> 
 	<c:if test="${reviewlist eq null||size == 0 }">
 		<div>등록된 글이 없습니다.</div>
@@ -86,9 +87,10 @@
 		<input type="button" class="reviewdelete" value="삭제">
 	</c:forEach>
 
-<section>
+
 </section>
 
+<br><br><br><br>
 
 
 <jsp:include page="/WEB-INF/views/include/footer.jsp"/>
@@ -97,7 +99,6 @@
 </body>
 
 <script>
-
 
 
 $(".btn-minus").click(function(){
