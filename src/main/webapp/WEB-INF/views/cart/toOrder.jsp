@@ -44,7 +44,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12 ftco-animate">
-				<form action="doOrder" method="get" class="order_form" name="toCheckout">
+				<form action="doOrder" method="get" class="order_form" id="doOrderForm"name="toCheckout">
 					<div class="myPage-table table-striped">
 						<table>
 							<tr style="background-color: #212529; color: white;">
@@ -57,9 +57,9 @@
 							<c:forEach items="${orderList}" var="orderInfo">
 								<tr>
 									<th><img src='resources/photo/${orderInfo.newFileName }'style="width: 350px; height: 350px;" /></th>
-									<th>${orderInfo.product_name}</th>
+									<th class="productName">${orderInfo.product_name}</th>
 									<th>${orderInfo.price }</th>
-									<th>${orderInfo.quantity }</th>
+									<th class="quantity">${orderInfo.quantity }</th>
 									<th class="totalPrice">${orderInfo.price *orderInfo.quantity }</th>
 								</tr>
 							</c:forEach>
@@ -69,10 +69,10 @@
 						<h2>결제 하기</h2>
 						<div class="form-group" style="text-align: left;">
 							<label for="inputtelNO">성함</label>
-							<input type="text"value="${orderList[0].username }" readonly class="form-control"id="userName" name="userName"> <br>
+							<input type="text"value="${orderList[0].username }" class="form-control"id="userName" name="userName"> <br>
 							<div class="form-group" style="text-align: left;">
 								<label for="inputtelNO">우편번호</label>
-								<input type="text"value="${orderList[0].zipcode }" readonly class="form-control"id="inputZipcode" name="zipcode" placeholder="우편번호 찾기를 해주세요.">
+								<input type="text"value="${orderList[0].zipcode }" class="form-control"id="inputZipcode" name="zipcode" placeholder="우편번호 찾기를 해주세요.">
 							</div>
 							<div class="form-group" style="text-align: left;">
 								<label for="inputtelNO">주소</label>
@@ -112,6 +112,9 @@
 				     			<p class="d-flex total-price">
 				     				<span>최종구매가격</span>
 				     				<span id="totalPrice" class="totalPrice_span"></span>원
+				     				<input type="hidden" name="totalPriceFinal" id="totalPriceFinal"/>
+				     				<input type="hidden" name="quantityFinal" id="quantityFinal"/>
+				     				<input type="hidden" name="productNameFinal" id="productNameFinal"/>
 				     			</p>
 				     			
 				     		</div>
@@ -119,9 +122,9 @@
 					</div>
 					<div class="col-lg-5" style="height: 300px; width: 500px; margin-left: 645px; margin-top: 70px;">
 						<h4 style="margin-bottom: 40px;">결재방법</h4>
-				     	<input type="radio" name="approvalChoice1" value="계좌이체" style="margin-left: 20px;" /><span>계좌이체</span><br/>
-				     	<input type="radio" name="approvalChoice1" value="신용카드" style="margin-left: 20px;" checked/><span>신용카드</span><br/>
-				     	<input type="radio" name="approvalChoice1" value="네이버페이" style="margin-left: 20px;"/><span>네이버페이</span>
+				     	<input type="radio" name="approvalChoice" value="계좌이체" style="margin-left: 20px;" /><span>계좌이체</span><br/>
+				     	<input type="radio" name="approvalChoice" value="신용카드" style="margin-left: 20px;"/><span>신용카드</span><br/>
+				     	<input type="radio" name="approvalChoice" value="네이버페이" style="margin-left: 20px;"/><span>네이버페이</span>
 					</div>
 				    <div class="text-center">
 				    <!-- <form action="/checkout" method="post" class="order_form" name="toCheckout"> -->
@@ -133,7 +136,7 @@
 						    <!--<button type="submit" id="order_btn" onclick="goOrder()" class="btn btn-primary py-3 px-4">결제하기</button>  -->
 						    <!--  onclick="location.href='toOrder?userId=${sessionScope.userId }'"-->
 						    <%-- <a type="button" href="toOrder?userId=${sessionScope.userId }" id="toCheckoutButton" class="btn btn-primary py-3 px-4">결제하기</a> --%> 
-						    <input type="button" value="결제하기" class="btn btn-primary py-3 px-4" id="toCheckoutButton"/>
+						    <input type="button"value="결제하기" class="btn btn-primary py-3 px-4" id="toCheckoutButton"/>
 						</div>
 				     </div>
 				</form>
@@ -171,9 +174,14 @@
 	//var a = $(".totalPrice").length();
 	//console.log($('p').length);
 	var totalPrice = 0;
+	var totalQuantity = 0;
+	var totalProductName = 0;
 	console.log($('.totalPrice').length);
 	console.log($('.totalPrice').eq(0).html());
+	console.log("갯수",$('.quantity').length);
 	setTotal();
+	setQuantity();
+	serProductNames();
 	function setTotal() {
 		for(var i = 0; i<$('.totalPrice').length; i++){
 			totalPrice += parseInt($('.totalPrice').eq(i).html());
@@ -181,7 +189,21 @@
 		}
 		$(".totalPrice_span").text(totalPrice.toLocaleString());
 	}
-
+	function setQuantity() {
+		for(var i = 0; i<$('.quantity').length; i++){
+			totalQuantity += parseInt($('.quantity').eq(i).html());
+			console.log(totalQuantity);
+		}
+	}
+	function serProductNames() {
+		for(var i = 0; i<$('.productName').length; i++){
+			totalProductName += $('.productName').eq(i).html();
+			console.log(totalProductName);
+		}
+	}
+	$("#quantityFinal").val(totalQuantity);
+	$("#totalPriceFinal").val(totalPrice);
+	$("#productNameFinal").val(totalProductName);
 	console.log($(".totalPrice_span").html());
 	//우편번호 찾기
 	function goPostcode() {
@@ -238,16 +260,19 @@
 		}).open();
 	};
 	
-	var userName = $('input[name=userName]').val();
-	var zipcode = $('input[name=zipcode]').val();
-	var address = $('input[name=address]').val();
-	var address_detail = $('input[name=address_detail]').val();
-	var email = $('input[name=email]').val();
-	var phone = $('input[name=phone]').val();
-	var approvalChoice = $('input:radio[name="approvalChoice1"]:checked').val();
+	
 
 	
 	$("#toCheckoutButton").click(function () {
+		
+		var userName = $('input[name=userName]').val();
+		var zipcode = $('input[name=zipcode]').val();
+		var address = $('input[name=address]').val();
+		var address_detail = $('input[name=address_detail]').val();
+		var email = $('input[name=email]').val();
+		var phone = $('input[name=phone]').val();
+		var approvalChoice = $('input:radio[name="approvalChoice"]:checked').val();
+		
 		console.log("#toCheckoutButton 동작 확인");
 		console.log(userName, zipcode, address, address_detail, email, phone, approvalChoice);
 		if(userName.length == 0){
@@ -256,13 +281,26 @@
         } else if(zipcode.length == 0){
             alert("우편번호를 입력해 주세요");
             $('input[name=zipcode]').focus();
+        } else if(address.length == 0){
+            alert("주소를 입력해 주세요");
+            $('input[name=address]').focus();
+        } else if(address_detail.length == 0){
+            alert("상세주소를 입력해 주세요");
+            $('input[name=address_detail]').focus();
+        } else if(email.length == 0){
+            alert("이메일을 입력해 주세요");
+            $('input[name=email]').focus();
         } else if(phone.length == 0){
             alert("핸드폰 번호를 입력해 주세요");
             $('input[name=phone]').focus();
-        } else if(email.length == 0){
-            alert("핸드폰 번호를 입력해 주세요");
-            $('input[name=email]').focus();
-        } 
+        } else if(approvalChoice == null){
+            alert("결제방식을 입력해 주세요");
+            return;
+        }
+		if (confirm('결제하시겠습니까?')) {
+			$('#doOrderForm').submit();
+		}
+		
 	});
 </script>
 </html>
