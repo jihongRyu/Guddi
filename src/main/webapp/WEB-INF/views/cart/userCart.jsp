@@ -67,7 +67,7 @@
      			<div class="col-lg-12 mt-5 cart-wrap ftco-animate">     	
      				<div class="text-center">
      					<h1>로그인을 해주세요.</h1><br><br>
-     					<a href="login" class="btn btn-primary py-3 px-4">로그인</a>
+     					<a href="toLogin" class="btn btn-primary py-3 px-4">로그인</a>
      				</div>
      			</div>
     		  </div>
@@ -113,17 +113,17 @@
   			      <c:forEach items="${list}" var="list" varStatus="status">
   			      <tr class="text-center">
   			        <td class="cart_info_td">
-  			        
-  			        
-  			        	<input type="checkbox" class="individual_cart_checkbox input_size_20" name="chk" checked="checked" />
+  			        	<input type="checkbox" class="individual_cart_checkbox input_size_20" name="chk" checked="checked" value="${list.product_name}" />
   			        	<input type="hidden" class="individual_newFileName_input" value="${list.newFileName}">
   			        	<input type="hidden" class="individual_product_name_input" value="${list.product_name}">
   			        	<input type="hidden" class="individual_product_code_input" value="${list.product_code}">
   			       	 	<input type="hidden" class="individual_quantity_input" value="${list.quantity}">
+  			       	 	<input type="hidden" class="individual_price_input" value="${list.price}">
   			        	<input type="hidden" class="individual_totalprice_input" value="${list.quantity*list.price}">
+  			        	<input type="hidden" value="${total}" name="checkoutPrice" id="checkoutPrice">
+		     			<input type="hidden" value="${sessionScope.userId}" name="userId" id="userId">
+		     		
   			       	 	<%-- <input type="hidden" class="individual_bookId_input" value="${ci.bookId}"> --%>
-  			  
-  			        
   			        </td>
   			        <td class="image-prod"><div class="img" style="background-image:url(resources/photo/${list.newFileName});"></div></td>
   			        
@@ -143,7 +143,10 @@
 							<input type="hidden" name="product_code" value="${list.product_code}">
 							<input type="hidden" name="userId" value="${userId}">
 						
-						   	<button type="submit" class="btn btn-info">수량번경</button>
+						
+						
+						
+						   	<button type="submit" class="btn btn-primary py-3 px-4">수량변경</button>
 						</form>
   		             		
   		          	</td>
@@ -186,14 +189,17 @@
      			</p>
      		</div>
      		<div class="text-center">
-     		<form action="/order" method="get" class="order_form">
-
-	     		<input type="hidden" value="${total}" name="checkoutPrice" id="checkoutPrice">
-	     		<input type="hidden" value="${sessionScope.userId}" name="userId" id="userId">
-     		
-	     		<a href="./" class="btn btn-primary py-3 px-4">계속쇼핑하기</a>     		     		
-	     		<a href="#" id="order_btn" onclick="goOrder()" class="btn btn-primary py-3 px-4">결제하기</a>
-	    		
+     		<form action="/checkout" method="post" class="order_form" name="toCheckout">
+				<div class="order_btn_each">
+		     		<input type="hidden" value="${total}" name="checkoutPrice" id="checkoutPrice">
+		     		<input type="hidden" value="${sessionScope.userId}" name="userId" id="userId">
+		     		<input type="hidden" id="arrayParam" name="arrayParam"/>
+	     		
+		     		<a href="./" class="btn btn-primary py-3 px-4">계속쇼핑하기</a>     		     		
+		     		<!-- <a href="" id="order_btn" onclick="goOrder()" class="btn btn-primary py-3 px-4">결제하기</a> -->
+		    		<!--<button type="submit" id="order_btn" onclick="goOrder()" class="btn btn-primary py-3 px-4">결제하기</button>  -->
+		    		<a href="cart/toOrder" id="toCheckoutButton" class="btn btn-primary py-3 px-4">결제하기</a>
+				</div>
 			</form>
 			
      		
@@ -241,6 +247,35 @@
 
 </body>
 <script>
+
+/* 
+$("#order_btn").on("click", function(){
+	$(".order_btn_each").each(function(index, element){ //상품의 데이터가 저장된 <input> 값들을 감싸고 있는 <td> 태그 반복해서 접근하는 메서드 
+		
+	});
+	$(".order_form").submit();
+});
+
+ */
+
+var array = new Array(); // 배열 선언 여기에 이제 하나씩 넣을 것.
+
+$('input:checkbox[name=chk]:checked').each(function(idx,item) { // 체크된 체크박스의 value 값을 가지고 온다. 애초에 foreach로 값을 뽑아오니까 가능할것 
+    array.push(this.value);  // 	배열에 값을 넣고  
+});
+
+$("#arrayParam").val(array);
+
+$("#toCheckoutButton").click(function(){
+	
+	if (confirm("결제화면으로 넘어가시겠습니까?")) {
+		
+		document.toCheckout.submit(); // toCheckout 을 submit 하면 checkout action ? 인듯 
+		
+		
+	}
+});
+
 
 /*
 // 결제하기 페이지로 이동 
@@ -314,32 +349,44 @@ var delList = [];
 
 function del(){
 	
+	var confirm_val = confirm("정말 삭제하시겠습니까?");
 	
-	$("input[type='checkbox']:checked").each(function (idx,item){
-		console.log(idx,$(this).val());	
-		delList.push($(this).val());
-	});
-	
-	console.log(delList);
-	
-	$.ajax({
-		type:'GET',
-		url:'checkedDelete',
-		data:{'delList' : delList},
-		dataType: 'JSON',
-		success: function (data) {
-			console.log(data);
-			alert(data.msg);
-			//ajax는 페이지를 새로고침 하지 않기 때문에, 적용된 내용을 확인하기 위해서는 리스트를 다시 그려야 한다.
-			//listCall();
-			//$("tbody").empty();
-			delList=[];
-		},
-		error:function(e){
-			console.log(e);
-		}
+	if(confirm_val){
 		
-	});
+		
+		
+		console.log(delList);
+		
+		
+		$('input[type="checkbox"]:checked').each(function (idx,item){
+			//console.log(idx,$(this).val());	
+			delList.push($(this).val());
+			
+			
+				
+		});
+		
+		var checkArr = new Array();
+		$.ajax({
+			type:'POST',
+			url:'chkdelete',
+			data:{'delList' : delList},
+			dataType: 'JSON',
+			success: function (data) {
+				console.log(data);
+				alert(data.msg);
+				//ajax는 페이지를 새로고침 하지 않기 때문에, 적용된 내용을 확인하기 위해서는 리스트를 다시 그려야 한다.
+				//listCall();
+				//$("tbody").empty();
+				delList=[];
+			},
+			error:function(e){
+				console.log(e);
+			}
+			
+		});
+		
+	}
 	
 	
 }

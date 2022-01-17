@@ -282,7 +282,7 @@ var totalPrice = ${totalPrice};
 
 totalPrice = totalPrice.toLocaleString();
 console.log(totalPrice);
-$("#totalPrice").html("총 구매가격 : " + totalPrice +"원");
+$("#totalPrice").html("${info.username}님 총 구매가격 : ₩" + totalPrice);
 
 
 function changeOrderList(){

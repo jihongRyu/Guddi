@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.guddi.shop.dao.HomeDao;
 import com.guddi.shop.dto.EtcDto;
+import com.guddi.shop.dto.ProductDto;
 
 @Service
 public class HomeService {
@@ -21,6 +22,13 @@ public class HomeService {
 	public ArrayList<EtcDto> photoList() {
 		
 		return dao.photoList();
+	}
+
+
+
+	public ArrayList<ProductDto> rankList() {
+		
+		return dao.rankList();
 	}
 
 

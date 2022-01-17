@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Qna</title>
+<title>Q&A상세</title>
 <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 <script src="resources/css/bootstrap/bootstrap.min.js"></script>
 
@@ -33,40 +33,43 @@
 
 <jsp:include page="/WEB-INF/views/include/header.jsp"/>
 
+
+
+
 <section class="ftco-section contact-section bg-light">
   <div class="container">
     <div class="row block-9">
       <div class="login-form col-md-8 d-flex">
-        <form action="doRegistQna" name="qnaForm" id="qnaForm" method="post" class="bg-white p-5 contact-form">
+        <div class="bg-white p-5 contact-form">
 	          <div class="login-heading">
-		      	<span>Q&A작성</span>	                      
-		      </div>   
-	          <div class="col-lg-12 pl-md-5 ftco-animate">
-		      	 <h5>문의타입</h5>
-				 <select id="answer_type" name="answer_type" class="form-control">
-				 		<option value="" >문의타입을 선택해주세요.</option>
-				 	<c:forEach items="${getQnaTypeInfo}" var="list">
-				 		<option value="${list.idx}" >${list.typename}</option>
-				 	</c:forEach>					
-				   			
-			     </select>	
-	          	 <br>
-				 <h5>제목</h5>	
-				 <input type="text" id="subject" name="subject" class="form-control">		
-				 <br>		
+		      	<span>Q&A상세</span>	                      
+		      </div>	        
+	          <div class="col-lg-12 product-details pl-md-5 ftco-animate">
+				 <h5>문의타입</h5>	
+				 <p>${dto.answer_type}</p>				 		
+				 <h5>아이디</h5>	
+				 <p>${dto.userId }</p>	
+				  <h5>제목</h5>	
+				 <p>${dto.subject }</p>					
 				 <h5>내용</h5>
-				 <textarea class="form-textArea" rows="5" id="content" name="content"></textarea>
-				 
-			  </div>
-			  <br>
-			  <div class="ftco-animate text-center">
-			  	<button type="button" class="btn btn-primary" onclick="location.href='qnaPage?qnaNum=1&answer_flg=2'">뒤로</button>
-		        <button type="button" class="btn btn-primary" onclick="regist();">등록하기</button>
-			  </div>
-			  
+				 <p>${dto.content }</p> 
+				 <p style="float:right;">${dto.regdate }</p>
+			  </div>			 
 			  <br><br>
-			
-        </form>      
+			  <form action="doUpdateAnswer" id="updateForm" name="updateForm" method="post">
+			  	  <input type="hidden" id="idx" name="idx" value="${dto.idx}">
+			  	  <input type="hidden" id="q_idx" name="q_idx" value="${qDto.idx}">		 
+				  <div class="col-lg-10 bg-light " style="margin:auto;"><br>	 		
+					 <h5>ㄴ관리자(${qDto.userId})</h5>			
+					 <textarea class="form-textArea" rows="5" id="content" name="content">${qDto.content}</textarea>							
+				  <br>
+					  <div class="form-group text-center">
+					      <input type="button" value="뒤로가기" class="btn btn-primary" onclick="location.href='qnaPage?qnaNum=1&answer_flg=2&qnaType=0'">
+					      <input type="button" value="수정하기" class="btn btn-primary" onclick="doUpdateAnswer()">	         
+					  </div><br>
+				  </div>
+			  </form>	
+        </div>      
       </div>      
     </div>
   </div>
@@ -100,37 +103,14 @@
 
 <script>
 
-function regist(){
+
+function doUpdateAnswer() {
 	
-	    if (!document.qnaForm.answer_type.value)
-	    // login_form 이름을 가진 form 안의 id_val 의 value가 없으면
-	    {
-	        alert("문의타입을 선택하세요!");
-	        // 화면 커서 이동
-	        return;
-	    }
-	    
-	    if (!document.qnaForm.subject.value)
-	    {
-	        alert("문의제목을 입력하세요!");
-	        // 화면 커서 이동
-	        return;
-	    }
-	    
-	    if (!document.qnaForm.subject.value)
-	    {
-	        alert("문의내용을 입력하세요!");
-	        // 화면 커서 이동
-	        return;
-	    }
-	   	alert("문의가 등록되었습니다.");
-	    document.qnaForm.submit();
-	    // 모두 확인 후 submit()
-	    
-	  
+	if (confirm('답변을 수정하시겠습니까?')) {
+		$('#updateForm').submit();
+	}
 	
 }
-
 </script>
 
 

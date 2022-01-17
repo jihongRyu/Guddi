@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 
 import com.guddi.shop.dao.ProductDao;
+import com.guddi.shop.dto.CartDto;
 import com.guddi.shop.dto.EtcDto;
 import com.guddi.shop.dto.PageDto;
 import com.guddi.shop.dto.ProductDto;
@@ -20,34 +21,54 @@ public class ProductService {
 	@Autowired ProductDao dao;
 		
 	//2022.01.13 유지홍 제품 리스트 관련 소스 Start
-	public int searchCount(String searchType, String keyword, int type) {
+	public int searchCount(int brand_idx, String bag_name, String keyword) {
 		// TODO Auto-generated method stub
 		
 		PageDto dto = new PageDto();
 		  
-		dto.setType(type);
+		dto.setBrand_type(brand_idx);
 		dto.setKeyword(keyword);
-		dto.setSearchType(searchType);	
+		dto.setBag_name(bag_name);
 		
 		return dao.searchCount(dto);
 	}
 
-	public ArrayList<ProductDto> listPageSearch(int displayPost, int postNum, String searchType, String keyword, int type) {
+	public ArrayList<ProductDto> listPageSearch(int displayPost, int postNum, 
+			String keyword, int brand_idx, String bag_name) {
 		// TODO Auto-generated method stub
 		
 		PageDto dto = new PageDto();
 		
-		dto.setType(type);
-		logger.info("type : {}", dto.getType());
+		dto.setBag_name(bag_name);
+		dto.setBrand_type(brand_idx);
+		logger.info("displayPost : {}", displayPost);
+		logger.info("postNum : {}", postNum);
 		dto.setPostNum(postNum);
 		dto.setDisplayPost(displayPost);
-		dto.setKeyword(keyword);
-		dto.setSearchType(searchType);				
+		dto.setKeyword(keyword);		
 		
 		return dao.listPageSearch(dto);
 	}
 	//2022.01.13 유지홍 제품 리스트 관련 소스 End
-
+	
+	//상세페이지 관련 충구형님 2022.01.17 Start
+	public ArrayList<ProductDto> detail(String idx) {
+		
+		return dao.detail(idx);
+	}
+	public ArrayList<ProductDto> productimage() {
+		
+		return dao.productimage();
+	}
+	public int cartupdate(CartDto dto) {
+		
+		return dao.cartupdate(dto);
+	}
+	public ArrayList<EtcDto> review(String idx) {
+		
+		return dao.review(idx);
+	}
+	//상세페이지 관련 충구형님 2022.01.17 End
 
 
 }

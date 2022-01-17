@@ -50,7 +50,7 @@
 		        <br><br>		                       
 		        <form method="post" action="doRegistProduct" name="registForm" id="registForm" enctype="multipart/form-data">
 					<label>제품명</label><br/>
-					<input class="form-control" type="text" name="subject" id="subject" placeholder="제품을 입력해주세요."/><br/>
+					<input class="form-control" type="text" name="product_name" id="product_name" placeholder="제품을 입력해주세요."/><br/>
 					
 					<label>브랜드</label><br/>
 					<select name="brand_type" id="brand_type" class="form-control" >
@@ -92,14 +92,15 @@
 					<input type="text" class="form-control" name="price" id="price" placeholder="정가를 입력해주세요."/><br/>
 										
 					<label>제품번호</label>
-					<button type="button" class="btn btn-primary" onclick="makeProductNum()">제품번호발행</button>					
+					<button type="button" class="btn btn-primary" onclick="makeProductCode()">제품번호발행</button>					
 					<br/>
-					<input type="text" class="form-control" name="product_num" id="product_num" readonly placeholder="상품번호를 생성해주세요."/><br/>
+					<input type="text" class="form-control" name="product_code" id="product_code" readonly placeholder="상품번호를 생성해주세요."/><br/>
 						
 					<label>제품 상세설명</label><br/>
 					<textarea class="form-control" name="content" id="content" rows="10" placeholder="상세설명을 입력해주세요."></textarea><br/>
 									
 					<label>이미지 등록</label>
+					<label>*첫번째로 선택된 이미지가 대표이미지입니다.</label>
 					<input class="form-control" type="file" name="files" id="files" style="border:none;"  multiple="multiple"/>	
 										
 					<br><br>
@@ -151,8 +152,8 @@
 
 CKEDITOR.replace("content");
 
-//상품번호 생성 함수
-function makeProductNum(){
+//제품코드 생성 함수
+function makeProductCode(){
 	
 	if ($("#brand_type").val()=='0') {
 		alert("브랜드를 선택해주세요");
@@ -164,106 +165,110 @@ function makeProductNum(){
 		return;
 	}
 	
-	if (confirm("상품번호를 생성하시겠습니까?")) {
+	if (confirm("상품번호를 생성하시겠습니까?")) {	
 
 		$.ajax({
-			url: "makeProductNum", //호출할 파일명			
+			url: "makeProductCode", //호출할 파일명			
 			method: "POST",
 			dataType: "json", //내가 받아야할 결과 형태가 text, html, xml, json
 			
-			success: function(data){
-				console.log(data);
+			success: function(data){				
 				
-				if(data.result!=null) {
-					let today = new Date();  
-					let brandType;
-					let productType;
+				if(data.newIdx!=null) {
 					
-					if ($("#product_type").val()=='크로스백') {
-						productType = 'PC';
-					}else if ($("#product_type").val()=='백팩') {
-						productType = 'PB';
-					}else if ($("#product_type").val()=='핸드백') {
-						productType = 'PH';
-					}else if ($("#product_type").val()=='토트백') {
-						productType = 'PT';
-					}else if ($("#product_type").val()=='숄더백') {
-						productType = 'PS';
-					}else if ($("#product_type").val()=='기타') {
-						productType = 'PE';
+					let today = new Date();  
+					let brandCode;
+					let bagCode;
+					
+					//제품코드에 브랜드 코드 반영
+					for (var i = 0; i < data.brandType.length; i++) {						
+						if ($("#brand_type").val() == data.brandType[i].brand_idx) {
+							brandCode = data.brandType[i].brand_code;							
+						}
 					}
 					
-					if ($("#brand_type").val()=='샤넬') {
-						brandType = 'S';
-					}else if ($("#brand_type").val()=='루이비통') {
-						brandType = 'L';
-					}else if ($("#brand_type").val()=='에르메스') {
-						brandType = 'H';
-					}else if ($("#brand_type").val()=='보테가베네타') {
-						brandType = 'B';
-					}else if ($("#brand_type").val()=='기타') {
-						brandType = 'E';
+					//제품코드에 가방종류 코드 반영
+					for (var i = 0; i < data.bagType.length; i++) {
+						if ($("#bag_type").val() == data.bagType[i].type_idx) {
+							bagCode = data.bagType[i].type_code;
+						}						
 					}					
 					
-					var idx = data.result;
-					var month = today.getMonth() + 1;  // 월
-					var date = today.getDate();  // 날짜					
-					
-					var product_num = brandType + productType + month + date + idx;							
-					
-					$("#product_num").val(product_num);				
-					
+					//제품코드에 새 idx 반영
+					var idx = data.newIdx;
+					var month = today.getMonth() + 1;  // 제품코드에  월 반영
+					var date = today.getDate();  // 제품코드에  날짜 반영						
+					//제품코드 생성!
+					var product_code = brandCode + bagCode + month + date + idx;
+					$("#product_code").val(product_code);				
 					alert("상품번호 생성 성공!");
-					
-				} 	
-				
+				} 					
 			},
 			error:function(){
 				alert("상품번호 생성실패! 관리자에게 문의해주세요.");
 			}
 		});
-		
-	}
-	
+	}	
 }
 
 function check_input() {
+	
+	 var fileUpload = $("input[type='file']");
 	 
  	
-    if (!document.registForm.subject.value){// login_form 이름을 가진 form 안의 id_val 의 value가 없으면
+    if (!document.registForm.product_name.value){// login_form 이름을 가진 form 안의 id_val 의 value가 없으면
         alert("상품명 입력하세요!");
-        document.registForm.subject.focus();
+        document.registForm.product_name.focus();
         // 화면 커서 이동
         return;
-    }  	
-    if (document.registForm.product_type.value=='0'){
-        alert("상품타입을 선택하세요!");
+    }  
+    if (document.registForm.brand_type.value==''){
+        alert("브랜드타입을 선택하세요!");
         // 화면 커서 이동
         return;
     } 
-    if (!document.registForm.unit.value){
-        alert("상품단위를 입력해주세요!");
+    if (document.registForm.bag_type.value==''){
+        alert("종류타입을 선택하세요!");
         // 화면 커서 이동
         return;
-    }
+    } 
     if (!document.registForm.price.value){
         alert("정가를 입력하세요!");
         // 화면 커서 이동
         return;
     }   
-    if (!document.registForm.salePrice.value){
-        alert("할인가를 입력하세요!");
+    if (document.registForm.new_flg.value==''){
+        alert("신상품 여부를 선택하세요!");
         // 화면 커서 이동
         return;
-    }
-    if (!document.registForm.product_num.value){
+    }  
+    if (document.registForm.sell_flg.value==''){
+        alert("판매 여부를 선택하세요!");
+        // 화면 커서 이동
+        return;
+    }  
+
+    if (!document.registForm.product_code.value){
         alert("상품코드를 만들어주세요!");
         // 화면 커서 이동
         return;
     }
+    if (document.registForm.content.value=''){
+        alert("상세설명을 작성해주세요!");
+        // 화면 커서 이동
+        return;
+    }
+    if (parseInt(fileUpload.get(0).files.length)!=4){
+        alert("이미지는 4장 등록해주세요!");
+        // 화면 커서 이동
+        return;
+    }
     
-    document.registForm.submit();
-    // 모두 확인 후 submit()
+    if (confirm("제품을 등록하시겠습니까?")) {
+    	  document.registForm.submit();
+    	    // 모두 확인 후 submit()
+	}
+  
  }
 
 </script>

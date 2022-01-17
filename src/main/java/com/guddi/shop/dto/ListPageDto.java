@@ -1,6 +1,9 @@
 package com.guddi.shop.dto;
 
-public class PageDto {
+public class ListPageDto {
+	
+	
+	//제품 리스트 페이징을 위한 DTo입니다!
 
 	// 현재 페이지 번호
 	private int num;
@@ -10,9 +13,6 @@ public class PageDto {
 	
 	//답변여부
 	private int answer_flg;
-	
-	//문의타입
-	private int qnaType;
 	
 	//가방 타입
 	private int bag_type;
@@ -36,7 +36,7 @@ public class PageDto {
 	private int count;
 
 	// 한 페이지에 출력할 게시물 갯수
-	private int postNum = 10;
+	private int postNum = 12;
 
 	// 하단 페이징 번호 ([ 게시물 총 갯수 ÷ 한 페이지에 출력할 갯수 ]의 올림)
 	private int pageNum;
@@ -45,7 +45,7 @@ public class PageDto {
 	private int displayPost;
 
 	// 한번에 표시할 페이징 번호의 갯수
-	private int pageNumCnt = 10;
+	private int pageNumCnt = 12;
 
 	// 표시되는 페이지 번호 중 마지막 번호
 	private int endPageNum;
@@ -226,14 +226,6 @@ public class PageDto {
 
 	public void setBrand_name(String brand_name) {
 		this.brand_name = brand_name;
-	}
-
-	public int getQnaType() {
-		return qnaType;
-	}
-
-	public void setQnaType(int qnaType) {
-		this.qnaType = qnaType;
 	}
 
 

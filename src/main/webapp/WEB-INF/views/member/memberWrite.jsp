@@ -257,7 +257,7 @@ $(function(){
 				$('font[name=check]').html("비밀번호가 서로 일치하지 않습니다.");
 			}else{
 				$('font[name=check]').text(' ');
-				$('font[name=cehck]').html("비밀번호가 일치합니다.");
+				$('font[name=check]').html("비밀번호가 일치합니다.");
 			}
 		});
 		
