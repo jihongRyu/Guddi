@@ -7,8 +7,8 @@
 
 	<!-- 회원가입 도연 start 2022.01.10 -->
 	<insert id="write" parameterType="com.guddi.shop.dto.MemberDto">
-		INSERT INTO member(userId,password,username,phone,email,zipcode,address,address_detail,mem_flg,gender)
-			VALUES(#{userId},#{password},#{username},#{phone},#{email},#{zipcode},#{address},#{address_detail},#{mem_flg},#{gender})
+		INSERT INTO member(userId,password,username,phone,email,zipcode,address,address_detail,birthday,gender,personInfo_flg,marketing_flg,mem_flg)
+			VALUES(#{userId},#{password},#{username},#{phone},#{email},#{zipcode},#{address},#{address_detail},#{birthday},#{gender},#{personInfo_flg},#{marketing_flg},#{mem_flg})
 	</insert>
 	
 	<select id="idCheck" resultType="String">
@@ -229,6 +229,10 @@
 		WHERE product_code = #{product_code} and userId=#{userId}
 	</update>
 	
+
+	
+	
+
 	<select id="getTotalPrice" resultType="com.guddi.shop.dto.CartDto">
 		select price, quantity from tb_order where userId = #{param1}
 	</select>

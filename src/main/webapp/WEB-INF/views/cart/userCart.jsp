@@ -114,7 +114,7 @@
   			      <tr class="text-center">
   			        <td class="cart_info_td">
   			        	<input type="checkbox" class="individual_cart_checkbox input_size_20" name="chk" checked="checked" value="${list.product_name}" />
-  			        	<input type="hidden" class="individual_newFileName_input" value="${listImg.newFileName}">
+  			        	<input type="hidden" class="individual_newFileName_input" value="${list.newFileName}">
   			        	<input type="hidden" class="individual_product_name_input" value="${list.product_name}">
   			        	<input type="hidden" class="individual_product_code_input" value="${list.product_code}">
   			       	 	<input type="hidden" class="individual_quantity_input" value="${list.quantity}">
