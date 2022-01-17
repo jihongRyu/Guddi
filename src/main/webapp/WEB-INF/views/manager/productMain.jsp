@@ -106,7 +106,7 @@
 			        	<th>${list.bag_type}</th>
 			        	<th>${list.product_name}</th>
 			        	<th>${list.product_code}</th>
-			        	<th>${list.price}</th>
+			        	<th>₩<fmt:formatNumber type="number" maxFractionDigits="3" value="${list.price}" /></th>
 						<c:forEach items="${sessionScope.newflg}" var="newFlgList">
 							<c:if test="${newFlgList.idx eq list.new_flg}"><th>${newFlgList.newname}</th></c:if>						
 						</c:forEach>
@@ -116,7 +116,7 @@
 			        	<th>${list.regdate}</th>
 			        	<th><a href="updateProduct?idx=${list.idx}">수정하기</a></th>
 			        	<th><a href="updateProductImage?idx=${list.idx}">수정하기</a></th> 
-			        	<th><a href="javascript:void(0);" onclick="delProduct(${list.idx});">삭제</a></th>            		           		     
+			        	<th><a href="javascript:void(0);" onclick="delProduct('${list.idx}');">삭제</a></th>            		           		     
 			       </tr>			    
 		       </c:forEach>             
 	        </table>
@@ -254,6 +254,37 @@
 		
 		location.href = "productMain?num=1&bag_type=" + bag_type + "&brand_type=" + brand_type + 
 		  "&keyword=" +  keyword +"#productList";
+		
+	}
+	
+	function delProduct(idx) {
+		
+		if (confirm("해당 제품을 삭제하시겠습니까?")) {
+			
+			$.ajax({
+				url: "delProduct", //호출할 파일명			
+				method: "POST",
+				data:{'idx':idx},
+				dataType: "json", //내가 받아야할 결과 형태가 text, html, xml, json
+				
+				success: function(data){	
+								
+					if (data.result>0) {
+						alert('제품 삭제를 성공하였습니다!');
+						location.href="productMain?num=1&brand_idx=0";
+					}else {
+						alert("DB상 제품정보와 이미지정보가 삭제되었으나, 실제파일이 삭제되지 않았습니다.");
+					}
+					
+		
+										
+				},
+				error:function(){
+					alert("제품삭제 실패! 관리자에게 문의해주세요.");
+				}
+			});
+			
+		}
 		
 	}
 	

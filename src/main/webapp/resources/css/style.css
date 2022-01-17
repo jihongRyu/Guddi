@@ -8363,7 +8363,7 @@ h1, h2, h3, h4, h5,
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center center;
-      height: 450px;
+      height: 550px;
       position: relative;
       z-index: 0; }
       @media (max-width: 1199.98px) {
@@ -8378,7 +8378,7 @@ h1, h2, h3, h4, h5,
         background: #000000;
         opacity: .2; }
       .owl-carousel.home-slider .slider-item .slider-text {
-        height: 450px;
+        height: 550px;
         z-index: 0; }
         @media (max-width: 991.98px) {
           .owl-carousel.home-slider .slider-item .slider-text {

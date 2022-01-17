@@ -100,6 +100,7 @@
 					<textarea class="form-control" name="content" id="content" rows="10" placeholder="상세설명을 입력해주세요."></textarea><br/>
 									
 					<label>이미지 등록</label>
+					<label>*첫번째로 선택된 이미지가 대표이미지입니다.</label>
 					<input class="form-control" type="file" name="files" id="files" style="border:none;"  multiple="multiple"/>	
 										
 					<br><br>
@@ -211,6 +212,8 @@ function makeProductCode(){
 }
 
 function check_input() {
+	
+	 var fileUpload = $("input[type='file']");
 	 
  	
     if (!document.registForm.product_name.value){// login_form 이름을 가진 form 안의 id_val 의 value가 없으면
@@ -255,9 +258,17 @@ function check_input() {
         // 화면 커서 이동
         return;
     }
+    if (parseInt(fileUpload.get(0).files.length)!=4){
+        alert("이미지는 4장 등록해주세요!");
+        // 화면 커서 이동
+        return;
+    }
     
-    document.registForm.submit();
-    // 모두 확인 후 submit()
+    if (confirm("제품을 등록하시겠습니까?")) {
+    	  document.registForm.submit();
+    	    // 모두 확인 후 submit()
+	}
+  
  }
 
 </script>

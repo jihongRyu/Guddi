@@ -131,6 +131,9 @@
 	<if test='answer_flg!=2'>
   	and answer_flg = #{answer_flg}
  	</if>	
+ 	<if test='qnaType!=0'>
+  	and answer_type = #{qnaType}
+ 	</if>	
  	<if test='keyword != null'>
   	and userId LIKE concat('%', #{keyword}, '%')
  	</if>  		 	
@@ -150,10 +153,10 @@
 	</select> 
 	
 	<select id="getQnaAnswerDetail" resultType="com.guddi.shop.dto.ReviewQnaDto">
- 	select qa.content, qa.regdate
-	from qna q inner join qna_answer qa
-	on q.idx = qa.q_idx
-	where qa.q_idx = #{idx}	 	
+ 	select idx ,content, userId, regdate
+	from qna_answer
+	where q_idx = #{idx}
+	and del_flg=0	 	
 	</select> 
 	
 	<select id="getQnaType" resultType="com.guddi.shop.dto.ReviewQnaDto">

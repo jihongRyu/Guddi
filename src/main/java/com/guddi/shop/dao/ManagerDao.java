@@ -31,13 +31,43 @@ public interface ManagerDao {
 	ArrayList<ProductDto> productList(PageDto dto);
 
 	void doUpdateProduct(ProductDto dto);
+
+	int delImage(int photoNum, int idx);
 	//관리자페이지 제품리스트, 제품정보 수정 관련  End ryujihong 2022.01.13
 	
 	//관리자페이지 제품등록 Start ryujihong 2022.01.14
 	void doRegistProduct(ProductDto dto);	
 
 	int getU_idx(String userId);
+	
+	int getPhoto_num(int idx);
 
 	int doRegistPhoto(ProductDto pdto);
 	//관리자페이지 제품등록 End ryujihong 2022.01.14
+	//관리자페이지 제품리스트, 제품정보 수정 관련  Start ryujihong 2022.01.14
+	void updatePhotoNum(int newPhotoNum, int oriPhotoNum);
+
+	void updateImageOrder(int newOrder, String newFileName);
+	//관리자페이지 제품리스트, 제품정보 수정 관련  End ryujihong 2022.01.14
+	
+	//2022.01.15 유지홍 제품 삭제,관리자 Qna 관련 소스 Start
+	int delProductInfo(String idx);
+	
+	int registQnaAnswer(int idx, String answer, String userId);
+	
+	void updateAnswerFlg(int idx);
+
+	void doUpdateAnswer(String content, String userId, int q_idx);
+
+	void doDelAnswer(String userId, int a_idx);
+	
+	
+	//2022.01.15 유지홍 제품 삭제, 관리자 Qna 관련 소스 End
+
+	
+	
+	
+	
+
+
 }

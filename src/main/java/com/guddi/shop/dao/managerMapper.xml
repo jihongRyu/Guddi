@@ -32,7 +32,7 @@
 	</select>
 	
 	<select id="productImageInfo" resultType="com.guddi.shop.dto.ProductDto">
-		select p_idx, b_idx, oriFileName,newFileName, photo_num from product_photo
+		select p_idx, b_idx, oriFileName, newFileName, photo_num from product_photo
 		where b_idx = #{idx}
 		order by photo_num asc
 	</select>
@@ -73,17 +73,30 @@
  	limit #{displayPost}, #{postNum}
 	</select>
 	<!-- 관리자 제품내역 관련 Ryujihong 2022.01.12 End -->
-	<!-- 관리자 제품 정보 수정 관련 Ryujihong 2022.01.12 Start -->
+	
+	<!-- 관리자 제품 정보 수정 관련 Ryujihong 2022.01.14 Start -->
 	<update id="doUpdateProduct">
 		UPDATE product SET product_name = #{product_name}, brand_name = #{brand_name}, bag_type=#{bag_type} 
 		, sell_flg = #{sell_flg}, new_flg = #{new_flg}, product_code = #{product_code}, product_content =#{product_content} 
 		,price = #{price} WHERE idx = #{idx}
 	</update>
-	<!-- 관리자 제품 정보 수정 관련 Ryujihong 2022.01.12 End -->
+	
+	<delete id="delImage">
+		delete from product_photo where photo_num= #{param1} and b_idx=#{param2}
+	</delete>
+	
+	<update id="updateImageOrder">
+		update product_photo set photo_num = #{param1} where newFileName = #{param2}
+	</update>
+	<!-- 관리자 제품 정보 수정 관련 Ryujihong 2022.01.14 End -->
 	
 	<!--관리자페이지 제품등록 Start ryujihong 2022.01.14 -->
 	<select id="getU_idx" resultType="int">
 		select idx from member where userId = #{userId}
+	</select>
+	
+	<select id="getPhoto_num" resultType="int">
+		select count(*) from product_photo where b_idx = #{idx}
 	</select>
 	
 	<insert id="doRegistProduct" 
@@ -100,7 +113,32 @@
 		insert into product_photo (newFileName, oriFileName , b_idx, photo_num, u_idx) 
 		values (#{newFileName}, #{oriFileName}, #{b_idx}, #{photo_num}, #{u_idx})
 	</insert>
-	<!-- 관리자페이지 제품등록 End ryujihong 2022.01.14 -->
 	
+	<update id="updatePhotoNum">
+		update product_photo set photo_num = #{param1} where photo_num = #{param2}
+	</update>
+	<!-- 관리자페이지 제품등록 End ryujihong 2022.01.14 -->
+	<!-- 2022.01.15 유지홍 제품 삭제, 관리자 Qna 관련 소스 Start ryujihong 2022.01.14 -->
+	<delete id="delProductInfo" >
+		delete from product where idx = #{idx}
+	</delete>
+	
+	<insert id="registQnaAnswer">
+		insert into qna_answer (q_idx, content, userId, del_flg) values(#{param1},#{param2},#{param3}, 0);
+	</insert>
+	
+	<update id="updateAnswerFlg">
+		update qna set answer_flg = 1 where idx = #{idx}
+	</update>
+	
+	<update id="doUpdateAnswer">
+		update qna_answer set content = #{param1}, userId = #{param2} where q_idx = #{param3}
+	</update>
+	
+	<update id="doDelAnswer">
+		update qna_answer set del_flg = 1, userId = #{param1} where idx = #{param2}
+	</update>
+	
+	<!-- 2022.01.15 유지홍 제품 삭제, 관리자 Qna 관련 소스 End ryujihong 2022.01.14 -->
 
 </mapper>
