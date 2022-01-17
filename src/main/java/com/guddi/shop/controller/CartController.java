@@ -180,6 +180,32 @@ public class CartController {
 		}
 		// 2022.01.17 end - 송승혁
 		
+		@RequestMapping(value = "/doOrder", method = RequestMethod.GET)
+		public String doOrder(Model model , HttpSession session, @RequestParam HashMap<String, String> params) {
+			logger.info("doOrder 컨트롤러 이동 {}", params);
+			String userIdsession = (String) session.getAttribute("userId");
+			logger.info("userIdsession {}", userIdsession);
+			String userName = params.get("userName");
+			String zipcode = params.get("zipcode");
+			String address = params.get("address");
+			String address_detail = params.get("address_detail");
+			String email = params.get("email");
+			String phone = params.get("phone");
+			String totalPriceFinal = params.get("totalPriceFinal");
+			String quantityFinal = params.get("quantityFinal");
+			String productNameFinal = params.get("productNameFinal");
+			logger.info("userName :{}", userName);
+			logger.info("zipcode :{}", zipcode);
+			logger.info("address :{}", address);
+			logger.info("address_detail :{}", address_detail);
+			logger.info("email :{}", email);
+			logger.info("phone :{}", phone);
+			logger.info("totalPriceFinal :{}", totalPriceFinal);
+			logger.info("quantityFinal :{}", quantityFinal);
+			logger.info("productNameFinal :{}", productNameFinal);
+			//service.doOrder(params);
+			return "cart/completeOrder";
+		}
 	
 }
 
