@@ -30,7 +30,7 @@
 	}
 </style>
 <body>
-
+<jsp:include page="/WEB-INF/views/include/header.jsp"/>
 
 <section class="ftco-section contact-section bg-light">
   <div class="container">
@@ -90,7 +90,7 @@
 			  </div>
 			  <div class="form-group">
 			    <label for="inputMobile">생년월일</label>
-			    <input type="tel" class="form-control" id="inputBirth" name="birth"  placeholder="ex)20220101">
+			    <input type="tel" class="form-control" id="inputBirth" name="birthday"  placeholder="ex)20220101">
 			    <font name="bdlengthcheck" size="2" color="red"></font> 
 			  </div>
 			   <div class="form-group">
@@ -103,12 +103,12 @@
 			  <div class="form-group">
 			    <label for="inputtelNO">개인정보이용 동의</label>
 			    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			    <input type="checkbox" class="mr-2" id="checkbox" name = "checkbox" value="">동의합니다.&nbsp;(비동의시 회원가입 불가)
+			    <input type="checkbox" class="mr-2" id="checkbox" name = "personInfo_flg" value="1">동의합니다.&nbsp;(비동의시 회원가입 불가)
 			  </div>
 			  <div class="form-group">
 			    <label for="inputtelNO">마케팅 정보수신 동의</label>
 			    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			    <input type="checkbox" class="mr-2" id="marketing" name = "marketing" value="">동의합니다.
+			    <input type="checkbox" class="mr-2" id="marketing" name = "marketing_flg" value="1">동의합니다.
 			  </div>	
 	          <div class="form-group text-center">
 	            <input type="button" value="회원가입" class="btn btn-primary py-3 px-5" onclick="check_input()">
@@ -138,6 +138,9 @@
 <script src="resources/js/google-map.js"></script>
 <script src="resources/js/main.js"></script>
 
+
+<jsp:include page="/WEB-INF/views/include/footer.jsp"/>
+
 <!-- 우편번호 찾기 라이브러리 -->
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script> 	
 	
@@ -147,6 +150,24 @@ $('#certify').hide();
 $('#certifyButton').hide();
 
 var idcheck_flg;
+
+//개인정보이용, 마케팅 정보 수신동의 체크확인
+$(function(){
+	$('#checkbox').click(function(){
+		
+		var check = $('#checkbox').val();
+		console.log("개인정보 동의 : ",check);
+	});
+});
+
+$(function(){
+	$('#marketing').click(function(){
+		
+		var marketing = $('#marketing').val();
+		console.log("마케팅정보 수신동의 : ",marketing);
+	});
+});
+
 
 //아이디 중복체크	
 	function goIdCheck(){
@@ -158,6 +179,13 @@ var idcheck_flg;
 		console.log("userId : "+ userId);
 		console.log("idCheck : "+ idCheck);
 		
+		//아이디 미입력
+		if(!document.MemberWriteForm.userId.value){
+			alert("아이디 입력 후 중복확인을 해주세요.");
+			document.MemberWriteForm.userId.focus();
+			return;
+		}
+		
 		$.ajax({
 			url:'idCheck',
 			method:'POST',
@@ -165,6 +193,7 @@ var idcheck_flg;
 			dataType:'json',
 			success:function(data){
 				console.log(data);
+				
 				
 				if(data.result == false){
 					$("#idcheck").val('Y');	
@@ -176,6 +205,8 @@ var idcheck_flg;
 				}else{
 					$('#idcheck').val("N");
 					alert("이미 사용중인 아이디입니다.");
+					document.MemberWriteForm.userId.focus();
+					return;
 				}
 			},
 			error:function(e){
@@ -313,7 +344,8 @@ $(function(){
 		
 	});
 });
-	
+
+//입력확인 경고창
 function check_input(){
 	
 	var password = document.MemberWriteForm.password.value;
@@ -371,9 +403,9 @@ function check_input(){
         document.MemberWriteForm.phone.focus();
         return;
     }
-    if (!document.MemberWriteForm.birth.value){
+    if (!document.MemberWriteForm.birthday.value){
         alert("생년월일을 입력하세요!");
-        document.MemberWriteForm.birth.focus();
+        document.MemberWriteForm.birthday.focus();
         return;
     }
     if(!document.getElementById("checkbox").checked) {

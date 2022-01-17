@@ -9,8 +9,9 @@
 
 	<!--getCartInfo 카트 리스트 불러오기 -->
 	<select id="getCartInfo" resultType="com.guddi.shop.dto.CartDto">
-		
-		select pp.newFileName, c.product_name, p.price, c.quantity, c.price, m.idx , m.userId , m.username , m.phone , m.email , m.zipcode , m.address , m.address_detail 
+
+	
+		select pp.newFileName,c.product_code, c.product_name, p.price, c.quantity, c.price, m.idx , m.userId , m.username , m.phone , m.email , m.zipcode , m.address , m.address_detail 
 		, m.birthday , m.personInfo_flg , m.marketing_flg , m.mem_flg , m.delete_date , m.regdate , m.gender, pp.photo_num 
 		from product p inner join cart c
 		on p.product_code = c.product_code 
@@ -19,7 +20,6 @@
 		inner join member m
 		on m.userId = c.userId 
 		where c.userId = #{userId} and pp.photo_num = 1
-		
 	</select>
 	<!--getCartInfo 카트 리스트 불러오기 -->
 	<select id="getCartInfoImg" resultType="com.guddi.shop.dto.CartDto">
@@ -33,6 +33,7 @@
 	
 	</select>
 	
+
 	
 	
 	<!-- delCart-->

@@ -41,7 +41,7 @@
 <section class="ftco-section ftco-degree-bg" id="qnaList">
   <div class="container" >
     <div class="row">      
-      <div class="col-lg-12 ftco-animate" >      
+      <div class="col-lg-12 ftco-animate">      
           <div class="row text-center search-form">
 		   <div class="col-md-4">
 		   		<c:if test="${sessionScope.mem_flg eq 2}">

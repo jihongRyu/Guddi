@@ -33,7 +33,7 @@
 	<div class="container">    
 	      <div class="col-md-12 ftco-animate text-center bg-light">
 	      	<p class="breadcrumbs"><span class="mr-2"><a href="./">홈</a></span>/<span>마이페이지</span></p>
-	        <h1 class="mb-0 bread">마이페이지</h1>
+	        <h1 class="mb-0 bread">마이페이지</h1>	     
 	      </div>    
 	</div>
 </section>
@@ -44,7 +44,7 @@
     <div class="row">
       <div class="col-lg-12 ftco-animate">
 		  <form name = "mform" id = "mform" method="post">	                
-		      <div class="myPage-table table-striped ">		        
+		      <div class="myPage-table table-striped">		        
 		        <b><font size="3" color="BLACK">${info.username}</font>님의 회원 정보</b>        
 		        <br><br>		                       
 		        <table>
@@ -85,6 +85,7 @@
 				
 		        <button type="button" class="btn btn-primary" onclick="location.href='./'">뒤로</button>
 		        <button type="button" class="btn btn-primary" onclick="location.href='checkPassword?userId=${info.userId}'">정보수정하기</button>
+		        <button type="button" class="btn btn-primary" onclick="location.href='completeOrder/'">주문완료확인</button>
 		        <%-- <button type="button" id="btnUpdate" class="btn btn-primary">정보수정하기</button> --%>	    	
 		    </div>
    		</form>         

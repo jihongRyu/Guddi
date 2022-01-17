@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.guddi.shop.dao.MemberDao;
 import com.guddi.shop.dto.CartDto;
@@ -262,6 +264,8 @@ public class MemberService {
 		return dao.getCart(userId);
 	}*/
 
+
+
 	//카트 수 가져오기 end yonghyeon 2022.01.11
 
 //	public void cartupdate(int quantity, String product_code, String userId) {
@@ -269,6 +273,7 @@ public class MemberService {
 //		logger.info("service : "+quantity+product_code+userId);
 //		
 //	}
+
 
 
 	//회원가입 도연 start 2022.01.10
@@ -296,16 +301,21 @@ public class MemberService {
 		dto.setZipcode(params.get("zipcode"));
 		dto.setAddress(params.get("address"));
 		dto.setAddress_detail(params.get("address_detail"));
-		dto.setMem_flg(1);
+		dto.setBirthday(params.get("birthday"));
 		dto.setGender(params.get("gender"));
+		dto.setPersonInfo_flg(Integer.parseInt(params.get("personInfo_flg")));
+		dto.setMarketing_flg(Integer.parseInt(params.get("marketing_flg")));
+		dto.setMem_flg(1);
 		
 		logger.info("회원가입 정보 : {}"
-				, params.get("userId")+"/"+params.get("password")+"/"+params.get("username")+"/"+params.get("email")+"/"+params.get("zipcode")+"/"+params.get("address")+"/"+params.get("address_detail")+"/"+params.get("gender"));
+				, params.get("userId")+"/"+params.get("password")+"/"+params.get("username")+"/"+params.get("email")
+				+"/"+params.get("zipcode")+"/"+params.get("address")+"/"+params.get("address_detail")
+				+"/"+params.get("birthday")+"/"+params.get("gender")+"/"+params.get("personInfo_flg")+"/"+params.get("marketing_flg"));
 			
 		dao.write(dto);
 		
 	}
-	//회원가입  도연 end 2022.01.12
+//회원가입  도연 end 2022.01.12
 
 
 	public String doFindMemberId(String name, String email) {
@@ -352,4 +362,6 @@ public class MemberService {
 
 	
 	
+
+
 }

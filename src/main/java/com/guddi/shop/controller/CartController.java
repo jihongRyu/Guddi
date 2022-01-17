@@ -1,8 +1,10 @@
 package com.guddi.shop.controller;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -19,12 +21,16 @@ import com.guddi.shop.dao.CartDao;
 import com.guddi.shop.dto.CartDto;
 import com.guddi.shop.service.CartService;
 
+
+
 @Controller
 public class CartController {
-
+	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
+
 	@Autowired CartService service;
 	@Autowired CartDao dao;
+
 	
 	// =====cart controller 추가하기 수정 START YuSeonhwa===== 220112
 	
@@ -43,15 +49,13 @@ public class CartController {
 		logger.info("cart 페이지 요청");
 		String userId = (String) session.getAttribute("userId");// 로그인 미완성으로 아이디를 session에 그냥 넣어줌 - 실행했는데 아이디가 넘어가지 않는다. 
 		logger.info("userId : {}", userId);
+		
 		if (userId!=null) {
 			ArrayList<CartDto> list = service.getCartInfo(userId);
-			
-			//ArrayList<CartDto> listImg = service.getCartInfoImg(userId);
-			
-			logger.info("상품코드 : {}",list.get(0).getProduct_name());
+		
+			//ArrayList<CartDto> listImg = service.getCartInfoImg(userId);					
 			model.addAttribute("list", list);
-			//model.addAttribute("listImg", listImg);
-			
+			//model.addAttribute("listImg", listImg);			
 			model.addAttribute("userId", userId);
 		}
 		return "cart/userCart";
@@ -80,14 +84,14 @@ public class CartController {
 				
 		return map;
 	}
-	@RequestMapping(value = "cartupdate", method = RequestMethod.POST)
+	@RequestMapping(value = "/cartupdate", method = RequestMethod.POST)
 	public String cartupdate(Model model , HttpSession session,@RequestParam int quantity,@RequestParam String product_code,@RequestParam String userId) {
 		logger.info("cart/update");
 		
 		CartDto dto = new CartDto();
 		logger.info(quantity+"/"+product_code+"/"+userId);
 		String userIdsession = (String) session.getAttribute("userId");
-		//if(dto.getUserId() ==userIdsession) { // 세션에있는 id와 받아온 id가 같으면 서비스실행
+		//if(dto.getUserId() == userIdsession) { // 세션에있는 id와 받아온 id가 같으면 서비스실행
 			dto.setQuantity(quantity);
 			dto.setProduct_code(product_code);
 			dto.setUserId(userId);
@@ -100,6 +104,15 @@ public class CartController {
 		
 		
 		return "redirect:/cart";
+	}
+	
+	@RequestMapping(value = "/completeOrder", method = RequestMethod.GET)
+	public String completeOrder(Model model, HttpSession session ) {
+
+		logger.info("주문완료페이지 요청");
+
+
+		return "cart/completeOrder";
 	}
 	
 	
@@ -123,14 +136,15 @@ public class CartController {
 	
 	//order 추가 21-01-14
 
-	@RequestMapping(value = "cart/toOrder", method = RequestMethod.GET)
+	/*
+	@RequestMapping(value = "toOrder", method = RequestMethod.GET)
 	public String toOrder(Model model) {
 		logger.info("toOrder Click");
 		
 		
 		return "cart/toOrder";
 	}
-	
+	*/
 	@RequestMapping(value = "/checkout", method = RequestMethod.POST)
 	public HashMap<String, Object> toOrder(Model model,HashMap<String, Object> checkoutmap,@RequestParam String userId, @RequestParam String checkoutPrice) {
 		
@@ -166,7 +180,31 @@ public class CartController {
 	
 	
 	
+	// 체크박스 실험 ysh START 220117
+	@RequestMapping(value = "/test_check", method = RequestMethod.POST)
+	@ResponseBody
+	public void testCheck(HttpServletRequest request) {
+	   
+		String[] valueArrTest = request.getParameterValues("valueArrTest");
+		for (String c : valueArrTest) {
+            logger.info(c);
+        }
+	    
+	    
+	    
+	}
+	@RequestMapping(value = "/checkout2", method = RequestMethod.POST)
+	public ArrayList<String> checkout2(Model model,@RequestParam(value = "valueArrTest[]") ArrayList<String> valueArr) {
+		
+		logger.info("checkout");
+		
+       
+		return valueArr;
+	}
+
 	
+	
+	// 체크박스 실험 ysh END 220117
 	
 	
 	
@@ -228,15 +266,6 @@ public class CartController {
 		}
 		// 2022.01.17 end - 송승혁
 		
-		@RequestMapping(value = "/doOrder", method = RequestMethod.GET)
-		public String doOrder(Model model , HttpSession session, @RequestParam HashMap<String, Object> params) {
-			logger.info("doOrder 컨트롤러 이동 {}", params);
-			//model.addAttribute("orderList", dto);
-			String name = (String) params.get("userName");
-			System.out.println(name);
-			//int success = service.doOrder(params);
-			return null;
-		}
 	
 }
 

@@ -1,5 +1,6 @@
 package com.guddi.shop.service;
 
+
 import java.util.ArrayList;
 
 import org.slf4j.Logger;
@@ -10,12 +11,15 @@ import org.springframework.stereotype.Service;
 import com.guddi.shop.dao.CartDao;
 import com.guddi.shop.dto.CartDto;
 
+
+
 @Service
 public class CartService {
-
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	
 	@Autowired CartDao dao;
+
 	
 	public ArrayList<CartDto> getCartInfo(String userId) {
 		logger.info("service"+userId);
