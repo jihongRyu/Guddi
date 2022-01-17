@@ -38,5 +38,16 @@ public class EtcController {
 
 		return "etc/newFlgCategory";
 	}
+	
+	@RequestMapping(value = "/toBrandCategory", method = RequestMethod.GET)
+	public String toBrandCategory(Model model , HttpSession session) {
+		logger.info("toBrandCategory 이동요청");
+		
+		return "etc/brandCategory";
+	}
+	
+	
+	
+	
 
 }
