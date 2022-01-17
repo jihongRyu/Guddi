@@ -6,6 +6,8 @@ import com.guddi.shop.dto.EtcDto;
 
 public interface EtcDao {
 
+	ArrayList<EtcDto> getNewFlgInfo();
+
 	
 	
 

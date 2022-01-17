@@ -15,6 +15,7 @@ public class EtcDto {
 //	type_name varchar(30) 종류명
 //	brand_code varchar(10) 브랜드 코드 :  제품코드 생성을 위해 필요
 //	type_code varchar(10) 가방 코드 : 제품코드 생성을 위해 필요
+//use_flg
 	
 
 	private int brand_idx;

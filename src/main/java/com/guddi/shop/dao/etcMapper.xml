@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC	"-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
+
+
+<mapper namespace="com.guddi.shop.dao.EtcDao">
+
+	<select id="getNewFlgInfo" resultType="com.guddi.shop.dto.EtcDto">
+		select idx, use_flg, regdate, newname from newflg;
+	</select>
+	
+
+</mapper>
