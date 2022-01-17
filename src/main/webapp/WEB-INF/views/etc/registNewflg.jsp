@@ -24,7 +24,7 @@
 
 function doRegist() {
 	
-	if (confirm("이미지를 등록하시겠습니까?")) {			
+	if (confirm("flg를 등록하시겠습니까?")) {			
 		
 		var newname = $("#newname").val();
 		

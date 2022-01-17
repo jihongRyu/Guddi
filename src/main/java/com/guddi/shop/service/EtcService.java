@@ -40,6 +40,23 @@ public class EtcService {
 		// TODO Auto-generated method stub
 		return dao.getUseFlgInfo();
 	}
+
+	public ArrayList<EtcDto> getSellFlgInfo() {
+		// TODO Auto-generated method stub
+		return dao.getSellFlgInfo();
+	}
+
+	public int doRegistSellFlg(String sellname) {
+		// TODO Auto-generated method stub
+		int idx = dao.getSellFlgIdx();
+		int newIdx = idx+1;
+		return dao.doRegistSellFlg(newIdx, sellname);
+	}
+
+	public int doUpdateSellUseFlg(int use_flg, int idx) {
+		// TODO Auto-generated method stub
+		return dao.doUpdateSellUseFlg(use_flg, idx);
+	}
 	
 	
 	// 신상여부 카테고리 관련  유지홍 2022.01.17 End

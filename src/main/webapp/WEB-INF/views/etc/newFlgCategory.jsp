@@ -63,7 +63,7 @@
 			        	<th>
 			        		<select name="useFlg" id="useFlg" class="form-control" onchange="changeUseNewflg('${list.idx}',this.value)">
 			        			<c:forEach items="${useFlgList}" var="useFlgList">
-			        				<option <c:if test="${list.use_flg eq useFlgList.idx}">selected</c:if>>${useFlgList.useFlg_name}</option>
+			        				<option value="${useFlgList.idx}" <c:if test="${list.use_flg eq useFlgList.idx}">selected</c:if>>${useFlgList.useFlg_name}</option>
 			        			</c:forEach>
 			        		</select>			        	
 			        	</th>
@@ -112,7 +112,7 @@ function registNewflg(){
  
 
 
-function changeUseNewflg(idx, use_flgName){	
+function changeUseNewflg(idx, use_flg){	
 	
 	if (confirm("해당 Flg를 사용하시겠습니까?")) {
 		
@@ -120,7 +120,7 @@ function changeUseNewflg(idx, use_flgName){
 			url: "doUpdateUseFlg", //호출할 파일명			
 			method: "POST",
 			data:{'idx':idx,
-				  'use_flgName':use_flgName
+				  'use_flg':use_flg
 				},
 			dataType: "json", //내가 받아야할 결과 형태가 text, html, xml, json
 			

@@ -183,23 +183,29 @@ public class CartController {
 	// 체크박스 실험 ysh START 220117
 	@RequestMapping(value = "/test_check", method = RequestMethod.POST)
 	@ResponseBody
-	public void testCheck(HttpServletRequest request) {
+	public String testCheck(Model model,HttpServletRequest request) {
 	   
+		
+
+		
+	    logger.info("test_check");
+	
+	    String[] valueArrTest = request.getParameterValues("valueArrTest");
+	
+    	
+		return "cart/toOrder";
+	    
+	}
+	@RequestMapping(value = "/checkout2", method = RequestMethod.POST)
+	public String[] checkout2(HttpServletRequest request) {
+		
+		logger.info("checkout");
 		String[] valueArrTest = request.getParameterValues("valueArrTest");
 		for (String c : valueArrTest) {
             logger.info(c);
         }
-	    
-	    
-	    
-	}
-	@RequestMapping(value = "/checkout2", method = RequestMethod.POST)
-	public ArrayList<String> checkout2(Model model,@RequestParam(value = "valueArrTest[]") ArrayList<String> valueArr) {
 		
-		logger.info("checkout");
-		
-       
-		return valueArr;
+		return valueArrTest;
 	}
 
 	

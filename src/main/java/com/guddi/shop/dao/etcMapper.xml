@@ -15,8 +15,7 @@
 	<select id="getUseFlgInfo" resultType="com.guddi.shop.dto.EtcDto">
 		select idx, regdate, useFlg_name from useFlg;
 	</select>
-	
-	
+		
 	<select id="getNewFlgIdx" resultType="int">
 		select idx from newFlg
 		order by idx desc limit 1;
@@ -30,6 +29,22 @@
 		update newflg set use_flg=#{param1} where idx = #{param2}
 	</update>
 
+	<select id="getSellFlgInfo" resultType="com.guddi.shop.dto.EtcDto">
+		select idx, use_flg, regdate, sellname from sellflg;
+	</select>
+	
+	<select id="getSellFlgIdx" resultType="int">
+		select idx from sellflg
+		order by idx desc limit 1;
+	</select>
+	
+	<insert id="doRegistSellFlg">
+		insert into sellflg (idx, sellname, use_flg) values (#{param1},#{param2},1)
+	</insert>
+	
+	<update id="doUpdateSellUseFlg">
+		update sellflg set use_flg=#{param1} where idx = #{param2}
+	</update>
 	
 	<!-- 신상여부 카테고리 관련  유지홍 2022.01.17 End -->
 
