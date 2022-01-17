@@ -186,21 +186,21 @@ public class CartController {
 	@ResponseBody
 	public void testCheck(HttpServletRequest request) {
 	   
-		String[] valueArrTest = request.getParameterValues("valueArrTest");
-		for (String c : valueArrTest) {
-            logger.info(c);
-        }
+		
 	    
 	    
 	    
 	}
 	@RequestMapping(value = "/checkout2", method = RequestMethod.POST)
-	public ArrayList<String> checkout2(Model model,@RequestParam(value = "valueArrTest[]") ArrayList<String> valueArr) {
+	public String[] checkout2(HttpServletRequest request) {
 		
 		logger.info("checkout");
+		String[] valueArrTest = request.getParameterValues("valueArrTest");
+		for (String c : valueArrTest) {
+            logger.info(c);
+        }
 		
-       
-		return valueArr;
+		return valueArrTest;
 	}
 
 	
