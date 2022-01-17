@@ -76,5 +76,7 @@ public interface MemberDao {
 
 	ArrayList<CartDto> getTotalPrice(String userId);
 
+	int HeadergetCart(String userId);
+
 
 }

@@ -40,7 +40,7 @@ public class CartController {
 	@RequestMapping(value = "/cart", method = RequestMethod.GET)
 	public String cart(Model model , HttpSession session) {
 		logger.info("cart 페이지 요청");
-		String userId = "liujihong";// 로그인 미완성으로 아이디를 session에 그냥 넣어줌 - 실행했는데 아이디가 넘어가지 않는다. 
+		String userId = (String) session.getAttribute("userId");// 로그인 미완성으로 아이디를 session에 그냥 넣어줌 - 실행했는데 아이디가 넘어가지 않는다. 
 		logger.info("userId : {}", userId);
 		if (userId!=null) {
 			ArrayList<CartDto> list = service.getCartInfo(userId);
@@ -67,7 +67,7 @@ public class CartController {
 		logger.info("카트 담기 성공 유무 : {}", result);
 		if (result>0) {			
 			map.put("result", result);		
-			int cartCnt = service.getCart(userId);//카트수 가져오기
+			int cartCnt = service.HeadergetCart(userId);//카트수 가져오기
 			logger.info("카트 수 : {}", cartCnt);
 		}else {
 			map.put("result", 0);		

@@ -258,10 +258,10 @@ public class MemberService {
 	
 	
 	//카트 수 가져오기 Start yonghyeon 2022.01.11
-	public int getCart(String userId) {
+	/*public int getCart(String userId) {
 		logger.info("카트수 찾기 실행! 아이디 : {}", userId);
 		return dao.getCart(userId);
-	}
+	}*/
 	//카트 수 가져오기 end yonghyeon 2022.01.11
 
 
@@ -322,7 +322,13 @@ public class MemberService {
 		// TODO Auto-generated method stub
 		return dao.getTotalPrice(userId);
 	}
+	//카트 수 가져오기 Start yonghyeon 2022.01.14
+	public int HeadergetCart(String userId) {
+		logger.info("카트수 찾기 실행! 아이디 : {}", userId);
+		return dao.HeadergetCart(userId);
+	}
 
+	//카트 수 가져오기 End yonghyeon 2022.01.14
 
 	
 	
