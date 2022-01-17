@@ -49,8 +49,14 @@
     <div class="row">
       <div class="col-lg-12 ftco-animate">		                 
 		     <div class="">		        
-		        <b><font size="3" color="BLACK">제품이미지수정</font></b>   
-		        <br><br>		                       
+		        <b><font size="3" color="BLACK">제품이미지수정</font></b><br><br>   
+		        <button type="button" class="btn btn-primary" onclick="addImage()" id="addButton">이미지 추가하기</button>		        
+		        <input type="hidden" id="idx" name="idx" value="${idx}">
+		        <button type="button" class="btn btn-primary" onclick="orderChange()" id="orderButton">순서변경하기</button>		        
+		        <button type="button" class="btn btn-primary" onclick="location.href='productMain?num=1&brand_idx=0'">돌아가기</button>			
+		        <br>
+		        <font id="warn" size="2" color="red"></font>
+		        <br>                       
 		        <form method="post" action="doUpdateImage" name="updateForm" id="updateForm" enctype="multipart/form-data">					
 					<div class="col-md-12 ftco-animate">
 			     		<div class="cart-list">
@@ -58,7 +64,7 @@
 			  			    <thead class="thead-primary">
 			  			      <tr class="text-center">
 			  			        <th>이미지명</th>
-			  			        <th>&nbsp;</th>
+			  			        <th>*첫번째이미지가 대표이미지입니다.</th>
 			  			        <th>순서</th>
 			  			        <th>삭제</th>
 			  			      </tr>			  			     
@@ -70,24 +76,18 @@
 			  			      </tr>
 			  			      </c:if>
 			  			      <c:forEach items="${imageDto}" var="imageList" varStatus="status">
-			  			      	  <input type="hidden" id="newFileName" name="newFileName" value="${imageList.newFileName}">
+			  			      	  <input type="hidden" name="newFileName" value="${imageList.newFileName}">			  			      	  
 				  			      <tr class="text-center">			  			      
 				  			        <td class="product-name"><h3 id="imageName">${imageList.oriFileName}</h3></td>  
 				  			        <td class="image-prod"><div class="img" id="image" style="background-image:url(resources/photo/${imageList.newFileName});"></div></td>	
-				  			        <td class="price"><input type="text" id="photo_num" name="photo_num" value="${status.index + 1}" placeholder="순서를 입력해주세요"></td>				  			        		        
-				  			        <td class="product-remove"><a onClick="delImage('${imageList.photo_num}')"><span class="ion-ios-close"></span></a></td>			  			       
+				  			        <td class="price"><input type="text" id="photo_num" name="photo_num" value="${imageList.photo_num}" placeholder="순서를 입력해주세요"></td>				  			        		        
+				  			        <td class="product-remove"><a href="javascript:void(0);" onclick="delImage('${imageList.photo_num}','${imageList.newFileName}')"><span class="ion-ios-close"></span></a></td>			  			       
 				  			      </tr>
 			  				  </c:forEach>	
 			  			    </tbody>
 			  			  </table>
 			  		  </div>
 			     	</div>
-					<br>				
-					<br><br>
-					<div style="text-align:center;">
-					<button type="button" class="btn btn-primary" onclick="location.href='./'">취소</button>
-		       		<button type="button" class="btn btn-primary" onclick="check_input()">완료</button>			
-					</div>
 				</form>	        		      	
 		    </div>   		       
       </div> <!-- .col-md-8 -->
@@ -130,18 +130,85 @@
 
 <script>
 
-CKEDITOR.replace("content");
+//이미지 수를 가져와 4개인 경우 추가 버튼 비활성화
+var imageNum = "${imageDto.size()}";
+console.log(imageNum);
+if(imageNum == 4){
+	$("#addButton").prop("disabled", true);
+	$('#warn').html("※이미지가 4장이상인 경우, 이미지를 추가할 수 없습니다.");
+};
 
+//이미지 삭제관련
+function delImage(photoNum, newFileName) {
 
-function check_input() {
+	 var idx = "${idx}";	
 	 
- 	
-   
-    
-    document.updateForm.submit();
-    // 모두 확인 후 submit()
- }
+	 if (confirm("해당 이미지를 삭제하시겠습니까?")) {	
+		 alert("이미지는 원칙상 4장을 등록해야합니다. 이미지 재등록을 꼭 해주세요.");		 
+		 location.href = "delImage?photoNum="+photoNum+"&idx="+idx+"&newFileName="+newFileName;
+	}
+};
  
+//이미지 추가창 출력
+function addImage() {	 
+	var win = window.open("addimage", "PopupWin", "width=500,height=200");
+};
+ 
+//순서 변경 버튼 클릭시 실행되는 함수
+function orderChange(){
+	
+	if (confirm("순서를 변경하시겠습니까?")) {
+		
+		var totalNum = $("input[name=photo_num]").length;		
+		var newOrder = new Array(totalNum);
+		var idx = "${idx}";
+		var dupYn;
+		for(var i=0; i<totalNum; i++){                          
+			newOrder[i] = $("input[name=photo_num]").eq(i).val();			
+		}
+		//중복된 순서가 있는지 파악, 중복값이 있으면 경고창 반환 후 함수 종료
+		for(let i = 0; i < newOrder.length; i++) {
+		  const currElem = newOrder[i];
+		  
+		  for(let j = i+1; j < newOrder.length; j++) {
+		    if(currElem === newOrder[j]) {
+		      dupYn = true;
+		      break;
+		    }
+		  }
+		  
+		  if(dupYn)  {
+			alert("순서가 중복됩니다! 확인해주세요.");
+			dupYn = false;
+		    return;
+		  }
+		}
+		
+		var newFileName = new Array(totalNum);
+		for(var i=0; i<totalNum; i++){                          
+			newFileName[i] = $("input[name=newFileName]").eq(i).val();
+		}
+		$.ajax({
+			url: "updateImageOrder", //호출할 파일명
+			traditional : true,
+			data:{'newOrder': newOrder,
+				  'newFileName': newFileName
+				},
+			method: "POST",
+			dataType: "json", //내가 받아야할 결과 형태가 text, html, xml, json
+			
+			success: function(data){
+				alert(data.result); 			
+				location.href="updateProductImage?idx="+idx;
+			},
+			error:function(error){
+				alert("순서 변경 실패! 관리자에게 문의해주세요."); 
+			}
+		});
+		
+	}
+	
+};
  
 
 </script>

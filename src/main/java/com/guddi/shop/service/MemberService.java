@@ -34,17 +34,18 @@ public class MemberService {
 		return dao.qnaSearchCount(dto);
 	}
 
-	public ArrayList<ReviewQnaDto> qnaInfo(int displayPost, int postNum, String keyword, int answer_flg) {
+	public ArrayList<ReviewQnaDto> qnaInfo(int displayPost, int postNum, String keyword, int answer_flg, int qnaType) {
 		// TODO Auto-generated method stub
 		
 		PageDto dto = new PageDto();
 		
 		dto.setAnswer_flg(answer_flg);
+		dto.setQnaType(qnaType);
 		logger.info("getAnswer_flg : {}", dto.getAnswer_flg());
 		dto.setPostNum(postNum);
 		dto.setDisplayPost(displayPost);
 		dto.setKeyword(keyword);
-					
+		logger.info("displayPost : {}", displayPost);	
 		logger.info("postNum : {}", postNum);
 		return dao.qnaInfo(dto);		
 	}
@@ -254,7 +255,13 @@ public class MemberService {
 	
 	
 	
-	
+
+	//카트 수 가져오기 Start yonghyeon 2022.01.11
+	/*public int getCart(String userId) {
+		logger.info("카트수 찾기 실행! 아이디 : {}", userId);
+		return dao.getCart(userId);
+	}*/
+
 	//카트 수 가져오기 end yonghyeon 2022.01.11
 
 //	public void cartupdate(int quantity, String product_code, String userId) {
@@ -300,6 +307,7 @@ public class MemberService {
 	}
 	//회원가입  도연 end 2022.01.12
 
+
 	public String doFindMemberId(String name, String email) {
 		logger.info("아이디 찾기 서비스 이동");
 		return dao.doFindMemberId(name, email);
@@ -325,11 +333,21 @@ public class MemberService {
 		return dao.tempPass(userpass);
 	}
 
-	public int HeadergetCart(String userId) {
+	
+
+
+
+	public  ArrayList<CartDto> getTotalPrice(String userId) {
 		// TODO Auto-generated method stub
+		return dao.getTotalPrice(userId);
+	}
+	//카트 수 가져오기 Start yonghyeon 2022.01.14
+	public int HeadergetCart(String userId) {
+		logger.info("카트수 찾기 실행! 아이디 : {}", userId);
 		return dao.HeadergetCart(userId);
 	}
 
+	//카트 수 가져오기 End yonghyeon 2022.01.14
 
 
 	

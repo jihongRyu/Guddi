@@ -79,11 +79,11 @@
           <li class="nav-item dropdown">
 	          <a class="nav-link dropdown-toggle" href="javascript:void(0);" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">카테고리</a>
 	          <div class="dropdown-menu" aria-labelledby="dropdown04">	         
-	          	<a class="dropdown-item" href="productPageList?brandIdx=0">전체</a>
-	          	<a class="dropdown-item" href="productPageList?brandIdx=1">루이비통</a>
-	            <a class="dropdown-item" href="productPageList?brandIdx=2">루이까또즈</a>
-	            <a class="dropdown-item" href="productPageList?brandIdx=3">구찌</a>
-	            <a class="dropdown-item" href="productPageList?brandIdx=4">생로랑</a>           
+	          	<a class="dropdown-item" href="productPage?num=1&brand_idx=0&bag_type=0">전체</a>
+	          	<a class="dropdown-item" href="productPage?num=1&brand_idx=1&bag_type=0">루이비통</a>
+	            <a class="dropdown-item" href="productPage?num=1&brand_idx=2&bag_type=0">루이까또즈</a>
+	            <a class="dropdown-item" href="productPage?num=1&brand_idx=3&bag_type=0">구찌</a>
+	            <a class="dropdown-item" href="productPage?num=1&brand_idx=4&bag_type=0">생로랑</a>           
 	          </div>
           </li>
           </c:if>         
@@ -99,12 +99,14 @@
 		
 		  <c:if test="${sessionScope.mem_flg eq 2}">
 
-			<li class="nav-item"><a href="productMain?num=1" class="nav-link">제품내역</a></li>
-			<li class="nav-item"><a href="login" class="nav-link">Q&A내역</a></li>
+
+			<li class="nav-item"><a href="productMain?num=1&brand_idx=0" class="nav-link">제품내역</a></li>
+			<li class="nav-item"><a href="qnaPage?qnaNum=1&answer_flg=2&qnaType=0" class="nav-link">Q&A내역</a></li>
 			<li class="nav-item"><a href="login" class="nav-link">리뷰내역</a></li>
 			<li class="nav-item"><a href="login" class="nav-link">주문정보</a></li>
 			<li class="nav-item"><a href="login" class="nav-link">회원목록</a></li>
 			<li class="nav-item"><a href="login" class="nav-link">배너이미지/카테고리관리</a></li>
+
 
 		  </c:if>	
           
@@ -141,7 +143,7 @@
 </body>
 
 <script>
-console.log('${sessionScope.mem_flg}');
+console.log("가져온 카트 수 : '${sessionScope.cartCnt}'");
 
 
 function logout(){	
@@ -165,7 +167,7 @@ function toQna(userid){
 		
 	} else {
 		
-		location.href = "qnaPage?qnaNum=1&answer_flg=2";
+		location.href = "qnaPage?qnaNum=1&answer_flg=2&qnaType=0";
 	}
 	
 	

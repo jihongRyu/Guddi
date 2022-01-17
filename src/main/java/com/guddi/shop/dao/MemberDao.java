@@ -65,6 +65,7 @@ public interface MemberDao {
 	String idCheck(String param);
 	//회원가입 end 2022.01.12
 
+
 	String doFindMemberId(String name, String email);
 
 	String temppasslogin(String userId, String email);
@@ -74,5 +75,8 @@ public interface MemberDao {
 	String tempPass(String userpass);
 
 	int HeadergetCart(String userId);
+
+	ArrayList<CartDto> getTotalPrice(String userId);
+
 
 }

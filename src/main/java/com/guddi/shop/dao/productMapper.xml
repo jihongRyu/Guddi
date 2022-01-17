@@ -8,45 +8,37 @@
 	<!-- 2022.01.13 유지홍 제품 리스트 관련 소스 Start -->
 	<!-- 게시물 총 갯수 + 검색 적용 -->
 	<select id="searchCount" parameterType="com.guddi.shop.dto.PageDto" resultType="int">
- 	select count(idx) from tb_product   	
+ 	select count(idx) from product   	
 	where 1=1
-	<if test='type!=0'>
-  	and product_type = #{type}
+	<if test='brand_type!=0'>
+  	and brand_idx = #{brand_type}
  	</if>	
- 	<if test='searchType.equals("subject")'>
-  	and subject LIKE concat('%', #{keyword}, '%')
+ 	<if test='bag_name!=null'>
+  	and bag_type LIKE concat('%', #{bag_name}, '%')
  	</if> 
- 	<if test='searchType.equals("content")'>
- 	 and content LIKE concat('%', #{keyword}, '%')
+ 	<if test='keyword!=null'>
+ 	 and product_name LIKE concat('%', #{keyword}, '%')
  	</if> 
- 	<if test='searchType.equals("subject_content")'>
- 	and subject LIKE concat('%', #{keyword}, '%') 
-  	or content LIKE concat('%', #{keyword}, '%')
- 	</if> 
+ 	
 	</select>
 	
 	<!-- 목록 + 페이징 + 검색 -->
 	<select id="listPageSearch" parameterType="com.guddi.shop.dto.PageDto" resultType="com.guddi.shop.dto.ProductDto">
- 	select tp.idx idx, tp.product_type product_type, tp.subject subject
-			,tp.price price, tp.salePrice salePrice
-			,tpp.newFileName newFileName
-	from tb_product tp inner join tb_product_photo tpp
+ 	 select tp.idx idx, tp.brand_idx brand_idx, tp.brand_name brand_name, tp.product_name product_name, 
+			tp.price price	,tpp.newFileName newFileName, tpp.photo_num photo_num
+	from product tp inner join product_photo tpp
 	ON tp.idx = tpp.b_idx	
-	where 1=1
-	<if test='type!=0'>
-  	and product_type = #{type}
+	where photo_num = 1
+	<if test='brand_type!=0'>
+  	and brand_idx = #{brand_type}
  	</if>	
- 	<if test='searchType.equals("subject")'>
-  	and subject LIKE concat('%', #{keyword}, '%') 
-  	</if> 
- 	<if test='searchType.equals("content")'>
-  	and content LIKE concat('%', #{keyword}, '%')
+ 	<if test='bag_name!=null'>
+  	and bag_type LIKE concat('%', #{bag_name}, '%')
  	</if> 
- 	<if test='searchType.equals("subject_content")'>
-  	and subject LIKE concat('%', #{keyword}, '%') 
-  	or content LIKE concat('%', #{keyword}, '%')
- 	</if>  	
- 	order by idx desc
+ 	<if test='keyword!=null'>
+ 	 and product_name LIKE concat('%', #{keyword}, '%')
+ 	</if> 
+ 	order by tp.idx desc
  	limit #{displayPost}, #{postNum}
 	</select> 
 	<!-- 2022.01.13 유지홍 제품 리스트 관련 소스 end -->

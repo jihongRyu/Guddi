@@ -43,7 +43,14 @@
     <div class="row">      
       <div class="col-lg-12 ftco-animate" >      
           <div class="row text-center search-form">
-		   <div class="col-md-4">		     
+		   <div class="col-md-4">
+		   		<c:if test="${sessionScope.mem_flg eq 2}">
+		   		<select name="qnaType" class="form-control" onchange="changeQnAListByCategory(this.value)">
+		    		<c:forEach var="list" items="${getQnaTypeInfo}">
+		    			<option value="${list.idx}" <c:if test="${qnaType eq list.idx}">selected</c:if>>${list.typename}</option>	
+		    		</c:forEach>		
+				</select>   
+				</c:if>  
 		   </div>
 		   <div class="col-md-4">
 		      <div class=" mb-4">
@@ -64,7 +71,9 @@
 		   </div>
 		 </div>
 		 <div class="myPage-table table-striped" >
+		   <c:if test="${sessionScope.mem_flg eq 1}">
 		   <button class="btn btn-primary mb-4" style="float:right;" onclick="registQna()">Q&A등록</button>	
+		   </c:if>
 		   <table>
 		        <tr style="background-color:#212529;color:white;">
 		        	<th>문의번호</th>
@@ -83,7 +92,7 @@
 			       <tr>		       
 			        	<th>${list.idx}</th>
 			        	<th>${list.answer_type}</th>
-			        	<th><a href="qnaDetail?idx=${list.idx}">${list.subject}</a></th>
+			        	<th><a href="javascript:void(0);" onclick="toDetail('${list.idx}','${list.userId}')">${list.subject}</a></th>
 			        	<th>${list.userId}</th>	
 			        	<th>${list.regdate}</th>
 			        	<th>${list.answer_flg}</th>	             		           		     
@@ -94,18 +103,21 @@
 		      <div class="block-27">
 		          <ul>
 			      <c:if test="${qnaPage.prev}">
-			      <li><a href="qnaPage?qnaNum=${qnaPage.startPageNum - 1}&answer_flg=${qnaAnswer_flg}#qnaList">&lt;</a></li>
+			      <li><a href="qnaPage?qnaNum=${qnaPage.startPageNum - 1}&answer_flg=${qnaAnswer_flg}
+			      &qnaType=${qnaType}#qnaList">&lt;</a></li>
 			      </c:if>
 			      <c:forEach begin="${qnaPage.startPageNum}" end="${qnaPage.endPageNum}" var="num">
 			      <c:if test="${qnaSelect == num}">
 			      <li class="active"><span>${num}</span></li>
 			      </c:if>
 			      <c:if test="${qnaSelect != num}">
-			      <li><a href="qnaPage?qnaNum=${num}&answer_flg=${qnaAnswer_flg}#qnaList">${num}</a></li>			     
+			      <li><a href="qnaPage?qnaNum=${num}&answer_flg=${qnaAnswer_flg}
+			      &qnaType=${qnaType}#qnaList">${num}</a></li>			     
 			      </c:if>    		
 			      </c:forEach>
 			      <c:if test="${qnaPage.next}">
-			      <li><a href="qnaPage?qnaNum=${qnaPage.endPageNum + 1}&answer_flg=${qnaAnswer_flg}#qnaList">&gt;</a></li>
+			      <li><a href="qnaPage?qnaNum=${qnaPage.endPageNum + 1}&answer_flg=${qnaAnswer_flg}
+			      &qnaType${qnaType}=#qnaList">&gt;</a></li>
 			      </c:if>
 			    </ul>
 		      </div>
@@ -140,7 +152,6 @@
 <script>
 
 
-
 var msg = "${msg}";
 
 if(msg != ""){
@@ -154,26 +165,39 @@ function delReview(idx) {
 		location.href='delReview?idx='+idx;
 	}
 	
-}
+};
+
+function changeQnAListByCategory(qnaType){	
+	
+	var qnaType = qnaType;
+	var answer_flg = '${qnaAnswer_flg}';
+	var keyword = '${qnaKeyword}';
+	
+	location.href="qnaPage?qnaNum=1&answer_flg="+answer_flg+"&qnaType="+qnaType+"&keyword="+keyword+"#qnaList";	
+	
+};
 
 
 function changeQnAListByFlg(answer_flg){	
 	
+	var qnaType = '${qnaType}';
 	var answer_flg = answer_flg;
+	var keyword = '${qnaKeyword}';
 	
-	location.href="qnaPage?qnaNum=1&answer_flg="+answer_flg+"#qnaList";
+	location.href="qnaPage?qnaNum=1&answer_flg="+answer_flg+"&qnaType="+qnaType+"&keyword="+keyword+"#qnaList";	
 	
-}
+};
 
 
 function changeQnAListById(){
 	
-	var answer_flg = ${qnaAnswer_flg};
+	var qnaType = '${qnaType}';
+	var answer_flg = '${qnaAnswer_flg}';
 	var keyword = $('#keyword').val();	
 	
-	location.href="qnaPage?qnaNum=1&answer_flg="+answer_flg+"&keyword="+keyword+"#qnaList";	
+	location.href="qnaPage?qnaNum=1&answer_flg="+answer_flg+"&qnaType="+qnaType+"&keyword="+keyword+"#qnaList";	
 	
-}
+};
 
 function registQna(){	
 	
@@ -183,6 +207,23 @@ function registQna(){
 		
 	}
 	
+	
+};
+
+function toDetail(idx, writer) {
+	
+	var userId = "${sessionScope.userId}";		
+	var mem_flg = "${sessionScope.mem_flg}";
+
+	
+	if (userId!=writer) {	
+		if (mem_flg==1) {
+			alert("타인의 문의내용을 볼 수 없습니다!");
+			return;
+		}				
+	}
+	
+	location.href="qnaDetail?idx="+idx;
 	
 }
 

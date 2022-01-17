@@ -33,8 +33,8 @@ public class MemberController {
 	
 	//Q&A Start ryujihong 2022.01.10
 	@RequestMapping(value = "/qnaPage", method = RequestMethod.GET)
-	public String qnaPage(Model model, @RequestParam("qnaNum") int qnaNum, @RequestParam("answer_flg") int answer_flg, 
-			@RequestParam(value = "keyword",required = false, defaultValue = "")String keyword ) {		
+	public String qnaPage(Model model, @RequestParam("qnaNum") int qnaNum, @RequestParam("answer_flg") int answer_flg,
+			@RequestParam("qnaType") int qnaType, @RequestParam(value="keyword",required=false,defaultValue="")String keyword ) {		
 		
 		logger.info("qnaPage 요청");		
 		PageDto qnaPage = new PageDto();
@@ -46,11 +46,11 @@ public class MemberController {
 		logger.info("qnaPage.getCount() : {}",qnaPage.getCount());
 		
 		ArrayList<ReviewQnaDto> qnaList = 
-				service.qnaInfo(qnaPage.getDisplayPost(), qnaPage.getPostNum(), keyword, answer_flg);
+				service.qnaInfo(qnaPage.getDisplayPost(), qnaPage.getPostNum(), keyword, answer_flg, qnaType);
 		
 		//문의타입 한글화
 		ArrayList<ReviewQnaDto> getQnaTypeInfo = service.getQnaType();
-				
+		
 		//숫자를 글자로 변경. ex) 1--->상품
 		for (int i = 0; i < qnaList.size(); i++) {
 			int type = Integer.parseInt(qnaList.get(i).getAnswer_type());
@@ -74,13 +74,18 @@ public class MemberController {
 			}	
 		}		
 		
+		
 		model.addAttribute("qnaList", qnaList); //리스트 보내기
 		model.addAttribute("qnaPage", qnaPage); //페이징처리
 		model.addAttribute("qnaSelect", qnaNum);//페이징처리		  
 		model.addAttribute("qnaKeyword", keyword); //검색어
 		model.addAttribute("qnaAnswer_flg", answer_flg); //검색어
 		model.addAttribute("getAnswerTypeInfo", getAnswerTypeInfo); //답변여부정보
-		
+		//Q&A페이지 관리자 기능 추가 Start ryujihong 2022.01.15
+		model.addAttribute("getQnaTypeInfo", getQnaTypeInfo); //문의타입 카테고리
+		model.addAttribute("qnaType", qnaType); //문의타입 
+		//Q&A페이지 관리자 기능 추가 End ryujihong 2022.01.15
+			
 		return "member/qnaPage";
 	}
 	
@@ -103,13 +108,13 @@ public class MemberController {
 		
 		service.doRegistQna(params, session);		
 		
-		return "redirect:/qnaPage?qnaNum=1&answer_flg=2";
+		return "redirect:/qnaPage?qnaNum=1&answer_flg=2&qnaType=0";
 	}
 	
 	@RequestMapping(value = "/qnaDetail", method = RequestMethod.GET)
 	public String qnaDetail(Model model, @RequestParam String idx) {		
 		
-		logger.info("registQna 요청 idx : {}",idx);
+		logger.info("qnaDetail 요청 idx : {}",idx);
 		
 		ReviewQnaDto dto = service.getQnaDetail(idx);
 		ReviewQnaDto aDto = service.getQnaAnswerDetail(idx);
@@ -231,9 +236,10 @@ public class MemberController {
 			
 			//총가격 계산
 			int totalPrice = 0;
-			for (int i = 0; i < orderList.size(); i++) {			
-				int price = Integer.parseInt(orderList.get(i).getPrice());
-				int quantity = orderList.get(i).getQuantity();			
+			ArrayList<CartDto> getTotalPrice = service.getTotalPrice(userId);
+			for (int i = 0; i < getTotalPrice.size(); i++) {			
+				int price = Integer.parseInt(getTotalPrice.get(i).getPrice());
+				int quantity = getTotalPrice.get(i).getQuantity();			
 				totalPrice += price*quantity;
 			}				
 			
@@ -438,7 +444,7 @@ public class MemberController {
 					page = "redirect:/";			
 					msg="";
 					//용현님 아래 코드 수정하셔야되요~
-					
+
 						//int cartCnt = 0;
 						session.setAttribute("cartCnt", cartCnt);
 						logger.info("session1 실행");
@@ -450,6 +456,7 @@ public class MemberController {
 						logger.info("session에서 mem_flg가져오기");
 					
 					//logger.info("cartCnt 반환");
+
 				}else if(dto.getUserId()!=null&&dto.getMem_flg()==2) {
 					page = "redirect:/";			
 					msg="";
