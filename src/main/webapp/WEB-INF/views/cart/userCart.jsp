@@ -196,7 +196,9 @@
 		     		<input type="hidden" id="arrayParam" name="arrayParam"/>
 		     		<a href="./" class="btn btn-primary py-3 px-4">계속쇼핑하기</a>     		     		
 		     		<!-- <a href="" id="order_btn" onclick="goOrder()" class="btn btn-primary py-3 px-4">결제하기</a> -->
-		    		<button type="button" id="order_btn" class="btn btn-primary py-3 px-4" onclick="checkCall()">결제하기</button>
+		    		<!--<button type="submit" id="order_btn" onclick="goOrder()" class="btn btn-primary py-3 px-4">결제하기</button>  -->
+		    		<a href="toOrder?userId=${sessionScope.userId }" id="toCheckoutButton" class="btn btn-primary py-3 px-4">결제하기</a>
+		    		<!--  <button type="button" id="order_btn" class="btn btn-primary py-3 px-4" onclick="checkCall()">결제하기</button>-->
 		    		<!-- <a href="" id="toCheckoutButton" class="btn btn-primary py-3 px-4">결제하기</a> -->
 				</div>
      		</div>

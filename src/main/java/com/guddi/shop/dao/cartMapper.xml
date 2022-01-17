@@ -20,8 +20,6 @@
 		inner join member m
 		on m.userId = c.userId 
 		where c.userId = #{userId} and pp.photo_num = 1
-		
-
 	</select>
 	<!--getCartInfo 카트 리스트 불러오기 -->
 	<select id="getCartInfoImg" resultType="com.guddi.shop.dto.CartDto">
@@ -68,5 +66,17 @@
 	<select id="findInfo" resultType="com.guddi.shop.dto.CartDto">	
 		 select userId, username, phone, email, zipcode, address, address_detail, regdate, mem_flg
 		 from member where userId = #{param1}
+	</select>
+	
+	<select id="toOrder" resultType="com.guddi.shop.dto.CartDto">	
+		select pp.newFileName, c.product_name, p.price, c.quantity, c.price, m.idx 
+		, m.userId , m.username , m.phone , m.email , m.zipcode , m.address , m.address_detail  
+		from product p inner join cart c
+		on p.product_code = c.product_code 
+		inner join product_photo pp
+		on pp.b_idx = p.idx
+		inner join member m
+		on m.userId = c.userId 
+		where c.userId = #{param1} and pp.photo_num = 1
 	</select>
 </mapper>

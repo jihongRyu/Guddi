@@ -136,6 +136,7 @@ public class CartController {
 	
 	//order 추가 21-01-14
 
+	/*
 	@RequestMapping(value = "toOrder", method = RequestMethod.GET)
 	public String toOrder(Model model) {
 		logger.info("toOrder Click");
@@ -143,7 +144,7 @@ public class CartController {
 		
 		return "cart/toOrder";
 	}
-	
+	*/
 	@RequestMapping(value = "/checkout", method = RequestMethod.POST)
 	public HashMap<String, Object> toOrder(Model model,HashMap<String, Object> checkoutmap,@RequestParam String userId, @RequestParam String checkoutPrice) {
 		
@@ -255,4 +256,87 @@ public class CartController {
 	
 	// =====cart controller 추가하기 수정 END YuSeonhwa===== 220115
 	
+	// 2022.01.17 start - 송승혁
+		@RequestMapping(value = "/toOrder", method = RequestMethod.GET)
+		public String toOrder(Model model , HttpSession session, @RequestParam String userId) {
+			logger.info("toOrder 컨트롤러 이동 {}", userId);
+			ArrayList<CartDto> dto = service.toOrder(userId);
+			model.addAttribute("orderList", dto);
+			return "cart/toOrder";
+		}
+		// 2022.01.17 end - 송승혁
+		
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -24,5 +24,7 @@ public interface CartDao {
 	CartDto findInfo(String userId);
 
 	ArrayList<CartDto> getCartInfoImg(String userId);
+	
+	ArrayList<CartDto> toOrder(String userId);
 
 }
