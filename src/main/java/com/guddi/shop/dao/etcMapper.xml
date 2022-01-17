@@ -12,6 +12,11 @@
 		select idx, use_flg, regdate, newname from newflg;
 	</select>
 	
+	<select id="getUseFlgInfo" resultType="com.guddi.shop.dto.EtcDto">
+		select idx, regdate, useFlg_name from useFlg;
+	</select>
+	
+	
 	<select id="getNewFlgIdx" resultType="int">
 		select idx from newFlg
 		order by idx desc limit 1;

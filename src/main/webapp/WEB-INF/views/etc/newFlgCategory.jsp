@@ -46,11 +46,10 @@
 		   <button class="btn btn-primary mb-4" style="float:right;" onclick="registNewflg()">추가하기</button>		  
 		   <table>
 		        <tr style="background-color:#212529;color:white;">
-		        	<th>번호</th>
-		        	<th>사용여부 ( 1:사용, 0:미사용 )</th>
-		        	<th>사용명</th>
-		        	<th>등록일</th>
-		        	<th colspan="2">처리관련</th>			            	           		     
+		        	<th>번호</th>		        	
+		        	<th>카테고리명</th>
+		        	<th>사용여부</th>
+		        	<th>등록일</th>		        	        	           		     
 		       </tr>
 		       <c:if test="${newFlgList.size() == 0 }">           
 		       <tr>
@@ -59,12 +58,16 @@
 		       </c:if>
 		       <c:forEach items="${newFlgList}" var="list">		       	  
 			       <tr>		       
-			        	<th>${list.idx}</th>
-			        	<th>${list.use_flg}</th>
+			        	<th>${list.idx}</th>			        	
 			        	<th>${list.newname}</th>
-			        	<th>${list.regdate}</th>	
-			        	<th><a href="javascript:void(0);" onclick="NotUseNewflg('${list.idx}')">미사용처리</a></th>
-			        	<th><a href="javascript:void(0);" onclick="UseNewflg('${list.idx}')">사용처리</a></th>	             		           		     
+			        	<th>
+			        		<select name="useFlg" id="useFlg" class="form-control" onchange="changeUseNewflg('${list.idx}',this.value)">
+			        			<c:forEach items="${useFlgList}" var="useFlgList">
+			        				<option <c:if test="${list.use_flg eq useFlgList.idx}">selected</c:if>>${useFlgList.useFlg_name}</option>
+			        			</c:forEach>
+			        		</select>			        	
+			        	</th>
+			        	<th>${list.regdate}</th>			                 		           		     
 			       </tr>			    
 		       </c:forEach>      
 		   </table>    	   				
@@ -108,18 +111,36 @@ function registNewflg(){
 };
  
 
-function NotUseNewflg(idx){	
-	
-	if (confirm("해당 Flg를 미사용처리하시겠습니까?")) {		
-		location.href="doUpdateUseFlg?idx="+idx+"&use_flg=0";	
-	}	
-	
-};
 
-function UseNewflg(idx){	
+function changeUseNewflg(idx, use_flgName){	
 	
-	if (confirm("해당 Flg를 사용하시겠습니까?")) {		
-		location.href="doUpdateUseFlg?idx="+idx+"&use_flg=1";	
+	if (confirm("해당 Flg를 사용하시겠습니까?")) {
+		
+		$.ajax({
+			url: "doUpdateUseFlg", //호출할 파일명			
+			method: "POST",
+			data:{'idx':idx,
+				  'use_flgName':use_flgName
+				},
+			dataType: "json", //내가 받아야할 결과 형태가 text, html, xml, json
+			
+			success: function(data){	
+							
+				if (data.result>0) {
+					alert('해당 사항을 변경하였습니다!');
+					location.href="toNewFlgCategory";
+				}else {
+					alert("수정에 실패하였습니다.");
+				}		
+	
+									
+			},
+			error:function(){
+				alert("수정에 실패하였습니다.");
+			}
+		});
+		
+		
 	}	
 	
 };

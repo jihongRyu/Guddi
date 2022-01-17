@@ -31,9 +31,14 @@ public class EtcService {
 		return dao.doRegistNewFlg(newIdx ,newname);
 	}
 
-	public void doUpateUseFlg(int use_flg, int idx) {
+	public int doUpateUseFlg(int use_flg, int idx) {
 		// TODO Auto-generated method stub
-		dao.doUpateUseFlg(use_flg,idx);
+		return dao.doUpateUseFlg(use_flg,idx);
+	}
+
+	public ArrayList<EtcDto> getUseFlgInfo() {
+		// TODO Auto-generated method stub
+		return dao.getUseFlgInfo();
 	}
 	
 	

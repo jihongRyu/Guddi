@@ -14,7 +14,9 @@ public interface EtcDao {
 
 	int getNewFlgIdx();
 
-	void doUpateUseFlg(int use_flg, int idx);
+	int doUpateUseFlg(int use_flg, int idx);
+
+	ArrayList<EtcDto> getUseFlgInfo();
 	
 	
 	

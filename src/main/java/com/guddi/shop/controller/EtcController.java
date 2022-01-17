@@ -35,8 +35,12 @@ public class EtcController {
 	public String toNewFlgCategory(Model model , HttpSession session) {
 		logger.info("toNewFlgCategory 요청");
 		
-		ArrayList<EtcDto> dto = service.getNewFlgInfo();
+		ArrayList<EtcDto> dto = service.getNewFlgInfo();//신상여부 리스트를 가져옮		
+		ArrayList<EtcDto> uDto = service.getUseFlgInfo();//사용여부정보를 가져옮
+		
 		model.addAttribute("newFlgList", dto);
+		model.addAttribute("useFlgList", uDto);
+		
 
 		return "etc/newFlgCategory";
 	}
@@ -53,24 +57,38 @@ public class EtcController {
 	@ResponseBody
 	public HashMap<String, Object> doRegistNewFlg(Model model , @RequestParam String newname) {
 		logger.info("doRegistNewFlg 요청");
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		
+		HashMap<String, Object> map = new HashMap<String, Object>();		
 		int result = service.doRegistNewFlg(newname);
 		
 		if (result>0) {
 			map.put("result", result);
 		}
-
 		return map;
 	}
 	
-	@RequestMapping(value = "/doUpdateUseFlg", method = RequestMethod.GET)
-	public String doUpdateUseFlg(Model model , @RequestParam int idx, @RequestParam int use_flg) {
-		logger.info("doUpdateUseFlg 요청");
+	@RequestMapping(value = "/doUpdateUseFlg", method = RequestMethod.POST)
+	@ResponseBody
+	public HashMap<String, Object> doUpdateUseFlg(Model model , @RequestParam String idx, @RequestParam String use_flgName) {
 		
-		service.doUpateUseFlg(use_flg, idx);
+		logger.info("doUpdateUseFlg 요청");
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		int use_flg = 100;
+		ArrayList<EtcDto> uDto = service.getUseFlgInfo();//사용여부정보를 가져옮
+		
+		for (int i = 0; i < uDto.size(); i++) {
+			if (uDto.get(i).getUseFlg_name().equals(use_flgName)) {
+				use_flg=uDto.get(i).getIdx();
+			}
+		}
+		
+		if (use_flg!=100) {
+			int result = service.doUpateUseFlg(use_flg , Integer.parseInt(idx));
+			map.put("result", result);
+		}
+		
 
-		return "redirect:/toNewFlgCategory";
+		return map;
 	}
 	
 	
