@@ -18,11 +18,26 @@ public class EtcService {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired EtcDao dao;
 	
+	// 신상여부 카테고리 관련  유지홍 2022.01.17 Start
 	public ArrayList<EtcDto> getNewFlgInfo() {
 		// TODO Auto-generated method stub
 		return dao.getNewFlgInfo();
 	}
+
+	public int doRegistNewFlg(String newname) {
+		// TODO Auto-generated method stub
+		int idx = dao.getNewFlgIdx();
+		int newIdx = idx+1;
+		return dao.doRegistNewFlg(newIdx ,newname);
+	}
+
+	public void doUpateUseFlg(int use_flg, int idx) {
+		// TODO Auto-generated method stub
+		dao.doUpateUseFlg(use_flg,idx);
+	}
 	
+	
+	// 신상여부 카테고리 관련  유지홍 2022.01.17 End
 	
 
 

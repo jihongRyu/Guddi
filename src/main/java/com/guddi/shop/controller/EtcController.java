@@ -2,6 +2,7 @@ package com.guddi.shop.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -29,6 +30,7 @@ public class EtcController {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired EtcService service;
 	
+	// 신상여부 카테고리 관련  유지홍 2022.01.17 Start
 	@RequestMapping(value = "/toNewFlgCategory", method = RequestMethod.GET)
 	public String toNewFlgCategory(Model model , HttpSession session) {
 		logger.info("toNewFlgCategory 요청");
@@ -38,5 +40,41 @@ public class EtcController {
 
 		return "etc/newFlgCategory";
 	}
+	
+	@RequestMapping(value = "/registNewflg", method = RequestMethod.GET)
+	public String registNewflg(Model model , HttpSession session) {
+		logger.info("registNewflg 요청");
+		
 
+		return "etc/registNewflg";
+	}
+	
+	@RequestMapping(value = "/doRegistNewFlg", method = RequestMethod.POST)
+	@ResponseBody
+	public HashMap<String, Object> doRegistNewFlg(Model model , @RequestParam String newname) {
+		logger.info("doRegistNewFlg 요청");
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		int result = service.doRegistNewFlg(newname);
+		
+		if (result>0) {
+			map.put("result", result);
+		}
+
+		return map;
+	}
+	
+	@RequestMapping(value = "/doUpdateUseFlg", method = RequestMethod.GET)
+	public String doUpdateUseFlg(Model model , @RequestParam int idx, @RequestParam int use_flg) {
+		logger.info("doUpdateUseFlg 요청");
+		
+		service.doUpateUseFlg(use_flg, idx);
+
+		return "redirect:/toNewFlgCategory";
+	}
+	
+	
+	// 신상여부 카테고리 관련  유지홍 2022.01.17 End
+
+	
 }

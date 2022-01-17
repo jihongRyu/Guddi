@@ -33,8 +33,7 @@
 	<div class="container">    
 	      <div class="col-md-12 ftco-animate text-center bg-light">
 	      	<p class="breadcrumbs"><span class="mr-2"><a href="./">홈</a></span>/<span>마이페이지</span></p>
-	        <h1 class="mb-0 bread">마이페이지</h1>
-	        <a href="completeOrder">주문완료</a>
+	        <h1 class="mb-0 bread">마이페이지</h1>	     
 	      </div>    
 	</div>
 </section>
