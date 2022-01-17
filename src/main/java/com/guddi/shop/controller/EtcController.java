@@ -58,6 +58,7 @@ public class EtcController {
 	public HashMap<String, Object> doRegistNewFlg(Model model , @RequestParam String newname) {
 		logger.info("doRegistNewFlg 요청");
 		HashMap<String, Object> map = new HashMap<String, Object>();		
+		
 		int result = service.doRegistNewFlg(newname);
 		
 		if (result>0) {
@@ -68,26 +69,17 @@ public class EtcController {
 	
 	@RequestMapping(value = "/doUpdateUseFlg", method = RequestMethod.POST)
 	@ResponseBody
-	public HashMap<String, Object> doUpdateUseFlg(Model model , @RequestParam String idx, @RequestParam String use_flgName) {
+	public HashMap<String, Object> doUpdateUseFlg(Model model , @RequestParam String idx, @RequestParam String use_flg) {
 		
 		logger.info("doUpdateUseFlg 요청");
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
-		int use_flg = 100;
-		ArrayList<EtcDto> uDto = service.getUseFlgInfo();//사용여부정보를 가져옮
+		logger.info("use_flg : {}",use_flg);
+		logger.info("idx :  {}",idx);
+				
+		int result = service.doUpateUseFlg(Integer.parseInt(use_flg) , Integer.parseInt(idx));
+		map.put("result", result);
 		
-		for (int i = 0; i < uDto.size(); i++) {
-			if (uDto.get(i).getUseFlg_name().equals(use_flgName)) {
-				use_flg=uDto.get(i).getIdx();
-			}
-		}
-		
-		if (use_flg!=100) {
-			int result = service.doUpateUseFlg(use_flg , Integer.parseInt(idx));
-			map.put("result", result);
-		}
-		
-
 		return map;
 	}
 	
@@ -115,10 +107,10 @@ public class EtcController {
 	
 	@RequestMapping(value = "/doRegistSellFlg", method = RequestMethod.POST)
 	@ResponseBody
-	public HashMap<String, Object> doRegistSellFlg(Model model , @RequestParam String newname) {
+	public HashMap<String, Object> doRegistSellFlg(Model model , @RequestParam String sellname) {
 		logger.info("doRegistSellFlg 요청");
 		HashMap<String, Object> map = new HashMap<String, Object>();		
-		int result = service.doRegistSellFlg(newname);
+		int result = service.doRegistSellFlg(sellname);
 		
 		if (result>0) {
 			map.put("result", result);
@@ -127,25 +119,18 @@ public class EtcController {
 	}
 	
 	@RequestMapping(value = "/doUpdateSellUseFlg", method = RequestMethod.POST)
-	@ResponseBody
-	public HashMap<String, Object> doUpdateSellUseFlg(Model model , @RequestParam String idx, @RequestParam String use_flgName) {
+	@ResponseBody            
+	public HashMap<String, Object> doUpdateSellUseFlg(Model model , @RequestParam String idx, @RequestParam String use_flg) {
 		
 		logger.info("doUpdateSellUseFlg 요청");
-		HashMap<String, Object> map = new HashMap<String, Object>();
+		HashMap<String, Object> map = new HashMap<String, Object>();		
 		
-		int use_flg = 100;
-		ArrayList<EtcDto> uDto = service.getUseFlgInfo();//사용여부정보를 가져옮
+		logger.info("use_flg : {}",use_flg);
+		logger.info("idx :  {}",idx);
+	
+		int result = service.doUpdateSellUseFlg(Integer.parseInt(use_flg) , Integer.parseInt(idx));
+		map.put("result", result);
 		
-		for (int i = 0; i < uDto.size(); i++) {
-			if (uDto.get(i).getUseFlg_name().equals(use_flgName)) {
-				use_flg=uDto.get(i).getIdx();
-			}
-		}
-		
-		if (use_flg!=100) {
-			int result = service.doUpdateSellUseFlg(use_flg , Integer.parseInt(idx));
-			map.put("result", result);
-		}
 		
 
 		return map;

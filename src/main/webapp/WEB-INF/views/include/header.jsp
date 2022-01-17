@@ -94,7 +94,7 @@
 	          	<a class="dropdown-item" href="productPage?num=1&brand_idx=1&bag_type=0">문의타입카테고리관리</a>
 	            <a class="dropdown-item" href="productPage?num=1&brand_idx=2&bag_type=0">브랜드카테고리관리</a>
 	            <a class="dropdown-item" href="productPage?num=1&brand_idx=3&bag_type=0">가방종류카테고리관리</a>
-	            <a class="dropdown-item" href="productPage?num=1&brand_idx=4&bag_type=0">판매여부카테고리관리</a>  
+	            <a class="dropdown-item" href="toSellFlgCategory">판매여부카테고리관리</a>  
 	            <a class="dropdown-item" href="toNewFlgCategory">신상여부카테고리관리</a>           
 	          </div>
 			</li>
