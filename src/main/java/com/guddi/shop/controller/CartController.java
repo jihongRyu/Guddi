@@ -218,4 +218,96 @@ public class CartController {
 	
 	// =====cart controller 추가하기 수정 END YuSeonhwa===== 220115
 	
+	// 2022.01.17 start - 송승혁
+		@RequestMapping(value = "/toOrder", method = RequestMethod.GET)
+		public String toOrder(Model model , HttpSession session, @RequestParam String userId) {
+			logger.info("toOrder 컨트롤러 이동 {}", userId);
+			ArrayList<CartDto> dto = service.toOrder(userId);
+			model.addAttribute("orderList", dto);
+			return "cart/toOrder";
+		}
+		// 2022.01.17 end - 송승혁
+		
+		@RequestMapping(value = "/doOrder", method = RequestMethod.GET)
+		public String doOrder(Model model , HttpSession session, @RequestParam HashMap<String, Object> params) {
+			logger.info("doOrder 컨트롤러 이동 {}", params);
+			//model.addAttribute("orderList", dto);
+			String name = (String) params.get("userName");
+			System.out.println(name);
+			//int success = service.doOrder(params);
+			return null;
+		}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

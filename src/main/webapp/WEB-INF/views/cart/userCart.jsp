@@ -114,7 +114,7 @@
   			      <tr class="text-center">
   			        <td class="cart_info_td">
   			        	<input type="checkbox" class="individual_cart_checkbox input_size_20" name="chk" checked="checked" value="${list.product_name}" />
-  			        	<input type="hidden" class="individual_newFileName_input" value="${listImg.newFileName}">
+  			        	<input type="hidden" class="individual_newFileName_input" value="${list.newFileName}">
   			        	<input type="hidden" class="individual_product_name_input" value="${list.product_name}">
   			        	<input type="hidden" class="individual_product_code_input" value="${list.product_code}">
   			       	 	<input type="hidden" class="individual_quantity_input" value="${list.quantity}">
@@ -198,7 +198,7 @@
 		     		<a href="./" class="btn btn-primary py-3 px-4">계속쇼핑하기</a>     		     		
 		     		<!-- <a href="" id="order_btn" onclick="goOrder()" class="btn btn-primary py-3 px-4">결제하기</a> -->
 		    		<!--<button type="submit" id="order_btn" onclick="goOrder()" class="btn btn-primary py-3 px-4">결제하기</button>  -->
-		    		<a href="cart/toOrder" id="toCheckoutButton" class="btn btn-primary py-3 px-4">결제하기</a>
+		    		<a href="toOrder?userId=${sessionScope.userId }" id="toCheckoutButton" class="btn btn-primary py-3 px-4">결제하기</a>
 				</div>
 			</form>
 			

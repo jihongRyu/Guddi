@@ -1,14 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Q&A</title>
+<title>결제하기</title>
 <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 
-
- 
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -31,7 +30,7 @@
 </head>
 <body>
 
-	<jsp:include page="/WEB-INF/views/include/header.jsp" />
+	<jsp:include page="/WEB-INF/views/include/header.jsp"/>
 
 	<section class="ftco-section contact-section bg-light">
 		<div class="container">
@@ -45,6 +44,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12 ftco-animate">
+				<form action="doOrder" method="get" class="order_form" name="toCheckout">
 					<div class="myPage-table table-striped">
 						<table>
 							<tr style="background-color: #212529; color: white;">
@@ -65,7 +65,7 @@
 							</c:forEach>
 						</table>
 					</div>
-					<div class="col-lg-6" style="border: 1px solid black; margin-top: 70px;  float: left;">
+					<div class="col-lg-6" style="margin-top: 70px;  float: left;">
 						<h2>결제 하기</h2>
 						<div class="form-group" style="text-align: left;">
 							<label for="inputtelNO">성함</label>
@@ -95,13 +95,48 @@
 							<input type="button" id="btnZipcode"class="btn btn-primary py-3 px-5" onclick="goPostcode()"value="우편번호 검색" />
 						</div>
 					</div>
-					<div class="col-lg-5" style="border: 1px solid red; height: 700px; width: 500px; margin-left: 645px; margin-top: 70px;">
-						<h2>카트</h2>
-						<div class="form-group" style="text-align: left;">
-								<label for="inputMobile">가격</label>
-								<input type="tel"value="${orderList[0].phone }" class="form-control"id="inputMobile" name="phone" placeholder="ex)01012345678">
-						</div>
+					<div class="col-lg-5" style="height: 300px; width: 500px; margin-left: 645px; margin-top: 70px;">
+						<h4 style="padding-bottom: -300px;">카트</h4>		      
+				     	<div class="col-lg-12 mt-5 cart-wrap ftco-animate">
+				     		<div class="cart-total mb-3">
+				     			<h3></h3>
+				     			<p class="d-flex">
+				     				<span>구매가격</span>     				
+									<span id="totalPrice" class="totalPrice_span"></span>원
+				     			</p>
+				     			<p class="d-flex">
+				     				<span>배송료</span>
+				     				<span>언제나 0원!</span>
+				     			</p>     			
+				     			<hr>
+				     			<p class="d-flex total-price">
+				     				<span>최종구매가격</span>
+				     				<span id="totalPrice" class="totalPrice_span"></span>원
+				     			</p>
+				     			
+				     		</div>
+				     	</div>
 					</div>
+					<div class="col-lg-5" style="height: 300px; width: 500px; margin-left: 645px; margin-top: 70px;">
+						<h4 style="margin-bottom: 40px;">결재방법</h4>
+				     	<input type="radio" name="approvalChoice1" value="계좌이체" style="margin-left: 20px;" /><span>계좌이체</span><br/>
+				     	<input type="radio" name="approvalChoice1" value="신용카드" style="margin-left: 20px;" checked/><span>신용카드</span><br/>
+				     	<input type="radio" name="approvalChoice1" value="네이버페이" style="margin-left: 20px;"/><span>네이버페이</span>
+					</div>
+				    <div class="text-center">
+				    <!-- <form action="/checkout" method="post" class="order_form" name="toCheckout"> -->
+						<div class="order_btn_each">
+						     <input type="hidden" value="${total}" name="checkoutPrice" id="checkoutPrice">
+						     <input type="hidden" value="${sessionScope.userId}" name="userId" id="userId">
+						     <input type="hidden" id="arrayParam" name="arrayParam"/>	     		
+						     <!-- <a href="" id="order_btn" onclick="goOrder()" class="btn btn-primary py-3 px-4">결제하기</a> -->
+						    <!--<button type="submit" id="order_btn" onclick="goOrder()" class="btn btn-primary py-3 px-4">결제하기</button>  -->
+						    <!--  onclick="location.href='toOrder?userId=${sessionScope.userId }'"-->
+						    <%-- <a type="button" href="toOrder?userId=${sessionScope.userId }" id="toCheckoutButton" class="btn btn-primary py-3 px-4">결제하기</a> --%> 
+						    <input type="button" value="결제하기" class="btn btn-primary py-3 px-4" id="toCheckoutButton"/>
+						</div>
+				     </div>
+				</form>
 				</div>
 			</div>
 		</div>
@@ -133,7 +168,21 @@
 
 </body>
 <script>
-	
+	//var a = $(".totalPrice").length();
+	//console.log($('p').length);
+	var totalPrice = 0;
+	console.log($('.totalPrice').length);
+	console.log($('.totalPrice').eq(0).html());
+	setTotal();
+	function setTotal() {
+		for(var i = 0; i<$('.totalPrice').length; i++){
+			totalPrice += parseInt($('.totalPrice').eq(i).html());
+			console.log(totalPrice);
+		}
+		$(".totalPrice_span").text(totalPrice.toLocaleString());
+	}
+
+	console.log($(".totalPrice_span").html());
 	//우편번호 찾기
 	function goPostcode() {
 		console.log("우편번호 검색");
@@ -188,6 +237,33 @@
 			}
 		}).open();
 	};
+	
+	var userName = $('input[name=userName]').val();
+	var zipcode = $('input[name=zipcode]').val();
+	var address = $('input[name=address]').val();
+	var address_detail = $('input[name=address_detail]').val();
+	var email = $('input[name=email]').val();
+	var phone = $('input[name=phone]').val();
+	var approvalChoice = $('input:radio[name="approvalChoice1"]:checked').val();
+
+	
+	$("#toCheckoutButton").click(function () {
+		console.log("#toCheckoutButton 동작 확인");
+		console.log(userName, zipcode, address, address_detail, email, phone, approvalChoice);
+		if(userName.length == 0){
+            alert('성함을 입력해 주세요');
+            $('input[name=userName]').focus();
+        } else if(zipcode.length == 0){
+            alert("우편번호를 입력해 주세요");
+            $('input[name=zipcode]').focus();
+        } else if(phone.length == 0){
+            alert("핸드폰 번호를 입력해 주세요");
+            $('input[name=phone]').focus();
+        } else if(email.length == 0){
+            alert("핸드폰 번호를 입력해 주세요");
+            $('input[name=email]').focus();
+        } 
+	});
 </script>
 </html>
 
