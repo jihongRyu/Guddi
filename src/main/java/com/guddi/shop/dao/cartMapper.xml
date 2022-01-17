@@ -9,8 +9,6 @@
 
 	<!--getCartInfo 카트 리스트 불러오기 -->
 	<select id="getCartInfo" resultType="com.guddi.shop.dto.CartDto">
-
-	
 		select pp.newFileName,c.product_code, c.product_name, p.price, c.quantity, c.price, m.idx , m.userId , m.username , m.phone , m.email , m.zipcode , m.address , m.address_detail 
 		, m.birthday , m.personInfo_flg , m.marketing_flg , m.mem_flg , m.delete_date , m.regdate , m.gender, pp.photo_num 
 		from product p inner join cart c
@@ -63,7 +61,7 @@
 	</select>
 	
 	<select id="toOrder" resultType="com.guddi.shop.dto.CartDto">	
-		select pp.newFileName, c.product_name, p.price, c.quantity, c.price, m.idx 
+		select pp.newFileName, c.product_name, p.price, c.quantity, c.price, m.idx, p.product_code
 		, m.userId , m.username , m.phone , m.email , m.zipcode , m.address , m.address_detail  
 		from product p inner join cart c
 		on p.product_code = c.product_code 
@@ -80,4 +78,23 @@
 			)
 		</if>
 	</select>
+	
+	<select id="getOrderIdx" resultType="String">
+		select count(*) from tb_order
+	</select>
+	
+	<insert id="doOrder" parameterType="com.guddi.shop.dto.CartDto">
+		insert into tb_order (userId, username, phone, email,zipcode, address, address_detail, product_name, product_code, price, quantity, order_num, totalPrice) 
+		values (#{userId},#{username},#{phone},#{email},#{zipcode},#{address},#{address_detail},#{product_name},#{product_code},#{price},#{quantity},#{order_num},#{totalPrice})
+	</insert>
+	
+	<!-- delCart-->
+	<delete id="delCartByProductCode">
+		delete from cart where userId = #{param1} and product_code = #{param2}
+	</delete>
+	
+	<select id="HeadergetCart" resultType="int">
+		select COUNT(*) from cart where userId=#{param1} 
+	</select>
+	
 </mapper>

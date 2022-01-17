@@ -123,7 +123,7 @@
   			        <td class="image-prod"><div class="img" style="background-image:url(resources/photo/${list.newFileName});"></div></td>
   			        <td class="product-name">
   			        	<h3>${list.product_name}</h3>
-  			        	<p>상품코드 : ${list.product_code}</p>  			      
+  			        	<p>상품코드 : ${list.product_code}</p>  			        	  			      
   			        </td>
   			        <td class="quantity">
   		             	<form method="post" action="cartupdate">

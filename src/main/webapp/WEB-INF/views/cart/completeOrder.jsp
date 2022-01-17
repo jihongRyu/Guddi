@@ -38,16 +38,10 @@
       	<div class="bg-white p-5 contact-form"> 
 		      <div class="login-heading">
 		         <span>주문이 완료되었습니다!</span>	                      
-		      </div><br>
+		      </div>
 	          <div class="form-group text-center">
-	            <table>
-	            	<tr>
-	            		<td>주문번호</td>
-	            	</tr>
-	            	<tr>
-	            		<td>${info.ordernum}</td>
-	            	</tr>
-	            </table>
+	          			<h5>주문번호</h5>
+	            		<p>${order_num}</p>
 	          </div><br>
 	          <div class="form-group text-center">	            
 	            <input type="button" value="계속 쇼핑하기" class="btn btn-primary py-3 px-5" onclick="location.href='./'">

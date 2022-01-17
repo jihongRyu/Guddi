@@ -30,8 +30,6 @@ public class CartService {
 		logger.info("service get img"+userId);
 		return dao.getCartInfoImg(userId);
 	}
-	
-	
 
 	public int delCart(CartDto dto) {
 		// TODO Auto-generated method stub
@@ -70,9 +68,28 @@ public class CartService {
 	public ArrayList<CartDto> toOrder(String userId, String[] array) {
 		// TODO Auto-generated method stub
 		logger.info("userId:{}", userId);
-		return dao. toOrder(userId, array);
+		return dao.toOrder(userId, array);
 	}
 
+	public String getOrderIdx() {
+		// TODO Auto-generated method stub
+		return dao.getOrderIdx();
+	}
 
+	public void doOrder(CartDto dto) {
+		// TODO Auto-generated method stub
+			dao.doOrder(dto);
+		
+	}
+
+	public void delCartByProductCode(String userId, String product_code) {
+		// TODO Auto-generated method stub
+		dao.delCartByProductCode(userId, product_code);
+	}
+
+	public int HeadergetCart(String userId) {
+		logger.info("카트수 찾기 실행! 아이디 : {}", userId);
+		return dao.HeadergetCart(userId);
+	}
 
 }

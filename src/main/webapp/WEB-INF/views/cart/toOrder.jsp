@@ -44,11 +44,11 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12 ftco-animate">
-				<form action="doOrder" method="get" class="order_form" id="doOrderForm"name="toCheckout">
+				<form action="doOrder" method="post" class="order_form" id="doOrderForm"name="toCheckout">
 					<div class="myPage-table table-striped">
 						<table>
 							<tr style="background-color: #212529; color: white;">
-								<th>제품 이미지</th>
+								<th>제품이미지</th>
 								<th>제품명</th>
 								<th>가격</th>
 								<th>수량</th>
@@ -56,17 +56,25 @@
 							</tr>
 							<c:forEach items="${orderList}" var="orderInfo">
 								<tr>
-									<th><img src='resources/photo/${orderInfo.newFileName }'style="width: 350px; height: 350px;" /></th>
-									<th class="productName">${orderInfo.product_name}</th>
-									<th>${orderInfo.price }</th>
-									<th class="quantity">${orderInfo.quantity }</th>
+									<th><img src='resources/photo/${orderInfo.newFileName }'style="width: 200px; height: 200px;" /></th>
+									<th class="productName">
+										<input type="hidden" name="product_code" value="${orderInfo.product_code}">
+										<input type="hidden" name="product_name" value="${orderInfo.product_name}">
+										<input type="hidden" name="quantity" value="${orderInfo.quantity}">
+										<input type="hidden" name="totalPrice" value="${orderInfo.price*orderInfo.quantity}">
+										<input type="hidden" name="price" value="${orderInfo.price}">
+										<h5>${orderInfo.product_name}</h5>
+  			        					<p>상품코드 : ${orderInfo.product_code}</p>  	
+									</th>
+									<th>₩ <fmt:formatNumber value="${orderInfo.price}" pattern="#,###.##"/></th>
+									<th class="quantity">${orderInfo.quantity}</th>
 									<th class="totalPrice">${orderInfo.price *orderInfo.quantity }</th>
 								</tr>
 							</c:forEach>
 						</table>
 					</div>
 					<div class="col-lg-6" style="margin-top: 70px;  float: left;">
-						<h2>결제 하기</h2>
+						<h2>결제하기</h2>
 						<div class="form-group" style="text-align: left;">
 							<label for="inputtelNO">성함</label>
 							<input type="text"value="${orderList[0].username }" class="form-control"id="userName" name="userName"> <br>
@@ -122,9 +130,9 @@
 					</div>
 					<div class="col-lg-5" style="height: 300px; width: 500px; margin-left: 645px; margin-top: 70px;">
 						<h4 style="margin-bottom: 40px;">결재방법</h4>
-				     	<input type="radio" name="approvalChoice" value="계좌이체" style="margin-left: 20px;" /><span>계좌이체</span><br/>
-				     	<input type="radio" name="approvalChoice" value="신용카드" style="margin-left: 20px;"/><span>신용카드</span><br/>
-				     	<input type="radio" name="approvalChoice" value="네이버페이" style="margin-left: 20px;"/><span>네이버페이</span>
+				     	<input type="radio" name="approvalChoice" value="계좌이체" style="margin-left: 20px;" /><span> 계좌이체</span><br/>
+				     	<input type="radio" name="approvalChoice" value="신용카드" style="margin-left: 20px;"/><span> 신용카드</span><br/>
+				     	<input type="radio" name="approvalChoice" value="네이버페이" style="margin-left: 20px;"/><span> 네이버페이</span>
 					</div>
 				    <div class="text-center">
 				    <!-- <form action="/checkout" method="post" class="order_form" name="toCheckout"> -->

@@ -22,6 +22,7 @@ public class CartDto {
 //	address_detail varchar(30) 상세주소
 //	regdate date default current_date 주문 날짜
 //	order_num varchar(30) 주문번호
+//  totalPrice
 
 
 	
@@ -46,7 +47,7 @@ public class CartDto {
 	private String product_name;
 	private String product_code;
 	private String price;
-	private String totalPrice;
+	private int totalPrice;
 	private int quantity ;
 	private String newFileName;
 	private String phone;
@@ -152,17 +153,18 @@ public class CartDto {
 	public void setOrder_num(String order_num) {
 		this.order_num = order_num;
 	}
-	public String getTotalPrice() {
-		return totalPrice;
-	}
-	public void setTotalPrice(String totalPrice) {
-		this.totalPrice = totalPrice;
-	}
+
 	public String[] getProductCodeList() {
 		return productCodeList;
 	}
 	public void setProductCodeList(String[] productCodeList) {
 		this.productCodeList = productCodeList;
+	}
+	public int getTotalPrice() {
+		return totalPrice;
+	}
+	public void setTotalPrice(int totalPrice) {
+		this.totalPrice = totalPrice;
 	}
 
 
