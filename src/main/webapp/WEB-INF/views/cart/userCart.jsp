@@ -113,7 +113,11 @@
   			      <c:forEach items="${list}" var="list" varStatus="status">
   			      <tr class="text-center">
   			        <td class="cart_info_td">
+<<<<<<< HEAD
   			        	<input type="checkbox" class="individual_cart_checkbox input_size_20" name="chk" checked="checked" value="${list.product_name}" onclick="checkCall()"/>
+=======
+  			        	<input type="checkbox" class="individual_cart_checkbox input_size_20" name="chk" checked="checked" value="${list.product_name}" />
+>>>>>>> a878d9d97e2651818eda1e961a520bee5080f5ca
   			        	<input type="hidden" class="individual_newFileName_input" value="${list.newFileName}">
   			        	<input type="hidden" class="individual_product_name_input" value="${list.product_name}">
   			        	<input type="hidden" class="individual_product_code_input" value="${list.product_code}">

@@ -72,6 +72,9 @@ public interface MemberDao {
 
 	void temppassloginPw(String userId, String temppw);
 
+	//회원가입 end 2022.01.12
+	
+
 	String tempPass(String userpass);
 
 	int HeadergetCart(String userId);

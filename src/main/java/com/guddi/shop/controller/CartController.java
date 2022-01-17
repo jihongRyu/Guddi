@@ -1,5 +1,6 @@
 package com.guddi.shop.controller;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -20,12 +21,16 @@ import com.guddi.shop.dao.CartDao;
 import com.guddi.shop.dto.CartDto;
 import com.guddi.shop.service.CartService;
 
+
+
 @Controller
 public class CartController {
-
+	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
+
 	@Autowired CartService service;
 	@Autowired CartDao dao;
+
 	
 	// =====cart controller 추가하기 수정 START YuSeonhwa===== 220112
 	
@@ -103,6 +108,15 @@ public class CartController {
 		return "redirect:/cart";
 	}
 	
+	@RequestMapping(value = "/completeOrder", method = RequestMethod.GET)
+	public String completeOrder(Model model, HttpSession session ) {
+
+		logger.info("주문완료페이지 요청");
+
+
+		return "cart/completeOrder";
+	}
+	
 	
 
 	@RequestMapping(value = "/chkdelete", method = RequestMethod.POST)
@@ -124,7 +138,7 @@ public class CartController {
 	
 	//order 추가 21-01-14
 
-	@RequestMapping(value = "cart/toOrder", method = RequestMethod.GET)
+	@RequestMapping(value = "toOrder", method = RequestMethod.GET)
 	public String toOrder(Model model) {
 		logger.info("toOrder Click");
 		

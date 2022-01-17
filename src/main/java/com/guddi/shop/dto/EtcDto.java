@@ -15,6 +15,8 @@ public class EtcDto {
 //	type_name varchar(30) 종류명
 //	brand_code varchar(10) 브랜드 코드 :  제품코드 생성을 위해 필요
 //	type_code varchar(10) 가방 코드 : 제품코드 생성을 위해 필요
+//  use_flg
+//  useFlg_name
 	
 
 	private int brand_idx;
@@ -30,7 +32,7 @@ public class EtcDto {
 	private String brand_code;
 	private String type_code;
 	private String newFileName;
-
+	private String useFlg_name;
 	
 	public String getNewFileName() {
 		return newFileName;
@@ -114,6 +116,12 @@ public class EtcDto {
 	}
 	public void setType_code(String type_code) {
 		this.type_code = type_code;
+	}
+	public String getUseFlg_name() {
+		return useFlg_name;
+	}
+	public void setUseFlg_name(String useFlg_name) {
+		this.useFlg_name = useFlg_name;
 	}
 	
 	

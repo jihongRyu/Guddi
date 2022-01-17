@@ -86,7 +86,7 @@
 
 					</a>
 					<div class="text py-3 pb-4 px-3 text-center">
-						<h3><a href="prudoutDtail?idx=${list.idx}">${list.product_name}</a></h3>
+						<h3><a href="detail?idx=${list.idx}">${list.product_name}</a></h3>
 						<div class="d-flex">
 							<div class="pricing">
 	    						<p class="price">

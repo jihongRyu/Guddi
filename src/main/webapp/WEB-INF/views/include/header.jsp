@@ -75,7 +75,7 @@
       <div class="collapse navbar-collapse" id="ftco-nav">
         <ul class="navbar-nav ml-auto">
         
-           <c:if test="${sessionScope.mem_flg ne 2}">          
+          <c:if test="${sessionScope.mem_flg ne 2}">          
           <li class="nav-item dropdown">
 	          <a class="nav-link dropdown-toggle" href="javascript:void(0);" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">카테고리</a>
 	          <div class="dropdown-menu" aria-labelledby="dropdown04">	         
@@ -105,7 +105,17 @@
 			<li class="nav-item"><a href="login" class="nav-link">리뷰내역</a></li>
 			<li class="nav-item"><a href="login" class="nav-link">주문정보</a></li>
 			<li class="nav-item"><a href="login" class="nav-link">회원목록</a></li>
-			<li class="nav-item"><a href="login" class="nav-link">배너이미지/카테고리관리</a></li>
+			<li class="nav-item dropdown">
+		      <a class="nav-link dropdown-toggle" href="javascript:void(0);" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">기타</a>
+	          <div class="dropdown-menu" aria-labelledby="dropdown04">	         
+	          	<a class="dropdown-item" href="productPage?num=1&brand_idx=0&bag_type=0">배너이미지관리</a>
+	          	<a class="dropdown-item" href="productPage?num=1&brand_idx=1&bag_type=0">문의타입카테고리관리</a>
+	            <a class="dropdown-item" href="productPage?num=1&brand_idx=2&bag_type=0">브랜드카테고리관리</a>
+	            <a class="dropdown-item" href="productPage?num=1&brand_idx=3&bag_type=0">가방종류카테고리관리</a>
+	            <a class="dropdown-item" href="productPage?num=1&brand_idx=4&bag_type=0">판매여부카테고리관리</a>  
+	            <a class="dropdown-item" href="toNewFlgCategory">신상여부카테고리관리</a>           
+	          </div>
+			</li>
 
 
 		  </c:if>	

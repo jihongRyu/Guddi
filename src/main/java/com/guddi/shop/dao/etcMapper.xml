@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC	"-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
+
+
+<mapper namespace="com.guddi.shop.dao.EtcDao">
+
+	<!-- 신상여부 카테고리 관련  유지홍 2022.01.17 Start -->
+	<select id="getNewFlgInfo" resultType="com.guddi.shop.dto.EtcDto">
+		select idx, use_flg, regdate, newname from newflg;
+	</select>
+	
+	<select id="getUseFlgInfo" resultType="com.guddi.shop.dto.EtcDto">
+		select idx, regdate, useFlg_name from useFlg;
+	</select>
+	
+	
+	<select id="getNewFlgIdx" resultType="int">
+		select idx from newFlg
+		order by idx desc limit 1;
+	</select>
+	
+	<insert id="doRegistNewFlg">
+		insert into newflg (idx, newname, use_flg) values (#{param1},#{param2},1)
+	</insert>
+	
+	<update id="doUpateUseFlg">
+		update newflg set use_flg=#{param1} where idx = #{param2}
+	</update>
+
+	
+	<!-- 신상여부 카테고리 관련  유지홍 2022.01.17 End -->
+
+</mapper>
