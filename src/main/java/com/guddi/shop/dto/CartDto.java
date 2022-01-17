@@ -1,6 +1,7 @@
 package com.guddi.shop.dto;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 public class CartDto {
 	
@@ -55,6 +56,7 @@ public class CartDto {
 	private String address_detail;
 	private Date regdate;
 	private String order_num;
+	private String[] productCodeList;
 
 	
 	
@@ -156,6 +158,14 @@ public class CartDto {
 	public void setTotalPrice(String totalPrice) {
 		this.totalPrice = totalPrice;
 	}
+	public String[] getProductCodeList() {
+		return productCodeList;
+	}
+	public void setProductCodeList(String[] productCodeList) {
+		this.productCodeList = productCodeList;
+	}
+
+
 
 
 	

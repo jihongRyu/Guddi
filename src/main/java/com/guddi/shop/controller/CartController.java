@@ -100,9 +100,7 @@ public class CartController {
 		//}else {
 			logger.info("세션에있는 아이디와 로그인한 아이디가 다름");
 		//}
-		
-		
-		
+			
 		return "redirect:/cart";
 	}
 	
@@ -111,11 +109,9 @@ public class CartController {
 
 		logger.info("주문완료페이지 요청");
 
-
 		return "cart/completeOrder";
 	}
-	
-	
+		
 
 	@RequestMapping(value = "/chkdelete", method = RequestMethod.POST)
 	@ResponseBody // 컨트롤러에서 요청을 받아와 반환된 값을 jsp에 넘겨줄때 언어가 달라 json라이브러리를 추가했고 @ResponseBody 어노테이션을 사용해 hashMAp데이터 타입으로 뷰에서 읽을수 있게 처리해 줬습니다.
@@ -136,101 +132,6 @@ public class CartController {
 	
 	//order 추가 21-01-14
 
-	/*
-	@RequestMapping(value = "toOrder", method = RequestMethod.GET)
-	public String toOrder(Model model) {
-		logger.info("toOrder Click");
-		
-		
-		return "cart/toOrder";
-	}
-	*/
-	@RequestMapping(value = "/checkout", method = RequestMethod.POST)
-	public HashMap<String, Object> toOrder(Model model,HashMap<String, Object> checkoutmap,@RequestParam String userId, @RequestParam String checkoutPrice) {
-		
-		logger.info("checkout");
-		String[] arrayInfo = null;
-		String code = checkoutmap.get("arrayParam").toString();
-		
-		arrayInfo = code.split(",");
-		int[] results= new int[arrayInfo.length];
-        int result=1;
-
-        HashMap<String, Object> resendMap = new HashMap<String, Object>();
-        for(int i=0; i < arrayInfo.length; i++){
-	         
-            resendMap.put("code", arrayInfo[i]);  
-            resendMap.put("no", checkoutmap.get("idx")); 
-            resendMap.put("date", checkoutmap.get("item"));
-	        
-            results[i] = dao.checkout(resendMap); 
-            result *= results[i];
-        }
-        CartDto dto = service.findInfo(userId);
-		model.addAttribute("info", dto);
-		model.addAttribute("checkoutPrice",checkoutPrice);
-		
-		return resendMap;
-	}
-	
-	
-	
-	//
-	
-	
-	
-	
-	// 체크박스 실험 ysh START 220117
-	@RequestMapping(value = "/test_check", method = RequestMethod.POST)
-	@ResponseBody
-	public String testCheck(Model model,HttpServletRequest request) {
-	   
-		
-
-		
-	    logger.info("test_check");
-	
-	    String[] valueArrTest = request.getParameterValues("valueArrTest");
-	
-    	
-		return "cart/toOrder";
-	    
-	}
-	@RequestMapping(value = "/checkout2", method = RequestMethod.POST)
-	public String[] checkout2(HttpServletRequest request) {
-		
-		logger.info("checkout");
-		String[] valueArrTest = request.getParameterValues("valueArrTest");
-		for (String c : valueArrTest) {
-            logger.info(c);
-        }
-		
-		return valueArrTest;
-	}
-
-	
-	
-	// 체크박스 실험 ysh END 220117
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 //	//주문하기 페이지로 이동 //////////////////////////////////////////////
@@ -263,10 +164,17 @@ public class CartController {
 	// =====cart controller 추가하기 수정 END YuSeonhwa===== 220115
 	
 	// 2022.01.17 start - 송승혁
-		@RequestMapping(value = "/toOrder", method = RequestMethod.GET)
-		public String toOrder(Model model , HttpSession session, @RequestParam String userId) {
+		@RequestMapping(value = "/toOrder", method = RequestMethod.POST)
+		public String toOrder(Model model , HttpSession session, @RequestParam String userId, HttpServletRequest request) {
 			logger.info("toOrder 컨트롤러 이동 {}", userId);
-			ArrayList<CartDto> dto = service.toOrder(userId);
+			
+			String[] array = request.getParameterValues("arr");
+			for (int i = 0; i < array.length; i++) {
+				logger.info("array[i] :{}",array[i]);
+			}
+					
+			ArrayList<CartDto> dto = service.toOrder(userId, array);
+			
 			model.addAttribute("orderList", dto);
 			return "cart/toOrder";
 		}

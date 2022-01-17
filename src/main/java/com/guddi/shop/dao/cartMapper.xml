@@ -32,15 +32,11 @@
 		where a.new_flg = 1 and b.photo_num = 1 and a.sell_flg = 1 and product_name = #{product_name}
 	
 	</select>
-	
-
-	
-	
+		
 	<!-- delCart-->
 	<delete id="delCart" parameterType="com.guddi.shop.dto.CartDto">
 		delete from cart where userId = #{userId} and idx = #{idx}
 	</delete>
-	
 	
 	<update id="cartupdate" parameterType="com.guddi.shop.dto.CartDto">
 		UPDATE cart SET 
@@ -48,13 +44,11 @@
 		WHERE product_code = #{product_code} and userId=#{userId}
 	</update>
 	
-	
 	<!-- 체크박스 delete -->
 	<delete id ="chkdelete"> 
 		DELETE FROM cart WHERE product_name = #{param1} 
 	</delete>
-	
-	
+		
 	<!-- order checkout -->
 	<select id="checkout" parameterType="hashMap">
 	select distinct c.idx,c.userId ,c.u_idx,c.product_name,c.product_code,c.quantity,c.price,pp.photo_num,pp.newFileName 
@@ -78,5 +72,12 @@
 		inner join member m
 		on m.userId = c.userId 
 		where c.userId = #{param1} and pp.photo_num = 1
+		<if test="param2 != null">
+			and p.product_code in (
+			<foreach collection="param2" item="arr" separator=",">
+				  #{arr}
+			</foreach>
+			)
+		</if>
 	</select>
 </mapper>
