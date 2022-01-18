@@ -84,4 +84,23 @@
 	
 	<!-- 배너이미지 관련  유지홍 2022.01.18 End -->
 
+	<!-- 브랜드 카테고리 관리 김도연 start 2022.01.17 -->
+	<select id="getBrand" resultType="com.guddi.shop.dto.EtcDto">
+		SELECT brand_idx, use_flg, regdate, brand_name, brand_code FROM brand
+	</select>
+	
+	<select id="getBrandIdx" resultType="int">
+		SELECT brand_idx FROM brand order by brand_idx desc limit 1
+	</select>
+
+	<insert id="doRegistBrand">
+		INSERT INTO brand (brand_idx,use_flg,brand_name,brand_code)
+			VALUES (#{param1}, 1,#{param2}, #{param3})
+	</insert>
+	
+	<update id="doUpdateBrandUse">
+		UPDATE brand SET use_flg=#{param1} where brand_idx =#{param2}
+	</update>
+
+
 </mapper>
