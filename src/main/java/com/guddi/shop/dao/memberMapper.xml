@@ -215,14 +215,10 @@
 	</select>
 
 	<!-- 카트 갯수  -->
-	
-	
 	<select id="HeadergetCart" resultType="int">
 		select COUNT(*) from cart where userId=#{param1} 
 	</select>
-	
-
-	
+		
 	<update id="cartupdate" parameterType="com.guddi.shop.dto.CartDto">
 		UPDATE cart SET 
 			quantity=#{quantity}
