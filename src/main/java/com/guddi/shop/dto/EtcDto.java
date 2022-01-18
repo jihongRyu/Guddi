@@ -36,6 +36,9 @@ public class EtcDto {
 	private String useFlg_name;
 	private int u_idx;
 	private String userId;
+	private String keyword;
+	private int answer_flg;
+	
 	
 	public String getNewFileName() {
 		return newFileName;
@@ -140,6 +143,18 @@ public class EtcDto {
 	}
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+	public String getKeyword() {
+		return keyword;
+	}
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+	public int getAnswer_flg() {
+		return answer_flg;
+	}
+	public void setAnswer_flg(int answer_flg) {
+		this.answer_flg = answer_flg;
 	}
 	
 	

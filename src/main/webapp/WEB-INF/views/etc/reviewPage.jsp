@@ -93,7 +93,7 @@
 			        	<th>${list.brand_name}</th>
 			        	<th>${list.bag_type}</th>
 			        	<th>${list.product_name}</th>
-			        	<th><a href="javascript:void(0);" onclick="toDetail('${list.idx}')">${list.subject}</a></th>
+			        	<th><a href="javascript:void(0);" onclick="toDetail('${list.idx}','${list.product_name}')">${list.subject}</a></th>
 			        	<th>${list.userId}</th>	
 			        	<th>${list.regdate}</th>
 			        	<th>
@@ -215,10 +215,9 @@ function changeQnAListByBag(bag_name){
 };
 
 
-function toDetail(idx) {
-	
-	
-	location.href="toReviewDetail?idx="+idx;
+function toDetail(idx, product_name) {
+		
+	location.href="toReviewDetail?idx="+idx+"&product_name="+product_name;
 	
 }
 

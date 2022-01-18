@@ -42,25 +42,38 @@
       <div class="login-form col-md-8 d-flex">
         <div class="bg-white p-5 contact-form">
 	          <div class="login-heading">
-		      	<span>Q&A상세</span>	                      
+		      	<span>리뷰상세</span>	                      
 		      </div>	        
 	          <div class="col-lg-12 pl-md-5 ftco-animate">
-				 <h5>문의타입</h5>	
-				 <p>${dto.answer_type}</p>				 		
+				 <h5>제품명</h5>	
+				 <p>${product_name}</p>				 		
 				 <h5>아이디</h5>	
-				 <p>${dto.userId }</p><br>
-				 <h5>제목</h5>
-				 <input type="text" class="form-control" id="subject" name="subject" value="${dto.subject }"> 				 				
+				 <p>${review.userId }</p>	
+				  <h5>제목</h5>	
+				 <p>${review.subject }</p>					
 				 <h5>내용</h5>
-				 <textarea class="form-textArea" rows="5" id="content" name="content">${dto.content }</textarea>
-				 <p style="float:right;">${dto.regdate }</p>
+				 <p>${review.content }</p> 
+				 <p style="float:right;">${review.regdate }</p>
 			  </div>			 
 			  <br><br>			 
 	          
 	          <div class="form-group text-center">
-	            <input type="button" value="뒤로가기" class="btn btn-primary py-3 px-5" onclick="location.href='qnaDetail?idx=${dto.idx}'">
-	            <input type="button" value="수정하기" class="btn btn-primary py-3 px-5" onclick="doUpdateQna(${dto.idx})">
-	         
+	            <form action="doUpdateReviewAnswer" id="doAnswer" name="doAnswer" method="post">
+	              <input type="hidden" id="idx" name="idx" value="${review.idx}">
+	          	  <input type="hidden" id="a_idx" name="a_idx" value="${answer.idx}">
+	          	  <input type="hidden" id="product_name" name="product_name" value="${product_name}">
+		          <div class="bg-light p-5 contact-form">
+			          <div class="col-lg-12 pl-md-5 ftco-animate ">							 				
+						 <h5>답변수정</h5>
+						 <textarea class="form-textArea" rows="5" id="answer" name="answer">${answer.content}</textarea>						
+					  </div>			 
+					  <br><br>	
+			          <div class="form-group text-center">
+			            <input type="button" value="뒤로가기" class="btn btn-primary" onclick="location.href='toReviewPage?num=1&answer_flg=2'">
+			            <input type="button" value="답변수정" class="btn btn-primary" onclick="doAnswerRegist()">        
+			          </div>
+		           </div>
+	             </form>
 	          </div>	         
         </div>      
       </div>      
@@ -96,34 +109,10 @@
 
 <script>
 
-function doUpdateQna(idx){
+function doAnswerRegist(){
 	
-	if (confirm('해당 문의를 수정하시겠습니까?')) {
-		$.ajax({
-			type:"post",
-			url:"doUpdateQna",
-			data : {
-				idx: idx,	
-				content: $("#content").val(),
-				subject: $("#subject").val(),
-			},
-			dataType:"JSON",
-			success:function(data){
-				
-				if (data.result>0) {
-					alert('답변이 수정되었습니다.');
-					location.href="qnaDetail?idx="+idx;	
-					return;
-				} else{
-					alert('에러발생! 관리자에게 문의해주세요.');				
-				}				
-			},
-			error:function(e){
-				
-				alert('에러발생 관리자에게 문의해주세요.');
-				
-			}
-		});
+	if (confirm('해당 답변을 수정하시겠습니까?')) {
+		$('#doAnswer').submit();
 	}
 }
 

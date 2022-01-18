@@ -33,63 +33,54 @@
 
 <jsp:include page="/WEB-INF/views/include/header.jsp"/>
 
-
-
-
 <section class="ftco-section contact-section bg-light">
   <div class="container">
     <div class="row block-9">
       <div class="login-form col-md-8 d-flex">
         <div class="bg-white p-5 contact-form">
 	          <div class="login-heading">
-		      	<span>Q&A상세</span>	                      
+		      	<span>리뷰상세</span>	                      
 		      </div>	        
 	          <div class="col-lg-12 product-details pl-md-5 ftco-animate">
-				 <h5>문의타입</h5>	
-				 <p>${dto.answer_type}</p>				 		
+				 <h5>제품명</h5>	
+				 <p>${product_name}</p>				 		
 				 <h5>아이디</h5>	
-				 <p>${dto.userId }</p>	
+				 <p>${review.userId }</p>	
 				  <h5>제목</h5>	
-				 <p>${dto.subject }</p>					
+				 <p>${review.subject }</p>					
 				 <h5>내용</h5>
-				 <p>${dto.content }</p> 
-				 <p style="float:right;">${dto.regdate }</p>
+				 <p>${review.content }</p> 
+				 <p style="float:right;">${review.regdate }</p>
 			  </div>			 
 			  <br><br>
-			  <c:if test="${qDto eq null }">
+			  <c:if test="${answer eq null }">
 			  <div class="ftco-animate text-center">
 			  	<h5 >답변이 존재하지 않습니다.</h5>
 			  </div>
 			  <br>
 			  </c:if>
-			  <c:if test="${qDto ne null }">
+			  <c:if test="${answer ne null }">
 			  <div class="col-lg-10 bg-light" style="margin:auto;"><br>				 		
 				 <h5>ㄴ관리자
-				 	<c:if test="${sessionScope.mem_flg eq 2}">(${qDto.userId })</c:if>
+				 	<c:if test="${sessionScope.mem_flg eq 2}">(${answer.managerId })</c:if>
 				 </h5>	<br>
-				 <p>${qDto.content }</p>
-				 <p style="float:right;">${qDto.regdate }</p><br>				
+				 <p>${answer.content }</p>
+				 <p style="float:right;">${answer.regdate }</p><br>				
 			  </div><br><br>
 			  </c:if>
-			  <c:if test="${qDto ne null &&sessionScope.mem_flg eq 2}">
+			  <c:if test="${answer ne null &&sessionScope.mem_flg eq 2}">
 			  <div class="form-group text-center">
-			      <input type="button" value="뒤로가기" class="btn btn-primary" onclick="location.href='qnaPage?qnaNum=1&answer_flg=2&qnaType=0'">
-			      <input type="button" value="답변수정" class="btn btn-primary" onclick="toUpdateAnswer('${dto.idx}','${qDto.idx}')">
-			      <input type="button" value="답변삭제" class="btn btn-primary" onclick="delAnswer('${qDto.idx}','${dto.idx}')">       
+			      <input type="button" value="뒤로가기" class="btn btn-primary" onclick="location.href='toReviewPage?num=1&answer_flg=2'">
+			      <input type="button" value="답변수정" class="btn btn-primary" onclick="toUpdateAnswer('${review.idx}','${answer.idx}')">
+			      <input type="button" value="답변삭제" class="btn btn-primary" onclick="delAnswer('${answer.idx}','${review.idx}')">       
 			  </div>
 	          <br>
 	          </c:if>
 	          <br>
-	          <c:if test="${sessionScope.mem_flg eq 1}">
-	          <div class="text-center">
-	            <input type="button" value="뒤로가기" class="btn btn-primary " onclick="location.href='qnaPage?qnaNum=1&answer_flg=2&qnaType=0'">
-	            <input type="button" value="수정하기" class="btn btn-primary " onclick="updateQna('${dto.idx}')">
-	            <input type="button" value="삭제하기" class="btn btn-primary " onclick="deleteQna('${qDto.idx}')">
-	          </div>
-	          </c:if>     
-	          <c:if test="${qDto eq null &&sessionScope.mem_flg eq 2 }">
-	          <form action="doAnswer" id="doAnswer" name="doAnswer" method="post">
-	          	  <input type="hidden" id="idx" name="idx" value="${dto.idx}">
+	          <c:if test="${answer eq null &&sessionScope.mem_flg eq 2 }">
+	          <form action="doReviewAnswer" id="doAnswer" name="doAnswer" method="post">
+	          	  <input type="hidden" id="idx" name="idx" value="${review.idx}">
+	          	   <input type="hidden" id="product_name" name="product_name" value="${product_name}">
 		          <div class="bg-light p-5 contact-form">
 			          <div class="col-lg-12 pl-md-5 ftco-animate ">							 				
 						 <h5>답변 등록</h5>
@@ -97,7 +88,7 @@
 					  </div>			 
 					  <br><br>	
 			          <div class="form-group text-center">
-			            <input type="button" value="뒤로가기" class="btn btn-primary" onclick="location.href='qnaPage?qnaNum=1&answer_flg=2&qnaType=0'">
+			            <input type="button" value="뒤로가기" class="btn btn-primary" onclick="location.href='toReviewPage?num=1&answer_flg=2'">
 			            <input type="button" value="답변등록" class="btn btn-primary" onclick="doAnswerRegist()">        
 			          </div>
 		          </div>
@@ -137,61 +128,6 @@
 
 <script>
 
-function deleteQna(idx){
-	
-	if (confirm('해당 문의를 삭제하시겠습니까?')) {	
-		
-		$.ajax({
-			type:"post",
-			url:"deleteQna",
-			data : {
-				idx: idx,						
-			},
-			dataType:"JSON",
-			success:function(data){
-				
-				alert('해당 문의가 삭제되었습니다.');
-				location.href="qnaPage?qnaNum=1&answer_flg=2&qnaType=0";
-				
-			},
-			error:function(e){
-				
-				alert('에러발생 관리자에게 문의해주세요.');
-				
-			}
-		});
-	}	
-	
-}
-
-function updateQna(idx){
-	
-	if (confirm('해당 문의를 수정하시겠습니까?')) {	
-		
-		$.ajax({
-			type:"post",
-			url:"checkAnswer",
-			data : {
-				idx: idx,						
-			},
-			dataType:"JSON",
-			success:function(data){
-				
-				if (data.result>0) {
-					alert('답변이 있는 글은 수정할 수 없습니다.');
-					return;
-				} else{
-					location.href="updateQna?idx="+idx;					
-				}				
-			},
-			error:function(e){
-				
-				alert('에러발생 관리자에게 문의해주세요.');
-				
-			}
-		});		
-	}	
-}
 
 function doAnswerRegist(){
 	
@@ -206,19 +142,24 @@ function doAnswerRegist(){
 }
 
 
-function toUpdateAnswer(q_idx,a_idx) {
+function toUpdateAnswer(r_idx,a_idx) {
 	
 	if (confirm('답변을 수정하시겠습니까?')) {
-		location.href = "updateAnswer?q_idx="+q_idx+"&a_idx="+a_idx;
+		
+		var product_name= "${product_name}";
+		
+		location.href = "updateReviewAnswer?r_idx="+r_idx+"&a_idx="+a_idx+"&product_name="+product_name;
 	}
 	
 }
 
 
-function delAnswer(a_idx, q_idx) {
+function delAnswer(a_idx, r_idx) {
+	
+	var product_name= "${product_name}";
 	
 	if (confirm('해당 답변을 삭제하시겠습니까?')) {
-		location.href = "doDelAnswer?q_idx="+q_idx+"&a_idx="+a_idx;		
+		location.href = "doDelReviewAnswer?a_idx="+a_idx+"&r_idx="+a_idx+"&product_name="+product_name;		
 	}
 	
 }

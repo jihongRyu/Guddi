@@ -18,7 +18,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.guddi.shop.dao.EtcDao;
 import com.guddi.shop.dto.EtcDto;
 import com.guddi.shop.dto.MemberDto;
+import com.guddi.shop.dto.PageDto;
 import com.guddi.shop.dto.ProductDto;
+import com.guddi.shop.dto.ReviewQnaDto;
 
 
 @Service
@@ -163,6 +165,70 @@ public class EtcService {
 		}
 		
 		return success;
+	}
+
+	public int reviewSearchCount(String keyword, int answer_flg, String brandName, String bagName) {
+		// TODO Auto-generated method stub
+		EtcDto dto = new EtcDto();
+		dto.setKeyword(keyword);
+		dto.setAnswer_flg(answer_flg);
+		dto.setBrand_name(brandName);
+		dto.setType_name(bagName);
+		
+		return dao.reviewSearchCount(dto);
+	}
+
+	public ArrayList<ReviewQnaDto> reviewInfo(int displayPost, int postNum, String keyword, int answer_flg,
+			String brandName, String bagName) {
+		// TODO Auto-generated method stub
+		PageDto dto = new PageDto();
+		dto.setDisplayPost(displayPost);
+		dto.setPostNum(postNum);
+		dto.setKeyword(keyword);
+		dto.setAnswer_flg(answer_flg);
+		dto.setBrand_name(brandName);
+		dto.setBag_name(bagName);
+		return dao.reviewInfo(dto);
+	}
+
+	public ArrayList<EtcDto> getbagCategoryList() {
+		// TODO Auto-generated method stub
+		return dao.getbagCategoryList();
+	}
+
+	public ArrayList<EtcDto> getbrandCategoryList() {
+		// TODO Auto-generated method stub
+		return dao.getbrandCategoryList();
+	}
+
+	public ArrayList<EtcDto> getanswerList() {
+		// TODO Auto-generated method stub
+		return dao.getanswerList();
+	}
+
+	public ReviewQnaDto getReviewDetail(int idx) {
+		// TODO Auto-generated method stub
+		return dao.getReviewDetail(idx);
+	}
+
+	public ReviewQnaDto getReviewAnswer(int idx) {
+		// TODO Auto-generated method stub
+		return dao.getReviewAnswer(idx);
+	}
+
+	public int doReviewAnswer(ReviewQnaDto dto) {
+		// TODO Auto-generated method stub
+		return dao.doReviewAnswer(dto);
+	}
+
+	public void doDelReviewAnswer(int a_idx) {
+		// TODO Auto-generated method stub
+		dao.doDelReviewAnswer(a_idx);
+	}
+
+	public void doUpdateReviewAnswer(ReviewQnaDto dto) {
+		// TODO Auto-generated method stub
+		dao.doUpdateReviewAnswer(dto);
 	}
 	
 	// 메인이미지 제어  유지홍 2022.01.18 End

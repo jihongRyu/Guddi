@@ -23,6 +23,8 @@ import com.guddi.shop.dao.EtcDao;
 import com.guddi.shop.dto.CartDto;
 import com.guddi.shop.dto.EtcDto;
 import com.guddi.shop.dto.MemberDto;
+import com.guddi.shop.dto.PageDto;
+import com.guddi.shop.dto.ReviewQnaDto;
 import com.guddi.shop.service.CartService;
 import com.guddi.shop.service.EtcService;
 
@@ -204,7 +206,7 @@ public class EtcController {
 
 		return map;
 	}
-	// 신상여부 카테고리 관련  유지홍 2022.01.17 End
+	
 	@RequestMapping(value = "/updateMainImageOrder")
 	@ResponseBody
 	public HashMap<String, Object>  updateMainImageOrder(HttpServletRequest request) {
@@ -228,5 +230,133 @@ public class EtcController {
 	    return map;
 	}
 	// 메인이미지 제어  유지홍 2022.01.18 End
+	
+	@RequestMapping(value = "/toReviewPage", method = RequestMethod.GET)
+	public String toReviewPage(Model model, @RequestParam("num") int num, @RequestParam("answer_flg") int answer_flg, 
+			@RequestParam(value="brandName",required=false,defaultValue = "") String brandName, 
+			@RequestParam(value="bagName",required=false,defaultValue = "") String bagName, 
+			@RequestParam(value="keyword",required=false,defaultValue="")String keyword) {
+		
+		logger.info("qnaPage 요청");		
+		PageDto reviewPage = new PageDto();
+		
+		reviewPage.setNum(num);
+		reviewPage.setCount(service.reviewSearchCount(keyword, answer_flg, brandName, bagName));				
+		reviewPage.setKeyword(keyword);
+		
+		logger.info("review.getCount() : {}",reviewPage.getCount());
+		
+		ArrayList<ReviewQnaDto> reviewList = 
+				service.reviewInfo(reviewPage.getDisplayPost(), reviewPage.getPostNum(), keyword, answer_flg, brandName, bagName);
+		ArrayList<EtcDto> brandCategoryList = service.getbrandCategoryList();
+		ArrayList<EtcDto> answerList = service.getanswerList();
+		ArrayList<EtcDto> bagCategoryList = service.getbagCategoryList();
+	
+		model.addAttribute("reviewList", reviewList); //리스트 보내기
+		model.addAttribute("reviewPage", reviewPage); //페이징처리
+		model.addAttribute("select", num);//페이징처리		  
+		model.addAttribute("keyword", keyword); //검색어
+		model.addAttribute("answer_flg", answer_flg); //검색어
+		model.addAttribute("brandName", brandName); //검색어
+		model.addAttribute("bagName", bagName); //검색어
+		model.addAttribute("answerList", answerList); //답변여부정보
+		model.addAttribute("bagCategoryList", bagCategoryList); 
+		model.addAttribute("brandCategoryList", brandCategoryList); 
+	
+		return "etc/reviewPage";
+	}
+	
+	@RequestMapping(value = "/toReviewDetail", method = RequestMethod.GET)
+	public String toReviewDetail(Model model, @RequestParam int idx, @RequestParam String product_name) {
+		logger.info("toReviewDetail 요청");
+		
+		ReviewQnaDto dto = service.getReviewDetail(idx);
+		ReviewQnaDto answer = service.getReviewAnswer(idx);
+		
+		model.addAttribute("product_name", product_name);
+		model.addAttribute("review", dto);
+		model.addAttribute("answer", answer);
+		
+		return "etc/managerReviewDetail";
+	}
+	@RequestMapping(value = "/doReviewAnswer", method = RequestMethod.POST)
+	public String doReviewAnswer(Model model, HttpSession session,
+			@RequestParam int idx, @RequestParam String answer, @RequestParam String product_name) {
+		logger.info("toReviewDetail 요청");
+		
+		String managerId = (String) session.getAttribute("userId");
+		ReviewQnaDto dto = new ReviewQnaDto();
+		dto.setR_idx(idx);
+		dto.setContent(answer);
+		dto.setManagerId(managerId);
+		
+		int result = service.doReviewAnswer(dto);
+		
+		ReviewQnaDto review = service.getReviewDetail(idx);
+		ReviewQnaDto reviewAnswer = service.getReviewAnswer(idx);
+			
+		model.addAttribute("product_name", product_name);
+		model.addAttribute("review", review);
+		model.addAttribute("answer", reviewAnswer);		
+		
+		return "etc/managerReviewDetail";
+	}
+	
+	@RequestMapping(value = "/doDelReviewAnswer", method = RequestMethod.GET)
+	public String doDelReviewAnswer(Model model, @RequestParam int a_idx, @RequestParam int r_idx,@RequestParam String product_name) {
+		logger.info("doDelReviewAnswer 요청");
+		
+		service.doDelReviewAnswer(a_idx);
+		
+		ReviewQnaDto review = service.getReviewDetail(r_idx);
+		ReviewQnaDto reviewAnswer = service.getReviewAnswer(r_idx);
+			
+		model.addAttribute("product_name", product_name);
+		model.addAttribute("review", review);
+		model.addAttribute("answer", reviewAnswer);	
+		
+		
+		return "etc/managerReviewDetail";
+	}
+	@RequestMapping(value = "/updateReviewAnswer", method = RequestMethod.GET)
+	public String updateReviewAnswer(Model model, @RequestParam int r_idx, 
+			@RequestParam int a_idx, @RequestParam String product_name) {
+		logger.info("updateReviewAnswer 요청");
+		
+		ReviewQnaDto review = service.getReviewDetail(r_idx);
+		ReviewQnaDto reviewAnswer = service.getReviewAnswer(r_idx);
+			
+		model.addAttribute("product_name", product_name);
+		model.addAttribute("review", review);
+		model.addAttribute("answer", reviewAnswer);
+		
+		return "etc/updateReviewAnswer";
+	}
+	
+	@RequestMapping(value = "/doUpdateReviewAnswer", method = RequestMethod.POST)
+	public String doUpdateReviewAnswer(Model model, HttpSession session,
+			@RequestParam int idx, @RequestParam int a_idx, @RequestParam String answer, @RequestParam String product_name) {
+		logger.info("doUpdateReviewAnswer 요청");
+	
+		ReviewQnaDto dto = new ReviewQnaDto();
+		dto.setIdx(a_idx);
+		dto.setContent(answer);
+		
+		logger.info("dto.getContent():{}", dto.getContent());
+		logger.info("dto.getIdx():{}", dto.getIdx());
+			
+		service.doUpdateReviewAnswer(dto);
+		
+		ReviewQnaDto review = service.getReviewDetail(idx);
+		ReviewQnaDto reviewAnswer = service.getReviewAnswer(idx);
+			
+		model.addAttribute("product_name", product_name);
+		model.addAttribute("review", review);
+		model.addAttribute("answer", reviewAnswer);		
+		
+		return "etc/managerReviewDetail";
+	}
+	
+	
 	
 }
