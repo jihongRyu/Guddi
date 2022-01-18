@@ -165,10 +165,26 @@ public class EtcService {
 		}
 		
 		return success;
+	}	
+	// 메인이미지 제어  유지홍 2022.01.18 End
+	//브랜드 카테고리 김도연 start 2022.01.17
+	public int doRegistBrand(String name, String code) {
+		logger.info("브랜드 추가하기 서비스");
+		int idx = dao.getBrandIdx();
+		int newidx = idx+1;
+		logger.info("브랜드 인덱스 : "+idx+" -> "+newidx);
+		
+		return dao.doRegistBrand(newidx,name, code);
 	}
 
+	public int doUpdateBrandUse(int useflg, int brand_idx) {
+		logger.info("브랜드 사용여부 서비스");
+		return dao.doUpdateBrandUse(useflg,brand_idx);
+	}
+	//브랜드 카테고리 김도연 End 2022.01.17
 
-	
-	// 메인이미지 제어  유지홍 2022.01.18 End
-
+	public ArrayList<EtcDto> getBrand() {
+		// TODO Auto-generated method stub
+		return dao.getBrand();
+	}
 }

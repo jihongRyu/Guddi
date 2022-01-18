@@ -38,6 +38,7 @@ public class EtcDto {
 	private String userId;
 	private String keyword;
 	private int answer_flg;
+	private String  typename;
 	
 	
 	public String getNewFileName() {
@@ -155,6 +156,12 @@ public class EtcDto {
 	}
 	public void setAnswer_flg(int answer_flg) {
 		this.answer_flg = answer_flg;
+	}
+	public String getTypename() {
+		return typename;
+	}
+	public void setTypename(String typename) {
+		this.typename = typename;
 	}
 	
 	

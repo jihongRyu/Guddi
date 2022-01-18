@@ -89,7 +89,7 @@
 		      <a class="nav-link dropdown-toggle" href="javascript:void(0);" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">기타</a>
 	          <div class="dropdown-menu" aria-labelledby="dropdown04">	         
 	          	<a class="dropdown-item" href="toMainImage">배너이미지관리</a>
-	          	<a class="dropdown-item" href="productPage?num=1&brand_idx=1&bag_type=0">문의타입카테고리관리</a>
+	          	<a class="dropdown-item" href="toUpdateQnaCategory?userIdx=${sessionScope.u_idx}">문의타입카테고리관리</a>
 	            <a class="dropdown-item" href="toBrandCategory">브랜드카테고리관리</a>
 	            <a class="dropdown-item" href="productPage?num=1&brand_idx=3&bag_type=0">가방종류카테고리관리</a>
 	            <a class="dropdown-item" href="toSellFlgCategory">판매여부카테고리관리</a>  

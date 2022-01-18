@@ -231,8 +231,62 @@ public class EtcController {
 	}
 	// 메인이미지 제어  유지홍 2022.01.18 End
 	
-
+	//브랜드 카테고리 김도연 start 2022.01.17
+	@RequestMapping(value = "/toBrandCategory", method = RequestMethod.GET)
+	public String toBrandCategory(Model model , HttpSession session) {
+		logger.info("toBrandCategory 이동요청");
+		
+		ArrayList<EtcDto> dto = service.getBrand();
+		ArrayList<EtcDto> udto = service.getUseFlgInfo();
+		
+		model.addAttribute("brandList", dto);
+		model.addAttribute("useFlgList", udto);
+		
+		return "etc/brandCategory";
+	}
 	
+	@RequestMapping(value = "/doRegistBrand", method = RequestMethod.POST)
+	@ResponseBody
+	public HashMap<String, Object> doRegistBrand(Model model 
+			, @RequestParam String name, @RequestParam String code) {
+		logger.info("doRegistBrand 요청");
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int result = service.doRegistBrand(name,code);
+		
+		if(result>0) {
+			map.put("result", result);
+		}
+		
+		return map;
+	}
+	
+	@RequestMapping(value = "/doUpdateBrandUse", method = RequestMethod.POST)
+	@ResponseBody
+	public HashMap<String, Object> doUpdateBrandUse(Model model 
+			, @RequestParam String brand_idx, @RequestParam String use_flgName) {
+		logger.info("doUpdateBrandUse 요청");
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		int useflg = 100;
+		ArrayList<EtcDto> uDto = service.getUseFlgInfo();
+		
+		for (int i = 0; i < uDto.size(); i++) {
+			if(uDto.get(i).getUseFlg_name().equals(use_flgName)) {
+				useflg = uDto.get(i).getIdx();
+			}
+		}
+		
+		if(useflg != 100) {
+			int result = service.doUpdateBrandUse(useflg, Integer.parseInt(brand_idx));
+			map.put("result", result);
+		}
+	
+		
+		return map;
+	}
+	//브랜드 카테고리 김도연 start 2022.01.17 End
 	
 	
 }

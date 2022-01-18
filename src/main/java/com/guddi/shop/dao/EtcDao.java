@@ -50,4 +50,12 @@ public interface EtcDao {
 
 	void updateImageOrder(int idx, String string);
 	// 메인이미지 제어  유지홍 2022.01.18 End
+	//브랜드 카테고리 김도연 start 2022.01.17	
+	int getBrandIdx();
+
+	int doRegistBrand(int newidx, String name, String code);
+
+	int doUpdateBrandUse(int useflg, int brand_idx);
+	//브랜드 카테고리 김도연 End 2022.01.17	
+	
 }

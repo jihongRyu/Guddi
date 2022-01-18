@@ -340,5 +340,19 @@
 	
 	
 	<!-- 주문정보 관련 Ryujihong 2022.01.18 End  -->
+	
+	<select id="toUpdateQnaCategory" resultType="com.guddi.shop.dto.EtcDto">
+		select idx, typename, use_flg from qnatype
+	</select>
+	<!-- 승혁님 문의타입 카테고리 제어관련  Start  -->
+	<insert id="addQna">
+		insert into qnatype(u_idx, typename, use_flg)
+			values(#{param1}, #{param2}, 1)
+	</insert>
+	
+	<update id="changUseFlg">
+		update qnatype set use_flg = #{param1} where typename = #{param2}
+	</update>
+	<!-- 승혁님 문의타입 카테고리 제어관련  End  -->
 </mapper>
 
