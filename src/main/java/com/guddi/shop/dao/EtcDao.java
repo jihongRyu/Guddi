@@ -49,27 +49,5 @@ public interface EtcDao {
 	int doUpdateImageUseFlg(int use_flg, int idx);
 
 	void updateImageOrder(int idx, String string);
-
-	int reviewSearchCount(EtcDto dto);
-
-	ArrayList<ReviewQnaDto> reviewInfo(PageDto dto);
-
-	ArrayList<EtcDto> getbagCategoryList();
-
-	ArrayList<EtcDto> getbrandCategoryList();
-
-	ArrayList<EtcDto> getanswerList();
-
-	ReviewQnaDto getReviewDetail(int idx);
-
-	ReviewQnaDto getReviewAnswer(int idx);
-
-	int doReviewAnswer(ReviewQnaDto dto);
-
-	void doDelReviewAnswer(int a_idx);
-
-	void doUpdateReviewAnswer(ReviewQnaDto dto);
-	
-	
 	// 메인이미지 제어  유지홍 2022.01.18 End
 }

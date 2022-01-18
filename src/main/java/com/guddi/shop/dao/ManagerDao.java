@@ -8,6 +8,7 @@ import com.guddi.shop.dto.EtcDto;
 import com.guddi.shop.dto.ListPageDto;
 import com.guddi.shop.dto.PageDto;
 import com.guddi.shop.dto.ProductDto;
+import com.guddi.shop.dto.ReviewQnaDto;
 
 public interface ManagerDao {
 	
@@ -85,7 +86,29 @@ public interface ManagerDao {
 	
 	
 	// 주문정보내역 리스트 orderInfoList yuSeonhwa 2022.01.17 END
+
+	// 리뷰 관련 Ryujihong 2022.01.17 Start
+	int reviewSearchCount(EtcDto dto);
+
+	ArrayList<ReviewQnaDto> reviewInfo(PageDto dto);
+
+	ArrayList<EtcDto> getbagCategoryList();
+
+	ArrayList<EtcDto> getbrandCategoryList();
+
+	ArrayList<EtcDto> getanswerList();
+
+	ReviewQnaDto getReviewDetail(int idx);
+
+	ReviewQnaDto getReviewAnswer(int idx);
+
+	int doReviewAnswer(ReviewQnaDto dto);
+
+	void doDelReviewAnswer(int a_idx);
+
+	void doUpdateReviewAnswer(ReviewQnaDto dto);
 	
+	// 리뷰 관련 Ryujihong 2022.01.17 End
 	
 	
 

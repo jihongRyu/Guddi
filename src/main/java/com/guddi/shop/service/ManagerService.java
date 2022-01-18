@@ -403,5 +403,69 @@ public class ManagerService {
 //
 //
 	// 주문정보내역 리스트 orderInfoList yuSeonhwa 2022.01.17 END
-	
+	// 리뷰 관련 Ryujihong 2022.01.17 Start
+	public int reviewSearchCount(String keyword, int answer_flg, String brandName, String bagName) {
+		// TODO Auto-generated method stub
+		EtcDto dto = new EtcDto();
+		dto.setKeyword(keyword);
+		dto.setAnswer_flg(answer_flg);
+		dto.setBrand_name(brandName);
+		dto.setType_name(bagName);
+		
+		return dao.reviewSearchCount(dto);
+	}
+
+	public ArrayList<ReviewQnaDto> reviewInfo(int displayPost, int postNum, String keyword, int answer_flg,
+			String brandName, String bagName) {
+		// TODO Auto-generated method stub
+		PageDto dto = new PageDto();
+		dto.setDisplayPost(displayPost);
+		dto.setPostNum(postNum);
+		dto.setKeyword(keyword);
+		dto.setAnswer_flg(answer_flg);
+		dto.setBrand_name(brandName);
+		dto.setBag_name(bagName);
+		return dao.reviewInfo(dto);
+	}
+
+	public ArrayList<EtcDto> getbagCategoryList() {
+		// TODO Auto-generated method stub
+		return dao.getbagCategoryList();
+	}
+
+	public ArrayList<EtcDto> getbrandCategoryList() {
+		// TODO Auto-generated method stub
+		return dao.getbrandCategoryList();
+	}
+
+	public ArrayList<EtcDto> getanswerList() {
+		// TODO Auto-generated method stub
+		return dao.getanswerList();
+	}
+
+	public ReviewQnaDto getReviewDetail(int idx) {
+		// TODO Auto-generated method stub
+		return dao.getReviewDetail(idx);
+	}
+
+	public ReviewQnaDto getReviewAnswer(int idx) {
+		// TODO Auto-generated method stub
+		return dao.getReviewAnswer(idx);
+	}
+
+	public int doReviewAnswer(ReviewQnaDto dto) {
+		// TODO Auto-generated method stub
+		return dao.doReviewAnswer(dto);
+	}
+
+	public void doDelReviewAnswer(int a_idx) {
+		// TODO Auto-generated method stub
+		dao.doDelReviewAnswer(a_idx);
+	}
+
+	public void doUpdateReviewAnswer(ReviewQnaDto dto) {
+		// TODO Auto-generated method stub
+		dao.doUpdateReviewAnswer(dto);
+	}
+	// 리뷰 관련 Ryujihong 2022.01.17 End
 }
