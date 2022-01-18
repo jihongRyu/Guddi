@@ -344,18 +344,18 @@ public class ManagerService {
 	
 	
 	// 주문정보내역 리스트 orderInfoList yuSeonhwa 2022.01.17 START
-	
-	public ArrayList<CartDto> orderInfoList(int displayPost, int postNum) {
-		logger.info("Mybatispage service");
-		PageDto dto = new PageDto();
-		dto.setPostNum(postNum);
-		dto.setDisplayPost(displayPost);
-		return dao.orderInfoList(dto);
-	}
-
-	public int Mybatiscount() {
-		return dao.Mybatiscount();
-	}
+//	
+//	public ArrayList<CartDto> orderInfoList(int displayPost, int postNum) {
+//		logger.info("Mybatispage service");
+//		PageDto dto = new PageDto();
+//		dto.setPostNum(postNum);
+//		dto.setDisplayPost(displayPost);
+//		return dao.orderInfoList(dto);
+//	}
+//
+//	public int Mybatiscount() {
+//		return dao.Mybatiscount();
+//	}
 //
 //	@RequestMapping(value = "/orderInfoList", method = RequestMethod.GET)
 //	public String orderInfoList(Model model,@RequestParam("num") int num) {	
@@ -468,4 +468,24 @@ public class ManagerService {
 		dao.doUpdateReviewAnswer(dto);
 	}
 	// 리뷰 관련 Ryujihong 2022.01.17 End
+
+	// 주문정보내역 리스트 orderInfoList 유지홍 2022.01.18 START
+	public int orderListSearchCount(PageDto Page) {
+		// TODO Auto-generated method stub
+		return dao.orderListSearchCount(Page);
+	}
+
+	public ArrayList<CartDto> orderList(int displayPost, int postNum, String keyword, String searchType) {
+		// TODO Auto-generated method stub
+		PageDto dto = new PageDto();
+		dto.setDisplayPost(displayPost);
+		dto.setPostNum(postNum);
+		dto.setKeyword(keyword);
+		dto.setSearchType(searchType);
+		
+		return dao.orderList(dto);
+	}
+	
+	
+	// 주문정보내역 리스트 orderInfoList 유지홍 2022.01.18 End
 }

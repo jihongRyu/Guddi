@@ -262,5 +262,83 @@
 	</update>
 	<!-- 리뷰관련 Ryujihong 2022.01.18 End  -->
 	
+	<!-- 주문정보 관련 Ryujihong 2022.01.18 Start  -->
+	<select id="orderListSearchCount" parameterType="com.guddi.shop.dto.PageDto" resultType="int">
+		select count(*) 
+		from tb_order o
+		inner join product p 
+		on p.product_code = o.product_code
+		where 1=1
+		<if test="keyword !=null">
+			<if test="searchType.equals('phone')">
+			and o.phone LIKE concat('%', #{keyword}, '%')
+			</if>
+			<if test="searchType.equals('brand')">
+			and p.brand_name LIKE concat('%', #{keyword}, '%')
+			</if>
+			<if test="searchType.equals('bagType')">
+			and p.bag_type LIKE concat('%', #{keyword}, '%')
+			</if>
+			<if test="searchType.equals('userId')">
+			and o.userId LIKE concat('%', #{keyword}, '%')
+			</if>
+			<if test="searchType.equals('userName')">
+			and o.username LIKE concat('%', #{keyword}, '%')
+			</if>
+			<if test="searchType.equals('orderNum')">
+			and o.order_num LIKE concat('%', #{keyword}, '%')
+			</if>
+			<if test="searchType.equals('all')">
+			and o.phone LIKE concat('%', #{keyword}, '%')
+  			or p.brand_name LIKE concat('%', #{keyword}, '%')
+  			or p.bag_type LIKE concat('%', #{keyword}, '%')
+  			or o.userId LIKE concat('%', #{keyword}, '%')
+  			or o.username LIKE concat('%', #{keyword}, '%')
+  			or o.order_num LIKE concat('%', #{keyword}, '%')
+			</if>
+		</if>
+	
+	</select>
+	<select id="orderList" parameterType="com.guddi.shop.dto.PageDto" resultType="com.guddi.shop.dto.CartDto">
+	select o.idx, o.order_num ,o.product_code, p.brand_name, p.bag_type, o.userId, o.username, 
+	o.regdate, o.quantity, o.phone ,o.product_name, o.totalPrice
+	from tb_order o inner join product p 
+	on p.product_code = o.product_code
+	where 1=1
+		<if test="keyword !=null">
+			<if test="searchType.equals('phone')">
+			and o.phone LIKE concat('%', #{keyword}, '%')
+			</if>
+			<if test="searchType.equals('brand')">
+			and p.brand_name LIKE concat('%', #{keyword}, '%')
+			</if>
+			<if test="searchType.equals('bagType')">
+			and p.bag_type LIKE concat('%', #{keyword}, '%')
+			</if>
+			<if test="searchType.equals('userId')">
+			and o.userId LIKE concat('%', #{keyword}, '%')
+			</if>
+			<if test="searchType.equals('userName')">
+			and o.username LIKE concat('%', #{keyword}, '%')
+			</if>
+			<if test="searchType.equals('orderNum')">
+			and o.order_num LIKE concat('%', #{keyword}, '%')
+			</if>
+			<if test="searchType.equals('all')">
+			and o.phone LIKE concat('%', #{keyword}, '%')
+  			or p.brand_name LIKE concat('%', #{keyword}, '%')
+  			or p.bag_type LIKE concat('%', #{keyword}, '%')
+  			or o.userId LIKE concat('%', #{keyword}, '%')
+  			or o.username LIKE concat('%', #{keyword}, '%')
+  			or o.order_num LIKE concat('%', #{keyword}, '%')
+			</if>
+		</if>
+		order by o.regdate desc
+	 	limit #{displayPost}, #{postNum}
+		
+	</select>
+	
+	
+	<!-- 주문정보 관련 Ryujihong 2022.01.18 End  -->
 </mapper>
 

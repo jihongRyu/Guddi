@@ -107,6 +107,11 @@ public interface ManagerDao {
 	void doDelReviewAnswer(int a_idx);
 
 	void doUpdateReviewAnswer(ReviewQnaDto dto);
+
+	int orderListSearchCount(PageDto Page);
+
+	ArrayList<CartDto> orderList(PageDto dto);
+	
 	
 	// 리뷰 관련 Ryujihong 2022.01.17 End
 	

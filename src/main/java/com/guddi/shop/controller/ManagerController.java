@@ -403,11 +403,6 @@ public class ManagerController {
 	//2022.01.15 유지홍 관리자 Qna관련 소스 End
 	
 	
-	
-	
-	
-	
-	
 	//각종  카테고리 정보를 가져오는 메서드 Start ryujihong 2022.01.12
 	public void getCategory(HttpSession session){
 		
@@ -428,15 +423,33 @@ public class ManagerController {
 	//각종  카테고리 정보를 가져오는 메서드 End ryujihong 2022.01.11
 	
 	
-	// 주문정보내역 리스트 orderInfoList yuSeonhwa 2022.01.17 START
+	// 주문정보내역 리스트 orderInfoList yuSeonhwa and Ryujihong 2022.01.17 START
 	
 	@RequestMapping(value = "/orderInfoList", method = RequestMethod.GET)
-	public String orderInfoList(Model model,@RequestParam("num") int num) {	
-		logger.info("orderInfoList 요청");		
+	public String orderInfoList(Model model, HttpSession session, @RequestParam("num") int num,  
+			@RequestParam(value="searchType",required=false,defaultValue = "0") String searchType,
+			@RequestParam(value="keyword",required=false,defaultValue="")String keyword) {	
+		
+		
 		PageDto Page = new PageDto();
-		ArrayList<CartDto> orderInfoList = service.orderInfoList(Page.getDisplayPost(),Page.getPostNum());
-		model.addAttribute("Page", Page); //페이징처리
-		model.addAttribute("listpagedto", orderInfoList); //페이징처리
+		
+		Page.setNum(num);
+		Page.setKeyword(keyword);
+		Page.setSearchType(searchType);
+		
+		Page.setCount(service.orderListSearchCount(Page));	
+		
+		logger.info("Page.getCount() : {}",Page.getCount());
+		
+		ArrayList<CartDto> orderList = 
+				service.orderList(Page.getDisplayPost(), Page.getPostNum(), keyword, searchType);
+				
+		model.addAttribute("orderList", orderList); //리스트 보내기
+		model.addAttribute("page", Page); //페이징처리
+		model.addAttribute("select", num);//페이징처리		  
+		model.addAttribute("keyword", keyword); 
+		model.addAttribute("searchType", searchType); 
+		
 		
 		return "manager/orderInfoList";
 	}
