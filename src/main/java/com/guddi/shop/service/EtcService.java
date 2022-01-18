@@ -52,6 +52,10 @@ public class EtcService {
 		return dao.getUseFlgInfo();
 	}
 
+	// 신상여부 카테고리 관련  유지홍 2022.01.17 End
+	
+
+
 	public ArrayList<EtcDto> getSellFlgInfo() {
 		// TODO Auto-generated method stub
 		return dao.getSellFlgInfo();
@@ -162,6 +166,5 @@ public class EtcService {
 	}
 	
 	// 메인이미지 제어  유지홍 2022.01.18 End
-
 
 }

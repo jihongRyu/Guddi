@@ -18,7 +18,9 @@ public interface EtcDao {
 	int doUpateUseFlg(int use_flg, int idx);
 
 	ArrayList<EtcDto> getUseFlgInfo();
-
+	
+	ArrayList<EtcDto> getBrand();
+	
 	ArrayList<EtcDto> getSellFlgInfo();
 
 	int doRegistSellFlg(int newIdx, String sellname);
@@ -47,5 +49,5 @@ public interface EtcDao {
 	void updateImageOrder(int idx, String string);
 	
 	
-	// 메인이미지 제어  유지홍 2022.01.18 Start
+	// 메인이미지 제어  유지홍 2022.01.18 End
 }

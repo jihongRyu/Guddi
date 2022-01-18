@@ -270,8 +270,9 @@ public class ManagerController {
 	
 		return "redirect:/productMain?num=1&brand_idx=0";
 	}
-	
 	//2022.01.14 유지홍 제품 등록 관련 소스 End
+	
+	
 	//2022.01.15 유지홍 제품 삭제 관련 소스 Start
 	@RequestMapping(value = "/delProduct")
 	@ResponseBody
@@ -416,7 +417,7 @@ public class ManagerController {
 		ArrayList<EtcDto> sellflg = service.getSellflg();
 		ArrayList<EtcDto> answertype = service.getAnswertype();
 		ArrayList<EtcDto> newflg = service.getNewflg();
-				
+		
 		session.setAttribute("newflg", newflg);
 		session.setAttribute("brandcategory", brandcategory);
 		session.setAttribute("bagtype", bagtype);

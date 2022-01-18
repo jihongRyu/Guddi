@@ -46,7 +46,7 @@ public class EtcController {
 		
 
 		return "etc/newFlgCategory";
-	}
+	}	
 	
 	@RequestMapping(value = "/registNewflg", method = RequestMethod.GET)
 	public String registNewflg(Model model , HttpSession session) {
@@ -73,6 +73,7 @@ public class EtcController {
 	@RequestMapping(value = "/doUpdateUseFlg", method = RequestMethod.POST)
 	@ResponseBody
 	public HashMap<String, Object> doUpdateUseFlg(Model model , @RequestParam String idx, @RequestParam String use_flg) {
+
 		
 		logger.info("doUpdateUseFlg 요청");
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -135,7 +136,7 @@ public class EtcController {
 		map.put("result", result);
 		
 		
-
+	
 		return map;
 	}
 	// 신상여부, 판매여부 카테고리 관련  유지홍 2022.01.17 End
@@ -200,12 +201,10 @@ public class EtcController {
 	
 		int result = service.doUpdateImageUseFlg(Integer.parseInt(use_flg) , Integer.parseInt(idx));
 		map.put("result", result);
-		
-		
 
 		return map;
 	}
-	
+	// 신상여부 카테고리 관련  유지홍 2022.01.17 End
 	@RequestMapping(value = "/updateMainImageOrder")
 	@ResponseBody
 	public HashMap<String, Object>  updateMainImageOrder(HttpServletRequest request) {
