@@ -23,7 +23,12 @@
 	<link rel="stylesheet" href="resources/css/flaticon.css">
 	<link rel="stylesheet" href="resources/css/icomoon.css">
 	<link rel="stylesheet" href="resources/css/style.css">
-
+	<style>
+		#brandcode,#brandname,#add{
+			float: right;
+			margin:5px;
+		}
+	</style>
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/include/header.jsp"/>	
@@ -41,19 +46,40 @@
 	  <div class="container" >
 	    <div class="row">      
 	      <div class="col-lg-12 ftco-animate" >    
-			 <div class="myPage-table table-striped" >		 
-			   <button class="btn btn-primary mb-4" style="float:right;" onclick="registQna()">추가하기</button>		  
+			 <div class="myPage-table table-striped" >
+			 	<!-- <form action="addbrand" method="POST" > -->
+				   <button id="add" name="add" class="btn btn-primary mb-4" onclick="registBrand()">추가하기</button>
+				 	<input type="text" id="brandcode" name="brandcode" placeholder="브랜드코드">
+				 	<input type="text" id="brandname" name="brandname" placeholder="브랜드명">
+				<!--  </form> -->
 			   <table>
 					<tr style="background-color:#212529;color:white;">
 						<th>브랜드 번호</th>
 						<th>브랜드명</th>
+						<th>브랜드 코드</th>
 						<th>사용여부</th>
-						<th>브랜드 삭제</th>
+						<th>등록일</th>
 					</tr>
-				
-				
-				
-	
+					<c:if test="${brandList.size() == 0 }">
+						<tr>
+							<td colspan="4">사용 가능한 브랜드가 없습니다.</td>
+						</tr>
+					</c:if>
+					<c:forEach items="${brandList}" var="list">
+						<tr>
+							<th>${list.brand_idx}</th>
+							<th>${list.brand_name}</th>
+							<th>${list.brand_code}</th>
+							<th>
+								<select name="useFlg" id="useFlg" class="form-control" onchange="changeBrandUse('${list.brand_idx}',this.value)">
+									<c:forEach items="${useFlgList}" var="useFlgList">
+										<option <c:if test="${list.use_flg eq useFlgList.idx}">selected</c:if>>${useFlgList.useFlg_name}</option>
+									</c:forEach>
+								</select>
+							</th>
+							<th>${list.regdate}</th>
+						</tr>
+					</c:forEach>
 				</table>    	   				
 			 </div>   		     
 	      </div>
@@ -81,5 +107,64 @@
 	<script src="resources/js/main.js"></script>
 	
 </body>
-<script></script>
+<script>
+	
+	function registBrand(){
+		//console.log("브랜드 추가하기");
+		var name = $('#brandname').val();
+		var code = $('#brandcode').val();
+		//console.log(name,code);
+		
+		if(name == ''){
+			alert("브랜드명을 입력해주세요.");
+		}else if(code == ''){
+			alert("브랜드 코드를 입력해주세요.");
+		}else{
+			console.log("입력된 브랜드/코드",name,code);
+		}
+		
+		$.ajax({
+			url:'doRegistBrand',
+			method:'POST',
+			data:{'name':name,'code':code},
+			dataType:'json',
+			success:function(data){
+				if(data.result>0){
+					alert("브랜드가 추가되었습니다.");
+					location.reload();
+				}
+			},
+			error:function(e){
+				alert("브랜드 추가에 실패하였습니다. 다시시도해주세요.");
+				location.reload();
+			}
+		});
+		
+	}
+	
+	function changeBrandUse(brand_idx, use_flgName){
+		
+		if(confirm("사용여부를 변경하시겠습니까?")){
+			
+			$.ajax({
+				url:'doUpdateBrandUse',
+				method:'POST',
+				data:{'brand_idx':brand_idx,'use_flgName':use_flgName},
+				dataType:'json',
+				success:function(data){
+					console.log(data);
+					alert("사용여부 변경이 완료되었습니다.");
+					location.reload();
+				},
+				error:function(e){
+					alert("사용여부 변경에 실패하였습니다.");
+				}
+				
+			});
+		}
+		
+	}
+
+	
+</script>
 </html>

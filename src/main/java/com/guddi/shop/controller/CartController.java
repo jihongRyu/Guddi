@@ -137,7 +137,7 @@ public class CartController {
 	
 	//order 추가 21-01-14
 
-	@RequestMapping(value = "cart/toOrder", method = RequestMethod.GET)
+	@RequestMapping(value = "toOrder", method = RequestMethod.GET)
 	public String toOrder(Model model) {
 		logger.info("toOrder Click");
 		

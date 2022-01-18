@@ -32,8 +32,8 @@
 <section class="ftco-section contact-section bg-light">
 	<div class="container">    
 	      <div class="col-md-12 ftco-animate text-center bg-light">
-	      	<p class="breadcrumbs"><span class="mr-2"><a href="./">홈</a></span>/<span>사용여부카테고리관리</span></p>
-	        <h1 class="mb-0 bread">사용여부카테고리관리</h1>
+	      	<p class="breadcrumbs"><span class="mr-2"><a href="./">홈</a></span>/<span>신상여부카테고리관리</span></p>
+	        <h1 class="mb-0 bread">신상여부카테고리관리</h1>
 	      </div>    
 	</div>
 </section>
@@ -43,29 +43,31 @@
     <div class="row">      
       <div class="col-lg-12 ftco-animate" >    
 		 <div class="myPage-table table-striped" >		 
-		   <button class="btn btn-primary mb-4" style="float:right;" onclick="registQna()">추가하기</button>		  
+		   <button class="btn btn-primary mb-4" style="float:right;" onclick="registNewflg()">추가하기</button>		  
 		   <table>
 		        <tr style="background-color:#212529;color:white;">
-		        	<th>번호</th>
-		        	<th>사용여부 (1:사용, 0:미사용)</th>
-		        	<th>사용명</th>
-		        	<th>등록일</th>
-		        	<th>미사용처리</th>		
-		        	<th>사용처리</th>      	           		     
+		        	<th>번호</th>		        	
+		        	<th>카테고리명</th>
+		        	<th>사용여부</th>
+		        	<th>등록일</th>		        	        	           		     
 		       </tr>
 		       <c:if test="${newFlgList.size() == 0 }">           
 		       <tr>
-		        	<td colspan="6">해당하는 신상flg가 없습니다.</td>		             	             	           		     
+		        	<td colspan="4">해당하는 신상여부flg가 없습니다.</td>		             	             	           		     
 		       </tr>
 		       </c:if>
 		       <c:forEach items="${newFlgList}" var="list">		       	  
 			       <tr>		       
-			        	<th>${list.idx}</th>
-			        	<th>${list.use_flg}</th>
+			        	<th>${list.idx}</th>			        	
 			        	<th>${list.newname}</th>
-			        	<th>${list.regdate}</th>	
-			        	<th>미사용처리</th>
-			        	<th>사용처리</th>	             		           		     
+			        	<th>
+			        		<select name="useFlg" id="useFlg" class="form-control" onchange="changeUseNewflg('${list.idx}',this.value)">
+			        			<c:forEach items="${useFlgList}" var="useFlgList">
+			        				<option <c:if test="${list.use_flg eq useFlgList.idx}">selected</c:if>>${useFlgList.useFlg_name}</option>
+			        			</c:forEach>
+			        		</select>			        	
+			        	</th>
+			        	<th>${list.regdate}</th>			                 		           		     
 			       </tr>			    
 		       </c:forEach>      
 		   </table>    	   				
@@ -99,80 +101,50 @@
 <script>
 
 
-var msg = "${msg}";
 
-if(msg != ""){
-	alert(msg);
-}	
-
-
-function delReview(idx) {
+function registNewflg(){	
 	
-	if (confirm("해당 리뷰를 삭제하시겠습니까?")) {
-		location.href='delReview?idx='+idx;
-	}
+	if (confirm("새 Flg를 작성하시겠습니까?")) {		
+		var win = window.open("registNewflg", "PopupWin", "width=500,height=200");		
+	}	
 	
 };
-
-function changeQnAListByCategory(qnaType){	
-	
-	var qnaType = qnaType;
-	var answer_flg = '${qnaAnswer_flg}';
-	var keyword = '${qnaKeyword}';
-	
-	location.href="qnaPage?qnaNum=1&answer_flg="+answer_flg+"&qnaType="+qnaType+"&keyword="+keyword+"#qnaList";	
-	
-};
+ 
 
 
-function changeQnAListByFlg(answer_flg){	
+function changeUseNewflg(idx, use_flgName){	
 	
-	var qnaType = '${qnaType}';
-	var answer_flg = answer_flg;
-	var keyword = '${qnaKeyword}';
-	
-	location.href="qnaPage?qnaNum=1&answer_flg="+answer_flg+"&qnaType="+qnaType+"&keyword="+keyword+"#qnaList";	
-	
-};
-
-
-function changeQnAListById(){
-	
-	var qnaType = '${qnaType}';
-	var answer_flg = '${qnaAnswer_flg}';
-	var keyword = $('#keyword').val();	
-	
-	location.href="qnaPage?qnaNum=1&answer_flg="+answer_flg+"&qnaType="+qnaType+"&keyword="+keyword+"#qnaList";	
-	
-};
-
-function registQna(){	
-	
-	if (confirm("Q&A를 작성하시겠습니까?")) {
+	if (confirm("해당 Flg를 사용하시겠습니까?")) {
 		
-		location.href="registQna";
-		
-	}
+		$.ajax({
+			url: "doUpdateUseFlg", //호출할 파일명			
+			method: "POST",
+			data:{'idx':idx,
+				  'use_flgName':use_flgName
+				},
+			dataType: "json", //내가 받아야할 결과 형태가 text, html, xml, json
+			
+			success: function(data){	
+							
+				if (data.result>0) {
+					alert('해당 사항을 변경하였습니다!');
+					location.href="toNewFlgCategory";
+				}else {
+					alert("수정에 실패하였습니다.");
+				}		
 	
+									
+			},
+			error:function(){
+				alert("수정에 실패하였습니다.");
+			}
+		});
+		
+		
+	}	
 	
 };
 
-function toDetail(idx, writer) {
-	
-	var userId = "${sessionScope.userId}";		
-	var mem_flg = "${sessionScope.mem_flg}";
-
-	
-	if (userId!=writer) {	
-		if (mem_flg==1) {
-			alert("타인의 문의내용을 볼 수 없습니다!");
-			return;
-		}				
-	}
-	
-	location.href="qnaDetail?idx="+idx;
-	
-}
 
 
 
