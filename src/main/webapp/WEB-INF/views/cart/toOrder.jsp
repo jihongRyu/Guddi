@@ -56,6 +56,12 @@
 							</tr>
 							<c:forEach items="${orderList}" var="orderInfo">
 								<tr>
+<%-- 
+									<th><img src='resources/photo/${orderInfo.newFileName}'style="width: 350px; height: 350px;" /></th>
+									<th>${orderInfo.product_name}</th>
+									<th>${orderInfo.price }</th>
+									<th>${orderInfo.quantity }</th>
+ --%>
 									<th><img src='resources/photo/${orderInfo.newFileName }'style="width: 200px; height: 200px;" /></th>
 									<th class="productName">
 										<input type="hidden" name="product_code" value="${orderInfo.product_code}">
@@ -68,6 +74,7 @@
 									</th>
 									<th>₩ <fmt:formatNumber value="${orderInfo.price}" pattern="#,###.##"/></th>
 									<th class="quantity">${orderInfo.quantity}</th>
+
 									<th class="totalPrice">${orderInfo.price *orderInfo.quantity }</th>
 								</tr>
 							</c:forEach>

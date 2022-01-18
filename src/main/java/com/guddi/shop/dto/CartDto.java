@@ -24,7 +24,14 @@ public class CartDto {
 //	order_num varchar(30) 주문번호
 //  totalPrice
 
-
+	//주문정보 페이징을 위한 Dto Yuseonhwa 220118 START!!!
+	//페이지 갯수 limit 10,10 에서 앞부분(MyBatispageNum)
+	private int MyBatispageNum;
+	//한 페이지당 몇개의 데이터(MyBatisamount)를 보여줄 것인지
+	private int MyBatisamount;
+	
+	//주문정보 페이징을 위한 Dto Yuseonhwa 220118 END!!!
+	
 	
 	
 	
@@ -41,7 +48,14 @@ public class CartDto {
 	}
 	/*end*/
 	
+	/*주문정보조회 (관리자) 에서 product의 bag_type 과 brand_name 을 알기위해추가*/
+	private String brand_name;
+	private String bag_type;
+	
+
+	
 	private String idx;
+	private int u_idx;
 	private String userId;
 	private String username;
 	private String product_name;
@@ -165,6 +179,36 @@ public class CartDto {
 	}
 	public void setTotalPrice(int totalPrice) {
 		this.totalPrice = totalPrice;
+	}
+	public int getU_idx() {
+		return u_idx;
+	}
+	public void setU_idx(int u_idx) {
+		this.u_idx = u_idx;
+	}
+	public String getBrand_name() {
+		return brand_name;
+	}
+	public void setBrand_name(String brand_name) {
+		this.brand_name = brand_name;
+	}
+	public String getBag_type() {
+		return bag_type;
+	}
+	public void setBag_type(String bag_type) {
+		this.bag_type = bag_type;
+	}
+	public int getMyBatispageNum() {
+		return MyBatispageNum;
+	}
+	public void setMyBatispageNum(int myBatispageNum) {
+		MyBatispageNum = myBatispageNum;
+	}
+	public int getMyBatisamount() {
+		return MyBatisamount;
+	}
+	public void setMyBatisamount(int myBatisamount) {
+		MyBatisamount = myBatisamount;
 	}
 
 

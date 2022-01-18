@@ -16,13 +16,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.guddi.shop.dto.CartDto;
 import com.guddi.shop.dto.EtcDto;
 import com.guddi.shop.dto.PageDto;
 import com.guddi.shop.dto.ProductDto;
@@ -426,5 +426,65 @@ public class ManagerController {
 		
 	}
 	//각종  카테고리 정보를 가져오는 메서드 End ryujihong 2022.01.11
+	
+	
+	// 주문정보내역 리스트 orderInfoList yuSeonhwa 2022.01.17 START
+	
+	@RequestMapping(value = "/orderInfoList", method = RequestMethod.GET)
+	public String orderInfoList(Model model,@RequestParam("num") int num) {	
+		logger.info("orderInfoList 요청");		
+		PageDto Page = new PageDto();
+		ArrayList<CartDto> orderInfoList = service.orderInfoList(Page.getDisplayPost(),Page.getPostNum());
+		model.addAttribute("Page", Page); //페이징처리
+		model.addAttribute("listpagedto", orderInfoList); //페이징처리
+		
+		return "manager/orderInfoList";
+	}
+	// 주문정보내역 페이징 
+	
+	
+	
+	
+	
+	
+	// 주문정보내역 리스트 orderInfoList yuSeonhwa 2022.01.17 END
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

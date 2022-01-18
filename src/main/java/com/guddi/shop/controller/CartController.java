@@ -133,6 +133,103 @@ public class CartController {
 	
 	//order 추가 21-01-14
 
+
+	/*
+	@RequestMapping(value = "toOrder", method = RequestMethod.GET)
+	public String toOrder(Model model) {
+		logger.info("toOrder Click");
+		
+		
+		return "cart/toOrder";
+	}
+	*/
+	@RequestMapping(value = "/checkout", method = RequestMethod.POST)
+	public HashMap<String, Object> toOrder(Model model,HashMap<String, Object> checkoutmap,@RequestParam String userId, @RequestParam String checkoutPrice) {
+		
+		logger.info("checkout");
+		String[] arrayInfo = null;
+		String code = checkoutmap.get("arrayParam").toString();
+		
+		arrayInfo = code.split(",");
+		int[] results= new int[arrayInfo.length];
+        int result=1;
+
+        HashMap<String, Object> resendMap = new HashMap<String, Object>();
+        for(int i=0; i < arrayInfo.length; i++){
+	         
+            resendMap.put("code", arrayInfo[i]);  
+            resendMap.put("no", checkoutmap.get("idx")); 
+            resendMap.put("date", checkoutmap.get("item"));
+	        
+            results[i] = dao.checkout(resendMap); 
+            result *= results[i];
+        }
+        CartDto dto = service.findInfo(userId);
+		model.addAttribute("info", dto);
+		model.addAttribute("checkoutPrice",checkoutPrice);
+		
+		return resendMap;
+	}
+	
+	
+	
+	//
+	
+	
+	
+	
+	// 체크박스 실험 ysh START 220117
+	@RequestMapping(value = "/test_check", method = RequestMethod.POST)
+	@ResponseBody
+	public String testCheck(Model model,HttpServletRequest request) {
+	   
+		
+
+		
+	    logger.info("test_check");
+	
+	    String[] valueArrTest = request.getParameterValues("valueArrTest");
+	    
+    	
+		return "cart/toOrder";
+	    
+	}
+	@RequestMapping(value = "/checkout2", method = RequestMethod.POST)
+	public String[] checkout2(HttpServletRequest request) {
+		
+		logger.info("checkout");
+		String[] valueArrTest = request.getParameterValues("valueArrTest");
+		for (String c : valueArrTest) {
+            logger.info(c);
+        }
+		
+		return valueArrTest;
+	}
+
+	
+	
+	// 체크박스 실험 ysh END 220117
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
 	
 //	//주문하기 페이지로 이동 //////////////////////////////////////////////
 //	@RequestMapping(value = "/order/${list.userId}", method = RequestMethod.GET)

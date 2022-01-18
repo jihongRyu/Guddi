@@ -3,6 +3,15 @@ package com.guddi.shop.dto;
 public class ListPageDto {
 	
 	
+	//주문정보 페이징을 위한 Dto Yuseonhwa 220118 START!!!
+	//페이지 갯수 limit 10,10 에서 앞부분(MyBatispageNum)
+	private int MyBatispageNum;
+	//한 페이지당 몇개의 데이터(MyBatisamount)를 보여줄 것인지
+	private int MyBatisamount;
+	
+	//주문정보 페이징을 위한 Dto Yuseonhwa 220118 END!!!
+		
+	
 	//제품 리스트 페이징을 위한 DTo입니다!
 
 	// 현재 페이지 번호
@@ -60,6 +69,11 @@ public class ListPageDto {
 	private String searchType;
 	private String keyword;
 
+	
+	
+	
+	
+	
 	public void setNum(int num) {
 		this.num = num;
 	}
@@ -226,6 +240,22 @@ public class ListPageDto {
 
 	public void setBrand_name(String brand_name) {
 		this.brand_name = brand_name;
+	}
+
+	public int getMyBatispageNum() {
+		return MyBatispageNum;
+	}
+
+	public void setMyBatispageNum(int myBatispageNum) {
+		MyBatispageNum = myBatispageNum;
+	}
+
+	public int getMyBatisamount() {
+		return MyBatisamount;
+	}
+
+	public void setMyBatisamount(int myBatisamount) {
+		MyBatisamount = myBatisamount;
 	}
 
 
