@@ -140,5 +140,39 @@
 	</update>
 	
 	<!-- 2022.01.15 유지홍 제품 삭제, 관리자 Qna 관련 소스 End ryujihong 2022.01.14 -->
+	
+	<select id="memberList" resultType="com.guddi.shop.dto.MemberDto">
+			select idx, userId, username, address, email, phone, birthday, gender, mem_flg, marketing_flg, delete_date from member 
+			where 1=1 order by idx desc
+	<if test='memFlg_name!= null'>
+  	and mem_flg LIKE concat('%', #{bag_type}, '%') 
+ 	</if>	
+ 	<if test='keyword != null'>
+  	and memFlg_name LIKE concat('%', #{keyword}, '%')
+ 	</if>
+	limit #{displayPost}, #{postNum}
+	</select>
+	
+	<select id="memFlgList" resultType="com.guddi.shop.dto.EtcDto">
+			select idx, regdate, use_flg, memFlg_name from memflg order by idx desc;		
+	<if test='memFlg_name!= null'>
+  	and memFlg_name LIKE concat('%', #{memFlg_name}, '%') 
+ 	</if>
+	</select>
+	
+	<select id="marketingFlgList" resultType="com.guddi.shop.dto.EtcDto">
+			select idx, regdate, use_flg, marketingFlg_name from marketingFlg order by idx desc;
+	</select>
+	
+	<select id="memberSearchCount" parameterType="com.guddi.shop.dto.PageDto" resultType="int">
+ 	select count(*) from member
+ 	where 1=1
+ 	<if test='memFlg_name!= null'>
+  	and mem_flg LIKE concat('%', #{bag_type}, '%') 
+ 	</if>	
+ 	<if test='keyword != null'>
+  	and memFlg_name LIKE concat('%', #{keyword}, '%')
+ 	</if>  	
+	</select>
 
 </mapper>

@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.guddi.shop.dao.ManagerDao;
 import com.guddi.shop.dto.EtcDto;
+import com.guddi.shop.dto.MemberDto;
 import com.guddi.shop.dto.PageDto;
 import com.guddi.shop.dto.ProductDto;
 
@@ -334,6 +335,46 @@ public class ManagerService {
 		// TODO Auto-generated method stub
 		dao.doDelAnswer(userId, a_idx);
 	}
+
+
+	public ArrayList<com.guddi.shop.dto.MemberDto> memberList(int displayPost, int postNum, String keyword, String memFlg_name) {
+		PageDto dto = new PageDto();
+		
+		dto.setMemFlg_name(memFlg_name);
+		logger.info(" dto.getMemFlg_name() : {}", dto.getMemFlg_name() );
+		dto.setPostNum(postNum);
+		dto.setDisplayPost(displayPost);
+		dto.setKeyword(keyword);
+					
+		logger.info("postNum : {}", postNum);
+		return dao.memberList(dto);
+	}
+
+	public ArrayList<EtcDto> memFlgList() {
+		
+		return dao.memFlgList();
+	}
+
+	public ArrayList<EtcDto> marketingFlgList() {
+		
+		return dao.marketingFlgList();
+	}
+
+	public int memberSearchCount(String keyword, String memFlg_name) {
+		
+		PageDto dto = new PageDto();
+		dto.setMemFlg_name(memFlg_name);
+		dto.setKeyword(keyword);
+		
+		return dao.memberSearchCount(dto);
+	}
+
+
+	
+
+	
+
+	
 
 	//2022.01.15 유지홍 제품 삭제, 관리자 Qna 관련 소스 End
 }

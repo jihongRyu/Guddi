@@ -3,6 +3,7 @@ package com.guddi.shop.dao;
 import java.util.ArrayList;
 
 import com.guddi.shop.dto.EtcDto;
+import com.guddi.shop.dto.MemberDto;
 import com.guddi.shop.dto.PageDto;
 import com.guddi.shop.dto.ProductDto;
 import com.guddi.shop.dto.ReviewQnaDto;
@@ -60,6 +61,24 @@ public interface ManagerDao {
 	void doUpdateAnswer(String content, String userId, int q_idx);
 
 	void doDelAnswer(String userId, int a_idx);
+
+	//ArrayList<MemberDto> memberList(String keyword);
+
+	ArrayList<EtcDto> memFlgList();
+
+	ArrayList<EtcDto> marketingFlgList();
+
+	int memberSearchCount(PageDto dto);
+
+	ArrayList<MemberDto> memFlgList(PageDto dto);
+
+	ArrayList<MemberDto> memberList(PageDto dto);
+
+	
+
+	
+
+	
 	
 	
 	//2022.01.15 유지홍 제품 삭제, 관리자 Qna 관련 소스 End

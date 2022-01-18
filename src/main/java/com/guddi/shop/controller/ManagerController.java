@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.guddi.shop.dto.EtcDto;
+import com.guddi.shop.dto.MemberDto;
 import com.guddi.shop.dto.PageDto;
 import com.guddi.shop.dto.ProductDto;
 import com.guddi.shop.dto.ReviewQnaDto;
@@ -426,5 +427,64 @@ public class ManagerController {
 		
 	}
 	//각종  카테고리 정보를 가져오는 메서드 End ryujihong 2022.01.11
+	
+	
+	
+	//회원목록 확인 및 수정 Start yonghyeon 2022.01.17
+	
+	@RequestMapping(value = "/memberList", method = RequestMethod.GET)
+	public String memberList(Model model, HttpSession session, @RequestParam("num") int num,
+			@RequestParam(value="mem_flg",required=false,defaultValue = "0")int mem_flg,
+			@RequestParam(value="keyword",required=false,defaultValue = "")String keyword){	
+		logger.info("memberList 요청");
+		
+		getCategory(session);
+		ArrayList<EtcDto> memflgInfo = (ArrayList<EtcDto>) session.getAttribute("membercategory");
+		String memFlg_name = null;
+		
+		if (mem_flg!=0) {
+			for (int i = 0; i < memflgInfo.size(); i++) {
+				if (memflgInfo.get(i).getIdx()==mem_flg) {
+					memFlg_name = memflgInfo.get(i).getMemFlg_name();
+				}
+			}			
+		}
+		
+		PageDto Page = new PageDto();
+		Page.setNum(num);
+		Page.setCount(service.memberSearchCount(keyword, memFlg_name));				
+		Page.setKeyword(keyword);
+		
+		logger.info("Page.getCount() : {}",Page.getCount());
+		
+		ArrayList<MemberDto> memberList = 
+				service.memberList(Page.getDisplayPost(), Page.getPostNum(), keyword, memFlg_name);
+		
+		model.addAttribute("memberList", memberList); //리스트 보내기
+		model.addAttribute("page", Page); //페이징처리
+		model.addAttribute("select", num);//페이징처리		  
+		model.addAttribute("keyword", keyword); //검색어
+		model.addAttribute("mem_flg", mem_flg); 
+
+		
+		/*
+		ArrayList<MemberDto> memberList = service.memberList(keyword);
+		logger.info("가져온 리스트 수 : {}",memberList.get(0).getMem_flg());	
+		model.addAttribute("memberList",memberList);
+		model.addAttribute("keyword", keyword);
+		*/
+		
+		ArrayList<EtcDto> memFlgList = service.memFlgList();
+		logger.info("가져온 요청자 : {}",memFlgList.get(0).getMemFlg_name());
+		model.addAttribute("memFlgList",memFlgList);
+		
+		ArrayList<EtcDto> marketingFlgList = service.marketingFlgList();
+		logger.info("가져온 요청자 : {}",marketingFlgList.get(0).getMarketingFlg_name());
+		model.addAttribute("marketingFlgList",marketingFlgList);
+		
+
+
+		return "manager/memberList";
+	}
 
 }
