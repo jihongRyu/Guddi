@@ -72,11 +72,8 @@ public class EtcController {
 	
 	@RequestMapping(value = "/doUpdateUseFlg", method = RequestMethod.POST)
 	@ResponseBody
-<<<<<<< HEAD
-	public HashMap<String, Object> doUpdateUseFlg(Model model , @RequestParam String idx, @RequestParam String use_flgName){
-=======
 	public HashMap<String, Object> doUpdateUseFlg(Model model , @RequestParam String idx, @RequestParam String use_flg) {
->>>>>>> 2e51751a7001e267e150e65753ed74b9263f9f4e
+
 		
 		logger.info("doUpdateUseFlg 요청");
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -202,75 +199,12 @@ public class EtcController {
 		logger.info("use_flg : {}",use_flg);
 		logger.info("idx :  {}",idx);
 	
-<<<<<<< HEAD
-	// 신상여부 카테고리 관련  유지홍 2022.01.17 End
-	
-	//브랜드 카테고리 김도연 start 2022.01.17
-	@RequestMapping(value = "/toBrandCategory", method = RequestMethod.GET)
-	public String toBrandCategory(Model model , HttpSession session) {
-		logger.info("toBrandCategory 이동요청");
-		
-		ArrayList<EtcDto> dto = service.getBrand();
-		ArrayList<EtcDto> udto = service.getUseFlgInfo();
-		
-		model.addAttribute("brandList", dto);
-		model.addAttribute("useFlgList", udto);
-		
-		return "etc/brandCategory";
-	}
-	
-	@RequestMapping(value = "/doRegistBrand", method = RequestMethod.POST)
-	@ResponseBody
-	public HashMap<String, Object> doRegistBrand(Model model 
-			, @RequestParam String name, @RequestParam String code) {
-		logger.info("doRegistBrand 요청");
-		
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		int result = service.doRegistBrand(name,code);
-		
-		if(result>0) {
-			map.put("result", result);
-		}
-		
-		return map;
-	}
-	
-	@RequestMapping(value = "/doUpdateBrandUse", method = RequestMethod.POST)
-	@ResponseBody
-	public HashMap<String, Object> doUpdateBrandUse(Model model 
-			, @RequestParam String brand_idx, @RequestParam String use_flgName) {
-		logger.info("doUpdateBrandUse 요청");
-		
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		
-		int useflg = 100;
-		ArrayList<EtcDto> uDto = service.getUseFlgInfo();
-		
-		for (int i = 0; i < uDto.size(); i++) {
-			if(uDto.get(i).getUseFlg_name().equals(use_flgName)) {
-				useflg = uDto.get(i).getIdx();
-			}
-		}
-		
-		if(useflg != 100) {
-			int result = service.doUpdateBrandUse(useflg, Integer.parseInt(brand_idx));
-			map.put("result", result);
-		}
-	
-		
-		return map;
-	}
-	
-=======
 		int result = service.doUpdateImageUseFlg(Integer.parseInt(use_flg) , Integer.parseInt(idx));
 		map.put("result", result);
-		
-		
->>>>>>> 2e51751a7001e267e150e65753ed74b9263f9f4e
 
 		return map;
 	}
-	
+	// 신상여부 카테고리 관련  유지홍 2022.01.17 End
 	@RequestMapping(value = "/updateMainImageOrder")
 	@ResponseBody
 	public HashMap<String, Object>  updateMainImageOrder(HttpServletRequest request) {

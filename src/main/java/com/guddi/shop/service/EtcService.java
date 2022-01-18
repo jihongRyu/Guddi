@@ -51,16 +51,10 @@ public class EtcService {
 		// TODO Auto-generated method stub
 		return dao.getUseFlgInfo();
 	}
-<<<<<<< HEAD
+
 	// 신상여부 카테고리 관련  유지홍 2022.01.17 End
 	
-	
-	//브랜드 카테고리 김도연 start 2022.01.17
-	public ArrayList<EtcDto> getBrand() {
-		logger.info("브랜드 가져오기 서비스");
-		return dao.getBrand();
-	}
-=======
+
 
 	public ArrayList<EtcDto> getSellFlgInfo() {
 		// TODO Auto-generated method stub
@@ -172,20 +166,5 @@ public class EtcService {
 	}
 	
 	// 메인이미지 제어  유지홍 2022.01.18 End
->>>>>>> 2e51751a7001e267e150e65753ed74b9263f9f4e
-
-	public int doRegistBrand(String name, String code) {
-		logger.info("브랜드 추가하기 서비스");
-		int idx = dao.getBrandIdx();
-		int newidx = idx+1;
-		logger.info("브랜드 인덱스 : "+idx+" -> "+newidx);
-		
-		return dao.doRegistBrand(newidx,name, code);
-	}
-
-	public int doUpdateBrandUse(int useflg, int brand_idx) {
-		logger.info("브랜드 사용여부 서비스");
-		return dao.doUpdateBrandUse(useflg,brand_idx);
-	}
 
 }
