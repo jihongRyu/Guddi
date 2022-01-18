@@ -134,7 +134,6 @@ public class CartController {
 	//order 추가 21-01-14
 
 	
-	
 //	//주문하기 페이지로 이동 //////////////////////////////////////////////
 //	@RequestMapping(value = "/order/${list.userId}", method = RequestMethod.GET)
 //	public String order(Model model , HttpSession session) {
@@ -222,13 +221,13 @@ public class CartController {
 				dto.setTotalPrice(Integer.parseInt(totalPriceArray[i]));
 				dto.setOrder_num(order_num);
 				
-				service.doOrder(dto);				
-				service.delCartByProductCode(userId, productCodeArray[i]);
+				service.doOrder(dto);//order테이블에 추가
+				service.delCartByProductCode(userId, productCodeArray[i]);//카트테이블에서 삭제
 			}
 			
 			
 			model.addAttribute("order_num", order_num);
-			int cartCnt = service.HeadergetCart(userId);
+			int cartCnt = service.HeadergetCart(userId);//헤더의 장바구니수 조정
 			session.setAttribute("cartCnt", cartCnt);
 			
 			return "cart/completeOrder";
