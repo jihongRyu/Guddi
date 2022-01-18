@@ -318,11 +318,12 @@ public class ManagerController {
 		int idx = Integer.parseInt(params.get("idx"));
 		String answer = params.get("answer");
 		String userId = (String) session.getAttribute("userId");
+		String flg = "1";
 		
 		int success = service.registQnaAnswer(idx, answer, userId);
 		
 		if (success>0) {
-			service.updateAnswerFlg(idx);			
+			service.updateAnswerFlg(idx,flg);			
 		}
 		
 		return "redirect:/qnaDetail?idx="+idx;
@@ -386,22 +387,20 @@ public class ManagerController {
 
 
 		String userId = (String) session.getAttribute("userId");
+		String flg = "0";
 	
 		logger.info("q_idx 요청 :{}",q_idx);		
 		logger.info("userId 요청 :{}",userId);	
 		
-		service.doDelAnswer(userId, Integer.parseInt(a_idx));
-		
+		int success = service.doDelAnswer(userId, Integer.parseInt(a_idx));
+		if (success>0) {
+			service.updateAnswerFlg(Integer.parseInt(q_idx), flg);			
+		}
 		
 		return "redirect:/qnaDetail?idx="+q_idx;
 	}
 	
 	//2022.01.15 유지홍 관리자 Qna관련 소스 End
-	
-	
-	
-	
-	
 	
 	
 	

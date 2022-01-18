@@ -56,11 +56,12 @@ public interface ManagerDao {
 	
 	int registQnaAnswer(int idx, String answer, String userId);
 	
-	void updateAnswerFlg(int idx);
+	void updateAnswerFlg(String flg, int idx);
 
 	void doUpdateAnswer(String content, String userId, int q_idx);
 
-	void doDelAnswer(String userId, int a_idx);
+
+	
 
 	//ArrayList<MemberDto> memberList(String keyword);
 
@@ -79,6 +80,9 @@ public interface ManagerDao {
 	
 
 	
+
+	int doDelAnswer(String userId, int a_idx);
+
 	
 	
 	//2022.01.15 유지홍 제품 삭제, 관리자 Qna 관련 소스 End

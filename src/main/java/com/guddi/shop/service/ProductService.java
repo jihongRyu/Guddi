@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 
 import com.guddi.shop.dao.ProductDao;
+import com.guddi.shop.dto.CartDto;
 import com.guddi.shop.dto.EtcDto;
 import com.guddi.shop.dto.PageDto;
 import com.guddi.shop.dto.ProductDto;
@@ -49,7 +50,25 @@ public class ProductService {
 		return dao.listPageSearch(dto);
 	}
 	//2022.01.13 유지홍 제품 리스트 관련 소스 End
-
+	
+	//상세페이지 관련 충구형님 2022.01.17 Start
+	public ArrayList<ProductDto> detail(String idx) {
+		
+		return dao.detail(idx);
+	}
+	public ArrayList<ProductDto> productimage() {
+		
+		return dao.productimage();
+	}
+	public int cartupdate(CartDto dto) {
+		
+		return dao.cartupdate(dto);
+	}
+	public ArrayList<EtcDto> review(String idx) {
+		
+		return dao.review(idx);
+	}
+	//상세페이지 관련 충구형님 2022.01.17 End
 
 
 }

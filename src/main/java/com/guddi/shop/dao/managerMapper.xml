@@ -128,7 +128,7 @@
 	</insert>
 	
 	<update id="updateAnswerFlg">
-		update qna set answer_flg = 1 where idx = #{idx}
+		update qna set answer_flg = #{param1} where idx = #{param2}
 	</update>
 	
 	<update id="doUpdateAnswer">

@@ -321,9 +321,9 @@ public class ManagerService {
 		return dao.registQnaAnswer(idx, answer, userId);
 	}
 
-	public void updateAnswerFlg(int idx) {
+	public void updateAnswerFlg(int idx , String flg) {
 		// TODO Auto-generated method stub
-		dao.updateAnswerFlg(idx);
+		dao.updateAnswerFlg(flg ,idx);
 	}
 
 	public void doUpdateAnswer(String content, String userId,int q_idx) {
@@ -331,9 +331,8 @@ public class ManagerService {
 		dao.doUpdateAnswer(content, userId, q_idx);
 	}
 
-	public void doDelAnswer(String userId, int a_idx) {
-		// TODO Auto-generated method stub
-		dao.doDelAnswer(userId, a_idx);
+	public int doDelAnswer(String userId, int a_idx) {
+		return dao.doDelAnswer(userId, a_idx);
 	}
 
 
