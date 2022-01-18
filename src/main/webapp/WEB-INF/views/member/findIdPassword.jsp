@@ -49,7 +49,7 @@
 	            <input type="text" onkeyup="enterkey();"  class="form-control" name="password" placeholder="이메일을 입력해주세요." id="email" name="email">
 	          </div>	        
 	          <div class="form-group text-center">
-	            <input type="button" value="아이디 찾기" class="btn btn-primary py-3 px-5" onclick="check_input()" id="findId">
+	            <input type="button" value="아이디 찾기" class="btn btn-primary py-3 px-5" id="findId">
 	          </div>
         </form>
         <form action="temppass" name="temppass" id="temppass" method="post" class="bg-white p-5 contact-form">

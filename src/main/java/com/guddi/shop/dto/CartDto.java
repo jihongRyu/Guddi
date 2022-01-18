@@ -1,6 +1,7 @@
 package com.guddi.shop.dto;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 public class CartDto {
 	
@@ -21,8 +22,16 @@ public class CartDto {
 //	address_detail varchar(30) 상세주소
 //	regdate date default current_date 주문 날짜
 //	order_num varchar(30) 주문번호
+//  totalPrice
 
-
+	//주문정보 페이징을 위한 Dto Yuseonhwa 220118 START!!!
+	//페이지 갯수 limit 10,10 에서 앞부분(MyBatispageNum)
+	private int MyBatispageNum;
+	//한 페이지당 몇개의 데이터(MyBatisamount)를 보여줄 것인지
+	private int MyBatisamount;
+	
+	//주문정보 페이징을 위한 Dto Yuseonhwa 220118 END!!!
+	
 	
 	
 	
@@ -52,7 +61,7 @@ public class CartDto {
 	private String product_name;
 	private String product_code;
 	private String price;
-	private String totalPrice;
+	private int totalPrice;
 	private int quantity ;
 	private String newFileName;
 	private String phone;
@@ -62,6 +71,7 @@ public class CartDto {
 	private String address_detail;
 	private Date regdate;
 	private String order_num;
+	private String[] productCodeList;
 
 	
 	
@@ -157,10 +167,17 @@ public class CartDto {
 	public void setOrder_num(String order_num) {
 		this.order_num = order_num;
 	}
-	public String getTotalPrice() {
+
+	public String[] getProductCodeList() {
+		return productCodeList;
+	}
+	public void setProductCodeList(String[] productCodeList) {
+		this.productCodeList = productCodeList;
+	}
+	public int getTotalPrice() {
 		return totalPrice;
 	}
-	public void setTotalPrice(String totalPrice) {
+	public void setTotalPrice(int totalPrice) {
 		this.totalPrice = totalPrice;
 	}
 	public int getU_idx() {
@@ -181,6 +198,20 @@ public class CartDto {
 	public void setBag_type(String bag_type) {
 		this.bag_type = bag_type;
 	}
+	public int getMyBatispageNum() {
+		return MyBatispageNum;
+	}
+	public void setMyBatispageNum(int myBatispageNum) {
+		MyBatispageNum = myBatispageNum;
+	}
+	public int getMyBatisamount() {
+		return MyBatisamount;
+	}
+	public void setMyBatisamount(int myBatisamount) {
+		MyBatisamount = myBatisamount;
+	}
+
+
 
 
 	

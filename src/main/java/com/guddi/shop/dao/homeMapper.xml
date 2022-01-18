@@ -6,7 +6,8 @@
 <mapper namespace="com.guddi.shop.dao.HomeDao">
 
 <select id="photoList" resultType="com.guddi.shop.dto.EtcDto">	
-SELECT newFileName FROM mainimage  
+SELECT newFileName FROM mainimage  where use_flg = 1
+order by idx asc
 </select>
 
 <select id="rankList" resultType="com.guddi.shop.dto.ProductDto">	
@@ -18,6 +19,4 @@ FROM product a INNER JOIN product_photo b ON a.idx = b.b_idx
 where a.new_flg = 1 and b.photo_num = 1 and a.sell_flg = 1 order by a.regdate asc limit 8;
 </select>
 	
-
-
 </mapper>

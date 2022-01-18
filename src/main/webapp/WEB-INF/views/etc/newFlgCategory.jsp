@@ -114,7 +114,7 @@ function registNewflg(){
 
 function changeUseNewflg(idx, use_flg){	
 	
-	if (confirm("해당 Flg를 사용하시겠습니까?")) {
+	if (confirm("해당 Flg를 변경하시겠습니까?")) {
 		
 		$.ajax({
 			url: "doUpdateUseFlg", //호출할 파일명			

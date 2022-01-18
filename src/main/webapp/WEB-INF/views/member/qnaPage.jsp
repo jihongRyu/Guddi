@@ -215,8 +215,8 @@ function toDetail(idx, writer) {
 	var userId = "${sessionScope.userId}";		
 	var mem_flg = "${sessionScope.mem_flg}";
 
-	
 	if (userId!=writer) {	
+		
 		if (mem_flg==1) {
 			alert("타인의 문의내용을 볼 수 없습니다!");
 			return;

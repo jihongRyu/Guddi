@@ -57,23 +57,28 @@
 		 	<td colspan="12">등록된 제품이 없습니다.</td>	             	             	           		     
 		</tr>
 	</c:if>
-	<c:forEach items="${orderInfoList}" var="orderInfoList">		       	  
+	<c:forEach items="${listpagedto}" var="listpagedto">		       	  
 		<tr>		       
-			<th>${orderInfoList.order_num}</th>	             	
-		 	<th>${orderInfoList.product_code}</th>
-		 	<th>${orderInfoList.product_name}</th>	             	
-		 	<th>${orderInfoList.brand_name}</th>	             	
-		 	<th>${orderInfoList.bag_type}</th>	             	
-		 	<th>${orderInfoList.regdate}</th>	             	
-		 	<th>${orderInfoList.quantity}</th>	             	
-		 	<th>${orderInfoList.totalPrice}</th>	             	
-		 	<th>${orderInfoList.username}</th>	             	
-		 	<th>${orderInfoList.phone}</th>      		           		     
+			<th>${listpagedto.order_num}</th>	             	
+		 	<th>${listpagedto.product_code}</th>
+		 	<th>${listpagedto.product_name}</th>	             	
+		 	<th>${listpagedto.brand_name}</th>	             	
+		 	<th>${listpagedto.bag_type}</th>	             	
+		 	<th>${listpagedto.regdate}</th>	             	
+		 	<th>${listpagedto.quantity}</th>	             	
+		 	<th>${listpagedto.totalPrice}</th>	             	
+		 	<th>${listpagedto.username}</th>	             	
+		 	<th>${listpagedto.phone}</th>      		           		     
 		</tr>			    
 	</c:forEach>             
 </table>
 
+<c:forEach begin="1" end="${endPage}" var="num">
 
+
+
+  		
+</c:forEach>
 
 
 

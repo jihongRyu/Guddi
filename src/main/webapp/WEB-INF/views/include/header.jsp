@@ -85,12 +85,13 @@
 			<li class="nav-item"><a href="productMain?num=1&brand_idx=0" class="nav-link">제품내역</a></li>
 			<li class="nav-item"><a href="qnaPage?qnaNum=1&answer_flg=2&qnaType=0" class="nav-link">Q&A내역</a></li>
 			<li class="nav-item"><a href="login" class="nav-link">리뷰내역</a></li>
-			<li class="nav-item"><a href="orderInfoList" class="nav-link">주문정보</a></li>
+			<li class="nav-item"><a href="orderInfoList?num=1" class="nav-link">주문정보</a></li>
+	
 			<li class="nav-item"><a href="login" class="nav-link">회원목록</a></li>
 			<li class="nav-item dropdown">
 		      <a class="nav-link dropdown-toggle" href="javascript:void(0);" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">기타</a>
 	          <div class="dropdown-menu" aria-labelledby="dropdown04">	         
-	          	<a class="dropdown-item" href="productPage?num=1&brand_idx=0&bag_type=0">배너이미지관리</a>
+	          	<a class="dropdown-item" href="toMainImage">배너이미지관리</a>
 	          	<a class="dropdown-item" href="productPage?num=1&brand_idx=1&bag_type=0">문의타입카테고리관리</a>
 	            <a class="dropdown-item" href="productPage?num=1&brand_idx=2&bag_type=0">브랜드카테고리관리</a>
 	            <a class="dropdown-item" href="productPage?num=1&brand_idx=3&bag_type=0">가방종류카테고리관리</a>

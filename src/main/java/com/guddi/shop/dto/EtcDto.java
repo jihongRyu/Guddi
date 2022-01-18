@@ -32,7 +32,10 @@ public class EtcDto {
 	private String brand_code;
 	private String type_code;
 	private String newFileName;
+	private String oriFileName;
 	private String useFlg_name;
+	private int u_idx;
+	private String userId;
 	
 	public String getNewFileName() {
 		return newFileName;
@@ -96,9 +99,12 @@ public class EtcDto {
 	public void setSellname(String sellname) {
 		this.sellname = sellname;
 	}
-	
-	
-	
+	public String getOriFileName() {
+		return oriFileName;
+	}
+	public void setOriFileName(String oriFileName) {
+		this.oriFileName = oriFileName;
+	}
 	public String getNewname() {
 		return newname;
 	}
@@ -122,6 +128,18 @@ public class EtcDto {
 	}
 	public void setUseFlg_name(String useFlg_name) {
 		this.useFlg_name = useFlg_name;
+	}
+	public int getU_idx() {
+		return u_idx;
+	}
+	public void setU_idx(int u_idx) {
+		this.u_idx = u_idx;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 	
 	

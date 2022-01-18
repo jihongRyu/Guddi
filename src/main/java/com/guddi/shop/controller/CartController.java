@@ -1,6 +1,7 @@
 package com.guddi.shop.controller;
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -100,9 +101,7 @@ public class CartController {
 		//}else {
 			logger.info("세션에있는 아이디와 로그인한 아이디가 다름");
 		//}
-		
-		
-		
+			
 		return "redirect:/cart";
 	}
 	
@@ -111,11 +110,9 @@ public class CartController {
 
 		logger.info("주문완료페이지 요청");
 
-
 		return "cart/completeOrder";
 	}
-	
-	
+		
 
 	@RequestMapping(value = "/chkdelete", method = RequestMethod.POST)
 	@ResponseBody // 컨트롤러에서 요청을 받아와 반환된 값을 jsp에 넘겨줄때 언어가 달라 json라이브러리를 추가했고 @ResponseBody 어노테이션을 사용해 hashMAp데이터 타입으로 뷰에서 읽을수 있게 처리해 줬습니다.
@@ -135,6 +132,7 @@ public class CartController {
 	}
 	
 	//order 추가 21-01-14
+
 
 	/*
 	@RequestMapping(value = "toOrder", method = RequestMethod.GET)
@@ -231,7 +229,7 @@ public class CartController {
 	
 	
 	
-	
+
 	
 //	//주문하기 페이지로 이동 //////////////////////////////////////////////
 //	@RequestMapping(value = "/order/${list.userId}", method = RequestMethod.GET)
@@ -263,15 +261,74 @@ public class CartController {
 	// =====cart controller 추가하기 수정 END YuSeonhwa===== 220115
 	
 	// 2022.01.17 start - 송승혁
-		@RequestMapping(value = "/toOrder", method = RequestMethod.GET)
-		public String toOrder(Model model , HttpSession session, @RequestParam String userId) {
+		@RequestMapping(value = "/toOrder", method = RequestMethod.POST)
+		public String toOrder(Model model , HttpSession session, @RequestParam String userId, HttpServletRequest request) {
 			logger.info("toOrder 컨트롤러 이동 {}", userId);
-			ArrayList<CartDto> dto = service.toOrder(userId);
+			
+			String[] array = request.getParameterValues("arr");
+			for (int i = 0; i < array.length; i++) {
+				logger.info("array[i] :{}",array[i]);
+			}
+					
+			ArrayList<CartDto> dto = service.toOrder(userId, array);
+			
 			model.addAttribute("orderList", dto);
 			return "cart/toOrder";
 		}
 		// 2022.01.17 end - 송승혁
 		
+		@RequestMapping(value = "/doOrder", method = RequestMethod.POST)
+		public String doOrder(Model model , HttpSession session, @RequestParam HashMap<String, String> params, HttpServletRequest request) {
+			
+			//toOrder에서 가져온 파라미터
+			String[] productCodeArray = request.getParameterValues("product_code");
+			String[] productNameArray = request.getParameterValues("product_name");
+			String[] quantityArray =  request.getParameterValues("quantity");
+			String[] priceArray =  request.getParameterValues("price");
+			String[] totalPriceArray =  request.getParameterValues("totalPrice");
+			String userId = (String) session.getAttribute("userId");		
+			String username = params.get("userName");
+			String zipcode = params.get("zipcode");
+			String address = params.get("address");
+			String address_detail = params.get("address_detail");
+			String email = params.get("email");
+			String phone = params.get("phone");
+			
+			//주문번호 생성
+		    java.util.Date now = new java.util.Date();
+		    SimpleDateFormat vans = new SimpleDateFormat("yyyyMMdd");
+		    String wdate = vans.format(now);
+			String order_num = "S" + wdate + service.getOrderIdx();
+			
+			//tb_order에 insert할 파라미터들을 arrayList에 담음
+			CartDto dto = new CartDto();
+			for (int i = 0; i < totalPriceArray.length; i++) {
+				
+				dto.setUserId(userId);
+				dto.setUsername(username);
+				dto.setZipcode(zipcode);
+				dto.setAddress(address);
+				dto.setAddress_detail(address_detail);
+				dto.setEmail(email);
+				dto.setPhone(phone);
+				dto.setProduct_code(productCodeArray[i]);
+				dto.setProduct_name(productNameArray[i]);
+				dto.setQuantity(Integer.parseInt(quantityArray[i]));
+				dto.setPrice(priceArray[i]);
+				dto.setTotalPrice(Integer.parseInt(totalPriceArray[i]));
+				dto.setOrder_num(order_num);
+				
+				service.doOrder(dto);//order테이블에 추가
+				service.delCartByProductCode(userId, productCodeArray[i]);//카트테이블에서 삭제
+			}
+			
+			
+			model.addAttribute("order_num", order_num);
+			int cartCnt = service.HeadergetCart(userId);//헤더의 장바구니수 조정
+			session.setAttribute("cartCnt", cartCnt);
+			
+			return "cart/completeOrder";
+		}
 	
 }
 

@@ -1,6 +1,7 @@
 package com.guddi.shop.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.guddi.shop.dto.CartDto;
 import com.guddi.shop.dto.EtcDto;
@@ -67,9 +68,20 @@ public interface ManagerDao {
 	
 	
 	// 주문정보내역 리스트 orderInfoList yuSeonhwa 2022.01.17 START
-	ArrayList<CartDto> orderInfoList();
+	ArrayList<CartDto> orderInfoList(PageDto dto);
 	
-	ArrayList<ListPageDto> Mybatispage();
+	ArrayList<CartDto> Mybatispage(ListPageDto listPageDto);
+	
+	
+	
+	//listPageDto 얘를 MyBatispageNum MyBatisamount 로 어떻게 보낼지 
+	
+	int Mybatiscount();
+
+	List listPaging(int myBatispageNum, int endPage);
+
+	//ArrayList<CartDto> Mybatispage(int myBatispageNum, int myBatisamount);
+	
 	
 	
 	// 주문정보내역 리스트 orderInfoList yuSeonhwa 2022.01.17 END

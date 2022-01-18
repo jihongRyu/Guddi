@@ -145,29 +145,35 @@
 
 	<!-- 주문정보내역 리스트 orderInfoList yuSeonhwa 2022.01.17 START  -->
 	
-	<select id="orderInfoList" resultType="com.guddi.shop.dto.CartDto">
- 		<!-- SELECT idx,phone,u_idx,userId,username,email,zipcode,address,address_detail,product_name,product_code,price,quantity,regdate,order_num,totalPrice
- 			FROM tb_order -->
- 		select t.idx, pc.brand_name,pc.bag_type,t.product_name,t.product_code,t.regdate,t.quantity,t.totalPrice,t.username,t.phone,t.order_num
+	<!-- <select id="orderInfoList" resultType="com.guddi.shop.dto.CartDto">
+ 		SELECT idx,phone,u_idx,userId,username,email,zipcode,address,address_detail,product_name,product_code,price,quantity,regdate,order_num,totalPrice
+ 			FROM tb_order
+ 		select t.idx, pc.brand_name,t.product_name,t.product_code,t.regdate,t.quantity,t.totalPrice,t.username,t.phone,t.order_num
 			from product pc inner join tb_order t  
 			on pc.product_code = t.product_code
-	</select>
+	</select> -->
 	
-	<select id="Mybatispage" resultType="com.guddi.shop.dto.ListPageDto">
+	<select id="orderInfoList" parameterType="com.guddi.shop.dto.PageDto" resultType="com.guddi.shop.dto.CartDto">
  		
-
 		SELECT *
 		FROM (
-		    SELECT @ROWNUM := @ROWNUM + 1 as rnum,t.idx, pc.brand_name,pc.bag_type,t.product_name,t.product_code,t.regdate,t.quantity,t.totalPrice,t.username,t.phone,t.order_num
+		    SELECT @ROWNUM := @ROWNUM + 1 as rnum,t.idx,pc.brand_name,t.product_name,t.product_code,t.regdate,t.quantity,t.totalPrice,t.username,t.phone,t.order_num
 		    from product pc inner join tb_order t 
 		    on pc.product_code = t.product_code
 		    ,(SELECT @ROWNUM :=0) A
 		    ORDER BY rnum
 		    ) RESULT
-		LIMIT #{MyBatispageNum}, #{MyBatisamount}
+		LIMIT #{displayPost}, #{postNum}
 
-			
 	</select>
+	
+	<!-- 게시물 총 갯수 -->
+	<select id="Mybatiscount" resultType="int">
+	 	select count(t.idx)
+			from product pc inner join tb_order t  
+			on pc.product_code = t.product_code
+	</select>
+	
 	
 	<!-- 주문정보내역 리스트 orderInfoList yuSeonhwa 2022.01.17 END  -->
 </mapper>

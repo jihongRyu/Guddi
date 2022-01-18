@@ -46,16 +46,14 @@
 
 <jsp:include page="/WEB-INF/views/include/header.jsp"/>
 
-<div class="hero-wrap hero-bread" style="background-image: url('resources/images/bg_1.jpg');">
-  <div class="container">
-    <div class="row no-gutters slider-text align-items-center justify-content-center">
-      <div class="col-md-9 ftco-animate text-center">
-      	<p class="breadcrumbs"><span class="mr-2"><a href="./">홈</a></span>/<span>카트</span></p>
-        <h1 class="mb-0 bread">장바구니</h1>
-      </div>
-    </div>
+<section class="ftco-section contact-section bg-light">
+  <div class="container">   
+     <div class="col-md-12 ftco-animate text-center">
+      <p class="breadcrumbs"><span class="mr-2"><a href="./">홈</a></span>/<span>장바구니</span></p>
+      <h1 class="mb-0 bread">장바구니</h1>    
+     </div>
   </div>
-</div>
+</section>
 
 <!-- 로그인 userCart-->
 
@@ -83,16 +81,23 @@
      	<div class="col-md-12 ftco-animate">
      		<div class="cart-list">
      		<!-- 체크박스 전체 여부 -->
+
 				<div class="all_check_input_div">
 				
 
+
+				<div class="all_check_input_div" style="margin:10px;">
+					<!-- <input type="checkbox" id ="all" class="all_check_input input_size_20" checked="checked"><span class="all_chcek_span">전체선택</span> -->
+					
+					<input type="button" onclick = "del()" class="btn btn-primary" value="체크된 리스트 삭제" style="padding:10px;">
+
 				</div>
-				
   				<table class="table">
   			    <thead class="thead-primary">
   			    
   			      <tr class="text-center">
-  			 
+
+  			        <th><input type="checkbox" id="cbx_chkAll" class="" checked="checked" /> 전체선택</th>
   			        <th>이미지</th>
   			        <th>제품명</th>
   			        <th>수량</th>
@@ -108,53 +113,40 @@
 	  			      </tr>
   			      </c:if>
   			      
-  			      
   			      <c:forEach items="${list}" var="list" varStatus="status">
   			      <tr class="text-center">
   			        <td class="cart_info_td">
-  			        	<input type="hidden" class="individual_newFileName_input" value="${list.newFileName}">
+
+  			        	<input type="checkbox" class="individual_cart_checkbox" name="chk" checked="checked" value="${list.product_code}"/>
+					 	<input type="hidden" class="individual_newFileName_input" value="${list.newFileName}">
+
   			        	<input type="hidden" class="individual_product_name_input" value="${list.product_name}">
   			        	<input type="hidden" class="individual_product_code_input" value="${list.product_code}">
   			       	 	<input type="hidden" class="individual_quantity_input" value="${list.quantity}">
   			       	 	<input type="hidden" class="individual_price_input" value="${list.price}">
   			        	<input type="hidden" class="individual_totalprice_input" value="${list.quantity*list.price}">
   			        	<input type="hidden" value="${total}" name="checkoutPrice" id="checkoutPrice">
-		     			<input type="hidden" value="${sessionScope.userId}" name="userId" id="userId">
-		     		
+		     			<input type="hidden" value="${sessionScope.userId}" name="userId" id="userId">		     		
   			       	 	<%-- <input type="hidden" class="individual_bookId_input" value="${ci.bookId}"> --%>
   			        </td>
   			        <td class="image-prod"><div class="img" style="background-image:url(resources/photo/${list.newFileName});"></div></td>
-  			        
   			        <td class="product-name">
   			        	<h3>${list.product_name}</h3>
-  			        	<p>상품코드 : ${list.product_code}</p>
-  			      
+  			        	<p>상품코드 : ${list.product_code}</p>  			        	  			      
   			        </td>
-  			        
-  			        
   			        <td class="quantity">
   		             	<form method="post" action="cartupdate">
   			        		<input type="text" name="quantity" id="quantity${status.index}"class="form-control input-number" 
-  		             		value="${list.quantity}" onchange="changeCount(this)" min="1" max="100">
-  		             	
+  		             		value="${list.quantity}" onchange="changeCount(this)" min="1" max="100">  		             	
 							<input type="hidden" name="product_name" value="${list.product_name}">
 							<input type="hidden" name="product_code" value="${list.product_code}">
-							<input type="hidden" name="userId" value="${userId}">
-						
-						
-						
-						
-						   	<button type="submit" class="btn btn-primary py-3 px-4">수량변경</button>
-						</form>
-  		             		
-  		          	</td>
-  			        
-  			        <td class="total"><fmt:formatNumber value="${list.quantity*list.price}" pattern="#,### 원" /></td>
-  			        
-  			        <c:set var= "total" value="${list.quantity*list.price}"/>
-  			        
-  			        <td class="product-remove"><a onClick="delCart('${list.idx}')"><span class="ion-ios-close"></span></a></td>
-  			        
+							<input type="hidden" name="userId" value="${userId}">							   
+							<input type="submit" class="btn btn-primary py-3 px-4 mb-4" value="수량변경" style="margin:10px;">							   
+						</form>  		             		
+  		          	</td>  			        
+  			        <td class="total"><fmt:formatNumber value="${list.quantity*list.price}" pattern="#,### 원" /></td>  			        
+  			        <c:set var= "total" value="${list.quantity*list.price}"/>  			        
+  			        <td class="product-remove"><a onClick="delCart('${list.idx}')"><span class="ion-ios-close"></span></a></td>  			        
   			      </tr>
   				  </c:forEach>
   			    
@@ -167,7 +159,7 @@
   		  </div>
      	</div>
      </div>
-     <div class="row justify-content-end">
+     <div class="row col-lg-12 justify-content-end">
      	<c:if test="${fn:length(list)>0}"> 			      
      	<div class="col-lg-12 mt-5 cart-wrap ftco-animate">
      		<div class="cart-total mb-3">
@@ -187,15 +179,16 @@
      			</p>
      		</div>
      		<div class="text-center">
-				<div class="order_btn_each">
-			
+
+				<div class="order_btn_each" id="checkCallForm">
+
 		     		<input type="hidden" value="${total}" name="checkoutPrice" id="checkoutPrice">
 		     		<input type="hidden" value="${sessionScope.userId}" name="userId" id="userId">
 		     		<input type="hidden" id="arrayParam" name="arrayParam"/>
 		     		<a href="./" class="btn btn-primary py-3 px-4">계속쇼핑하기</a> 
-		    		<button type="button" id="toCheckoutButton" class="btn btn-primary py-3 px-4" onclick="checkCall()">결제하기</button>
 
-		   
+		     		<a href="javascript:void(0);" class="btn btn-primary py-3 px-4"  onclick="checkCall()">결제하기</a>     
+
 				</div>
      		</div>
      	</div>
@@ -243,12 +236,115 @@
 <script>
 
 
+ 
+ // 배열 선언 여기에 이제 하나씩 넣을 것.
 
-$("#toCheckoutButton").click(function(){
+	
+	
+function checkCall() {
+	 
+	 var totalNum = $("input:checkbox[name=chk]:checked").length;	
+	 var array = new Array(totalNum);
+	 var userId = '${sessionScope.userId}';
+	 
+	 for(var i=0; i<totalNum; i++){                          
+		 array[i]=$("input:checkbox[name=chk]:checked").eq(i).val();			
+		}
+
+	 if(array.length === 0){
+	 	alert("선택하신 제품이 없습니다.");
+	 	return;
+	 }
+	
+	 /* JQUERY */ 
+	 //create element (form) 
+	 var newForm = $('<form></form>'); 
+	 //set attribute (form) 
+	 newForm.attr("name","newForm"); 
+	 newForm.attr("method","post"); 
+	 newForm.attr("action","toOrder"); 
+	 // create element & set attribute (input) 
+	 for(var i=0; i<totalNum; i++){                          
+		 newForm.append($('<input/>', {type: 'hidden', name: 'arr', value: $("input:checkbox[name=chk]:checked").eq(i).val() }));			
+		}
+	 newForm.append($('<input/>', {type: 'hidden', name: 'userId', value: userId }));			
+	 // append form (to body) 
+	 newForm.appendTo('body'); 
+	 //submit form 
+	 newForm.submit();
+
+	 
+}
+
+/*test_check 요청 배열에 값 넘기기 test*/
+
+/* $("#toCheckoutButton").click(function(){
 	if (confirm("결제화면으로 넘어가시겠습니까?")) {
 		document.toCheckout.submit(); 
 	}
 });
+ */
+
+/*
+// 결제하기 페이지로 이동 
+$("#order_btn").on("click", function(){
+	let form_contents ='';
+	let orderNumber = 0; // index값 역할을 할 orderNumber 변수 
+	$(".cart_info_td").each(function(index, element){ //상품의 데이터가 저장된 <input> 값들을 감싸고 있는 <td> 태그 반복해서 접근하는 메서드 
+		// bookId, bookCount변수를 선언하여 접근한 <td>태그 내부에 있는 <input> 태그의 값들로 초기화
+		let bookId = $(element).find(".individual_bookId_input").val();
+		let bookCount = $(element).find(".individual_bookCount_input").val();
+		let bookId_input = "<input name='orders[" + orderNumber + "].bookId' type='hidden' value='" + bookId + "'>";
+		form_contents += bookId_input;
+		
+		let bookCount_input = "<input name='orders[" + orderNumber + "].bookCount' type='hidden' value='" + bookCount + "'>";
+		form_contents += bookCount_input;
+		orderNumber += 1;
+	});
+	$(".order_form").html(form_contents);
+	$(".order_form").submit();
+});
+
+*/
+
+$("#cbx_chkAll").click(function() {
+	if($("#cbx_chkAll").is(":checked")) $("input[name=chk]").prop("checked", true);
+	else $("input[name=chk]").prop("checked", false);
+});
+
+
+$("input[name=chk]").click(function() {
+	var total = $("input[name=chk]").length;
+	var checked = $("input[name=chk]:checked").length;
+	
+	if(total != checked) $("#cbx_chkAll").prop("checked", false);
+	else $("#cbx_chkAll").prop("checked", true); 
+});
+
+
+setTotal();
+function setTotal(){
+	let totalPrice=0;
+	$(".cart_info_td").each(function(index, element){
+		
+		if($(element).find(".individual_cart_checkbox").is(":checked") == true){	//체크여부
+			totalPrice += parseInt($(element).find(".individual_totalPrice_input").val());			
+		}
+	});
+	$(".totalPrice_span").text(totalPrice.toLocaleString());	
+	
+};
+
+$(".individual_cart_checkbox").on("change", function(){	
+	setTotal($(".cart_info_td"));
+});
+
+$("#cbx_chkAll").on("change", function(){	
+	setTotal($(".cart_info_td"));
+});
+
+
+
 
 var delList = [];
 
@@ -258,16 +354,10 @@ function del(){
 	
 	if(confirm_val){
 		
-		
-		
 		console.log(delList);
-		
-		
 		$('input[type="checkbox"]:checked').each(function (idx,item){
 			//console.log(idx,$(this).val());	
 			delList.push($(this).val());
-			
-			
 				
 		});
 		

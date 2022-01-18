@@ -9,7 +9,6 @@ public class ListPageDto {
 	//한 페이지당 몇개의 데이터(MyBatisamount)를 보여줄 것인지
 	private int MyBatisamount;
 	
-	
 	//주문정보 페이징을 위한 Dto Yuseonhwa 220118 END!!!
 		
 	
@@ -70,6 +69,11 @@ public class ListPageDto {
 	private String searchType;
 	private String keyword;
 
+	
+	
+	
+	
+	
 	public void setNum(int num) {
 		this.num = num;
 	}

@@ -128,6 +128,7 @@
 			      <li><a href="productMain?num=${page.startPageNum - 1}&brand_type=${brand_type}&bag_type=${bag_type}
 			      &keyword=${keyword}#productList">&lt;</a></li>
 			      </c:if>
+			      
 			      <c:forEach begin="${page.startPageNum}" end="${page.endPageNum}" var="num">
 			      <c:if test="${select == num}">
 			      <li class="active"><span>${num}</span></li>
@@ -137,6 +138,8 @@
 			      &keyword=${keyword}#productList">${num}</a></li>			     
 			      </c:if>    		
 			      </c:forEach>
+			      
+			      
 			      <c:if test="${page.next}">
 			      <li><a href="productMain?num=${page.endPageNum + 1}&brand_type=${brand_type}&bag_type=${bag_type}
 			      &keyword=${keyword}#productList">&gt;</a></li>
