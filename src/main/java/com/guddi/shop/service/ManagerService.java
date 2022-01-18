@@ -17,9 +17,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.guddi.shop.dao.ManagerDao;
+import com.guddi.shop.dto.CartDto;
 import com.guddi.shop.dto.EtcDto;
+import com.guddi.shop.dto.ListPageDto;
 import com.guddi.shop.dto.PageDto;
 import com.guddi.shop.dto.ProductDto;
+import com.guddi.shop.dto.ReviewQnaDto;
 
 @Service
 public class ManagerService {
@@ -334,5 +337,24 @@ public class ManagerService {
 		return dao.doDelAnswer(userId, a_idx);
 	}
 
+
 	//2022.01.15 유지홍 제품 삭제, 관리자 Qna 관련 소스 End
+	
+	// 주문정보내역 리스트 orderInfoList yuSeonhwa 2022.01.17 START
+	public ArrayList<CartDto> orderInfoList() {
+		// TODO Auto-generated method stub
+		return dao.orderInfoList();
+	}
+	public ArrayList<ListPageDto> Mybatispage() {
+		
+		
+		
+		
+		return dao.Mybatispage();
+	}
+
+	// 주문정보내역 리스트 orderInfoList yuSeonhwa 2022.01.17 END
+	
+	
+	
 }

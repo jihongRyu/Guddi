@@ -23,7 +23,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.guddi.shop.dto.CartDto;
 import com.guddi.shop.dto.EtcDto;
+import com.guddi.shop.dto.ListPageDto;
 import com.guddi.shop.dto.PageDto;
 import com.guddi.shop.dto.ProductDto;
 import com.guddi.shop.dto.ReviewQnaDto;
@@ -425,5 +427,71 @@ public class ManagerController {
 		
 	}
 	//각종  카테고리 정보를 가져오는 메서드 End ryujihong 2022.01.11
+	
+	
+	// 주문정보내역 리스트 orderInfoList yuSeonhwa 2022.01.17 START
+	
+	@RequestMapping(value = "/orderInfoList", method = RequestMethod.GET)
+	public String orderInfoList(Model model) {	
+		logger.info("orderInfoList 요청");		
+		CartDto cartDto = new CartDto(); 
+		
+		ArrayList<CartDto> orderInfoList = service.orderInfoList();
+		model.addAttribute("orderInfoList", orderInfoList);
+		
+		ArrayList<ListPageDto> listpagedto = service.Mybatispage();
+		model.addAttribute("listpagedto", listpagedto);
+		//페이지 번호를 추가 하면 
+		
+		
+		
+		return "manager/orderInfoList";
+	}
+	// 주문정보내역 페이징 
+	
+	
+	
+	
+	
+	
+	// 주문정보내역 리스트 orderInfoList yuSeonhwa 2022.01.17 END
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

@@ -5,6 +5,7 @@
 
 <mapper namespace="com.guddi.shop.dao.ManagerDao">
 
+
 	<!-- 관리자 제품내역 관련 Ryujihong 2022.01.12 Start -->
 	<select id="getBrandcategory" resultType="com.guddi.shop.dto.EtcDto">
 		select brand_idx, brand_name, brand_code  from brand where use_flg = 1
@@ -141,4 +142,33 @@
 	
 	<!-- 2022.01.15 유지홍 제품 삭제, 관리자 Qna 관련 소스 End ryujihong 2022.01.14 -->
 
+
+	<!-- 주문정보내역 리스트 orderInfoList yuSeonhwa 2022.01.17 START  -->
+	
+	<select id="orderInfoList" resultType="com.guddi.shop.dto.CartDto">
+ 		<!-- SELECT idx,phone,u_idx,userId,username,email,zipcode,address,address_detail,product_name,product_code,price,quantity,regdate,order_num,totalPrice
+ 			FROM tb_order -->
+ 		select t.idx, pc.brand_name,pc.bag_type,t.product_name,t.product_code,t.regdate,t.quantity,t.totalPrice,t.username,t.phone,t.order_num
+			from product pc inner join tb_order t  
+			on pc.product_code = t.product_code
+	</select>
+	
+	<select id="Mybatispage" resultType="com.guddi.shop.dto.ListPageDto">
+ 		
+
+		SELECT *
+		FROM (
+		    SELECT @ROWNUM := @ROWNUM + 1 as rnum,t.idx, pc.brand_name,pc.bag_type,t.product_name,t.product_code,t.regdate,t.quantity,t.totalPrice,t.username,t.phone,t.order_num
+		    from product pc inner join tb_order t 
+		    on pc.product_code = t.product_code
+		    ,(SELECT @ROWNUM :=0) A
+		    ORDER BY rnum
+		    ) RESULT
+		LIMIT #{MyBatispageNum}, #{MyBatisamount}
+
+			
+	</select>
+	
+	<!-- 주문정보내역 리스트 orderInfoList yuSeonhwa 2022.01.17 END  -->
 </mapper>
+

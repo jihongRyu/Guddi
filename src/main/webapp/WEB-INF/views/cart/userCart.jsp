@@ -84,16 +84,15 @@
      		<div class="cart-list">
      		<!-- 체크박스 전체 여부 -->
 				<div class="all_check_input_div">
-					<!-- <input type="checkbox" id ="all" class="all_check_input input_size_20" checked="checked"><span class="all_chcek_span">전체선택</span> -->
-					<input type="checkbox" id="cbx_chkAll" /><span class="all_chcek_span">전체선택</span>
-					<button onclick = "del()"> 체크된 리스트 삭제</button>
+				
+
 				</div>
 				
   				<table class="table">
   			    <thead class="thead-primary">
   			    
   			      <tr class="text-center">
-  			        <th>선택</th>
+  			 
   			        <th>이미지</th>
   			        <th>제품명</th>
   			        <th>수량</th>
@@ -113,10 +112,6 @@
   			      <c:forEach items="${list}" var="list" varStatus="status">
   			      <tr class="text-center">
   			        <td class="cart_info_td">
-
-
-  			        	<input type="checkbox" class="individual_cart_checkbox input_size_20" name="chk" checked="checked" value="${list.product_name}" onclick="checkCall()"/>
-
   			        	<input type="hidden" class="individual_newFileName_input" value="${list.newFileName}">
   			        	<input type="hidden" class="individual_product_name_input" value="${list.product_name}">
   			        	<input type="hidden" class="individual_product_code_input" value="${list.product_code}">
@@ -193,19 +188,14 @@
      		</div>
      		<div class="text-center">
 				<div class="order_btn_each">
+			
 		     		<input type="hidden" value="${total}" name="checkoutPrice" id="checkoutPrice">
 		     		<input type="hidden" value="${sessionScope.userId}" name="userId" id="userId">
 		     		<input type="hidden" id="arrayParam" name="arrayParam"/>
-		     		<a href="./" class="btn btn-primary py-3 px-4">계속쇼핑하기</a>     		     		
-		     		<!-- <a href="" id="order_btn" onclick="goOrder()" class="btn btn-primary py-3 px-4">결제하기</a> -->
-
+		     		<a href="./" class="btn btn-primary py-3 px-4">계속쇼핑하기</a> 
 		    		<button type="button" id="toCheckoutButton" class="btn btn-primary py-3 px-4" onclick="checkCall()">결제하기</button>
 
-		    		<!--<button type="submit" id="order_btn" onclick="goOrder()" class="btn btn-primary py-3 px-4">결제하기</button>  -->
-
-		    		<!--  <button type="button" id="order_btn" class="btn btn-primary py-3 px-4" onclick="checkCall()">결제하기</button>-->
-
-		    		<!-- <a href="" id="toCheckoutButton" class="btn btn-primary py-3 px-4">결제하기</a> -->
+		   
 				</div>
      		</div>
      	</div>
@@ -253,116 +243,12 @@
 <script>
 
 
- 
- 
- // 배열 선언 여기에 이제 하나씩 넣을 것.
-
-	
-	
-function checkCall() {
-	 
-	 var totalNum = $("input:checkbox[name=chk]:checked").length;	
-	 var array = new Array(totalNum);
-	 for(var i=0; i<totalNum; i++){                          
-		 array[i] = $("input:checkbox[name=chk]:checked").eq(i).val();			
-		}
-	 console.log(array);
-
-		$("#arrayParam").val(array);
-	
-	$.ajax({
-	    url: 'test_check'
-	    , type: 'post'
-	    , dataType: 'json'
-	    , data: {
-	        valueArrTest: array
-	    }
-	    ,traditional : true
-		,success: function (c){
-			
-		}
-	    
-	});
-}
-if(array[0]){
-	alert("선택하신 제품이 없습니다.");
-}
-/*test_check 요청 배열에 값 넘기기 test*/
 
 $("#toCheckoutButton").click(function(){
 	if (confirm("결제화면으로 넘어가시겠습니까?")) {
 		document.toCheckout.submit(); 
 	}
 });
-
-
-/*
-// 결제하기 페이지로 이동 
-$("#order_btn").on("click", function(){
-	let form_contents ='';
-	let orderNumber = 0; // index값 역할을 할 orderNumber 변수 
-	$(".cart_info_td").each(function(index, element){ //상품의 데이터가 저장된 <input> 값들을 감싸고 있는 <td> 태그 반복해서 접근하는 메서드 
-		// bookId, bookCount변수를 선언하여 접근한 <td>태그 내부에 있는 <input> 태그의 값들로 초기화
-		let bookId = $(element).find(".individual_bookId_input").val();
-		let bookCount = $(element).find(".individual_bookCount_input").val();
-		let bookId_input = "<input name='orders[" + orderNumber + "].bookId' type='hidden' value='" + bookId + "'>";
-		form_contents += bookId_input;
-		
-		let bookCount_input = "<input name='orders[" + orderNumber + "].bookCount' type='hidden' value='" + bookCount + "'>";
-		form_contents += bookCount_input;
-		orderNumber += 1;
-	});
-	$(".order_form").html(form_contents);
-	$(".order_form").submit();
-});
-
-*/
-
-$("#cbx_chkAll").click(function() {
-	if($("#cbx_chkAll").is(":checked")) $("input[name=chk]").prop("checked", true);
-	else $("input[name=chk]").prop("checked", false);
-});
-
-
-$("input[name=chk]").click(function() {
-	var total = $("input[name=chk]").length;
-	var checked = $("input[name=chk]:checked").length;
-	
-	if(total != checked) $("#cbx_chkAll").prop("checked", false);
-	else $("#cbx_chkAll").prop("checked", true); 
-});
-
-
-setTotal();
-function setTotal(){
-	let totalPrice=0;
-	$(".cart_info_td").each(function(index, element){
-		
-		if($(element).find(".individual_cart_checkbox").is(":checked") === true){	//체크여부
-			totalPrice += parseInt($(element).find(".individual_totalPrice_input").val());
-			
-		}
-	});
-	$(".totalPrice_span").text(totalPrice.toLocaleString());	
-	
-};
-
-$(".individual_cart_checkbox").on("change", function(){
-	
-	setTotal($(".cart_info_td"));
-});
-
-$("#cbx_chkAll").on("change", function(){
-	
-	setTotal($(".cart_info_td"));
-});
-
-
-
-
-
-
-
 
 var delList = [];
 
@@ -409,9 +295,6 @@ function del(){
 	
 	
 }
-
-
-
 
 
 

@@ -2,10 +2,11 @@ package com.guddi.shop.dao;
 
 import java.util.ArrayList;
 
+import com.guddi.shop.dto.CartDto;
 import com.guddi.shop.dto.EtcDto;
+import com.guddi.shop.dto.ListPageDto;
 import com.guddi.shop.dto.PageDto;
 import com.guddi.shop.dto.ProductDto;
-import com.guddi.shop.dto.ReviewQnaDto;
 
 public interface ManagerDao {
 	
@@ -60,11 +61,18 @@ public interface ManagerDao {
 	void doUpdateAnswer(String content, String userId, int q_idx);
 
 	int doDelAnswer(String userId, int a_idx);
-	
-	
-	//2022.01.15 유지홍 제품 삭제, 관리자 Qna 관련 소스 End
 
 	
+	//2022.01.15 유지홍 제품 삭제, 관리자 Qna 관련 소스 End
+	
+	
+	// 주문정보내역 리스트 orderInfoList yuSeonhwa 2022.01.17 START
+	ArrayList<CartDto> orderInfoList();
+	
+	ArrayList<ListPageDto> Mybatispage();
+	
+	
+	// 주문정보내역 리스트 orderInfoList yuSeonhwa 2022.01.17 END
 	
 	
 	

@@ -56,7 +56,7 @@
 							</tr>
 							<c:forEach items="${orderList}" var="orderInfo">
 								<tr>
-									<th><img src='resources/photo/${orderInfo.newFileName }'style="width: 350px; height: 350px;" /></th>
+									<th><img src='resources/photo/${orderInfo.newFileName}'style="width: 350px; height: 350px;" /></th>
 									<th>${orderInfo.product_name}</th>
 									<th>${orderInfo.price }</th>
 									<th>${orderInfo.quantity }</th>

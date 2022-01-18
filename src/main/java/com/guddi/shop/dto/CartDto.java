@@ -39,7 +39,14 @@ public class CartDto {
 	}
 	/*end*/
 	
+	/*주문정보조회 (관리자) 에서 product의 bag_type 과 brand_name 을 알기위해추가*/
+	private String brand_name;
+	private String bag_type;
+	
+
+	
 	private String idx;
+	private int u_idx;
 	private String userId;
 	private String username;
 	private String product_name;
@@ -155,6 +162,24 @@ public class CartDto {
 	}
 	public void setTotalPrice(String totalPrice) {
 		this.totalPrice = totalPrice;
+	}
+	public int getU_idx() {
+		return u_idx;
+	}
+	public void setU_idx(int u_idx) {
+		this.u_idx = u_idx;
+	}
+	public String getBrand_name() {
+		return brand_name;
+	}
+	public void setBrand_name(String brand_name) {
+		this.brand_name = brand_name;
+	}
+	public String getBag_type() {
+		return bag_type;
+	}
+	public void setBag_type(String bag_type) {
+		this.bag_type = bag_type;
 	}
 
 
