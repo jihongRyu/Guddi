@@ -434,30 +434,36 @@ public class ManagerController {
 	@RequestMapping(value = "/memberList", method = RequestMethod.GET)
 	public String memberList(Model model, HttpSession session, @RequestParam("num") int num,
 			@RequestParam(value="mem_flg",required=false,defaultValue = "0")int mem_flg,
-			@RequestParam(value="keyword",required=false,defaultValue = "")String keyword){	
+			@RequestParam(value="phone", required=false,defaultValue = "0")String phone
+			,@RequestParam(value="keyword",required=false,defaultValue = "")String keyword){	
 		logger.info("memberList 요청");
 		
 		getCategory(session);
 		ArrayList<EtcDto> memflgInfo = (ArrayList<EtcDto>) session.getAttribute("membercategory");
-		String memFlg_name = null;
+		//String phone = null;
 		
+		/*
 		if (mem_flg!=0) {
 			for (int i = 0; i < memflgInfo.size(); i++) {
 				if (memflgInfo.get(i).getIdx()==mem_flg) {
-					memFlg_name = memflgInfo.get(i).getMemFlg_name();
+					phone = memflgInfo.get(i).getMemFlg_name();
 				}
 			}			
 		}
+		*/
+	
 		
 		PageDto Page = new PageDto();
 		Page.setNum(num);
-		Page.setCount(service.memberSearchCount(keyword, memFlg_name));				
+		Page.setCount(service.memberSearchCount(keyword, phone, mem_flg));				
 		Page.setKeyword(keyword);
 		
 		logger.info("Page.getCount() : {}",Page.getCount());
 		
+		logger.info("page.getkeyword() : {}",Page.getKeyword());
+		
 		ArrayList<MemberDto> memberList = 
-				service.memberList(Page.getDisplayPost(), Page.getPostNum(), keyword, memFlg_name);
+				service.memberList(Page.getDisplayPost(), Page.getPostNum(), keyword, phone, mem_flg);
 		
 		model.addAttribute("memberList", memberList); //리스트 보내기
 		model.addAttribute("page", Page); //페이징처리

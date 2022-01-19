@@ -336,7 +336,7 @@ public class ManagerService {
 	}
 
 
-	public ArrayList<com.guddi.shop.dto.MemberDto> memberList(int displayPost, int postNum, String keyword, String memFlg_name) {
+	public ArrayList<com.guddi.shop.dto.MemberDto> memberList(int displayPost, int postNum, String keyword, String memFlg_name, int mem_flg) {
 		PageDto dto = new PageDto();
 		
 		dto.setMemFlg_name(memFlg_name);
@@ -344,6 +344,7 @@ public class ManagerService {
 		dto.setPostNum(postNum);
 		dto.setDisplayPost(displayPost);
 		dto.setKeyword(keyword);
+		dto.setMem_flg(String.valueOf(mem_flg));
 					
 		logger.info("postNum : {}", postNum);
 		return dao.memberList(dto);
@@ -359,10 +360,11 @@ public class ManagerService {
 		return dao.marketingFlgList();
 	}
 
-	public int memberSearchCount(String keyword, String memFlg_name) {
+	public int memberSearchCount(String keyword, String phone, int mem_flg) {
 		
 		PageDto dto = new PageDto();
-		dto.setMemFlg_name(memFlg_name);
+		dto.setPhone(phone);
+		dto.setMem_flg(String.valueOf(mem_flg));
 		dto.setKeyword(keyword);
 		
 		return dao.memberSearchCount(dto);

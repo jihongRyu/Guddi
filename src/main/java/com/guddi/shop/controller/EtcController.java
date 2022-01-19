@@ -136,6 +136,24 @@ public class EtcController {
 		return map;
 	}
 	
+	@RequestMapping(value = "/doUpdateMemFlg", method = RequestMethod.POST)
+	@ResponseBody            
+	public HashMap<String, Object> doUpdateMemFlg(Model model , @RequestParam String idx, @RequestParam(value="mem_flg",required=false,defaultValue="") String mem_flg) {
+		
+		logger.info("doUpdateMemFlg 요청");
+		HashMap<String, Object> map = new HashMap<String, Object>();		
+		
+		logger.info("use_flg : {}",mem_flg);
+		logger.info("idx :  {}",idx);
+	
+		int result = service.doUpdateMemFlg(Integer.parseInt(mem_flg) , Integer.parseInt(idx));
+		map.put("result", result);
+		
+		
+
+		return map;
+	}
+	
 	
 	// 신상여부, 판매여부 카테고리 관련  유지홍 2022.01.17 End
 

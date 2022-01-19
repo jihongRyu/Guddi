@@ -46,6 +46,10 @@
 		update sellflg set use_flg=#{param1} where idx = #{param2}
 	</update>
 	
+	<update id="doUpdateMemFlg">
+		update member set mem_flg=#{param1} where idx = #{param2}
+	</update>
+	
 	<!-- 신상여부 카테고리 관련  유지홍 2022.01.17 End -->
 
 </mapper>

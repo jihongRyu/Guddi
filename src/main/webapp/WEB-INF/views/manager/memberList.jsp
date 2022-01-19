@@ -55,17 +55,17 @@
 		
 			       <div class="mb-4">	
 				   <select name="mem_flg" class="form-control" onchange="changeListByMember(this.value)">
-				   		<option value="">전체</option>	
-				   		<c:forEach var="list" items="${sessionScope.membercategory}">
-				    		<option value="${list.memflg_idx}"><c:if test="${mem_flg eq list.memflg_idx}">selected</c:if>${list.memFlg_name}</option>	
+				   		<option value="3">전체</option>	
+				   		<c:forEach var="list" items="${memFlgList}">
+				    		<option value="${list.idx}" <c:if test="${mem_flg eq list.idx}">selected</c:if>>${list.memFlg_name}</option>	
 				   		</c:forEach>
-				   </select>		
+				   </select>	
 			     </div>
 			   </div>
 			   <div class="col-md-4">
 			     <div class="mb-4">
 			     	<div class="form-group">                
-			             <a href="javascript:void(0);" onclick="changeListByProductName()" id="searchBtn"><span class="icon ion-ios-search"></span></a>
+			             <a href="javascript:void(0);" onclick="changeListByPhone()" id="searchBtn"><span class="icon ion-ios-search"></span></a>
 			             <input type="text" class="form-control" id="keyword" name="keyword" value="${keyword}" placeholder="휴대폰 번호">
 			         </div>
 			   	</div>
@@ -87,7 +87,7 @@
 	             	<th>탈퇴 일자</th>
 	             	            	           		     
 	            </tr>
-	            <c:if test="${memberList.size() == 0 }"> 
+	            <c:if test="${memberList.size() == 0}"> 
 	            <tr>
 	             	<td colspan="12">등록된 회원이 없습니다.</td>	             	             	           		     
 	            </tr>
@@ -103,9 +103,16 @@
 			        	<th>${list.phone}</th>
 			        	<th>${list.birthday}</th>
 			        	<th>${list.gender}</th>
-						<th><c:forEach items="${memFlgList}" var="memFlgList">
+						<th><c:if test="${list.mem_flg eq 0}">탈퇴회원</c:if>
+						<c:if test="${list.mem_flg ne 0}">
+						<select name="memFlg" id="memFlg" onchange="changeUseMemFlg('${list.idx}',this.value)">
+						<c:forEach items="${memFlgList}" var="memFlgList">
+						<option value="${memFlgList.idx}" <c:if test="${list.mem_flg eq memFlgList.idx}">selected</c:if>>${memFlgList.memFlg_name}</option>
 						<c:if test="${memFlgList.idx eq list.mem_flg}">${memFlgList.memFlg_name}</c:if>							
-						</c:forEach></th>
+						</c:forEach>
+						</select>
+						</c:if>
+						</th>
 						<th><c:forEach items="${marketingFlgList}" var="marketingFlgList">
 						<c:if test="${marketingFlgList.idx eq list.marketing_flg}">${marketingFlgList.marketingFlg_name}</c:if>							
 						</c:forEach></th>
@@ -114,6 +121,31 @@
 		       </c:forEach>   
 		                
 	        </table>
+	        <c:if test="${page.endPageNum > 1}">
+	        <div class="col text-center">
+		      <div class="block-27">
+		          <ul>
+			      <c:if test="${page.prev}">
+			      <li><a href="memberList?num=${page.startPageNum - 1}&mem_flg=${mem_flg}&phone=${phone}
+			      &keyword=${keyword}#memberList">&lt;</a></li>
+			      </c:if>
+			      <c:forEach begin="${page.startPageNum}" end="${page.endPageNum}" var="num">
+			      <c:if test="${select == num}">
+			      <li class="active"><span>${num}</span></li>
+			      </c:if>
+			      <c:if test="${select != num}">
+			      <li><a href="memberList?num=${num}&mem_flg=${mem_flg}&phone=${phone}
+			      &keyword=${keyword}#memberList">${num}</a></li>			     
+			      </c:if>    		
+			      </c:forEach>
+			      <c:if test="${page.next}">
+			      <li><a href="memberList?num=${page.endPageNum + 1}&mem_flg=${mem_flg}&phone=${phone}
+			      &keyword=${keyword}#memberList">&gt;</a></li>
+			      </c:if>
+			    </ul>
+		      </div>
+       	   </div> 
+       	   </c:if>
 			
 	    </div>
  	</form>
@@ -152,15 +184,80 @@
 </body>
 <script>
 
+
+function enterkey() {	
+    if (window.event.keyCode == 13) {
+         // 엔터키가 눌렸을 때 실행할 내용
+         DoSearch();
+    }
+};
+
+function DoSearch() {    
+	 
+	  let keyword = $("#keyword").val();
+	  let phone = $("#phone").val();
+	  
+	  console.log(keyword);
+	  console.log(phone);	 	
+	  
+	  location.href = "memberList?num=1&phone=" + phone + "&keyword=" + keyword;
+
+};
+
+
+function changeListByMember(mem_flg){	
+	
+	var mem_flg = mem_flg;
+	var keyword = $('#keyword').val();	
+	
+	location.href = "memberList?num=1&mem_flg=" + mem_flg +  
+	  "&keyword=" +  keyword ;
+	
+}
+
+
+function changeListByPhone(){
+	
+	var mem_flg = "${mem_flg}";
+	var phone = "${phone}";
+	var keyword = $('#keyword').val();
+	
+	
+	location.href = "memberList?num=1&phone=" + phone +  "&mem_flg=" + mem_flg +
+	  "&keyword=" + keyword +"#memberList";
+	
+
+};
+
+function changeUseMemFlg(idx, mem_flg){
+	if (confirm("회원 구분을 변경 하시겠습니까?")){
+		
+	$.ajax({
+		type:'POST',	//method
+		url:'doUpdateMemFlg',		//action
+		data:{'idx':idx,
+			'mem_flg':mem_flg
+			},		//parameter
+		dataType:'JSON',	//JSON, XML, TEXT, HTML, JSONP
+		success:function(data){
+			
+			if (data.result>0) {
+				alert('변경 완료 되었습니다.!');
+				location.href="memberList?num=1&mem_flg=3";
+			}else {
+				alert("수정에 실패하였습니다!");
+			}
+		},	//성공 했을때 해야 할 일(성공 했을때 서버에서 보낸 데이터를 매개변수로 받는다.)
+		error:function(e){
+			alert("수정에 실패하였습니다.");
+		}	//에러났을때 해야 할 일(에러가 났을때 서버에서 보낸 데이터를 매개변수로 받는다.)
+	});
+		
+	}
+	
+}
+
 /*
-$.ajax({
-	type:'',	//method
-	url:'',		//action
-	data:{}		//parameter
-	dataType:'JSON',	//JSON, XML, TEXT, HTML, JSONP
-	success:function(data){},	//성공 했을때 해야 할 일(성공 했을때 서버에서 보낸 데이터를 매개변수로 받는다.)
-	error:function(e){}	//에러났을때 해야 할 일(에러가 났을때 서버에서 보낸 데이터를 매개변수로 받는다.)
-});
 */
 
 </script>

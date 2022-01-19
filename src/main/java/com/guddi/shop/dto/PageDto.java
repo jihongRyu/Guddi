@@ -62,6 +62,26 @@ public class PageDto {
 	
 	//회원 구분
 	private String memFlg_name;
+	
+	private String mem_flg;
+	
+	private String phone;
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getMem_flg() {
+		return mem_flg;
+	}
+
+	public void setMem_flg(String mem_flg) {
+		this.mem_flg = mem_flg;
+	}
 
 	public String getMemFlg_name() {
 		return memFlg_name;

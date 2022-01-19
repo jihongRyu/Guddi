@@ -86,7 +86,7 @@
 			<li class="nav-item"><a href="qnaPage?qnaNum=1&answer_flg=2&qnaType=0" class="nav-link">Q&A내역</a></li>
 			<li class="nav-item"><a href="toLogin" class="nav-link">리뷰내역</a></li>
 			<li class="nav-item"><a href="toLogin" class="nav-link">주문정보</a></li>
-			<li class="nav-item"><a href="memberList?num=1&mem_flg=0" class="nav-link">회원목록</a></li>
+			<li class="nav-item"><a href="memberList?num=1&mem_flg=3" class="nav-link">회원목록</a></li>
 			<li class="nav-item"><a href="toLogin" class="nav-link">배너이미지/카테고리관리</a></li>
 
 			<li class="nav-item dropdown">

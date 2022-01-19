@@ -57,6 +57,11 @@ public class EtcService {
 		// TODO Auto-generated method stub
 		return dao.doUpdateSellUseFlg(use_flg, idx);
 	}
+
+	public int doUpdateMemFlg(int mem_flg, int idx) {
+		// TODO Auto-generated method stub
+		return dao.doUpdateMemFlg(mem_flg, idx);
+	}
 	
 	
 	// 신상여부 카테고리 관련  유지홍 2022.01.17 End

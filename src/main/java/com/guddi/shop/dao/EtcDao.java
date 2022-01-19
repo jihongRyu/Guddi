@@ -25,6 +25,8 @@ public interface EtcDao {
 	int getSellFlgIdx();
 
 	int doUpdateSellUseFlg(int use_flg, int idx);
+
+	int doUpdateMemFlg(int mem_flg, int idx);
 	
 	
 	
