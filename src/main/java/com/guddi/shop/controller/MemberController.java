@@ -484,23 +484,6 @@ public class MemberController {
 		
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		//로그인페이지 findIdPassword 아이디/패스워드 찾기 START!!! -- > 임시비밀번호 유선화 2022.01.13
 		@RequestMapping(value = "/findIdPassword", method = RequestMethod.GET)
 		public String findidPassword(Model model) {		
@@ -580,10 +563,7 @@ public class MemberController {
 		}
 
 		
-		
-		
 		//로그인페이지 findIdPassword 아이디/패스워드 찾기 END!!! -- > 임시비밀번호 유선화 2022.01.13
-		
 		
 		
 		
