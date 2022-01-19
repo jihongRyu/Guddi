@@ -117,7 +117,8 @@
 				<c:forEach items="${rankList}" var="list">
 					<div class="col-md-3">
 					<div class="product">
-						<a href="detail?idx=${list.idx}" class="img-prod"><img class="img-fluid" src="resources/photo/${list.newFileName}" alt="Colorlib Template"></a>
+					<c:if test="${reviewNum eq 1}"></c:if>
+						<a href="detail?idx=${list.idx}&reviewNum=1" class="img-prod"><img class="img-fluid" src="resources/photo/${list.newFileName}" alt="Colorlib Template"></a>
 							<div class="overlay"></div>
 						</div>
 						</div>
