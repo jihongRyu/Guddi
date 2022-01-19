@@ -207,7 +207,7 @@
 	</delete>
 	
 	<select id="toLogin" parameterType="com.guddi.shop.dto.MemberDto" resultType="com.guddi.shop.dto.MemberDto">	
-		 SELECT userId, password, username, phone, email, zipcode, address, address_detail, regdate, mem_flg
+		 SELECT idx, userId, password, username, phone, email, zipcode, address, address_detail, regdate, mem_flg
 		 from member 
 		 where userId = #{userId} 
 		 and password = #{password}
