@@ -318,7 +318,7 @@ public class MemberService {
 //회원가입  도연 end 2022.01.12
 
 
-	public String doFindMemberId(String name, String email) {
+	public ArrayList<MemberDto> doFindMemberId(String name, String email) {
 		logger.info("아이디 찾기 서비스 이동");
 		return dao.doFindMemberId(name, email);
 	}

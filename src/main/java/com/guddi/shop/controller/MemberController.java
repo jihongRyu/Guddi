@@ -438,7 +438,7 @@ public class MemberController {
 			logger.info("아이디 찾기 기능");
 			String msg;
 			String url = "member/findMemberId";
-			String memberId = service.doFindMemberId(name, email);
+			ArrayList<MemberDto> memberId = service.doFindMemberId(name, email);
 			if(memberId != null) {
 				msg = "아이디 찾기 성공";
 		

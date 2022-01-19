@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
 	<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
-	
+	<link rel="icon" type="image/png" href="resources/photo/로고2.png">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 	<link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
@@ -30,9 +30,16 @@
 	<section class="ftco-section contact-section bg-light">
 		<div class="bg-white" style="width: 500px; height:400px; margin-left: 500px;">
 			<h3 style="text-align: center; padding-top: 50px;">아이디 찾기 결과</h3>
-			<p style="font-size: large; text-align: center; margin-top: 50px;">아이디 : ${memberId }</p>
-			<!-- <button id="login">로그인</button> -->
+			<c:if test="${memberId.size() > 0 }">
+				<c:forEach items="${memberId}" var="memberId">
+					<p style="font-size: large; text-align: center; margin-top: 30px;">아이디 : ${memberId.userId }</p>			
+				</c:forEach>
 			<input id="login" type="button" value="로그인" class="btn btn-primary py-3 px-5" style="margin-top: 90px; margin-left: 190px;"/>
+			</c:if>
+			<c:if test="${memberId.size() == 0 }">
+				<p style="font-size: large; text-align: center; margin-top: 30px;">가입하신 아이디가 없습니다</p>	
+			<input id="memberWrite" type="button" value="회원가입" class="btn btn-primary py-3 px-5" style="margin-top: 90px; margin-left: 170px;"/>
+			</c:if>
 		</div>
 	</section>
 	
@@ -60,6 +67,9 @@
 <script>
 	$('#login').click(function () {
 		location.href='toLogin';
+	})
+	$('#memberWrite').click(function () {
+		location.href='memberWrite';
 	})
 </script>
 </html>

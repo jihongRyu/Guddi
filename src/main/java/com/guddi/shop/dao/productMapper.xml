@@ -91,12 +91,7 @@
 		0
 		)
 	</insert>
-	
-	<update id="reviewdelete">
-		UPDATE review SET
-			del_flg = 1
-		WHERE idx = #{idx};
-	</update>
+
 	
 	<select id="checkOrder" resultType="int">
 		select count(*) from tb_order
@@ -111,9 +106,18 @@
 	where r.b_idx = #{idx}
 	and a.del_flg = 0	
 	</select>
+
+	<!-- 리뷰삭제 -->
+	<update id="reviewdelete">
+		UPDATE review SET
+			del_flg = 1
+		WHERE idx = #{idx};
+	</update>
+
 	<select id="getCart" resultType="int">
 		select COUNT(*) from cart where userId = #{userId}
 	</select>
+
 
 </mapper>
 

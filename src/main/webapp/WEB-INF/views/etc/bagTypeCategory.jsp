@@ -5,6 +5,7 @@
 	<meta charset="UTF-8">
 	<title>종류카테고리관리</title>
 	<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+	<link rel="icon" type="image/png" href="resources/photo/로고2.png">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	

@@ -77,8 +77,9 @@ public interface EtcDao {
 	//승혁님 문의타입 카테고리 제어관련 Start
 	ArrayList<EtcDto> toUpdateQnaCategory();
 
-	void addQna(int userIdxInt, String keyword);
+	void addQna(int userIdxInt, String keyword, int idxCountInt);
 
-	void changUseFlg(int changUseFlgInt, String typename);
+	void changUseFlg(int changUseFlgInt, String typename, int userIdxInt);
 	//승혁님 문의타입 카테고리 제어관련 End
+	
 }

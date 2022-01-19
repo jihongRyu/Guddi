@@ -531,5 +531,8 @@ public class ManagerService {
 	
 	
 	// 주문정보내역 리스트 orderInfoList 유지홍 2022.01.18 End
+	
+	
+
 
 }

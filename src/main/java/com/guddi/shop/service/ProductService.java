@@ -97,10 +97,16 @@ public class ProductService {
 			// TODO Auto-generated method stub
 			return dao.answerLsit(idx);
 		}
+		
+		public int reviewdelete(String idx) {
+			logger.info("리뷰 삭제 dao요청");
+			return dao.reviewdelete(idx);
+		}
 
 		public int getCart(String userId) {
 			logger.info("카트수 찾기 실행! 아이디 : {}", userId);
 			return dao.getCart(userId);
+
 		}
 
 
