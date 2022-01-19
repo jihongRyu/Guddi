@@ -160,6 +160,12 @@ public class EtcController {
 		return "etc/mainImageControl";
 	}
 	
+	@RequestMapping(value = "/addMainimage", method = RequestMethod.GET)
+	public String addMainimage(Model model, HttpSession session) {
+		logger.info("addMainimage 요청");
+		
+		return "etc/addMainImage";
+	}
 
 	@RequestMapping(value = "/doUpdateMemFlg", method = RequestMethod.POST)
 	@ResponseBody            

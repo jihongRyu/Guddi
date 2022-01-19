@@ -297,6 +297,10 @@
 	<update id="doUpdateReviewAnswer" parameterType="com.guddi.shop.dto.ReviewQnaDto">
 		update review_answer set content = #{content} where idx = #{idx}
 	</update>
+	
+	<update id="updateReviewFlg">
+		update review set answer_flg = #{param1} where idx=#{param2}
+	</update>
 	<!-- 리뷰관련 Ryujihong 2022.01.18 End  -->
 	
 	<!-- 주문정보 관련 Ryujihong 2022.01.18 Start  -->
