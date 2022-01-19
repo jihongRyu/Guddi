@@ -160,12 +160,26 @@ public class EtcController {
 		return "etc/mainImageControl";
 	}
 	
-	@RequestMapping(value = "/addMainimage", method = RequestMethod.GET)
-	public String addMainimage(Model model, HttpSession session) {
-		logger.info("addMainimage 요청");
+
+	@RequestMapping(value = "/doUpdateMemFlg", method = RequestMethod.POST)
+	@ResponseBody            
+	public HashMap<String, Object> doUpdateMemFlg(Model model , @RequestParam String idx, @RequestParam(value="mem_flg",required=false,defaultValue="") String mem_flg) {
 		
-		return "etc/addMainImage";
+		logger.info("doUpdateMemFlg 요청");
+		HashMap<String, Object> map = new HashMap<String, Object>();		
+		
+		logger.info("use_flg : {}",mem_flg);
+		logger.info("idx :  {}",idx);
+	
+		int result = service.doUpdateMemFlg(Integer.parseInt(mem_flg) , Integer.parseInt(idx));
+		map.put("result", result);
+		
+		
+
+		return map;
 	}
+	
+
 	
 	@RequestMapping(value = "/doAddMainImage", method = RequestMethod.POST)
 	@ResponseBody

@@ -141,6 +141,43 @@
 	</update>
 	
 	<!-- 2022.01.15 유지홍 제품 삭제, 관리자 Qna 관련 소스 End ryujihong 2022.01.14 -->
+	
+	<!-- 멤버 리스트 불러오기 -->
+	
+	<select id="memberList" parameterType="com.guddi.shop.dto.PageDto" resultType="com.guddi.shop.dto.MemberDto">
+			select idx, userId, username, address, email, phone, birthday, gender, mem_flg, marketing_flg, delete_date from member 
+			where 1=1 
+	<if test='keyword!= null'>
+  	and phone LIKE concat('%', #{keyword}, '%') 
+ 	</if>	
+ 	<if test='mem_flg!= 3'>
+  	and mem_flg LIKE concat('%', #{mem_flg}, '%') 
+ 	</if>
+ 	order by idx desc
+	limit #{displayPost}, #{postNum}
+	</select>
+	
+	<!-- 멤버등급 불러오기 -->
+	<select id="memFlgList" resultType="com.guddi.shop.dto.EtcDto">
+			select idx, regdate, use_flg, memFlg_name from memflg order by idx desc;		
+	</select>
+	
+	<!-- 마케팅 수신 동의 여부 -->
+	<select id="marketingFlgList" resultType="com.guddi.shop.dto.EtcDto">
+			select idx, regdate, use_flg, marketingFlg_name from marketingFlg order by idx desc;
+	</select>
+	
+	
+	<select id="memberSearchCount" parameterType="com.guddi.shop.dto.PageDto" resultType="int">
+ 	select count(*) from member
+ 	where 1=1
+ 	<if test='mem_flg!= 3'>
+  	and mem_flg LIKE concat('%', #{mem_flg}, '%') 
+ 	</if>	
+ 	<if test='keyword != null'>
+  	and phone LIKE concat('%', #{keyword}, '%')
+ 	</if>	
+	</select>
 
 
 	<!-- 주문정보내역 리스트 orderInfoList yuSeonhwa 2022.01.17 START  -->

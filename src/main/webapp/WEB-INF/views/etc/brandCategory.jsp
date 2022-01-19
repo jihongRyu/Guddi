@@ -117,8 +117,10 @@
 		
 		if(name == ''){
 			alert("브랜드명을 입력해주세요.");
+			return;
 		}else if(code == ''){
 			alert("브랜드 코드를 입력해주세요.");
+			return;
 		}else{
 			console.log("입력된 브랜드/코드",name,code);
 		}
