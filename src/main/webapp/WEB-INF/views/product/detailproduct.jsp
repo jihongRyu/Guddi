@@ -8,7 +8,7 @@
 	<title>${detail[0].product_name}</title>
 <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 <link rel="icon" type="image/png" href="resources/photo/로고2.png">
-
+<link rel="icon" type="image/png" href="resources/photo/로고2.png">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
 <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
@@ -96,10 +96,11 @@
 		<div class="title">REVIEW</div>
 		
 		<!-- 리뷰 리스트 예시 start -->
-		<c:if test="${reviewlist eq null}">
-			<div>등록된 이 없습니다.</div>
-		</c:if>
+		
 		<ul class="review_list">
+			<c:if test="${reviewlist.size() eq 0}">
+				<li><div class="text-center">등록된 리뷰가 없습니다.</div></li>
+			</c:if>
 			<c:forEach items="${reviewlist}" var="review">
 				<li>
 					<div class="writer"> 작성자 : <span class="reviewuser">${review.userId}</span> </div>
@@ -301,7 +302,12 @@ $(".cart-btn").click(function(){
 			var quantity = $(".product-quantity").val();
 			var price = $(".price").val();
 			console.log(userId);
-		
+			
+			if (sessionuserId=='') {
+				alert('장바구니는 회원만 이용가능합니다. 로그인해주시기 바랍니다.');
+				location.href='toLogin';
+				return;
+			}
 			
 			$.ajax({
 				url:"doCartUpdate",

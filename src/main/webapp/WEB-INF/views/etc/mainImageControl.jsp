@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <title>메인이미지제어</title>
 <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+<link rel="icon" type="image/png" href="resources/photo/로고2.png">
 <!-- ckeditor -->
 <script src="resources/ckeditor/ckeditor.js"></script>	
 
@@ -150,7 +151,7 @@
 function delImage(idx, newFileName) {
 
 	 if (confirm("해당 이미지를 삭제하시겠습니까?")) {	
-		 alert("이미지는 원칙상 4장을 등록해야합니다. 이미지 재등록을 꼭 해주세요.");		 
+		 alert("해당 이미지를 삭제하였습니다.");		 
 		 location.href = "delMainImage?idx="+idx;
 	}
 };

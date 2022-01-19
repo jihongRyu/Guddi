@@ -137,6 +137,8 @@ public interface ManagerDao {
 	int orderListSearchCount(PageDto Page);
 
 	ArrayList<CartDto> orderList(PageDto dto);
+
+	void updateReviewFlg(int flg, int idx);
 	
 	
 	// 리뷰 관련 Ryujihong 2022.01.17 End

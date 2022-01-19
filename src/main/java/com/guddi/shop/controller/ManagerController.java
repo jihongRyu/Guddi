@@ -589,6 +589,10 @@ public class ManagerController {
 		dto.setManagerId(managerId);
 		
 		int result = service.doReviewAnswer(dto);
+		if (result>0) {
+			int flg = 0;
+			service.updateReviewFlg(flg,idx);
+		}
 		
 		ReviewQnaDto review = service.getReviewDetail(idx);
 		ReviewQnaDto reviewAnswer = service.getReviewAnswer(idx);
@@ -605,6 +609,8 @@ public class ManagerController {
 		logger.info("doDelReviewAnswer 요청");
 		
 		service.doDelReviewAnswer(a_idx);
+		int flg = 1;
+		service.updateReviewFlg(flg, a_idx);
 		
 		ReviewQnaDto review = service.getReviewDetail(r_idx);
 		ReviewQnaDto reviewAnswer = service.getReviewAnswer(r_idx);
