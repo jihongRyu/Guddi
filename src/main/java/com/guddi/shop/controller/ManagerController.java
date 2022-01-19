@@ -659,58 +659,7 @@ public class ManagerController {
 	
 	
 
-	//승혁님 문의타입 카테고리 제어관련 Start
-	@RequestMapping(value = "/toUpdateQnaCategory", method = RequestMethod.GET)
-	public String toUpdateQnaCategory(Model model, HttpSession session, @RequestParam String userIdx) {
-		logger.info("userIdx {}", userIdx);
-		logger.info("toUpdateQnaCategory 이동");		
-		ArrayList<EtcDto> qnaList = service.toUpdateQnaCategory();
-		model.addAttribute("qnaList", qnaList);
-		model.addAttribute("userIdx", userIdx);
-		for(EtcDto dto : qnaList) {
-			logger.info("타입명 : {}",dto.getTypename());
-			//logger.info("타입명 : {}",dto.getType_name());
-		}
-		return "etc/toUpdateQnaCategory";
-	}
 	
-	@RequestMapping(value = "/addQna", method = RequestMethod.GET)
-	@ResponseBody
-	public HashMap<String, Object> addQna(@RequestParam String userIdx, @RequestParam String keyword, @RequestParam String idxCount) {
-		logger.info("keyword : {}", keyword);
-		logger.info("userIdx : {}", userIdx);
-		logger.info("keyword : {}", idxCount);
-		int userIdxInt = Integer.parseInt(userIdx);
-		int idxCountInt = Integer.parseInt(idxCount);
-		logger.info("userIdxInt : {}", userIdxInt);
-		logger.info("idxCountInt : {}", idxCountInt);
-		service.addQna(userIdxInt, keyword, idxCountInt);
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		ArrayList<EtcDto> qnaList = service.toUpdateQnaCategory();
-		logger.info("qnaList 사이즈 {}", qnaList.size());
-		map.put("qnaList", qnaList);
-		return map;
-	}
-	
-	@RequestMapping(value = "/changUseFlg", method = RequestMethod.GET)
-	@ResponseBody
-	public HashMap<String, Object> changUseFlg(@RequestParam String changUseFlg, @RequestParam String typename, @RequestParam String userIdx) {
-		logger.info("changUseFlg : {}", changUseFlg);
-		logger.info("typename : {}", typename);
-		logger.info("userIdx : {}", userIdx);
-		int changUseFlgInt = Integer.parseInt(changUseFlg);
-		int userIdxInt = Integer.parseInt(userIdx);
-		logger.info("userIdxInt : {}", userIdxInt);
-		logger.info("userIdxInt : {}", changUseFlgInt);
-		service.changUseFlg(changUseFlgInt, typename, userIdxInt);
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		ArrayList<EtcDto> qnaList = service.toUpdateQnaCategory();
-		logger.info("qnaList 사이즈 {}", qnaList.size());
-		map.put("qnaList", qnaList);
-		return map;
-	}
-
-	//승혁님 문의타입 카테고리 제어관련 End
 	
 	
 	
