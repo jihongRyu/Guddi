@@ -43,10 +43,10 @@
         <div class="ftco-footer-widget mb-4 ml-md-5">
           <h2 class="ftco-heading-2">브랜드</h2>
           <ul class="list-unstyled">
-            <li><a href="#" class="py-2 d-block">샤넬</a></li>
-            <li><a href="#" class="py-2 d-block">루이비통</a></li>
-            <li><a href="#" class="py-2 d-block">구찌</a></li>
-            <li><a href="#" class="py-2 d-block">생로랑</a></li>
+            <li><a href="productPage?num=1&brand_idx=1&bag_type=0" class="py-2 d-block">루이비통</a></li>
+            <li><a href="productPage?num=1&brand_idx=2&bag_type=0" class="py-2 d-block">루이까또즈</a></li>
+            <li><a href="productPage?num=1&brand_idx=3&bag_type=0" class="py-2 d-block">구찌</a></li>
+            <li><a href="productPage?num=1&brand_idx=4&bag_type=0" class="py-2 d-block">생로랑</a></li>
           </ul>
         </div>
       </div>
