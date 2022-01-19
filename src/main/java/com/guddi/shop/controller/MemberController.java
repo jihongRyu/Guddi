@@ -263,6 +263,7 @@ public class MemberController {
 			model.addAttribute("reviewPage", reviewPage); //페이징처리
 			model.addAttribute("reviewSelect", reviewNum);//페이징처리		  
 			model.addAttribute("reviewKeyword", reviewKeyword); //검색어
+			model.addAttribute("reviewSearchType", reviewSearchType); //검색타입
 			
 			return "member/myPage";
 		}
@@ -460,6 +461,7 @@ public class MemberController {
 			logger.info("이메일 아이디 여부 : " +email);
 			String page = "redirect:/member/tempPass";
 			
+
 			String msg = "아이디와 이메일을 확인해 주세요";
 			try {
 				if(loginId != null && email != null) { // 로그인이 되면 서비스에서 temppw로 업데이트 한 결과를 보낸다. 
@@ -480,6 +482,7 @@ public class MemberController {
 					page = "member/findIdPassword";
 				}
 				
+
 			}
 			catch (Exception e){
 				logger.info("에러 발생");		

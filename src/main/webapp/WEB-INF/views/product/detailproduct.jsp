@@ -40,6 +40,17 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/include/header.jsp"/>
+
+<section class="ftco-section contact-section bg-light">
+	<div class="container">    
+	      <div class="col-md-12 ftco-animate text-center bg-light">
+	      	<p class="breadcrumbs"><span class="mr-2"><a href="./">홈</a></span>/<span>${detail[0].brand_name}</span>/<span>${detail[0].product_name}</span></p>
+	        <h1 class="mb-0 bread">${detail[0].product_name}</h1>
+	      </div>    
+	</div>
+</section>
+
+
 <div class="container">
 	<section>
 		<div class="prd_info">
@@ -81,24 +92,8 @@
 			</div>
 		</div>
 	</section>
-
-	<section>
-		상품상세 이미지나 설명을 넣으시오.
-	</section>
-
 	<section class="review_wrap">
 		<div class="title">REVIEW</div>
-		
-		<!-- <c:if test="${reviewlist eq null||size == 0 }">
-			<div>등록된 이 없습니다.</div>
-		</c:if>
-		<c:forEach items="${reviewlist}" var="review">
-			<div>${review.userId}</div>
-			<div>${review.regdate}</div>
-			<div>${review.subject}</div>
-			<div>${review.content}</div>
-			<input type="button" class="reviewdelete" value="삭제" onclick="href='reviewupdate=?idx'">
-		</c:forEach> -->
 		
 		<!-- 리뷰 리스트 예시 start -->
 		<c:if test="${reviewlist eq null}">
@@ -114,25 +109,17 @@
 						<span class="date">${review.regdate}</span>
 					</div>
 					<c:forEach items="${answerList}" var="answer">
-						<c:if test="${answer.r_idx ne review.idx}">
-							<div class="con">
-								  ㄴ해당 리뷰의 답변이 존재하지 않습니다.
-							</div>
-						</c:if>
 						<c:if test="${answer.r_idx eq review.idx}">
 						<div class="con">
-							  ㄴ답변 <br>
-							  관리자 : ${answer.content}
+							  ㄴ 관리자 : ${answer.content}
 						</div>
 						</c:if>
 					</c:forEach>
-					
 				</li>
 			<input type="button" class="reviewdelete" onclick="detailreviewdelete()" value="삭제">
 			<!--  onclick="location.href='reviewdelete?idx=${review.idx}'"-->
 			</c:forEach>
 		</ul>
-		
 		<ul class="paging">
 			
 			<c:if test="${page.prev}">
@@ -149,10 +136,6 @@
 			<c:if test="${page.next}">
 			      <li><a href="detail?reviewNum=${page.endPageNum + 1}&idx=${idx}">&gt;</a></li>
 			</c:if>
-			
-			 
-			     
-			     
 		</ul>
 		<!-- 리뷰 리스트 예시 end -->
 	</section>
@@ -166,7 +149,7 @@
 			<li>제 &nbsp; 목 : <input type="text" class="reviewsubject" maxlength="50"/>${review.regdate}</li>
 			<li class="con">
 				내 &nbsp; 용 : <textarea class="reviewcontent"></textarea>
-				<input type="button" class="reviewupdate" onclick="reviewupdate('${idx}',${sessionScope.userId})" value="등록"/>
+				<input type="button" class="reviewupdate" onclick="reviewupdate('${idx}','${sessionScope.userId}')" value="등록"/>
 			</li>
 		</ul> 
 	</c:if>
@@ -178,24 +161,36 @@
 	</c:if>
 	</section>
 	
-
-	<br><br><br><br><br>
-<!--  <section>
-	<c:if test="${reviewlist eq null||size == 0 }">
-		<div>등록된 글이 없습니다.</div>
-	</c:if>
-	<c:forEach items="${reviewlist}" var="review">
-		<div>${review.userId}</div>
-		<div>${review.regdate}</div>
-		<div>${review.subject}</div>
-		<div>${review.content}</div>
-		<input type="button" class="reviewdelete" value="삭제">
-	</c:forEach>
-</section> -->
-
-<br><br><br><br>
 </div>
+
+<section class="ftco-section ftco-no-pt ftco-no-pb py-5 bg-light">
+  <div class="container py-4">
+    <div class="row d-flex justify-content-center py-5">    
+    </div>
+  </div>
+</section>
+
+
 <jsp:include page="/WEB-INF/views/include/footer.jsp"/>
+
+
+
+	<script src="resources/js/jquery.min.js"></script>
+	<script src="resources/js/jquery-migrate-3.0.1.min.js"></script>
+	<script src="resources/js/popper.min.js"></script>
+	<script src="resources/js/bootstrap.min.js"></script>
+	<script src="resources/js/jquery.easing.1.3.js"></script>
+	<script src="resources/js/jquery.waypoints.min.js"></script>
+	<script src="resources/js/jquery.stellar.min.js"></script>
+	<script src="resources/js/owl.carousel.min.js"></script>
+	<script src="resources/js/jquery.magnific-popup.min.js"></script>
+	<script src="resources/js/aos.js"></script>
+	<script src="resources/js/jquery.animateNumber.min.js"></script>
+	<script src="resources/js/bootstrap-datepicker.js"></script>
+	<script src="resources/js/scrollax.min.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+	<script src="resources/js/google-map.js"></script>
+	<script src="resources/js/main.js"></script>
 </body>
 
 <script>
@@ -214,29 +209,33 @@ function reviewupdate(idx, userId){
 	}else if(reviewcontent=='') {
 		alert('리뷰 내용을 입력해 주세요.');
 	}else{
-				
-		$.ajax({
-			type:'POST',
-			url:'reviewupdate',
-			data:{'reviewsubject':$('.reviewsubject').val(),
-				  'reviewcontent':$('.reviewcontent').val(),
-				  'product_code':$('.detail_product_code').val()				 
-				  },
-			datatype:'JSON',
-			success:function(data){
-				console.log(data);
-				if (data.success == 1) {
-					alert('리뷰등록이 완료되었습니다.');				
-				}else if(data.success == 0){
-					alert('구매회원만 리뷰등록이 가능합니다.');	
+			
+		if (confirm('리뷰를 작성하시겠습니까?')) {
+			$.ajax({
+				type:'POST',
+				url:'reviewupdate',
+				data:{'reviewsubject':$('.reviewsubject').val(),
+					  'reviewcontent':$('.reviewcontent').val(),
+					  'product_code':$('.detail_product_code').val()				 
+					  },
+				datatype:'JSON',
+				success:function(data){
+					console.log(data);
+					if (data.success == 1) {
+						alert('리뷰등록이 완료되었습니다.');				
+					}else if(data.success == 0){
+						alert('구매회원만 리뷰등록이 가능합니다.');	
+					}
+				},
+				error:function(e){
+					console.log(e);
+					alert('서버에 문제가 생겼습니다. 고객센터에 문의해주세요.');
 				}
-			},
-			error:function(e){
-				console.log(e);
-				alert('서버에 문제가 생겼습니다. 고객센터에 문의해주세요.');
-			}
-		});
+			});
+		}
+		
 	window.location.reload();
+	
 	}
 	
 };

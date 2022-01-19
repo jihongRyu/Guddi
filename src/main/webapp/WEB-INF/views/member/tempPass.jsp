@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title></title>
+
 <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -27,13 +27,13 @@
 <link rel="stylesheet" href="resources/css/style.css">
 
 </head>
-<body>
+<body class="goto-here">
 
 <jsp:include page="/WEB-INF/views/include/header.jsp"/>
 
 
 
-<section class="ftco-section contact-section bg-light">
+<section class="ftco-section contact-section bg-light" id="home-section" class="hero">
   <div class="container">
     <div class="row block-9">
       <div class="login-form col-md-8 d-flex">
@@ -57,6 +57,8 @@
 
 <jsp:include page="/WEB-INF/views/include/footer.jsp"/>
 
+<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
 <script src="resources/js/jquery.min.js"></script>
 <script src="resources/js/jquery-migrate-3.0.1.min.js"></script>
 <script src="resources/js/popper.min.js"></script>
@@ -75,6 +77,7 @@
 <script src="resources/js/main.js"></script>
 
 </body>
+
 <script>
 
 
@@ -83,6 +86,7 @@ var msg = "${temppw}";
 if(msg != ""){
 	alert(temppw);
 }	
+
 
 
 </script>
