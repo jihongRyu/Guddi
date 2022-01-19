@@ -64,21 +64,23 @@ public class CartController {
 
 	@RequestMapping(value = "/delCart", method = RequestMethod.POST)
 	@ResponseBody
-	public HashMap<String, Object> delCart(@RequestParam String idx, HttpSession session) {		
+	public HashMap<String, Object> delCart(@RequestParam String product_code, HttpSession session) {		
 		
 		logger.info("delCart 요청");
 		CartDto dto = new CartDto();		
 		String userId = (String) session.getAttribute("userId");
 		dto.setUserId(userId);		
-		dto.setIdx(idx);
-		
+		dto.setProduct_code(product_code);
+		logger.info("userId : {}", userId);
+		logger.info("product_code : {}", product_code);
 		int result = service.delCart(dto);		
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		logger.info("카트 담기 성공 유무 : {}", result);
+		logger.info("카트 삭제하기 성공 유무 : {}", result);
 		if (result>0) {			
 			map.put("result", result);		
 			int cartCnt = service.getCart(userId);//카트수 가져오기
 			logger.info("카트 수 : {}", cartCnt);
+			session.setAttribute("cartCnt", cartCnt);
 		}else {
 			map.put("result", 0);		
 		}
@@ -125,6 +127,8 @@ public class CartController {
 		
 		int delCnt = delList.size();// 1. 삭제할 갯수 확인 
 		int row = service.chkdelete(delList);	// 2. 삭제 완료된 갯수 확인
+		logger.info("chkdelete controller : {}",delList); 
+		
 		// 3. 1번과 2번이 같으면 완료
 		map.put("msg", delCnt+"개 요청 중 "+row+"개 를 삭제 하였습니다.");
 		
@@ -266,6 +270,7 @@ public class CartController {
 		    SimpleDateFormat vans = new SimpleDateFormat("yyyyMMdd");
 		    String wdate = vans.format(now);
 			String order_num = "S" + wdate + service.getOrderIdx();
+			
 			
 			//tb_order에 insert할 파라미터들을 arrayList에 담음
 			CartDto dto = new CartDto();

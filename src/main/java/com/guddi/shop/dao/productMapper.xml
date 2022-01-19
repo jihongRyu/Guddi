@@ -111,7 +111,9 @@
 	where r.b_idx = #{idx}
 	and a.del_flg = 0	
 	</select>
-
+	<select id="getCart" resultType="int">
+		select COUNT(*) from cart where userId = #{userId}
+	</select>
 
 </mapper>
 
