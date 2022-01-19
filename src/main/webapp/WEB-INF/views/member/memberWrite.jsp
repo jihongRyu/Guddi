@@ -240,7 +240,7 @@ $(function(){
 	   } else {
 	  	 	$('font[name=pwdlengthcheck]').text('');
 	    	$('font[name=pwdlengthcheck]').html("이 비밀번호는 사용가능합니다.");
-	   }   
+	   }
 	});
 });
 	
