@@ -263,6 +263,7 @@ public class MemberController {
 			model.addAttribute("reviewPage", reviewPage); //페이징처리
 			model.addAttribute("reviewSelect", reviewNum);//페이징처리		  
 			model.addAttribute("reviewKeyword", reviewKeyword); //검색어
+			model.addAttribute("reviewSearchType", reviewSearchType); //검색타입
 			
 			return "member/myPage";
 		}
