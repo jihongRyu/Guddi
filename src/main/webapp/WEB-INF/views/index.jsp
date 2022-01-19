@@ -118,9 +118,6 @@
 					<div class="col-md-3">
 					<div class="product">
 						<a href="detail?idx=${list.idx}" class="img-prod"><img class="img-fluid" src="resources/photo/${list.newFileName}" alt="Colorlib Template"></a>
-							<div class="text px-3 py-1">
-								<h2 class="mb-0"><a href="javascript:void(0);">신상품</a></h2>
-							</div>
 							<div class="overlay"></div>
 						</div>
 						</div>

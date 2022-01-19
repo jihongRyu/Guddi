@@ -32,6 +32,9 @@ public class EtcDto {
 	private String brand_code;
 	private String type_code;
 	private String newFileName;
+	private String memFlg_name;
+	private String marketingFlg_name;
+	private String mam_flg;
 	private String oriFileName;
 	private String useFlg_name;
 	private int u_idx;
@@ -41,6 +44,24 @@ public class EtcDto {
 	private String  typename;
 	
 	
+	public String getMam_flg() {
+		return mam_flg;
+	}
+	public void setMam_flg(String mam_flg) {
+		this.mam_flg = mam_flg;
+	}
+	public String getMarketingFlg_name() {
+		return marketingFlg_name;
+	}
+	public void setMarketingFlg_name(String marketingFlg_name) {
+		this.marketingFlg_name = marketingFlg_name;
+	}
+	public String getMemFlg_name() {
+		return memFlg_name;
+	}
+	public void setMemFlg_name(String memFlg_name) {
+		this.memFlg_name = memFlg_name;
+	}
 	public String getNewFileName() {
 		return newFileName;
 	}

@@ -59,6 +59,37 @@ public class PageDto {
 
 	private String searchType;
 	private String keyword;
+	
+	//회원 구분
+	private String memFlg_name;
+	
+	private String mem_flg;
+	
+	private String phone;
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getMem_flg() {
+		return mem_flg;
+	}
+
+	public void setMem_flg(String mem_flg) {
+		this.mem_flg = mem_flg;
+	}
+
+	public String getMemFlg_name() {
+		return memFlg_name;
+	}
+
+	public void setMemFlg_name(String memFlg_name) {
+		this.memFlg_name = memFlg_name;
+	}
 
 	public void setNum(int num) {
 		this.num = num;
@@ -235,6 +266,8 @@ public class PageDto {
 	public void setQnaType(int qnaType) {
 		this.qnaType = qnaType;
 	}
+
+	
 
 
 	
