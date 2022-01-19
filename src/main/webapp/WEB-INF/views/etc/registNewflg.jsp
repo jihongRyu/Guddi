@@ -7,6 +7,7 @@
 <title></title>
 <link rel="stylesheet" href="resources/css/style.css">
 <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+<link rel="icon" type="image/png" href="resources/photo/로고2.png">
 </head>
 <body>
 	<br><br>

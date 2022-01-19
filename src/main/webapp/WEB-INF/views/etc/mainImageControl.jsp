@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <title>메인이미지제어</title>
 <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+<link rel="icon" type="image/png" href="resources/photo/로고2.png">
 <!-- ckeditor -->
 <script src="resources/ckeditor/ckeditor.js"></script>	
 
