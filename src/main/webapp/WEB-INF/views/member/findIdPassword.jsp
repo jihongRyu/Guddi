@@ -101,14 +101,10 @@
 var msg = "${msg}";
 
 if(msg != ""){
-	alert(msg+"님 임시 비밀번호를 발급하시겠습니까? 비밀번호가 변경되니 주의바랍니다.");
+	alert(msg);
 }	
 
-var msg = "${msg2}";
 
-if(msg != ""){
-	alert(msg2);
-}	
 
 
 function check_input() {

@@ -481,26 +481,6 @@ public class MemberController {
 		
 		//로그인 end yonghyeon 2022.01.15 수량 수정 END
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		//로그인페이지 findIdPassword 아이디/패스워드 찾기 START!!! -- > 임시비밀번호 유선화 2022.01.13
 		@RequestMapping(value = "/findIdPassword", method = RequestMethod.GET)
 		public String findidPassword(Model model) {		
@@ -535,24 +515,35 @@ public class MemberController {
 			logger.info(userId+"/"+email); 
 			String loginId = service.temppasslogin(userId,email);
 			logger.info("로그인 아이디 여부 : " +loginId);
-			String page = "redirect:/member/temppass";
-			String msg2 = "아이디와 이메일이 맞지 않습니다.";
+			logger.info("이메일 아이디 여부 : " +email);
+			String page = "redirect:/member/tempPass";
 			
-			if(loginId != null) { // 로그인이 되면 서비스에서 temppw로 업데이트 한 결과를 보낸다. 
-				String temppw = getRamdomPassword(10);
-				model.addAttribute("msg", loginId);
-				logger.info(temppw+"<--임시비번"); 
+			String msg = "아이디와 이메일을 확인해 주세요";
+			try {
+				if(loginId != null && email != null) { // 로그인이 되면 서비스에서 temppw로 업데이트 한 결과를 보낸다. 
+					String temppw = getRamdomPassword(10);
+					msg = "임시비밀번호로 변경 하시겠습니까?";
+					logger.info(temppw+"<--임시비번"); 
+					
+					service.temppassloginPw(userId,temppw);
+					
+					page = "redirect:/member/tempPass"; // 여기서임시비밀번호를 뿌려주는 페이지로 이동한다. 
+					
+					session.setAttribute("loginId", loginId);
+					
+				}else {
+					
+					page = "redirect:/findIdPassword";
+				}
 				
-				service.temppassloginPw(userId,temppw);
-				
-				page = "redirect:/member/tempPass"; // 여기서임시비밀번호를 뿌려주는 페이지로 이동한다. 
-			
-				session.setAttribute("loginId", loginId);
-		
-			}else {
-				page = "redirect:/member/";
-				model.addAttribute("msg2", msg2);
 			}
+			catch (Exception e){
+				logger.info("에러 발생");		
+					
+			}
+			
+			model.addAttribute("msg", msg);
+			
 			return page;
 		}
 		
