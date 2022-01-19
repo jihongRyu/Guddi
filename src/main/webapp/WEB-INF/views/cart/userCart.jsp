@@ -236,10 +236,7 @@
 <script>
 
 
- 
- // 배열 선언 여기에 이제 하나씩 넣을 것.
 
-	
 	
 function checkCall() {
 	 
