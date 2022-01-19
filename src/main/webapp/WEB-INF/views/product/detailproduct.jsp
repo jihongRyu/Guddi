@@ -102,7 +102,7 @@
 		<ul class="review_list">
 			<c:forEach items="${reviewlist}" var="review">
 				<li>
-					<div class="writer"> 작성자 : ${review.userId}</div>
+					<div class="writer"> 작성자 : <span class="reviewuser">${review.userId}</span> </div>
 					<div class="subject">
 						${review.subject}<br>
 						내용 : ${review.content}
@@ -116,7 +116,7 @@
 						</c:if>
 					</c:forEach>
 				</li>
-			<input type="button" class="reviewdelete" onclick="detailreviewdelete()" value="삭제">
+			<input type="button" onclick="detailreviewdelete('${review.idx}','${review.userId}')" value="삭제"/>
 			<!--  onclick="location.href='reviewdelete?idx=${review.idx}'"-->
 			</c:forEach>
 		</ul>
@@ -194,7 +194,40 @@
 </body>
 
 <script>
+var sessionuserId = "${sessionScope.userId}";
 
+function detailreviewdelete(reviewidx,writer){
+	
+	var idx = reviewidx;
+	console.log(idx,writer);
+	
+	if (sessionuserId == writer) {
+		
+		if (confirm("해당 리뷰를 삭제하시겠습니까?")) {
+			$.ajax({
+				type:'GET',
+				url:'reviewdelete',
+				data:{'idx':idx},
+				datatype:'JSON',
+				success:function(data){
+					console.log(data);
+					if (data.success == 1) {
+						alert('삭제가 완료되었습니다.');
+						window.location.reload();
+					}
+				},
+				error:function(e){
+					console.log(e);
+					alert('서버에 문제가 생겼습니다.고객센터에 문의해주세요.');
+				}
+			});
+		}
+		
+		
+	}else if(sessionuserId != writer){
+		alert('작성한 사람만 삭제할수 있습니다. ');
+	}
+}	
 
 function reviewupdate(idx, userId){
 	
@@ -221,9 +254,11 @@ function reviewupdate(idx, userId){
 				datatype:'JSON',
 				success:function(data){
 					console.log(data);
-					if (data.success == 1) {
+					
+					if (data.success > 0) {
 						alert('리뷰등록이 완료되었습니다.');				
-					}else if(data.success == 0){
+					}
+					if(data.success < 1){
 						alert('구매회원만 리뷰등록이 가능합니다.');	
 					}
 				},
@@ -284,7 +319,7 @@ $(".cart-btn").click(function(){
 						if (confirm("장바구니로 이동하시겠습니까?")) {
 							location.href="cart";
 						}else{
-							location.href="detail";
+							window.location.reload();
 						}
 					}
 				
