@@ -194,8 +194,7 @@ function enterkey() {
          DoSearch();
     }
 };
-
-function DoSearch() {    
+function DoSearch() {
 	 
 	  let keyword = $("#keyword").val();
 	  let phone = $("#phone").val();
