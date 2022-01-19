@@ -85,7 +85,6 @@
 			<li class="nav-item"><a href="toLogin" class="nav-link">리뷰내역</a></li>
 			<li class="nav-item"><a href="toLogin" class="nav-link">주문정보</a></li>
 			<li class="nav-item"><a href="memberList?num=1&mem_flg=3" class="nav-link">회원목록</a></li>
-			<li class="nav-item"><a href="toLogin" class="nav-link">배너이미지/카테고리관리</a></li>
 			<li class="nav-item dropdown">
 		      <a class="nav-link dropdown-toggle" href="javascript:void(0);" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">기타</a>
 	          <div class="dropdown-menu" aria-labelledby="dropdown04">	         
