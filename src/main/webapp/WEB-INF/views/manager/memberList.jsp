@@ -116,7 +116,9 @@
 						<th><c:forEach items="${marketingFlgList}" var="marketingFlgList">
 						<c:if test="${marketingFlgList.idx eq list.marketing_flg}">${marketingFlgList.marketingFlg_name}</c:if>							
 						</c:forEach></th>
-						<th>${list.delete_date}</th>  		           		     
+						<th>
+						<c:if test="${list.delete_date eq null }">null</c:if>${list.delete_date}
+						</th>  		           		     
 			       </tr>			    
 		       </c:forEach>   
 		                
@@ -183,6 +185,8 @@
 
 </body>
 <script>
+
+$("#memFlg option[value='0']").remove();
 
 
 function enterkey() {	
