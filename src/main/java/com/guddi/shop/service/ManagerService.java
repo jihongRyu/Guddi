@@ -539,16 +539,17 @@ public class ManagerService {
 		return dao.toUpdateQnaCategory();
 	}
 
-	public void addQna(int userIdxInt, String keyword) {
+	public void addQna(int userIdxInt, String keyword, int idxCountInt) {
 		logger.info("addQna 서비스 이동 userIdxInt {}", userIdxInt);
 		logger.info("addQna 서비스 이동 keyword {}", keyword);
-		dao.addQna(userIdxInt, keyword);
+		logger.info("addQna 서비스 이동 idxCountInt {}", idxCountInt);
+		dao.addQna(userIdxInt, keyword, idxCountInt);
 		
 	}
 
-	public void changUseFlg(int changUseFlgInt, String typename) {
+	public void changUseFlg(int changUseFlgInt, String typename, int userIdxInt) {
 		// TODO Auto-generated method stub
-		dao.changUseFlg(changUseFlgInt, typename);
+		dao.changUseFlg(changUseFlgInt, typename, userIdxInt);
 	}
 	//승혁님 문의타입 카테고리 제어관련 End
 }

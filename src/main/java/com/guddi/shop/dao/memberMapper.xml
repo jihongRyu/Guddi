@@ -234,7 +234,7 @@
 	</select>
 
 	<!-- findIdPassword 아이디/패스워드 찾기 xml START!!!-->
-	<select id="doFindMemberId" resultType="String">
+	<select id="doFindMemberId" resultType="com.guddi.shop.dto.MemberDto">
 		select userId from member where username=#{param1} and email = #{param2}
 	</select>
 	<select id="temppasslogin" resultType="String">

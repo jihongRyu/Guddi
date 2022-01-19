@@ -675,12 +675,15 @@ public class ManagerController {
 	
 	@RequestMapping(value = "/addQna", method = RequestMethod.GET)
 	@ResponseBody
-	public HashMap<String, Object> addQna(@RequestParam String userIdx, @RequestParam String keyword) {
+	public HashMap<String, Object> addQna(@RequestParam String userIdx, @RequestParam String keyword, @RequestParam String idxCount) {
 		logger.info("keyword : {}", keyword);
 		logger.info("userIdx : {}", userIdx);
+		logger.info("keyword : {}", idxCount);
 		int userIdxInt = Integer.parseInt(userIdx);
+		int idxCountInt = Integer.parseInt(idxCount);
 		logger.info("userIdxInt : {}", userIdxInt);
-		service.addQna(userIdxInt, keyword);
+		logger.info("idxCountInt : {}", idxCountInt);
+		service.addQna(userIdxInt, keyword, idxCountInt);
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		ArrayList<EtcDto> qnaList = service.toUpdateQnaCategory();
 		logger.info("qnaList 사이즈 {}", qnaList.size());
@@ -690,12 +693,15 @@ public class ManagerController {
 	
 	@RequestMapping(value = "/changUseFlg", method = RequestMethod.GET)
 	@ResponseBody
-	public HashMap<String, Object> changUseFlg(@RequestParam String changUseFlg, @RequestParam String typename) {
+	public HashMap<String, Object> changUseFlg(@RequestParam String changUseFlg, @RequestParam String typename, @RequestParam String userIdx) {
 		logger.info("changUseFlg : {}", changUseFlg);
 		logger.info("typename : {}", typename);
+		logger.info("userIdx : {}", userIdx);
 		int changUseFlgInt = Integer.parseInt(changUseFlg);
+		int userIdxInt = Integer.parseInt(userIdx);
+		logger.info("userIdxInt : {}", userIdxInt);
 		logger.info("userIdxInt : {}", changUseFlgInt);
-		service.changUseFlg(changUseFlgInt, typename);
+		service.changUseFlg(changUseFlgInt, typename, userIdxInt);
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		ArrayList<EtcDto> qnaList = service.toUpdateQnaCategory();
 		logger.info("qnaList 사이즈 {}", qnaList.size());
