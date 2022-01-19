@@ -1,9 +1,15 @@
 package com.guddi.shop.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import com.guddi.shop.dto.CartDto;
 import com.guddi.shop.dto.EtcDto;
+
 import com.guddi.shop.dto.MemberDto;
+
+import com.guddi.shop.dto.ListPageDto;
+
 import com.guddi.shop.dto.PageDto;
 import com.guddi.shop.dto.ProductDto;
 import com.guddi.shop.dto.ReviewQnaDto;
@@ -83,13 +89,64 @@ public interface ManagerDao {
 
 	int doDelAnswer(String userId, int a_idx);
 
-	
-	
-	//2022.01.15 유지홍 제품 삭제, 관리자 Qna 관련 소스 End
 
 	
+	//2022.01.15 유지홍 제품 삭제, 관리자 Qna 관련 소스 End
 	
 	
+	// 주문정보내역 리스트 orderInfoList yuSeonhwa 2022.01.17 START
+	ArrayList<CartDto> orderInfoList(PageDto dto);
+	
+	ArrayList<CartDto> Mybatispage(ListPageDto listPageDto);
+	
+	
+	
+	//listPageDto 얘를 MyBatispageNum MyBatisamount 로 어떻게 보낼지 
+	
+	int Mybatiscount();
+
+	List listPaging(int myBatispageNum, int endPage);
+
+	//ArrayList<CartDto> Mybatispage(int myBatispageNum, int myBatisamount);
+	
+	
+	
+	// 주문정보내역 리스트 orderInfoList yuSeonhwa 2022.01.17 END
+
+	// 리뷰 관련 Ryujihong 2022.01.17 Start
+	int reviewSearchCount(EtcDto dto);
+
+	ArrayList<ReviewQnaDto> reviewInfo(PageDto dto);
+
+	ArrayList<EtcDto> getbagCategoryList();
+
+	ArrayList<EtcDto> getbrandCategoryList();
+
+	ArrayList<EtcDto> getanswerList();
+
+	ReviewQnaDto getReviewDetail(int idx);
+
+	ReviewQnaDto getReviewAnswer(int idx);
+
+	int doReviewAnswer(ReviewQnaDto dto);
+
+	void doDelReviewAnswer(int a_idx);
+
+	void doUpdateReviewAnswer(ReviewQnaDto dto);
+
+	int orderListSearchCount(PageDto Page);
+
+	ArrayList<CartDto> orderList(PageDto dto);
+	
+	
+	// 리뷰 관련 Ryujihong 2022.01.17 End
+	//승혁님 문의타입 카테고리 제어관련 Start
+	ArrayList<EtcDto> toUpdateQnaCategory();
+
+	void addQna(int userIdxInt, String keyword);
+
+	void changUseFlg(int changUseFlgInt, String typename);
+	//승혁님 문의타입 카테고리 제어관련 End
 	
 
 

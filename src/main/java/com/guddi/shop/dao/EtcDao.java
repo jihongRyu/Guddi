@@ -3,6 +3,9 @@ package com.guddi.shop.dao;
 import java.util.ArrayList;
 
 import com.guddi.shop.dto.EtcDto;
+import com.guddi.shop.dto.MemberDto;
+import com.guddi.shop.dto.PageDto;
+import com.guddi.shop.dto.ReviewQnaDto;
 
 public interface EtcDao {
 	
@@ -17,7 +20,9 @@ public interface EtcDao {
 	int doUpateUseFlg(int use_flg, int idx);
 
 	ArrayList<EtcDto> getUseFlgInfo();
-
+	
+	ArrayList<EtcDto> getBrand();
+	
 	ArrayList<EtcDto> getSellFlgInfo();
 
 	int doRegistSellFlg(int newIdx, String sellname);
@@ -26,15 +31,39 @@ public interface EtcDao {
 
 	int doUpdateSellUseFlg(int use_flg, int idx);
 
+
 	int doUpdateMemFlg(int mem_flg, int idx);
 	
 	
 	
 	
 	
+
 	// 신상여부 카테고리 관련  유지홍 2022.01.17 End
 
-	
-	
+	// 메인이미지 제어  유지홍 2022.01.18 Start
+	ArrayList<EtcDto> getMainImageList();
 
+	ArrayList<MemberDto> getUserInfo();
+
+	int getMainImageIdx();
+
+	int doRegistMainImage(EtcDto pdto);
+
+	int getU_idx(String userId);
+
+	void delMainImage(int idx);
+
+	int doUpdateImageUseFlg(int use_flg, int idx);
+
+	void updateImageOrder(int idx, String string);
+	// 메인이미지 제어  유지홍 2022.01.18 End
+	//브랜드 카테고리 김도연 start 2022.01.17	
+	int getBrandIdx();
+
+	int doRegistBrand(int newidx, String name, String code);
+
+	int doUpdateBrandUse(int useflg, int brand_idx);
+	//브랜드 카테고리 김도연 End 2022.01.17	
+	
 }

@@ -81,15 +81,22 @@
      	<div class="col-md-12 ftco-animate">
      		<div class="cart-list">
      		<!-- 체크박스 전체 여부 -->
+
+				<div class="all_check_input_div">
+				
+
+
 				<div class="all_check_input_div" style="margin:10px;">
 					<!-- <input type="checkbox" id ="all" class="all_check_input input_size_20" checked="checked"><span class="all_chcek_span">전체선택</span> -->
 					
 					<input type="button" onclick = "del()" class="btn btn-primary" value="체크된 리스트 삭제" style="padding:10px;">
+
 				</div>
   				<table class="table">
   			    <thead class="thead-primary">
   			    
   			      <tr class="text-center">
+
   			        <th><input type="checkbox" id="cbx_chkAll" class="" checked="checked" /> 전체선택</th>
   			        <th>이미지</th>
   			        <th>제품명</th>
@@ -109,8 +116,10 @@
   			      <c:forEach items="${list}" var="list" varStatus="status">
   			      <tr class="text-center">
   			        <td class="cart_info_td">
+
   			        	<input type="checkbox" class="individual_cart_checkbox" name="chk" checked="checked" value="${list.product_code}"/>
 					 	<input type="hidden" class="individual_newFileName_input" value="${list.newFileName}">
+
   			        	<input type="hidden" class="individual_product_name_input" value="${list.product_name}">
   			        	<input type="hidden" class="individual_product_code_input" value="${list.product_code}">
   			       	 	<input type="hidden" class="individual_quantity_input" value="${list.quantity}">
@@ -150,7 +159,7 @@
   		  </div>
      	</div>
      </div>
-     <div class="row justify-content-end">
+     <div class="row col-lg-12 justify-content-end">
      	<c:if test="${fn:length(list)>0}"> 			      
      	<div class="col-lg-12 mt-5 cart-wrap ftco-animate">
      		<div class="cart-total mb-3">
@@ -170,12 +179,16 @@
      			</p>
      		</div>
      		<div class="text-center">
+
 				<div class="order_btn_each" id="checkCallForm">
+
 		     		<input type="hidden" value="${total}" name="checkoutPrice" id="checkoutPrice">
 		     		<input type="hidden" value="${sessionScope.userId}" name="userId" id="userId">
 		     		<input type="hidden" id="arrayParam" name="arrayParam"/>
 		     		<a href="./" class="btn btn-primary py-3 px-4">계속쇼핑하기</a> 
+
 		     		<a href="javascript:void(0);" class="btn btn-primary py-3 px-4"  onclick="checkCall()">결제하기</a>     
+
 				</div>
      		</div>
      	</div>
@@ -224,7 +237,6 @@
 
 
  
- 
  // 배열 선언 여기에 이제 하나씩 넣을 것.
 
 	
@@ -266,12 +278,12 @@ function checkCall() {
 
 /*test_check 요청 배열에 값 넘기기 test*/
 
-$("#toCheckoutButton").click(function(){
+/* $("#toCheckoutButton").click(function(){
 	if (confirm("결제화면으로 넘어가시겠습니까?")) {
 		document.toCheckout.submit(); 
 	}
 });
-
+ */
 
 /*
 // 결제하기 페이지로 이동 
@@ -333,6 +345,7 @@ $("#cbx_chkAll").on("change", function(){
 
 
 
+
 var delList = [];
 
 function del(){
@@ -372,9 +385,6 @@ function del(){
 	
 	
 }
-
-
-
 
 
 

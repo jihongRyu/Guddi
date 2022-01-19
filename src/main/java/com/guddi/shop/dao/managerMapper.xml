@@ -5,6 +5,7 @@
 
 <mapper namespace="com.guddi.shop.dao.ManagerDao">
 
+
 	<!-- 관리자 제품내역 관련 Ryujihong 2022.01.12 Start -->
 	<select id="getBrandcategory" resultType="com.guddi.shop.dto.EtcDto">
 		select brand_idx, brand_name, brand_code  from brand where use_flg = 1
@@ -178,4 +179,217 @@
  	</if>	
 	</select>
 
+
+	<!-- 주문정보내역 리스트 orderInfoList yuSeonhwa 2022.01.17 START  -->
+	
+	<!-- <select id="orderInfoList" resultType="com.guddi.shop.dto.CartDto">
+ 		SELECT idx,phone,u_idx,userId,username,email,zipcode,address,address_detail,product_name,product_code,price,quantity,regdate,order_num,totalPrice
+ 			FROM tb_order
+ 		select t.idx, pc.brand_name,t.product_name,t.product_code,t.regdate,t.quantity,t.totalPrice,t.username,t.phone,t.order_num
+			from product pc inner join tb_order t  
+			on pc.product_code = t.product_code
+	</select> -->
+	
+	<select id="orderInfoList" parameterType="com.guddi.shop.dto.PageDto" resultType="com.guddi.shop.dto.CartDto">
+ 		
+		SELECT *
+		FROM (
+		    SELECT @ROWNUM := @ROWNUM + 1 as rnum,t.idx,pc.brand_name,t.product_name,t.product_code,t.regdate,t.quantity,t.totalPrice,t.username,t.phone,t.order_num
+		    from product pc inner join tb_order t 
+		    on pc.product_code = t.product_code
+		    ,(SELECT @ROWNUM :=0) A
+		    ORDER BY rnum
+		    ) RESULT
+		LIMIT #{displayPost}, #{postNum}
+
+	</select>
+	
+	<!-- 게시물 총 갯수 -->
+	<select id="Mybatiscount" resultType="int">
+	 	select count(t.idx)
+			from product pc inner join tb_order t  
+			on pc.product_code = t.product_code
+	</select>
+	
+	
+	<!-- 주문정보내역 리스트 orderInfoList yuSeonhwa 2022.01.17 END  -->
+	<!-- 리뷰관련 Ryujihong 2022.01.18 Start  -->
+	<select id="reviewSearchCount" parameterType="com.guddi.shop.dto.EtcDto" resultType="int">
+		select count(*) 
+		from review r inner join product p
+		on r.b_idx = p.idx
+		where 1=1
+		<if test='answer_flg!=2'>
+	  	and r.answer_flg = #{answer_flg}
+	 	</if>	
+	 	<if test='keyword != null'>
+	  	and p.product_name LIKE concat('%', #{keyword}, '%')
+	 	</if>  	
+	 	<if test="brand_name != '전체'">
+	  	and p.brand_name LIKE concat('%', #{brand_name}, '%')
+	 	</if>  	
+	 	<if test='type_name != null'>
+	  	and p.bag_type LIKE concat('%', #{type_name}, '%')
+	 	</if>  	
+		
+	</select>
+	
+	<select id="reviewInfo" parameterType="com.guddi.shop.dto.PageDto" resultType="com.guddi.shop.dto.ReviewQnaDto">
+		select r.idx, p.brand_name, p.bag_type, p.product_name, r.b_idx, r.u_idx, r.subject, r.content, r.userId,
+		r.regdate, r.del_flg, r.answer_flg
+		from review r inner join product p
+		on r.b_idx = p.idx
+		where r.del_flg=0
+		<if test='answer_flg!=2'>
+	  	and r.answer_flg = #{answer_flg}
+	 	</if>	
+	 	<if test='keyword != null'>
+	  	and p.product_name LIKE concat('%', #{keyword}, '%')
+	 	</if>  	
+	 	<if test="brand_name != '전체'">
+	  	and p.brand_name LIKE concat('%', #{brand_name}, '%')
+	 	</if>  	
+	 	<if test='bag_name != null'>
+	  	and p.bag_type LIKE concat('%', #{bag_name}, '%')
+	 	</if>  	
+	 	order by idx desc
+	 	limit #{displayPost}, #{postNum}
+		
+	</select>
+	
+	<select id="getbrandCategoryList" resultType="com.guddi.shop.dto.EtcDto">
+	select brand_idx, use_flg, brand_name from brand
+	where use_flg =1
+	</select>
+	
+	<select id="getbagCategoryList" resultType="com.guddi.shop.dto.EtcDto">
+	select type_idx, use_flg, type_name from bagtype
+	where use_flg =1
+	</select>
+	
+	<select id="getanswerList" resultType="com.guddi.shop.dto.EtcDto">
+	select idx, use_flg, answername from answertype
+	where use_flg =1
+	order by idx desc
+	</select>
+	
+	<select id="getReviewDetail" resultType="com.guddi.shop.dto.ReviewQnaDto">
+	select idx, subject, content, userId, del_flg, answer_flg
+	from review where idx = #{idx}
+	and del_flg = 0
+	</select>
+	
+	<select id="getReviewAnswer"  resultType="com.guddi.shop.dto.ReviewQnaDto">
+	select idx,  content, managerId, del_flg
+	from review_answer where r_idx = #{idx}
+	and del_flg = 0
+	</select>
+	
+	<insert id="doReviewAnswer">
+		insert into review_answer (r_idx, content, managerId, regdate, del_flg) values 
+		(#{r_idx},#{content},#{managerId},#{regdate}, 0)
+	</insert>
+	
+	<update id="doDelReviewAnswer">
+		update review_answer set del_flg = 1 where idx = #{a_idx}
+	</update>
+	
+	<update id="doUpdateReviewAnswer" parameterType="com.guddi.shop.dto.ReviewQnaDto">
+		update review_answer set content = #{content} where idx = #{idx}
+	</update>
+	<!-- 리뷰관련 Ryujihong 2022.01.18 End  -->
+	
+	<!-- 주문정보 관련 Ryujihong 2022.01.18 Start  -->
+	<select id="orderListSearchCount" parameterType="com.guddi.shop.dto.PageDto" resultType="int">
+		select count(*) 
+		from tb_order o
+		inner join product p 
+		on p.product_code = o.product_code
+		where 1=1
+		<if test="keyword !=null">
+			<if test="searchType.equals('phone')">
+			and o.phone LIKE concat('%', #{keyword}, '%')
+			</if>
+			<if test="searchType.equals('brand')">
+			and p.brand_name LIKE concat('%', #{keyword}, '%')
+			</if>
+			<if test="searchType.equals('bagType')">
+			and p.bag_type LIKE concat('%', #{keyword}, '%')
+			</if>
+			<if test="searchType.equals('userId')">
+			and o.userId LIKE concat('%', #{keyword}, '%')
+			</if>
+			<if test="searchType.equals('userName')">
+			and o.username LIKE concat('%', #{keyword}, '%')
+			</if>
+			<if test="searchType.equals('orderNum')">
+			and o.order_num LIKE concat('%', #{keyword}, '%')
+			</if>
+			<if test="searchType.equals('all')">
+			and o.phone LIKE concat('%', #{keyword}, '%')
+  			or p.brand_name LIKE concat('%', #{keyword}, '%')
+  			or p.bag_type LIKE concat('%', #{keyword}, '%')
+  			or o.userId LIKE concat('%', #{keyword}, '%')
+  			or o.username LIKE concat('%', #{keyword}, '%')
+  			or o.order_num LIKE concat('%', #{keyword}, '%')
+			</if>
+		</if>
+	
+	</select>
+	<select id="orderList" parameterType="com.guddi.shop.dto.PageDto" resultType="com.guddi.shop.dto.CartDto">
+	select o.idx, o.order_num ,o.product_code, p.brand_name, p.bag_type, o.userId, o.username, 
+	o.regdate, o.quantity, o.phone ,o.product_name, o.totalPrice
+	from tb_order o inner join product p 
+	on p.product_code = o.product_code
+	where 1=1
+		<if test="keyword !=null">
+			<if test="searchType.equals('phone')">
+			and o.phone LIKE concat('%', #{keyword}, '%')
+			</if>
+			<if test="searchType.equals('brand')">
+			and p.brand_name LIKE concat('%', #{keyword}, '%')
+			</if>
+			<if test="searchType.equals('bagType')">
+			and p.bag_type LIKE concat('%', #{keyword}, '%')
+			</if>
+			<if test="searchType.equals('userId')">
+			and o.userId LIKE concat('%', #{keyword}, '%')
+			</if>
+			<if test="searchType.equals('userName')">
+			and o.username LIKE concat('%', #{keyword}, '%')
+			</if>
+			<if test="searchType.equals('orderNum')">
+			and o.order_num LIKE concat('%', #{keyword}, '%')
+			</if>
+			<if test="searchType.equals('all')">
+			and o.phone LIKE concat('%', #{keyword}, '%')
+  			or p.brand_name LIKE concat('%', #{keyword}, '%')
+  			or p.bag_type LIKE concat('%', #{keyword}, '%')
+  			or o.userId LIKE concat('%', #{keyword}, '%')
+  			or o.username LIKE concat('%', #{keyword}, '%')
+  			or o.order_num LIKE concat('%', #{keyword}, '%')
+			</if>
+		</if>
+		order by o.regdate desc
+	 	limit #{displayPost}, #{postNum}
+		
+	</select>
+	
+	
+	<!-- 주문정보 관련 Ryujihong 2022.01.18 End  -->
+	
+	<select id="toUpdateQnaCategory" resultType="com.guddi.shop.dto.EtcDto">
+		select idx, typename, use_flg from qnatype
+	</select>
+	<!-- 승혁님 문의타입 카테고리 제어관련  Start  -->
+	<insert id="addQna">
+		insert into qnatype(u_idx, typename, use_flg)
+			values(#{param1}, #{param2}, 1)
+	</insert>
+	
+	<update id="changUseFlg">
+		update qnatype set use_flg = #{param1} where typename = #{param2}
+	</update>
+	<!-- 승혁님 문의타입 카테고리 제어관련  End  -->
 </mapper>
+

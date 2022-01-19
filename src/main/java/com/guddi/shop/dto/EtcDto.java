@@ -35,7 +35,14 @@ public class EtcDto {
 	private String memFlg_name;
 	private String marketingFlg_name;
 	private String mam_flg;
+	private String oriFileName;
 	private String useFlg_name;
+	private int u_idx;
+	private String userId;
+	private String keyword;
+	private int answer_flg;
+	private String  typename;
+	
 	
 	public String getMam_flg() {
 		return mam_flg;
@@ -117,9 +124,12 @@ public class EtcDto {
 	public void setSellname(String sellname) {
 		this.sellname = sellname;
 	}
-	
-	
-	
+	public String getOriFileName() {
+		return oriFileName;
+	}
+	public void setOriFileName(String oriFileName) {
+		this.oriFileName = oriFileName;
+	}
 	public String getNewname() {
 		return newname;
 	}
@@ -143,6 +153,36 @@ public class EtcDto {
 	}
 	public void setUseFlg_name(String useFlg_name) {
 		this.useFlg_name = useFlg_name;
+	}
+	public int getU_idx() {
+		return u_idx;
+	}
+	public void setU_idx(int u_idx) {
+		this.u_idx = u_idx;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	public String getKeyword() {
+		return keyword;
+	}
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+	public int getAnswer_flg() {
+		return answer_flg;
+	}
+	public void setAnswer_flg(int answer_flg) {
+		this.answer_flg = answer_flg;
+	}
+	public String getTypename() {
+		return typename;
+	}
+	public void setTypename(String typename) {
+		this.typename = typename;
 	}
 	
 	

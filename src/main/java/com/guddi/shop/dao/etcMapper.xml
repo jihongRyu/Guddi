@@ -45,11 +45,66 @@
 	<update id="doUpdateSellUseFlg">
 		update sellflg set use_flg=#{param1} where idx = #{param2}
 	</update>
+
 	
 	<update id="doUpdateMemFlg">
 		update member set mem_flg=#{param1} where idx = #{param2}
 	</update>
-	
+
 	<!-- 신상여부 카테고리 관련  유지홍 2022.01.17 End -->
+	
+	<!-- 배너이미지 관련  유지홍 2022.01.18 Start -->	
+	<select id="getMainImageList" resultType="com.guddi.shop.dto.EtcDto">
+		select idx,u_idx, newFileName, oriFileName, use_flg, regdate from mainimage
+		order by idx asc
+	</select>
+	
+	<select id="getUserInfo" resultType="com.guddi.shop.dto.MemberDto">
+		select idx, userId from member
+	</select>
+	
+	<select id="getMainImageIdx" resultType="int">
+		select count(*) from mainimage
+	</select>
+	
+	<insert id="doRegistMainImage" parameterType="com.guddi.shop.dto.EtcDto">
+		insert into mainimage (idx, u_idx, newFileName, oriFileName, use_flg) 
+		values (#{idx},#{u_idx},#{newFileName},#{oriFileName},1)
+	</insert>
+	
+	<select id="getU_idx" resultType="int">
+		select idx from member where userId = #{param1}
+	</select>
+	
+	<delete id="delMainImage">
+		delete from mainimage where idx = #{idx}
+	</delete>
+	
+	<update id="doUpdateImageUseFlg">
+		update mainImage set use_flg=#{param1} where idx = #{param2}
+	</update>
+	
+	<update id="updateImageOrder">
+		update mainimage set idx = #{param1} where newFileName = #{param2}
+	</update>
+	<!-- 배너이미지 관련  유지홍 2022.01.18 End -->
+	<!-- 브랜드 카테고리 관리 김도연 start 2022.01.17 -->
+	<select id="getBrand" resultType="com.guddi.shop.dto.EtcDto">
+		SELECT brand_idx, use_flg, regdate, brand_name, brand_code FROM brand
+	</select>
+	
+	<select id="getBrandIdx" resultType="int">
+		SELECT brand_idx FROM brand order by brand_idx desc limit 1
+	</select>
+
+	<insert id="doRegistBrand">
+		INSERT INTO brand (brand_idx,use_flg,brand_name,brand_code)
+			VALUES (#{param1}, 1,#{param2}, #{param3})
+	</insert>
+	
+	<update id="doUpdateBrandUse">
+		UPDATE brand SET use_flg=#{param1} where brand_idx =#{param2}
+	</update>
+	<!-- 브랜드 카테고리 관리 김도연 end 2022.01.17 -->
 
 </mapper>

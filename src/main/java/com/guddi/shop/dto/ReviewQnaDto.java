@@ -30,6 +30,7 @@ public class ReviewQnaDto {
 	private int idx;
 	private int b_idx;
 	private int u_idx;
+	private int r_idx;
 	private String subject;
 	private String content;
 	private String userId;
@@ -42,8 +43,10 @@ public class ReviewQnaDto {
 	private String typename;
 	private int use_flg;
 	private String answername;
+	private String brand_name;
+	private String bag_type;
 	
-	
+
 	public String getManagerId() {
 		return managerId;
 	}
@@ -133,6 +136,24 @@ public class ReviewQnaDto {
 	}
 	public void setAnswername(String answername) {
 		this.answername = answername;
+	}
+	public String getBrand_name() {
+		return brand_name;
+	}
+	public void setBrand_name(String brand_name) {
+		this.brand_name = brand_name;
+	}
+	public String getBag_type() {
+		return bag_type;
+	}
+	public void setBag_type(String bag_type) {
+		this.bag_type = bag_type;
+	}
+	public int getR_idx() {
+		return r_idx;
+	}
+	public void setR_idx(int r_idx) {
+		this.r_idx = r_idx;
 	}
 	
 	

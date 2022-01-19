@@ -16,13 +16,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.guddi.shop.dto.CartDto;
 import com.guddi.shop.dto.EtcDto;
 import com.guddi.shop.dto.MemberDto;
 import com.guddi.shop.dto.PageDto;
@@ -271,8 +271,9 @@ public class ManagerController {
 	
 		return "redirect:/productMain?num=1&brand_idx=0";
 	}
-	
 	//2022.01.14 유지홍 제품 등록 관련 소스 End
+	
+	
 	//2022.01.15 유지홍 제품 삭제 관련 소스 Start
 	@RequestMapping(value = "/delProduct")
 	@ResponseBody
@@ -403,11 +404,6 @@ public class ManagerController {
 	//2022.01.15 유지홍 관리자 Qna관련 소스 End
 	
 	
-	
-	
-	
-	
-	
 	//각종  카테고리 정보를 가져오는 메서드 Start ryujihong 2022.01.12
 	public void getCategory(HttpSession session){
 		
@@ -417,7 +413,7 @@ public class ManagerController {
 		ArrayList<EtcDto> sellflg = service.getSellflg();
 		ArrayList<EtcDto> answertype = service.getAnswertype();
 		ArrayList<EtcDto> newflg = service.getNewflg();
-				
+		
 		session.setAttribute("newflg", newflg);
 		session.setAttribute("brandcategory", brandcategory);
 		session.setAttribute("bagtype", bagtype);
@@ -428,6 +424,7 @@ public class ManagerController {
 	//각종  카테고리 정보를 가져오는 메서드 End ryujihong 2022.01.11
 	
 	
+
 	
 	//회원목록 확인 및 수정 Start yonghyeon 2022.01.17
 	
@@ -491,5 +488,253 @@ public class ManagerController {
 
 		return "manager/memberList";
 	}
+
+	// 주문정보내역 리스트 orderInfoList yuSeonhwa and Ryujihong 2022.01.17 START
+	
+	@RequestMapping(value = "/orderInfoList", method = RequestMethod.GET)
+	public String orderInfoList(Model model, HttpSession session, @RequestParam("num") int num,  
+			@RequestParam(value="searchType",required=false,defaultValue = "0") String searchType,
+			@RequestParam(value="keyword",required=false,defaultValue="")String keyword) {	
+		
+		
+		PageDto Page = new PageDto();
+		
+		Page.setNum(num);
+		Page.setKeyword(keyword);
+		Page.setSearchType(searchType);
+		
+		Page.setCount(service.orderListSearchCount(Page));	
+		
+		logger.info("Page.getCount() : {}",Page.getCount());
+		
+		ArrayList<CartDto> orderList = 
+				service.orderList(Page.getDisplayPost(), Page.getPostNum(), keyword, searchType);
+				
+		model.addAttribute("orderList", orderList); //리스트 보내기
+		model.addAttribute("page", Page); //페이징처리
+		model.addAttribute("select", num);//페이징처리		  
+		model.addAttribute("keyword", keyword); 
+		model.addAttribute("searchType", searchType); 
+		
+		
+		return "manager/orderInfoList";
+	}
+	// 주문정보내역 페이징 
+	
+	
+	
+	
+	
+	
+	// 주문정보내역 리스트 orderInfoList yuSeonhwa 2022.01.17 END
+	
+	// 리뷰 관련 Ryujihong 2022.01.17 Start
+	@RequestMapping(value = "/toReviewPage", method = RequestMethod.GET)
+	public String toReviewPage(Model model, @RequestParam("num") int num, @RequestParam("answer_flg") int answer_flg, 
+			@RequestParam(value="brandName",required=false,defaultValue = "") String brandName, 
+			@RequestParam(value="bagName",required=false,defaultValue = "") String bagName, 
+			@RequestParam(value="keyword",required=false,defaultValue="")String keyword) {
+		
+		logger.info("qnaPage 요청");		
+		PageDto reviewPage = new PageDto();
+		
+		reviewPage.setNum(num);
+		reviewPage.setCount(service.reviewSearchCount(keyword, answer_flg, brandName, bagName));				
+		reviewPage.setKeyword(keyword);
+		
+		logger.info("review.getCount() : {}",reviewPage.getCount());
+		
+		ArrayList<ReviewQnaDto> reviewList = 
+				service.reviewInfo(reviewPage.getDisplayPost(), reviewPage.getPostNum(), keyword, answer_flg, brandName, bagName);
+		ArrayList<EtcDto> brandCategoryList = service.getbrandCategoryList();
+		ArrayList<EtcDto> answerList = service.getanswerList();
+		ArrayList<EtcDto> bagCategoryList = service.getbagCategoryList();
+	
+		model.addAttribute("reviewList", reviewList); //리스트 보내기
+		model.addAttribute("reviewPage", reviewPage); //페이징처리
+		model.addAttribute("select", num);//페이징처리		  
+		model.addAttribute("keyword", keyword); //검색어
+		model.addAttribute("answer_flg", answer_flg); //검색어
+		model.addAttribute("brandName", brandName); //검색어
+		model.addAttribute("bagName", bagName); //검색어
+		model.addAttribute("answerList", answerList); //답변여부정보
+		model.addAttribute("bagCategoryList", bagCategoryList); 
+		model.addAttribute("brandCategoryList", brandCategoryList); 
+	
+		return "etc/reviewPage";
+	}
+	
+	@RequestMapping(value = "/toReviewDetail", method = RequestMethod.GET)
+	public String toReviewDetail(Model model, @RequestParam int idx, @RequestParam String product_name) {
+		logger.info("toReviewDetail 요청");
+		
+		ReviewQnaDto dto = service.getReviewDetail(idx);
+		ReviewQnaDto answer = service.getReviewAnswer(idx);
+		
+		model.addAttribute("product_name", product_name);
+		model.addAttribute("review", dto);
+		model.addAttribute("answer", answer);
+		
+		return "etc/managerReviewDetail";
+	}
+	@RequestMapping(value = "/doReviewAnswer", method = RequestMethod.POST)
+	public String doReviewAnswer(Model model, HttpSession session,
+			@RequestParam int idx, @RequestParam String answer, @RequestParam String product_name) {
+		logger.info("toReviewDetail 요청");
+		
+		String managerId = (String) session.getAttribute("userId");
+		ReviewQnaDto dto = new ReviewQnaDto();
+		dto.setR_idx(idx);
+		dto.setContent(answer);
+		dto.setManagerId(managerId);
+		
+		int result = service.doReviewAnswer(dto);
+		
+		ReviewQnaDto review = service.getReviewDetail(idx);
+		ReviewQnaDto reviewAnswer = service.getReviewAnswer(idx);
+			
+		model.addAttribute("product_name", product_name);
+		model.addAttribute("review", review);
+		model.addAttribute("answer", reviewAnswer);		
+		
+		return "etc/managerReviewDetail";
+	}
+	
+	@RequestMapping(value = "/doDelReviewAnswer", method = RequestMethod.GET)
+	public String doDelReviewAnswer(Model model, @RequestParam int a_idx, @RequestParam int r_idx,@RequestParam String product_name) {
+		logger.info("doDelReviewAnswer 요청");
+		
+		service.doDelReviewAnswer(a_idx);
+		
+		ReviewQnaDto review = service.getReviewDetail(r_idx);
+		ReviewQnaDto reviewAnswer = service.getReviewAnswer(r_idx);
+			
+		model.addAttribute("product_name", product_name);
+		model.addAttribute("review", review);
+		model.addAttribute("answer", reviewAnswer);	
+		
+		
+		return "etc/managerReviewDetail";
+	}
+	@RequestMapping(value = "/updateReviewAnswer", method = RequestMethod.GET)
+	public String updateReviewAnswer(Model model, @RequestParam int r_idx, 
+			@RequestParam int a_idx, @RequestParam String product_name) {
+		logger.info("updateReviewAnswer 요청");
+		
+		ReviewQnaDto review = service.getReviewDetail(r_idx);
+		ReviewQnaDto reviewAnswer = service.getReviewAnswer(r_idx);
+			
+		model.addAttribute("product_name", product_name);
+		model.addAttribute("review", review);
+		model.addAttribute("answer", reviewAnswer);
+		
+		return "etc/updateReviewAnswer";
+	}
+	
+	@RequestMapping(value = "/doUpdateReviewAnswer", method = RequestMethod.POST)
+	public String doUpdateReviewAnswer(Model model, HttpSession session,
+			@RequestParam int idx, @RequestParam int a_idx, @RequestParam String answer, @RequestParam String product_name) {
+		logger.info("doUpdateReviewAnswer 요청");
+	
+		ReviewQnaDto dto = new ReviewQnaDto();
+		dto.setIdx(a_idx);
+		dto.setContent(answer);
+		
+		logger.info("dto.getContent():{}", dto.getContent());
+		logger.info("dto.getIdx():{}", dto.getIdx());
+			
+		service.doUpdateReviewAnswer(dto);
+		
+		ReviewQnaDto review = service.getReviewDetail(idx);
+		ReviewQnaDto reviewAnswer = service.getReviewAnswer(idx);
+			
+		model.addAttribute("product_name", product_name);
+		model.addAttribute("review", review);
+		model.addAttribute("answer", reviewAnswer);		
+		
+		return "etc/managerReviewDetail";
+	}
+	
+	// 리뷰 관련 Ryujihong 2022.01.17 End
+	
+	
+	//승혁님 문의타입 카테고리 제어관련 Start
+	@RequestMapping(value = "/toUpdateQnaCategory", method = RequestMethod.GET)
+	public String toUpdateQnaCategory(Model model, HttpSession session, @RequestParam String userIdx) {
+		logger.info("userIdx {}", userIdx);
+		logger.info("toUpdateQnaCategory 이동");		
+		ArrayList<EtcDto> qnaList = service.toUpdateQnaCategory();
+		model.addAttribute("qnaList", qnaList);
+		model.addAttribute("userIdx", userIdx);
+		for(EtcDto dto : qnaList) {
+			logger.info("타입명 : {}",dto.getTypename());
+			//logger.info("타입명 : {}",dto.getType_name());
+		}
+		return "etc/toUpdateQnaCategory";
+	}
+	
+	@RequestMapping(value = "/addQna", method = RequestMethod.GET)
+	@ResponseBody
+	public HashMap<String, Object> addQna(@RequestParam String userIdx, @RequestParam String keyword) {
+		logger.info("keyword : {}", keyword);
+		logger.info("userIdx : {}", userIdx);
+		int userIdxInt = Integer.parseInt(userIdx);
+		logger.info("userIdxInt : {}", userIdxInt);
+		service.addQna(userIdxInt, keyword);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<EtcDto> qnaList = service.toUpdateQnaCategory();
+		logger.info("qnaList 사이즈 {}", qnaList.size());
+		map.put("qnaList", qnaList);
+		return map;
+	}
+	
+	@RequestMapping(value = "/changUseFlg", method = RequestMethod.GET)
+	@ResponseBody
+	public HashMap<String, Object> changUseFlg(@RequestParam String changUseFlg, @RequestParam String typename) {
+		logger.info("changUseFlg : {}", changUseFlg);
+		logger.info("typename : {}", typename);
+		int changUseFlgInt = Integer.parseInt(changUseFlg);
+		logger.info("userIdxInt : {}", changUseFlgInt);
+		service.changUseFlg(changUseFlgInt, typename);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<EtcDto> qnaList = service.toUpdateQnaCategory();
+		logger.info("qnaList 사이즈 {}", qnaList.size());
+		map.put("qnaList", qnaList);
+		return map;
+	}
+
+	//승혁님 문의타입 카테고리 제어관련 End
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
 
 }

@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
@@ -17,10 +18,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.guddi.shop.dao.ManagerDao;
+import com.guddi.shop.dto.CartDto;
 import com.guddi.shop.dto.EtcDto;
 import com.guddi.shop.dto.MemberDto;
+import com.guddi.shop.dto.ListPageDto;
 import com.guddi.shop.dto.PageDto;
 import com.guddi.shop.dto.ProductDto;
+import com.guddi.shop.dto.ReviewQnaDto;
 
 @Service
 public class ManagerService {
@@ -327,7 +331,6 @@ public class ManagerService {
 	}
 
 	public void doUpdateAnswer(String content, String userId,int q_idx) {
-		// TODO Auto-generated method stub
 		dao.doUpdateAnswer(content, userId, q_idx);
 	}
 
@@ -377,5 +380,175 @@ public class ManagerService {
 
 	
 
+
 	//2022.01.15 유지홍 제품 삭제, 관리자 Qna 관련 소스 End
+	
+	
+	
+	
+	// 주문정보내역 리스트 orderInfoList yuSeonhwa 2022.01.17 START
+//	
+//	public ArrayList<CartDto> orderInfoList(int displayPost, int postNum) {
+//		logger.info("Mybatispage service");
+//		PageDto dto = new PageDto();
+//		dto.setPostNum(postNum);
+//		dto.setDisplayPost(displayPost);
+//		return dao.orderInfoList(dto);
+//	}
+//
+//	public int Mybatiscount() {
+//		return dao.Mybatiscount();
+//	}
+//
+//	@RequestMapping(value = "/orderInfoList", method = RequestMethod.GET)
+//	public String orderInfoList(Model model,@RequestParam("num") int num) {	
+//		logger.info("orderInfoList 요청");		
+//		CartDto cartDto = new CartDto(); 
+//		ListPageDto listPageDto = new ListPageDto(); 
+//		
+//		ArrayList<CartDto> orderInfoList = service.orderInfoList();
+//		model.addAttribute("orderInfoList", orderInfoList);
+//		
+//		//listPageDto.setMyBatispageNum(10);
+//		
+//		//페이지 번호를 추가 하면 
+//		logger.info("Mybatispage Controller : "+listPageDto);
+//		
+//		logger.info("Mybatispage Controller getMyBatisamount : "+listPageDto.getMyBatispageNum());
+//		// 페이지의 전체 갯수 총 갯수 
+//		int Mybatiscount = service.Mybatiscount();
+//		model.addAttribute("Mybatiscount", Mybatiscount);   
+//		logger.info("Mybatispage Controller Mybatiscount: "+Mybatiscount);
+//		// 한페이지에 출력할 갯수 
+//	
+//		int amount = 10;
+//		//하단 페이징 번호 ([게시물 총 갯수 / 한페이지에 출력할 갯수]) 의 올림 
+//		int endPage = (int)(Math.ceil((double)Mybatiscount/amount));
+//		
+//		//출력할 게시물
+//		int MyBatispageNum =((num) -1) * amount;
+//		
+//		
+//		listPageDto.setMyBatispageNum(MyBatispageNum);
+//		listPageDto.setMyBatisamount(10);
+//		ArrayList<CartDto> listpagedto = service.Mybatispage(listPageDto); // 넘겨 
+//		
+//		
+//		List<CartDto> list = service.listPaging(MyBatispageNum, endPage);
+//		 
+//		 
+//		model.addAttribute("listpagedto", listpagedto);
+//		model.addAttribute("endPage", endPage);
+//		
+//		
+//		return "manager/orderInfoList";
+//	}
+//
+//
+	// 주문정보내역 리스트 orderInfoList yuSeonhwa 2022.01.17 END
+	// 리뷰 관련 Ryujihong 2022.01.17 Start
+	public int reviewSearchCount(String keyword, int answer_flg, String brandName, String bagName) {
+		// TODO Auto-generated method stub
+		EtcDto dto = new EtcDto();
+		dto.setKeyword(keyword);
+		dto.setAnswer_flg(answer_flg);
+		dto.setBrand_name(brandName);
+		dto.setType_name(bagName);
+		
+		return dao.reviewSearchCount(dto);
+	}
+
+	public ArrayList<ReviewQnaDto> reviewInfo(int displayPost, int postNum, String keyword, int answer_flg,
+			String brandName, String bagName) {
+		// TODO Auto-generated method stub
+		PageDto dto = new PageDto();
+		dto.setDisplayPost(displayPost);
+		dto.setPostNum(postNum);
+		dto.setKeyword(keyword);
+		dto.setAnswer_flg(answer_flg);
+		dto.setBrand_name(brandName);
+		dto.setBag_name(bagName);
+		return dao.reviewInfo(dto);
+	}
+
+	public ArrayList<EtcDto> getbagCategoryList() {
+		// TODO Auto-generated method stub
+		return dao.getbagCategoryList();
+	}
+
+	public ArrayList<EtcDto> getbrandCategoryList() {
+		// TODO Auto-generated method stub
+		return dao.getbrandCategoryList();
+	}
+
+	public ArrayList<EtcDto> getanswerList() {
+		// TODO Auto-generated method stub
+		return dao.getanswerList();
+	}
+
+	public ReviewQnaDto getReviewDetail(int idx) {
+		// TODO Auto-generated method stub
+		return dao.getReviewDetail(idx);
+	}
+
+	public ReviewQnaDto getReviewAnswer(int idx) {
+		// TODO Auto-generated method stub
+		return dao.getReviewAnswer(idx);
+	}
+
+	public int doReviewAnswer(ReviewQnaDto dto) {
+		// TODO Auto-generated method stub
+		return dao.doReviewAnswer(dto);
+	}
+
+	public void doDelReviewAnswer(int a_idx) {
+		// TODO Auto-generated method stub
+		dao.doDelReviewAnswer(a_idx);
+	}
+
+	public void doUpdateReviewAnswer(ReviewQnaDto dto) {
+		// TODO Auto-generated method stub
+		dao.doUpdateReviewAnswer(dto);
+	}
+	// 리뷰 관련 Ryujihong 2022.01.17 End
+
+	// 주문정보내역 리스트 orderInfoList 유지홍 2022.01.18 START
+	public int orderListSearchCount(PageDto Page) {
+		// TODO Auto-generated method stub
+		return dao.orderListSearchCount(Page);
+	}
+
+	public ArrayList<CartDto> orderList(int displayPost, int postNum, String keyword, String searchType) {
+		// TODO Auto-generated method stub
+		PageDto dto = new PageDto();
+		dto.setDisplayPost(displayPost);
+		dto.setPostNum(postNum);
+		dto.setKeyword(keyword);
+		dto.setSearchType(searchType);
+		
+		return dao.orderList(dto);
+	}
+	
+	
+	// 주문정보내역 리스트 orderInfoList 유지홍 2022.01.18 End
+	//승혁님 문의타입 카테고리 제어관련 Start
+
+	public ArrayList<EtcDto> toUpdateQnaCategory() {
+		// TODO Auto-generated method stub
+		logger.info("toUpdateQnaCategory 이동");
+		return dao.toUpdateQnaCategory();
+	}
+
+	public void addQna(int userIdxInt, String keyword) {
+		logger.info("addQna 서비스 이동 userIdxInt {}", userIdxInt);
+		logger.info("addQna 서비스 이동 keyword {}", keyword);
+		dao.addQna(userIdxInt, keyword);
+		
+	}
+
+	public void changUseFlg(int changUseFlgInt, String typename) {
+		// TODO Auto-generated method stub
+		dao.changUseFlg(changUseFlgInt, typename);
+	}
+	//승혁님 문의타입 카테고리 제어관련 End
 }
