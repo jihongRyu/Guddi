@@ -108,10 +108,25 @@
 			<c:forEach items="${reviewlist}" var="review">
 				<li>
 					<div class="writer"> 작성자 : ${review.userId}</div>
-					<div class="subject">${review.subject}<span class="date">${review.regdate}</span></div>
-					<div class="con">
-						${review.content}
+					<div class="subject">
+						${review.subject}<br>
+						내용 : ${review.content}
+						<span class="date">${review.regdate}</span>
 					</div>
+					<c:forEach items="${answerList}" var="answer">
+						<c:if test="${answer.r_idx ne review.idx}">
+							<div class="con">
+								  ㄴ해당 리뷰의 답변이 존재하지 않습니다.
+							</div>
+						</c:if>
+						<c:if test="${answer.r_idx eq review.idx}">
+						<div class="con">
+							  ㄴ답변 <br>
+							  관리자 : ${answer.content}
+						</div>
+						</c:if>
+					</c:forEach>
+					
 				</li>
 			<input type="button" class="reviewdelete" onclick="detailreviewdelete()" value="삭제">
 			<!--  onclick="location.href='reviewdelete?idx=${review.idx}'"-->
