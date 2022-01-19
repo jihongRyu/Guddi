@@ -528,6 +528,11 @@ public class ManagerService {
 		
 		return dao.orderList(dto);
 	}
+
+	public void updateReviewFlg(int flg, int idx) {
+		// TODO Auto-generated method stub
+		dao.updateReviewFlg(flg, idx);
+	}
 	
 	
 	// 주문정보내역 리스트 orderInfoList 유지홍 2022.01.18 End

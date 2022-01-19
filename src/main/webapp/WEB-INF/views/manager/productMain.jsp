@@ -50,8 +50,6 @@
   	      	
 	  <form name = "mform" id = "mform" method="post">	                
 	      <div>		        
-	        <h3>제품 내역</h3>
-	        <br><br>		
 	        <div class="row text-center search-form" id="productList">
 			   <div class="col-md-4">
 		     		<select name="brand_type" class="form-control" onchange="changeListByBrand(this.value)">
@@ -109,11 +107,11 @@
 			        	<th>₩<fmt:formatNumber type="number" maxFractionDigits="3" value="${list.price}" /></th>
 						<c:forEach items="${sessionScope.newflg}" var="newFlgList">
 							<c:if test="${newFlgList.idx eq list.new_flg}"><th>${newFlgList.newname}</th></c:if>
-							<c:if test="${list.new_flg eq ''}"><th>null</th></c:if>						
+							<c:if test="${list.new_flg eq null}"><th>null</th></c:if>						
 						</c:forEach>
 			        	<c:forEach items="${sessionScope.sellflg}" var="sellFlgList">
 							<c:if test="${sellFlgList.idx eq list.sell_flg}"><th>${sellFlgList.sellname}</th></c:if>
-							<c:if test="${list.sell_flg eq ''}"><th>null</th></c:if>								
+							<c:if test="${list.sell_flg eq null}"><th>null</th></c:if>								
 						</c:forEach>
 			        	<th>${list.regdate}</th>
 			        	<th><a href="updateProduct?idx=${list.idx}">수정하기</a></th>
