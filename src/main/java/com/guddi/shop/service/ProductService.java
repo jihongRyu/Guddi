@@ -98,5 +98,10 @@ public class ProductService {
 			return dao.answerLsit(idx);
 		}
 
+		public int reviewdelete(String idx) {
+			logger.info("리뷰 삭제 dao요청");
+			return dao.reviewdelete(idx);
+		}
+
 
 }

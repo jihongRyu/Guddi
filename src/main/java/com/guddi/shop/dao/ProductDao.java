@@ -35,7 +35,8 @@ public interface ProductDao {
 	int checkOrder(String product_code, String userId);
 
 	ArrayList<ReviewQnaDto> answerLsit(String idx);
-	
+
+	int reviewdelete(String idx);
 	//상세페이지 관련 충구형님 2022.01.17 End
 
 	

@@ -213,13 +213,19 @@ public class ProductController {
 		}
 		
 		@RequestMapping(value = "/reviewdelete", method = RequestMethod.GET)
-		public String reviewdelete(Model model,HttpSession session,@RequestParam int idx) {
+		@ResponseBody
+		public HashMap<String,Object> reviewdelete(Model model,@RequestParam String idx) {
 			//Integer.parseInt() <- string 에서 int로 형변환 할때 사용
 			logger.info("리뷰 삭제요청 idx : "+idx);
-			service.reviewdelete(idx);
-			
-			
-			return "product/detailproduct";
+			HashMap<String,Object>map = new HashMap<String,Object>();
+			int result = service.reviewdelete(idx);
+			logger.info("result : {}"+result);
+			if (result > 0) {
+				map.put("success",result);
+			}else {
+				map.put("success","0");
+			}
+			return map;
 		}
 		
 		
