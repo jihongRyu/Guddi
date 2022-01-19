@@ -531,7 +531,6 @@ public class ManagerService {
 	
 	
 	// 주문정보내역 리스트 orderInfoList 유지홍 2022.01.18 End
-	//승혁님 문의타입 카테고리 제어관련 Start
 
 	public ArrayList<EtcDto> toUpdateQnaCategory() {
 		// TODO Auto-generated method stub

@@ -300,7 +300,112 @@ public class EtcController {
 		
 		return map;
 	}
-	//브랜드 카테고리 김도연 start 2022.01.17 End
+	//브랜드 카테고리 김도연 2022.01.17 End
+	
+	//가방종류 카테고리 김도연 start 2022.01.19
+	@RequestMapping(value = "/tobagTypeCategory", method = RequestMethod.GET)
+	public String tobagTypeCategory(Model model , HttpSession session) {
+		logger.info("tobagTypeCategory 페이지 이동");
+		
+		ArrayList<EtcDto> dto = service.getType();
+		ArrayList<EtcDto> udto = service.getUseFlgInfo();
+		
+		model.addAttribute("typeList", dto);
+		model.addAttribute("useFlgList", udto);
+		
+		
+		return "etc/bagTypeCategory";
+	}
+	
+	@RequestMapping(value = "/doRegistType", method = RequestMethod.POST)
+	@ResponseBody
+	public HashMap<String, Object> doRegistType(Model model 
+			, @RequestParam String name, @RequestParam String code) {
+		logger.info("doRegistType 요청");
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int result = service.doRegistType(name,code);
+		
+		if(result>0) {
+			map.put("result", result);
+		}
+		
+		return map;
+	}
+	
+	@RequestMapping(value = "/doUpdateTypeUse", method = RequestMethod.POST)
+	@ResponseBody
+	public HashMap<String, Object> doUpdateTypeUse(Model model 
+			, @RequestParam String type_idx, @RequestParam String use_flgName) {
+		logger.info("doUpdateTypeUse 요청");
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		int useflg = 100;
+		ArrayList<EtcDto> uDto = service.getUseFlgInfo();
+		
+		for (int i = 0; i < uDto.size(); i++) {
+			if(uDto.get(i).getUseFlg_name().equals(use_flgName)) {
+				useflg = uDto.get(i).getIdx();
+			}
+		}
+		
+		if(useflg != 100) {
+			int result = service.doUpdateTypeUse(useflg, Integer.parseInt(type_idx));
+			map.put("result", result);
+		}
+	
+		
+		return map;
+	}
+	//종류 카테고리 김도연 end 2022.01.19
+
+	//승혁님 문의타입 카테고리 제어관련 Start
+	@RequestMapping(value = "/toUpdateQnaCategory", method = RequestMethod.GET)
+	public String toUpdateQnaCategory(Model model, HttpSession session, @RequestParam String userIdx) {
+		logger.info("userIdx {}", userIdx);
+		logger.info("toUpdateQnaCategory 이동");		
+		ArrayList<EtcDto> qnaList = service.toUpdateQnaCategory();
+		model.addAttribute("qnaList", qnaList);
+		model.addAttribute("userIdx", userIdx);
+		for(EtcDto dto : qnaList) {
+			logger.info("타입명 : {}",dto.getTypename());
+			//logger.info("타입명 : {}",dto.getType_name());
+		}
+		return "etc/toUpdateQnaCategory";
+	}
+	
+	@RequestMapping(value = "/addQna", method = RequestMethod.GET)
+	@ResponseBody
+	public HashMap<String, Object> addQna(@RequestParam String userIdx, @RequestParam String keyword) {
+		logger.info("keyword : {}", keyword);
+		logger.info("userIdx : {}", userIdx);
+		int userIdxInt = Integer.parseInt(userIdx);
+		logger.info("userIdxInt : {}", userIdxInt);
+		service.addQna(userIdxInt, keyword);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<EtcDto> qnaList = service.toUpdateQnaCategory();
+		logger.info("qnaList 사이즈 {}", qnaList.size());
+		map.put("qnaList", qnaList);
+		return map;
+	}
+	
+	@RequestMapping(value = "/changUseFlg", method = RequestMethod.GET)
+	@ResponseBody
+	public HashMap<String, Object> changUseFlg(@RequestParam String changUseFlg, @RequestParam String typename) {
+		logger.info("changUseFlg : {}", changUseFlg);
+		logger.info("typename : {}", typename);
+		int changUseFlgInt = Integer.parseInt(changUseFlg);
+		logger.info("userIdxInt : {}", changUseFlgInt);
+		service.changUseFlg(changUseFlgInt, typename);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<EtcDto> qnaList = service.toUpdateQnaCategory();
+		logger.info("qnaList 사이즈 {}", qnaList.size());
+		map.put("qnaList", qnaList);
+		return map;
+	}
+
+	//승혁님 문의타입 카테고리 제어관련 End
 	
 	
 }

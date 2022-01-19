@@ -33,8 +33,11 @@
 		
 	<!-- delCart-->
 	<delete id="delCart" parameterType="com.guddi.shop.dto.CartDto">
-		delete from cart where userId = #{userId} and idx = #{idx}
+		delete from cart where userId = #{userId} and product_code = #{product_code}
 	</delete>
+	<select id="getCart" resultType="int">
+		select COUNT(*) from cart where userId = #{userId}
+	</select>
 	
 	<update id="cartupdate" parameterType="com.guddi.shop.dto.CartDto">
 		UPDATE cart SET 
@@ -44,7 +47,7 @@
 	
 	<!-- 체크박스 delete -->
 	<delete id ="chkdelete"> 
-		DELETE FROM cart WHERE product_name = #{param1} 
+		DELETE FROM cart WHERE product_code = #{product_code} 
 	</delete>
 		
 	<!-- order checkout -->

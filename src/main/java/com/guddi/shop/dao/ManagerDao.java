@@ -140,6 +140,7 @@ public interface ManagerDao {
 	
 	
 	// 리뷰 관련 Ryujihong 2022.01.17 End
+	
 	//승혁님 문의타입 카테고리 제어관련 Start
 	ArrayList<EtcDto> toUpdateQnaCategory();
 

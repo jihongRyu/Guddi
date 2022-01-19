@@ -561,7 +561,7 @@ public class ManagerController {
 		model.addAttribute("bagCategoryList", bagCategoryList); 
 		model.addAttribute("brandCategoryList", brandCategoryList); 
 	
-		return "etc/reviewPage";
+		return "manager/reviewPage";
 	}
 	
 	@RequestMapping(value = "/toReviewDetail", method = RequestMethod.GET)
@@ -575,7 +575,7 @@ public class ManagerController {
 		model.addAttribute("review", dto);
 		model.addAttribute("answer", answer);
 		
-		return "etc/managerReviewDetail";
+		return "manager/managerReviewDetail";
 	}
 	@RequestMapping(value = "/doReviewAnswer", method = RequestMethod.POST)
 	public String doReviewAnswer(Model model, HttpSession session,
@@ -597,7 +597,7 @@ public class ManagerController {
 		model.addAttribute("review", review);
 		model.addAttribute("answer", reviewAnswer);		
 		
-		return "etc/managerReviewDetail";
+		return "manager/managerReviewDetail";
 	}
 	
 	@RequestMapping(value = "/doDelReviewAnswer", method = RequestMethod.GET)
@@ -614,7 +614,7 @@ public class ManagerController {
 		model.addAttribute("answer", reviewAnswer);	
 		
 		
-		return "etc/managerReviewDetail";
+		return "manager/managerReviewDetail";
 	}
 	@RequestMapping(value = "/updateReviewAnswer", method = RequestMethod.GET)
 	public String updateReviewAnswer(Model model, @RequestParam int r_idx, 
@@ -628,7 +628,7 @@ public class ManagerController {
 		model.addAttribute("review", review);
 		model.addAttribute("answer", reviewAnswer);
 		
-		return "etc/updateReviewAnswer";
+		return "manager/updateReviewAnswer";
 	}
 	
 	@RequestMapping(value = "/doUpdateReviewAnswer", method = RequestMethod.POST)
@@ -652,12 +652,13 @@ public class ManagerController {
 		model.addAttribute("review", review);
 		model.addAttribute("answer", reviewAnswer);		
 		
-		return "etc/managerReviewDetail";
+		return "manager/managerReviewDetail";
 	}
 	
 	// 리뷰 관련 Ryujihong 2022.01.17 End
 	
 	
+
 	//승혁님 문의타입 카테고리 제어관련 Start
 	@RequestMapping(value = "/toUpdateQnaCategory", method = RequestMethod.GET)
 	public String toUpdateQnaCategory(Model model, HttpSession session, @RequestParam String userIdx) {
@@ -710,8 +711,6 @@ public class ManagerController {
 	}
 
 	//승혁님 문의타입 카테고리 제어관련 End
-	
-	
 	
 	
 	

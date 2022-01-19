@@ -413,11 +413,6 @@ function check_input(){
 	     document.MemberWriteForm.checkbox.focus();
 	     return;
    }
-    if(!document.getElementById("marketing").checked) {
-      	 alert("마케팅정보 수신에 동의해주세요.");
-   	     document.MemberWriteForm.marketing.focus();
-   	     return;
-      }
    if (confirm("회원가입을 진행하시겠습니까?")) {
    	 document.MemberWriteForm.submit();
 	}

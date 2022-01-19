@@ -172,6 +172,8 @@ public class EtcService {
 		return success;
 	}	
 	// 메인이미지 제어  유지홍 2022.01.18 End
+	
+	
 	//브랜드 카테고리 김도연 start 2022.01.17
 	public int doRegistBrand(String name, String code) {
 		logger.info("브랜드 추가하기 서비스");
@@ -186,10 +188,52 @@ public class EtcService {
 		logger.info("브랜드 사용여부 서비스");
 		return dao.doUpdateBrandUse(useflg,brand_idx);
 	}
-	//브랜드 카테고리 김도연 End 2022.01.17
-
+	
 	public ArrayList<EtcDto> getBrand() {
 		// TODO Auto-generated method stub
 		return dao.getBrand();
 	}
+	//브랜드 카테고리 김도연 End 2022.01.17
+
+	//가방종류 카테고리 김도연 start 2022.01.19
+	public ArrayList<EtcDto> getType() {
+		// TODO Auto-generated method stub
+		return dao.getType();
+	}
+
+	public int doRegistType(String name, String code) {
+		logger.info("종류 추가하기 서비스");
+		int idx = dao.getTypeIdx();
+		int newidx = idx+1;
+		logger.info("브랜드 인덱스 : "+idx+" -> "+newidx);
+		return dao.doRegistType(newidx,name,code);
+	}
+
+	public int doUpdateTypeUse(int useflg, int type_idx) {
+		logger.info("종류카테고리 사용여부 서비스");
+		return dao.doUpdateTypeUse(useflg,type_idx);
+	}
+	//종류 카테고리 김도연 end 2022.01.19
+	//승혁님 문의타입 카테고리 제어관련 Start
+
+	public ArrayList<EtcDto> toUpdateQnaCategory() {
+		// TODO Auto-generated method stub
+		logger.info("toUpdateQnaCategory 이동");
+		return dao.toUpdateQnaCategory();
+	}
+
+	public void addQna(int userIdxInt, String keyword) {
+		logger.info("addQna 서비스 이동 userIdxInt {}", userIdxInt);
+		logger.info("addQna 서비스 이동 keyword {}", keyword);
+		dao.addQna(userIdxInt, keyword);
+		
+	}
+
+	public void changUseFlg(int changUseFlgInt, String typename) {
+		// TODO Auto-generated method stub
+		dao.changUseFlg(changUseFlgInt, typename);
+	}
+	//승혁님 문의타입 카테고리 제어관련 End
+	
+	
 }

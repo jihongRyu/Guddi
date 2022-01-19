@@ -46,13 +46,12 @@
   </div>
   <div class="ftco-animate manager-table table-striped">
   	      	
-	  <form name = "mform" id = "mform" method="post">	                
+	  <form name = "mform" id = "mform" method="get">	                
 	      <div>		        
 	        <h3>회원 리스트</h3>
 	        <br><br>		
 	        <div class="row text-center search-form" id="memberList">
 			   <div class="col-md-4">
-		
 			       <div class="mb-4">	
 				   <select name="mem_flg" class="form-control" onchange="changeListByMember(this.value)">
 				   		<option value="3">전체</option>	
@@ -66,7 +65,7 @@
 			     <div class="mb-4">
 			     	<div class="form-group">                
 			             <a href="javascript:void(0);" onclick="changeListByPhone()" id="searchBtn"><span class="icon ion-ios-search"></span></a>
-			             <input type="text" class="form-control" id="keyword" name="keyword" value="${keyword}" placeholder="휴대폰 번호">
+			             <input onkeyup="enterkey()" type="text" class="form-control" id="keyword" name="keyword" value="${keyword}" placeholder="휴대폰 번호">
 			         </div>
 			   	</div>
 			   </div>
@@ -105,7 +104,7 @@
 			        	<th>${list.gender}</th>
 						<th><c:if test="${list.mem_flg eq 0}">탈퇴회원</c:if>
 						<c:if test="${list.mem_flg ne 0}">
-						<select name="memFlg" id="memFlg" onchange="changeUseMemFlg('${list.idx}',this.value)">
+						<select name="memFlg" id="memFlg" onchange="changeUseMemFlg('${list.idx}',this.value)" >
 						<c:forEach items="${memFlgList}" var="memFlgList">
 						<option value="${memFlgList.idx}" <c:if test="${list.mem_flg eq memFlgList.idx}">selected</c:if>>${memFlgList.memFlg_name}</option>
 						<c:if test="${memFlgList.idx eq list.mem_flg}">${memFlgList.memFlg_name}</c:if>							
@@ -116,7 +115,9 @@
 						<th><c:forEach items="${marketingFlgList}" var="marketingFlgList">
 						<c:if test="${marketingFlgList.idx eq list.marketing_flg}">${marketingFlgList.marketingFlg_name}</c:if>							
 						</c:forEach></th>
-						<th>${list.delete_date}</th>  		           		     
+						<th>
+						<c:if test="${list.delete_date eq null }">null</c:if>${list.delete_date}
+						</th>  		           		     
 			       </tr>			    
 		       </c:forEach>   
 		                
@@ -182,7 +183,9 @@
 <script src="resources/js/main.js"></script>
 
 </body>
-<script>
+<script type="text/javascript">
+
+$("#memFlg option[value='0']").remove();
 
 
 function enterkey() {	
@@ -191,16 +194,17 @@ function enterkey() {
          DoSearch();
     }
 };
-
-function DoSearch() {    
+function DoSearch() {
 	 
 	  let keyword = $("#keyword").val();
 	  let phone = $("#phone").val();
+	  let mem_flg = $("#mem_flg").val();
 	  
 	  console.log(keyword);
-	  console.log(phone);	 	
+	  console.log(phone);
+	  console.log(mem_flg);
 	  
-	  location.href = "memberList?num=1&phone=" + phone + "&keyword=" + keyword;
+	  location.href = "memberList?num=1&phone=" + phone + "&mem_flg" + mem_flg + "&keyword=" + keyword;
 
 };
 

@@ -29,16 +29,14 @@
 
 <jsp:include page="/WEB-INF/views/include/header.jsp"/>
 
-<div class="hero-wrap hero-bread" style="background-image: url('resources/images/bg_1.jpg');">
-  <div class="container">
-    <div class="row no-gutters slider-text align-items-center justify-content-center">
-      <div class="col-md-9 ftco-animate text-center">
-      	<p class="breadcrumbs"><span class="mr-2"><a href="./">홈</a></span>/<span>정보변경하기</span></p>
-        <h1 class="mb-0 bread">마이페이지</h1>
-      </div>
-    </div>
-  </div>
-</div>
+<section class="ftco-section contact-section bg-light">
+	<div class="container">    
+	    <div class="col-md-12 ftco-animate text-center bg-light">
+	       <p class="breadcrumbs"><span class="mr-2"><a href="./">홈</a></span>/<span>정보수정</span></p>
+	       <h1 class="mb-0 bread">정보수정</h1>
+	    </div>    
+	</div>
+</section>
 
 <section class="ftco-section ftco-degree-bg">
   <div class="container">
@@ -145,7 +143,7 @@
 				
 		        <button type="button" class="btn btn-primary" onclick="location.href='myPage?orderNum=1&reviewNum=1'">취소</button>
 		        <button type="button" class="btn btn-primary" onclick="check_input()">수정하기</button>
-		      	<button type="button" class="btn btn-primary" onclick="deleteUser()">탈퇴하기</button>
+		      	<button type="button" class="btn btn-primary" onclick="deleteUser('${info.userId}')">탈퇴하기</button>
 		    	
 		    </div>
    		</form>         
@@ -388,7 +386,7 @@ function goPostcode() {
 	    // 모두 확인 후 goPasswordCheck()함수 실행
 	 }
  
- function deleteUser(){
+ function deleteUser(userId){
 	 
 	 if (confirm("탈퇴하시겠습니까?")) {
 		
@@ -396,17 +394,17 @@ function goPostcode() {
 				url: "deleteUser", //호출할 파일명
 				data:{'userId': userId					  
 					},
-				method: "POST",
+				type: "POST",
 				dataType: "json", //내가 받아야할 결과 형태가 text, html, xml, json
 				
 				success: function(data){
 					console.log(data);			
-					alert("정보변경에 성공하였습니다.");
+					alert("회원탈퇴에 성공하였습니다.");
 					location.href='logout';
 					
 				},
 				error:function(){
-					console.log("데이터 로딩 실패");
+					alert("회원탈퇴에 실패하였습니다.");
 				}
 			});
 		 

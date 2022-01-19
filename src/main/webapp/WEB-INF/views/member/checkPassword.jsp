@@ -29,16 +29,14 @@
 
 <jsp:include page="/WEB-INF/views/include/header.jsp"/>
 
-<div class="hero-wrap hero-bread" style="background-image: url('resources/images/bg_1.jpg');">
-  <div class="container">
-    <div class="row no-gutters slider-text align-items-center justify-content-center">
-      <div class="col-md-9 ftco-animate text-center">
-      	<p class="breadcrumbs"><span class="mr-2"><a href="./">홈</a></span>/<span>비밀번호 확인</span></p>
-        <h1 class="mb-0 bread">비밀번호 확인</h1>
-      </div>
-    </div>
-  </div>
-</div>
+<section class="ftco-section contact-section bg-light">
+	<div class="container">    
+	    <div class="col-md-12 ftco-animate text-center bg-light">
+	       <p class="breadcrumbs"><span class="mr-2"><a href="./">홈</a></span>/<span>비밀번호확인</span></p>
+	       <h1 class="mb-0 bread">비밀번호확인</h1>
+	    </div>    
+	</div>
+</section>
 
 <section class="ftco-section ftco-degree-bg">
   <div class="container">

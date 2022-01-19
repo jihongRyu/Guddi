@@ -65,5 +65,20 @@ public interface EtcDao {
 
 	int doUpdateBrandUse(int useflg, int brand_idx);
 	//브랜드 카테고리 김도연 End 2022.01.17	
-	
+	//종류 카테고리 김도연 start 2022.01.19
+	ArrayList<EtcDto> getType();
+
+	int getTypeIdx();
+
+	int doUpdateTypeUse(int useflg, int type_idx);
+
+	int doRegistType(int newidx, String name, String code);
+	//종류 카테고리 김도연 end 2022.01.19
+	//승혁님 문의타입 카테고리 제어관련 Start
+	ArrayList<EtcDto> toUpdateQnaCategory();
+
+	void addQna(int userIdxInt, String keyword);
+
+	void changUseFlg(int changUseFlgInt, String typename);
+	//승혁님 문의타입 카테고리 제어관련 End
 }

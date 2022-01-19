@@ -146,7 +146,7 @@
   		          	</td>  			        
   			        <td class="total"><fmt:formatNumber value="${list.quantity*list.price}" pattern="#,### 원" /></td>  			        
   			        <c:set var= "total" value="${list.quantity*list.price}"/>  			        
-  			        <td class="product-remove"><a onClick="delCart('${list.idx}')"><span class="ion-ios-close"></span></a></td>  			        
+  			        <td class="product-remove"><a onClick="delCart('${list.product_code}')"><span class="ion-ios-close"></span></a></td>  			        
   			      </tr>
   				  </c:forEach>
   			    
@@ -236,10 +236,7 @@
 <script>
 
 
- 
- // 배열 선언 여기에 이제 하나씩 넣을 것.
 
-	
 	
 function checkCall() {
 	 
@@ -390,17 +387,17 @@ function del(){
 
  //삭제 
  
-function delCart(idx){
+function delCart(product_code){
 	
 	if (confirm("해당 제품을 카트에서 제외하시겠습니까?")) {
 		
-		var idx = idx;
+		var product_code = product_code;
 		
 		$.ajax({
 			url: "delCart", //호출할 파일명			
-			method: "POST",
+			type: "POST",
 			dataType: "json", //내가 받아야할 결과 형태가 text, html, xml, json
-			data : {"idx":idx},
+			data : {"product_code":product_code},
 			success: function(data){
 				console.log(data);
 				

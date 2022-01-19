@@ -96,14 +96,14 @@
  	limit #{displayPost}, #{postNum}
 	</select> 
 	
-	<select id="getReviewDetail" parameterType="com.guddi.shop.dto.PageDto" resultType="com.guddi.shop.dto.ReviewQnaDto">
+	<select id="getReviewDetail"  resultType="com.guddi.shop.dto.ReviewQnaDto">
  	select r.subject, r.regdate, p.product_name, r.idx, r.content
 	from review r inner join product p
 	on r.b_idx = p.idx
 	where r.idx = #{idx}	 	
 	</select> 
 	
-	<select id="getReviewAnswerDetail" parameterType="com.guddi.shop.dto.PageDto" resultType="com.guddi.shop.dto.ReviewQnaDto">
+	<select id="getReviewAnswerDetail"  resultType="com.guddi.shop.dto.ReviewQnaDto">
  	select ra.content, ra.regdate
 	from review r inner join review_answer ra
 	on r.idx = ra.r_idx
