@@ -526,7 +526,7 @@ public class MemberController {
 			if(loginId != null) { // 로그인이 되면 서비스에서 temppw로 업데이트 한 결과를 보낸다. 
 				String temppw = getRamdomPassword(10);
 				model.addAttribute("msg", loginId);
-				logger.info(temppw+"<--임시비번"); 
+				logger.info(temppw+"<--임시비번");
 				
 				service.temppassloginPw(userId,temppw);
 				
@@ -535,7 +535,7 @@ public class MemberController {
 				session.setAttribute("loginId", loginId);
 		
 			}else {
-				page = "redirect:/member/";
+				page = "redirect:/findidPassword";
 				model.addAttribute("msg2", msg2);
 			}
 			return page;
