@@ -221,9 +221,11 @@ function reviewupdate(idx, userId){
 				datatype:'JSON',
 				success:function(data){
 					console.log(data);
-					if (data.success == 1) {
+					
+					if (data.success > 0) {
 						alert('리뷰등록이 완료되었습니다.');				
-					}else if(data.success == 0){
+					}
+					if(data.success < 1){
 						alert('구매회원만 리뷰등록이 가능합니다.');	
 					}
 				},

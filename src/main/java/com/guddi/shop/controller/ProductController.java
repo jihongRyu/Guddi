@@ -199,7 +199,9 @@ public class ProductController {
 			dto.setUserId(userId);
 			
 			HashMap<String, Object> map = new HashMap<String, Object>();
-			int  orderCount= service.checkOrder(product_code, userId);
+			int orderCount= service.checkOrder(product_code, userId);
+			logger.info("orderCount : {}", orderCount);
+			map.put("success", orderCount);
 			
 			if (orderCount>0) {
 				int result = service.reviewupdate(dto);
