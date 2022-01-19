@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Q&A</title>
+<title>문의 카테고리</title>
 <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 	
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -33,21 +33,17 @@
 	<input class="form-control" type="hidden" style="width: 300px; margin-right: 50px;"name="userIdx" value="${userIdx}"/>
 	<div class="container">    
 	      <div class="col-md-12 ftco-animate text-center bg-light">
-	      	<h3>문의 카테고리</h3>
+	      	<p class="breadcrumbs"><span class="mr-2"><a href="./">홈</a></span>/<span>문의 카테고리</span></p>
+	      	<h1 class="mb-0 bread">문의 카테고리</h1>
 	      </div>    
 	</div>
 </section>
 
-
-<section class="ftco-section">
-   <div class="container" style="margin-bottom: -100px;">
-      <input class="form-control" type="text" style=" float:left; width: 300px; margin-right: 50px;"name="keyword" placeholder="카테고리명을 입력해주세요.">
-      <input type="button"value="카테고리 추가하기" class="btn btn-primary py-3 px-4" id="addQna" style="height: 50px; margin-left: -40px;"/>
+<section class="ftco-section ftco-degree-bg" id="qnaList">
+	<div class="container" style="text-align: right; margin-bottom: 20px;">
+      <input type="text" name="keyword" placeholder="카테고리명을 입력해주세요." style="width: 300px; height: 50px;"/>
+      <input type="button"value="카테고리 추가하기" class="btn btn-primary py-3 px-4" id="addQna" style="height: 50px;"/>
    </div>
-</section>
-
-
-<section class="ftco-section ftco-degree-bg" id="qnaList" style="margin-top: -40px;">
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-12 ftco-animate">

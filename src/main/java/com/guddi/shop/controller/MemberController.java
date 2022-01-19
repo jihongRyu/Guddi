@@ -454,6 +454,7 @@ public class MemberController {
 						logger.info("session3 실행");
 						session.setAttribute("mem_flg", dto.getMem_flg());
 						logger.info("session에서 mem_flg가져오기");
+						session.setAttribute("u_idx", dto.getIdx());
 					
 					//logger.info("cartCnt 반환");
 
@@ -467,6 +468,7 @@ public class MemberController {
 					session.setAttribute("mem_flg", dto.getMem_flg());
 					logger.info("session에서 mem_flg가져오기");
 					session.setAttribute("u_idx", dto.getIdx());
+					
 				}
 				
 			}catch(Exception e){
@@ -480,23 +482,6 @@ public class MemberController {
 		
 		
 		//로그인 end yonghyeon 2022.01.15 수량 수정 END
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		
 		
@@ -580,10 +565,7 @@ public class MemberController {
 		}
 
 		
-		
-		
 		//로그인페이지 findIdPassword 아이디/패스워드 찾기 END!!! -- > 임시비밀번호 유선화 2022.01.13
-		
 		
 		
 		
