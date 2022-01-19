@@ -5,22 +5,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="icon" type="image/png" href="resources/photo/로고2.png">
-<title>GUddI Shop</title>
-<style>
-#Benefits{
-	font-size:50;
-}
-#newreleases{
-	font-size:35;
-}
-.mb-0{
-	font-size:20;
-	text-align:center;
-	font-weight: bold;
-}
-
-</style>
 
 <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 
@@ -93,7 +77,17 @@
 <script src="resources/js/main.js"></script>
 
 </body>
-<script type="text/javascript">
+
+<script>
+
+
+var msg = "${temppw}";
+
+if(msg != ""){
+	alert(temppw);
+}	
+
+
 
 </script>
 </html>

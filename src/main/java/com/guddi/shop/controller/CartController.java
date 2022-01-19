@@ -206,12 +206,7 @@ public class CartController {
 		return valueArrTest;
 	}
 
-	
-	
-	// 체크박스 실험 ysh END 220117
-	
-	
-	
+
 	
 	
 	
@@ -230,34 +225,6 @@ public class CartController {
 	
 	
 
-	
-//	//주문하기 페이지로 이동 //////////////////////////////////////////////
-//	@RequestMapping(value = "/order/${list.userId}", method = RequestMethod.GET)
-//	public String order(Model model , HttpSession session) {
-//		
-//		return "order";
-//	}
-//	
-//	
-//	/////////////////
-//	@RequestMapping(value = "/checkedDelete", method = RequestMethod.GET)
-//	@ResponseBody // 컨트롤러에서 요청을 받아와 반환된 값을 jsp에 넘겨줄때 언어가 달라 json라이브러리를 추가했고 @ResponseBody 어노테이션을 사용해 hashMAp데이터 타입으로 뷰에서 읽을수 있게 처리해 줬습니다.
-//	public HashMap<String,Object> checkedDelete(
-//			@RequestParam (value="delList[]") ArrayList<String> delList 
-//			) {
-//		HashMap<String,Object> map = new HashMap<String, Object>();
-//		
-//		logger.info("delList : {}",delList); 
-//		
-//		int delCnt = delList.size();// 1. 삭제할 갯수 확인 
-//		int row = service.checkedDelete(delList);	// 2. 삭제 완료된 갯수 확인
-//		// 3. 1번과 2번이 같으면 완료
-//		map.put("msg", delCnt+"개 요청 중 "+row+"개 를 삭제 하였습니다.");
-//		
-//		return map;
-//	}
-//	//////////////////////////////////////////////////////////////////
-	
 	// =====cart controller 추가하기 수정 END YuSeonhwa===== 220115
 	
 	// 2022.01.17 start - 송승혁

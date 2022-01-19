@@ -214,7 +214,26 @@ public class EtcService {
 		return dao.doUpdateTypeUse(useflg,type_idx);
 	}
 	//종류 카테고리 김도연 end 2022.01.19
-	
+	//승혁님 문의타입 카테고리 제어관련 Start
+
+	public ArrayList<EtcDto> toUpdateQnaCategory() {
+		// TODO Auto-generated method stub
+		logger.info("toUpdateQnaCategory 이동");
+		return dao.toUpdateQnaCategory();
+	}
+
+	public void addQna(int userIdxInt, String keyword) {
+		logger.info("addQna 서비스 이동 userIdxInt {}", userIdxInt);
+		logger.info("addQna 서비스 이동 keyword {}", keyword);
+		dao.addQna(userIdxInt, keyword);
+		
+	}
+
+	public void changUseFlg(int changUseFlgInt, String typename) {
+		// TODO Auto-generated method stub
+		dao.changUseFlg(changUseFlgInt, typename);
+	}
+	//승혁님 문의타입 카테고리 제어관련 End
 	
 	
 }

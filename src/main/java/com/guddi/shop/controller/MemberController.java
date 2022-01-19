@@ -357,67 +357,6 @@ public class MemberController {
 		
 		//로그인 페이지 이동 end yonghyeon 2022.01.11
 		
-		//로그인 start yonghyeon 2022.01.11
-//		@RequestMapping(value = "/doLogin", method = RequestMethod.POST)
-//		public String doLogin(Model model, @RequestParam HashMap<String, String> params, HttpSession session) {
-//			logger.info("doLogin 요청");
-//			logger.info("아이디/비밀번호 : {}",params.get("userId")+"/"+params.get("password"));
-//			
-//			String page = "member/toLogin";
-//			String msg = "아이디와 비밀번호를 확인해주세요.";
-//			MemberDto dto = service.login(params);
-//			
-//			try {
-//				logger.info("아이디 : {}" , dto.getUserId());
-//				if(dto.getMem_flg()==0) {
-//					msg = "탈퇴 회원입니다.";
-//				}else if(dto.getUserId()!=null&&dto.getMem_flg()==1) {
-//					page = "redirect:/";			
-//					msg="";
-//					//용현님 아래 코드 수정하셔야되요~
-//					int cartCnt = service.HeadergetCart(params.get("userId"));
-//					
-//					logger.info("cartCnt 반환");
-////					if(cartCnt == 0);{
-////						cartCnt = 0;
-////						logger.info("if문 실행");
-////					}
-//					session.setAttribute("cartCnt", cartCnt);
-//					logger.info("session1 실행");
-//					session.setAttribute("userId", dto.getUserId());
-//					logger.info("session2 실행");
-//					session.setAttribute("username", dto.getUsername());
-//					logger.info("session3 실행");
-//					session.setAttribute("mem_flg", dto.getMem_flg());
-//					logger.info("session에서 mem_flg가져오기");
-//				}else if(dto.getUserId()!=null&&dto.getMem_flg()==2) {
-//					page = "redirect:/";			
-//					msg="";
-//					/*int cartCnt = service.getCart(params.get("userId"));
-//					logger.info("cartCnt 반환");
-//					if(cartCnt == 0);{
-//						cartCnt = 0;
-//						logger.info("if문 실행");
-//					}
-//					session.setAttribute("cartCnt", cartCnt);
-//					logger.info("session1 실행");*/
-//					session.setAttribute("userId", dto.getUserId());
-//					logger.info("session2 실행");
-//					session.setAttribute("username", dto.getUsername());
-//					logger.info("session3 실행");
-//					session.setAttribute("mem_flg", dto.getMem_flg());
-//					logger.info("session에서 mem_flg가져오기");
-//					session.setAttribute("u_idx", dto.getIdx());
-//				}
-//				
-//			}catch(Exception e){
-//				logger.info("에러 발생");
-//			}
-//			model.addAttribute("msg",msg);
-//				
-//			return page;
-//		}
-		//로그인 end yonghyeon 2022.01.11
 		
 		//로그인 end yonghyeon 2022.01.15 수량 수정 START
 		
@@ -483,9 +422,7 @@ public class MemberController {
 		
 		//로그인 end yonghyeon 2022.01.15 수량 수정 END
 		
-		
-		
-		
+
 		//로그인페이지 findIdPassword 아이디/패스워드 찾기 START!!! -- > 임시비밀번호 유선화 2022.01.13
 		@RequestMapping(value = "/findIdPassword", method = RequestMethod.GET)
 		public String findidPassword(Model model) {		
@@ -520,24 +457,39 @@ public class MemberController {
 			logger.info(userId+"/"+email); 
 			String loginId = service.temppasslogin(userId,email);
 			logger.info("로그인 아이디 여부 : " +loginId);
-			String page = "redirect:/member/temppass";
-			String msg2 = "아이디와 이메일이 맞지 않습니다.";
+			logger.info("이메일 아이디 여부 : " +email);
+			String page = "redirect:/member/tempPass";
 			
-			if(loginId != null) { // 로그인이 되면 서비스에서 temppw로 업데이트 한 결과를 보낸다. 
-				String temppw = getRamdomPassword(10);
-				model.addAttribute("msg", loginId);
-				logger.info(temppw+"<--임시비번");
+
+			String msg = "아이디와 이메일을 확인해 주세요";
+			try {
+				if(loginId != null && email != null) { // 로그인이 되면 서비스에서 temppw로 업데이트 한 결과를 보낸다. 
+					String temppw = getRamdomPassword(10);
+					msg = "임시비밀번호로 변경 하시겠습니까?";
+					logger.info(temppw+"<--임시비번"); 
+					
+					service.temppassloginPw(userId,temppw);
+					
+					// 여기서임시비밀번호를 뿌려주는 페이지로 이동한다. 
+					
+					model.addAttribute("temppw", temppw);
+					session.setAttribute("loginId", loginId);
+					page = "member/tempPass";
+					
+				}else {
+					
+					page = "member/findIdPassword";
+				}
 				
-				service.temppassloginPw(userId,temppw);
-				
-				page = "redirect:/member/tempPass"; // 여기서임시비밀번호를 뿌려주는 페이지로 이동한다. 
-			
-				session.setAttribute("loginId", loginId);
-		
-			}else {
-				page = "redirect:/findidPassword";
-				model.addAttribute("msg2", msg2);
+
 			}
+			catch (Exception e){
+				logger.info("에러 발생");		
+					
+			}
+			
+			model.addAttribute("msg", msg);
+			
 			return page;
 		}
 		
@@ -552,16 +504,6 @@ public class MemberController {
 				sb.append(charSet[idx]);
 			}
 			return sb.toString();
-		}
-
-		@RequestMapping(value = "/member/tempPass", method = RequestMethod.GET)
-		public String tempPass(Model model,HttpSession session) {
-			logger.info("tempPass");
-			String userpass = (String) session.getAttribute("loginId");
-			
-			String temppw = service.tempPass(userpass);
-			model.addAttribute("temppw", temppw);
-			return "member/tempPass";
 		}
 
 		
