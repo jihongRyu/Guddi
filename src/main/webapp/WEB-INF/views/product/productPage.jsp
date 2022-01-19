@@ -82,11 +82,11 @@
 		<c:forEach items="${list}" var="list">
 		   <div class="col-md-3 ftco-animate">
 				<div class="product">					
-					<a href="detail?idx=${list.idx}" class="img-prod"><img class="img-fluid" src="resources/photo/${list.newFileName}" alt="Colorlib Template">
+					<a href="detail?idx=${list.idx}&reviewNum=1" class="img-prod"><img class="img-fluid" src="resources/photo/${list.newFileName}" alt="Colorlib Template">
 
 					</a>
 					<div class="text py-3 pb-4 px-3 text-center">
-						<h3><a href="detail?idx=${list.idx}">${list.product_name}</a></h3>
+						<h3><a href="detail?idx=${list.idx}&reviewNum=1">${list.product_name}</a></h3>
 						<div class="d-flex">
 							<div class="pricing">
 	    						<p class="price">

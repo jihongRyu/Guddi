@@ -82,8 +82,8 @@
 		  <c:if test="${sessionScope.mem_flg eq 2}">
 			<li class="nav-item"><a href="productMain?num=1&brand_idx=0" class="nav-link">제품내역</a></li>
 			<li class="nav-item"><a href="qnaPage?qnaNum=1&answer_flg=2&qnaType=0" class="nav-link">Q&A내역</a></li>
-			<li class="nav-item"><a href="toLogin" class="nav-link">리뷰내역</a></li>
-			<li class="nav-item"><a href="toLogin" class="nav-link">주문정보</a></li>
+			<li class="nav-item"><a href="toReviewPage?num=1&answer_flg=2" class="nav-link">리뷰내역</a></li>
+            <li class="nav-item"><a href="orderInfoList?num=1" class="nav-link">주문정보</a></li>
 			<li class="nav-item"><a href="memberList?num=1&mem_flg=3" class="nav-link">회원목록</a></li>
 			<li class="nav-item dropdown">
 		      <a class="nav-link dropdown-toggle" href="javascript:void(0);" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">기타</a>

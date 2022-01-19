@@ -5,6 +5,8 @@ public class PageDto {
 	// 현재 페이지 번호
 	private int num;
 	
+	private int idx;
+	
 	//상품타입
 	private int type;
 	
@@ -265,6 +267,14 @@ public class PageDto {
 
 	public void setQnaType(int qnaType) {
 		this.qnaType = qnaType;
+	}
+
+	public int getIdx() {
+		return idx;
+	}
+
+	public void setIdx(int idx) {
+		this.idx = idx;
 	}
 
 	

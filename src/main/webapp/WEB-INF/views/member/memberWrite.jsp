@@ -413,7 +413,6 @@ function check_input(){
 	     document.MemberWriteForm.checkbox.focus();
 	     return;
    }
-    
    if (confirm("회원가입을 진행하시겠습니까?")) {
    	 document.MemberWriteForm.submit();
 	}
