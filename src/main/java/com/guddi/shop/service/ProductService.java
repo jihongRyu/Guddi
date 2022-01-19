@@ -93,5 +93,10 @@ public class ProductService {
 			return dao.checkOrder(product_code,userId);
 		}
 
+		public ArrayList<ReviewQnaDto> answerLsit(String idx) {
+			// TODO Auto-generated method stub
+			return dao.answerLsit(idx);
+		}
+
 
 }

@@ -103,6 +103,14 @@
 		where product_code = #{param1}
 		and userId = #{param2}
 	</select>
+	
+	<select id="answerLsit" resultType="com.guddi.shop.dto.ReviewQnaDto">
+	select r.b_idx, a.content, a.r_idx
+	from review_answer a inner join review r 
+	on r.idx = a.r_idx
+	where r.b_idx = #{idx}
+	and a.del_flg = 0	
+	</select>
 
 
 </mapper>

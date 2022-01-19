@@ -75,10 +75,10 @@ public interface EtcDao {
 	int doRegistType(int newidx, String name, String code);
 	//종류 카테고리 김도연 end 2022.01.19
 	//승혁님 문의타입 카테고리 제어관련 Start
-		ArrayList<EtcDto> toUpdateQnaCategory();
+	ArrayList<EtcDto> toUpdateQnaCategory();
 
-		void addQna(int userIdxInt, String keyword);
+	void addQna(int userIdxInt, String keyword);
 
-		void changUseFlg(int changUseFlgInt, String typename);
-		//승혁님 문의타입 카테고리 제어관련 End
+	void changUseFlg(int changUseFlgInt, String typename);
+	//승혁님 문의타입 카테고리 제어관련 End
 }

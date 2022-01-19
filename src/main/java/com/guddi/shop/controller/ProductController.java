@@ -111,42 +111,54 @@ public class ProductController {
 	//2022.01.13 유지홍 제품 리스트 관련 소스 End
 	
 	//상세페이지 관련 충구형님 2022.01.17 Start
-		@RequestMapping(value = "/detail", method = RequestMethod.GET)
-		public String detail(Model model,HttpSession session,@RequestParam String idx/*제품idx*/ 
-				,@RequestParam int reviewNum) {
-			//Integer.parseInt() <- string 에서 int로 형변환 할때 사용
-			logger.info("상품정보 요청");
+	/**
+	 * @param model
+	 * @param session
+	 * @param idx
+	 * @param reviewNum
+	 * @return
+	 */
+	@RequestMapping(value = "/detail", method = RequestMethod.GET)
+	public String detail(Model model,HttpSession session,@RequestParam String idx/*제품idx*/ 
+			,@RequestParam int reviewNum) {
+		//Integer.parseInt() <- string 에서 int로 형변환 할때 사용
+		logger.info("상품정보 요청");
 
-			/*session.setAttribute("userId","liujihong");
-			String userId = (String) session.getAttribute("userId");
-			model.addAttribute("userId",userId);
-			logger.info((String) userId); */
-			logger.info("idx : "+idx);
-			
-			ArrayList<ProductDto>detail = service.detail(idx);//제품 호출
-			logger.info("detail : {}",detail);
-			model.addAttribute("detail",detail);
-			
-			ArrayList<ProductDto>productimage = service.productimage(idx);//이미지호출
-			model.addAttribute("productimage", productimage);
-			
-			PageDto reviewPage = new PageDto();
-			  
-			reviewPage.setNum(reviewNum);
-			reviewPage.setCount(service.searchReviewCount(idx));
-			
-			//ArrayList<ProductDto> list = service.listPageSearch(page.getDisplayPost(),page.getPostNum(),keyword, brand_idx, bag_name);
-			
-			ArrayList<ReviewQnaDto>reviewlist = service.reviewlist(idx, reviewPage.getDisplayPost(),reviewPage.getPostNum());//리뷰호출
-			logger.info("reviewlist : "+reviewlist);
-			model.addAttribute("reviewlist", reviewlist);
-			model.addAttribute("select", reviewNum);
-			model.addAttribute("num", reviewNum);
-			model.addAttribute("page", reviewPage);
-			model.addAttribute("idx", idx);
-			
-			return "product/detailproduct";
+		/*session.setAttribute("userId","liujihong");
+		String userId = (String) session.getAttribute("userId");
+		model.addAttribute("userId",userId);
+		logger.info((String) userId); */
+		logger.info("idx : "+idx);
+	
+		ArrayList<ProductDto>detail = service.detail(idx);//제품 호출
+		logger.info("detail : {}",detail);
+		model.addAttribute("detail",detail);
+	
+		ArrayList<ProductDto>productimage = service.productimage(idx);//이미지호출
+		model.addAttribute("productimage", productimage);
+	
+		PageDto reviewPage = new PageDto();
+	  
+		reviewPage.setNum(reviewNum);
+		reviewPage.setCount(service.searchReviewCount(idx));		
+	
+		ArrayList<ReviewQnaDto>reviewlist = service.reviewlist(idx, reviewPage.getDisplayPost(),reviewPage.getPostNum());//리뷰호출
+		logger.info("reviewlist : "+reviewlist);
+		
+		ArrayList<ReviewQnaDto> answerList = service.answerLsit(idx);
+		
+		for (int i = 0; i < answerList.size(); i++) {
+			logger.info("answerList : " +answerList.get(i).getContent());
 		}
+		model.addAttribute("answerList", answerList);
+		model.addAttribute("reviewlist", reviewlist);
+		model.addAttribute("select", reviewNum);
+		model.addAttribute("num", reviewNum);
+		model.addAttribute("page", reviewPage);
+		model.addAttribute("idx", idx);
+	
+		return "product/detailproduct";
+	}
 		
 		@RequestMapping(value = "/doCartUpdate", method = RequestMethod.POST)
 		@ResponseBody

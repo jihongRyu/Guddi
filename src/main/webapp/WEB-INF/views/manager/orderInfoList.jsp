@@ -85,7 +85,7 @@
 	            </tr>
 	            <c:if test="${orderList.size() == 0 }">   
 	            <tr>
-	             	<td colspan="10">등록된 제품이 없습니다.</td>	             	             	           		     
+	             	<td colspan="10">해당하는 주문번호가 존재하지 않습니다.</td>	             	             	           		     
 	            </tr>
 	            </c:if>
  				<c:forEach items="${orderList}" var="listpagedto">		       	  
@@ -173,7 +173,6 @@ function changeList() {
 	var keyword = $('#keyword').val();
 	var num = "${select}";
 
-	alert(num);
 	location.href="orderInfoList?num="+num+"&keyword="+keyword+"&searchType="+searchType;
 	
 }

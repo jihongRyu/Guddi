@@ -204,7 +204,7 @@ public class MemberController {
 	}
 	//Q&A end ryujihong 2022.01.10
 	//고객정보수정,탈퇴관련, 마이페이지내 리뷰관련 Start ryujihong 2022.01.10
-	//마이페이지 관련
+	//마이페이지 관련 
 		@RequestMapping(value = "/myPage", method = RequestMethod.GET)
 		public String myPage(Model model, HttpSession session, 
 				@RequestParam(value="orderNum") int orderNum, @RequestParam(value="reviewNum") int reviewNum,
@@ -357,67 +357,7 @@ public class MemberController {
 		
 		//로그인 페이지 이동 end yonghyeon 2022.01.11
 		
-		//로그인 start yonghyeon 2022.01.11
-//		@RequestMapping(value = "/doLogin", method = RequestMethod.POST)
-//		public String doLogin(Model model, @RequestParam HashMap<String, String> params, HttpSession session) {
-//			logger.info("doLogin 요청");
-//			logger.info("아이디/비밀번호 : {}",params.get("userId")+"/"+params.get("password"));
-//			
-//			String page = "member/toLogin";
-//			String msg = "아이디와 비밀번호를 확인해주세요.";
-//			MemberDto dto = service.login(params);
-//			
-//			try {
-//				logger.info("아이디 : {}" , dto.getUserId());
-//				if(dto.getMem_flg()==0) {
-//					msg = "탈퇴 회원입니다.";
-//				}else if(dto.getUserId()!=null&&dto.getMem_flg()==1) {
-//					page = "redirect:/";			
-//					msg="";
-//					//용현님 아래 코드 수정하셔야되요~
-//					int cartCnt = service.HeadergetCart(params.get("userId"));
-//					
-//					logger.info("cartCnt 반환");
-////					if(cartCnt == 0);{
-////						cartCnt = 0;
-////						logger.info("if문 실행");
-////					}
-//					session.setAttribute("cartCnt", cartCnt);
-//					logger.info("session1 실행");
-//					session.setAttribute("userId", dto.getUserId());
-//					logger.info("session2 실행");
-//					session.setAttribute("username", dto.getUsername());
-//					logger.info("session3 실행");
-//					session.setAttribute("mem_flg", dto.getMem_flg());
-//					logger.info("session에서 mem_flg가져오기");
-//				}else if(dto.getUserId()!=null&&dto.getMem_flg()==2) {
-//					page = "redirect:/";			
-//					msg="";
-//					/*int cartCnt = service.getCart(params.get("userId"));
-//					logger.info("cartCnt 반환");
-//					if(cartCnt == 0);{
-//						cartCnt = 0;
-//						logger.info("if문 실행");
-//					}
-//					session.setAttribute("cartCnt", cartCnt);
-//					logger.info("session1 실행");*/
-//					session.setAttribute("userId", dto.getUserId());
-//					logger.info("session2 실행");
-//					session.setAttribute("username", dto.getUsername());
-//					logger.info("session3 실행");
-//					session.setAttribute("mem_flg", dto.getMem_flg());
-//					logger.info("session에서 mem_flg가져오기");
-//					session.setAttribute("u_idx", dto.getIdx());
-//				}
-//				
-//			}catch(Exception e){
-//				logger.info("에러 발생");
-//			}
-//			model.addAttribute("msg",msg);
-//				
-//			return page;
-//		}
-		//로그인 end yonghyeon 2022.01.11
+
 		
 		//로그인 end yonghyeon 2022.01.15 수량 수정 START
 		
@@ -443,7 +383,7 @@ public class MemberController {
 				}else if(dto.getUserId()!=null&&dto.getMem_flg()==1) {
 					page = "redirect:/";			
 					msg="";
-					//용현님 아래 코드 수정하셔야되요~
+					
 
 						//int cartCnt = 0;
 						session.setAttribute("cartCnt", cartCnt);
@@ -480,10 +420,7 @@ public class MemberController {
 		}
 		
 		
-		
 		//로그인 end yonghyeon 2022.01.15 수량 수정 END
-		
-		
 		
 		
 		//로그인페이지 findIdPassword 아이디/패스워드 찾기 START!!! -- > 임시비밀번호 유선화 2022.01.13
@@ -526,17 +463,16 @@ public class MemberController {
 			if(loginId != null) { // 로그인이 되면 서비스에서 temppw로 업데이트 한 결과를 보낸다. 
 				String temppw = getRamdomPassword(10);
 				model.addAttribute("msg", loginId);
-				logger.info(temppw+"<--임시비번"); 
-				
+				logger.info(temppw+"<--임시비번"); 			
+				model.addAttribute("temppw", temppw);
 				service.temppassloginPw(userId,temppw);
-				
-				page = "redirect:/member/tempPass"; // 여기서임시비밀번호를 뿌려주는 페이지로 이동한다. 
+				page = "member/tempPass"; // 여기서임시비밀번호를 뿌려주는 페이지로 이동한다. 
 			
 				session.setAttribute("loginId", loginId);
 		
 			}else {
-				page = "redirect:/member/";
-				model.addAttribute("msg2", msg2);
+				page = "member/findIdPassword";
+				model.addAttribute("msg", msg2);
 			}
 			return page;
 		}
@@ -554,19 +490,8 @@ public class MemberController {
 			return sb.toString();
 		}
 
-		@RequestMapping(value = "/member/tempPass", method = RequestMethod.GET)
-		public String tempPass(Model model,HttpSession session) {
-			logger.info("tempPass");
-			String userpass = (String) session.getAttribute("loginId");
-			
-			String temppw = service.tempPass(userpass);
-			model.addAttribute("temppw", temppw);
-			return "member/tempPass";
-		}
-
 		
 		//로그인페이지 findIdPassword 아이디/패스워드 찾기 END!!! -- > 임시비밀번호 유선화 2022.01.13
-		
 		
 		
 		//로그아웃 start yonghyeon 2022.01.11

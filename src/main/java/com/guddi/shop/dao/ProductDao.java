@@ -33,6 +33,8 @@ public interface ProductDao {
 	int searchReviewCount(String idx);
 
 	int checkOrder(String product_code, String userId);
+
+	ArrayList<ReviewQnaDto> answerLsit(String idx);
 	
 	//상세페이지 관련 충구형님 2022.01.17 End
 
