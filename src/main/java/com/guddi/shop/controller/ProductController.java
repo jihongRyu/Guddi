@@ -182,7 +182,7 @@ public class ProductController {
 			logger.info("카트 수 : {}", cartCnt);
 			session.setAttribute("cartCnt", cartCnt);
 			map.put("success", result);
-			
+			    
 			return map;
 		}
 		

@@ -120,7 +120,7 @@ public class CartController {
 	@ResponseBody // 컨트롤러에서 요청을 받아와 반환된 값을 jsp에 넘겨줄때 언어가 달라 json라이브러리를 추가했고 @ResponseBody 어노테이션을 사용해 hashMAp데이터 타입으로 뷰에서 읽을수 있게 처리해 줬습니다.
 	public HashMap<String,Object> chkdelete(
 			@RequestParam (value="delList[]") ArrayList<String> delList 
-			) {
+			,HttpSession session) {
 		HashMap<String,Object> map = new HashMap<String, Object>();
 		
 		logger.info("delList : {}",delList); 
@@ -131,6 +131,11 @@ public class CartController {
 		
 		// 3. 1번과 2번이 같으면 완료
 		map.put("msg", delCnt+"개 요청 중 "+row+"개 를 삭제 하였습니다.");
+		String userId = (String) session.getAttribute("userId");
+		int cartCnt = service.getCart(userId);//카트수 가져오기
+		logger.info("카트 수 : {}", cartCnt);
+		session.setAttribute("cartCnt", cartCnt);
+		
 		
 		return map;
 	}
