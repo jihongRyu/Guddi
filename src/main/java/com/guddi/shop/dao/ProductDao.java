@@ -13,8 +13,6 @@ public interface ProductDao {
 	int searchCount(PageDto dto);
 
 	ArrayList<ProductDto> listPageSearch(PageDto dto);
-	
-	
 	//상세페이지 관련 충구형님 2022.01.17 Start
 	ArrayList<ProductDto> detail(String idx);
 		
@@ -37,6 +35,9 @@ public interface ProductDao {
 	ArrayList<ReviewQnaDto> answerLsit(String idx);
 
 	int reviewdelete(String idx);
+
+	int getCart(String userId);
+	
 	//상세페이지 관련 충구형님 2022.01.17 End
 
 	

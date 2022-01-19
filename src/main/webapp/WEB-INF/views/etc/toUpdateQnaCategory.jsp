@@ -31,6 +31,7 @@
 
 <section class="ftco-section contact-section bg-light">
 	<input class="form-control" type="hidden" style="width: 300px; margin-right: 50px;"name="userIdx" value="${userIdx}"/>
+	<input class="form-control" type="hidden" style="width: 300px; margin-right: 50px;"name="idxCount" value="${qnaList.size()}"/>
 	<div class="container">    
 	      <div class="col-md-12 ftco-animate text-center bg-light">
 	      	<p class="breadcrumbs"><span class="mr-2"><a href="./">홈</a></span>/<span>문의 카테고리</span></p>
@@ -66,7 +67,7 @@
 								</select>								
 								</c:if>
 								<c:if test="${qnaList.use_flg eq 0}">
-								<select class="form-control" style="text-align: center;">
+								<select class="form-control" style="text-align: center;" onchange="updateUseFlg('${qnaList.typename }')">
 									<option value="${qnaList.use_flg }">미사용</option>
 									<option value="1">사용</option>
 								</select>								
@@ -133,6 +134,7 @@
 	$("#addQna").click(function () {
 		var keyword = $('input[name=keyword]').val();
 		var userIdx = $('input[name=userIdx]').val();
+		var idxCount = $('input[name=idxCount]').val();
 		console.log(keyword);
 		console.log(userIdx);
 		if(keyword == ''){
@@ -141,7 +143,7 @@
 			$.ajax({
 				type:'get',
 				url:'addQna',
-				data:{'userIdx':userIdx, 'keyword':keyword},
+				data:{'userIdx':userIdx, 'keyword':keyword, 'idxCount':idxCount},
 				dataType:'JSON',
 				success:function(data){
 					console.log(data);
@@ -157,21 +159,33 @@
 	$("select").change(function () {
 		var changUseFlg = $(this).val();
 		var typename = varTypename;
+		var userIdx = $('input[name=userIdx]').val();
 		console.log(changUseFlg);
 		console.log(varTypename);
-		$.ajax({
-			type:'get',
-			url:'changUseFlg',
-			data:{'changUseFlg':changUseFlg, 'typename':typename},
-			dataType:'JSON',
-			success:function(data){
-				console.log(data);
-				location.href="toUpdateQnaCategory?userIdx="+userIdx;
-			},
-			error:function(e){
-				
+		if (confirm('변경하시겠습니까?')) {
+			$.ajax({
+				type:'get',
+				url:'changUseFlg',
+				data:{'changUseFlg':changUseFlg, 'typename':typename, 'userIdx':userIdx},
+				dataType:'JSON',
+				success:function(data){
+					console.log(data);
+					location.href="toUpdateQnaCategory?userIdx="+userIdx;
+				},
+				error:function(e){
+					
+				}
+			})
+		}else{
+			var useFlg = $(this).val();
+			console.log(useFlg);
+			if(useFlg == 0){
+				$(this).val(1);
+			}else{
+				$(this).val(0);
 			}
-		})
+			location.href="toUpdateQnaCategory?userIdx="+userIdx;
+		}
 	})
 	
 	

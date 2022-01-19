@@ -532,4 +532,23 @@ public class ManagerService {
 	
 	// 주문정보내역 리스트 orderInfoList 유지홍 2022.01.18 End
 
+	public ArrayList<EtcDto> toUpdateQnaCategory() {
+		// TODO Auto-generated method stub
+		logger.info("toUpdateQnaCategory 이동");
+		return dao.toUpdateQnaCategory();
+	}
+
+	public void addQna(int userIdxInt, String keyword, int idxCountInt) {
+		logger.info("addQna 서비스 이동 userIdxInt {}", userIdxInt);
+		logger.info("addQna 서비스 이동 keyword {}", keyword);
+		logger.info("addQna 서비스 이동 idxCountInt {}", idxCountInt);
+		dao.addQna(userIdxInt, keyword, idxCountInt);
+		
+	}
+
+	public void changUseFlg(int changUseFlgInt, String typename, int userIdxInt) {
+		// TODO Auto-generated method stub
+		dao.changUseFlg(changUseFlgInt, typename, userIdxInt);
+	}
+	//승혁님 문의타입 카테고리 제어관련 End
 }

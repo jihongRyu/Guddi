@@ -66,7 +66,7 @@ public interface MemberDao {
 	//회원가입 end 2022.01.12
 
 
-	String doFindMemberId(String name, String email);
+	ArrayList<MemberDto> doFindMemberId(String name, String email);
 
 	String temppasslogin(String userId, String email);
 

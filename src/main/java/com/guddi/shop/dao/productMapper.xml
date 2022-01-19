@@ -114,6 +114,11 @@
 		WHERE idx = #{idx};
 	</update>
 
+	<select id="getCart" resultType="int">
+		select COUNT(*) from cart where userId = #{userId}
+	</select>
+
+
 </mapper>
 
 
