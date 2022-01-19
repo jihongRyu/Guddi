@@ -98,5 +98,10 @@ public class ProductService {
 			return dao.answerLsit(idx);
 		}
 
+		public int getCart(String userId) {
+			logger.info("카트수 찾기 실행! 아이디 : {}", userId);
+			return dao.getCart(userId);
+		}
+
 
 }

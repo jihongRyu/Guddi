@@ -64,21 +64,23 @@ public class CartController {
 
 	@RequestMapping(value = "/delCart", method = RequestMethod.POST)
 	@ResponseBody
-	public HashMap<String, Object> delCart(@RequestParam String idx, HttpSession session) {		
+	public HashMap<String, Object> delCart(@RequestParam String product_code, HttpSession session) {		
 		
 		logger.info("delCart 요청");
 		CartDto dto = new CartDto();		
 		String userId = (String) session.getAttribute("userId");
 		dto.setUserId(userId);		
-		dto.setIdx(idx);
-		
+		dto.setProduct_code(product_code);
+		logger.info("userId : {}", userId);
+		logger.info("product_code : {}", product_code);
 		int result = service.delCart(dto);		
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		logger.info("카트 담기 성공 유무 : {}", result);
+		logger.info("카트 삭제하기 성공 유무 : {}", result);
 		if (result>0) {			
 			map.put("result", result);		
 			int cartCnt = service.getCart(userId);//카트수 가져오기
 			logger.info("카트 수 : {}", cartCnt);
+			session.setAttribute("cartCnt", cartCnt);
 		}else {
 			map.put("result", 0);		
 		}
@@ -118,15 +120,22 @@ public class CartController {
 	@ResponseBody // 컨트롤러에서 요청을 받아와 반환된 값을 jsp에 넘겨줄때 언어가 달라 json라이브러리를 추가했고 @ResponseBody 어노테이션을 사용해 hashMAp데이터 타입으로 뷰에서 읽을수 있게 처리해 줬습니다.
 	public HashMap<String,Object> chkdelete(
 			@RequestParam (value="delList[]") ArrayList<String> delList 
-			) {
+			,HttpSession session) {
 		HashMap<String,Object> map = new HashMap<String, Object>();
 		
 		logger.info("delList : {}",delList); 
 		
 		int delCnt = delList.size();// 1. 삭제할 갯수 확인 
 		int row = service.chkdelete(delList);	// 2. 삭제 완료된 갯수 확인
+		logger.info("chkdelete controller : {}",delList); 
+		
 		// 3. 1번과 2번이 같으면 완료
 		map.put("msg", delCnt+"개 요청 중 "+row+"개 를 삭제 하였습니다.");
+		String userId = (String) session.getAttribute("userId");
+		int cartCnt = service.getCart(userId);//카트수 가져오기
+		logger.info("카트 수 : {}", cartCnt);
+		session.setAttribute("cartCnt", cartCnt);
+		
 		
 		return map;
 	}
@@ -266,6 +275,7 @@ public class CartController {
 		    SimpleDateFormat vans = new SimpleDateFormat("yyyyMMdd");
 		    String wdate = vans.format(now);
 			String order_num = "S" + wdate + service.getOrderIdx();
+			
 			
 			//tb_order에 insert할 파라미터들을 arrayList에 담음
 			CartDto dto = new CartDto();

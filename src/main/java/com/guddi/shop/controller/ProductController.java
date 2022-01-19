@@ -178,9 +178,11 @@ public class ProductController {
 			int result = service.doCartUpdate(dto);
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			logger.info("장바구니 담기 유무 : {}",result);
-			
+			int cartCnt = service.getCart(userId);//카트수 가져오기
+			logger.info("카트 수 : {}", cartCnt);
+			session.setAttribute("cartCnt", cartCnt);
 			map.put("success", result);
-			
+			    
 			return map;
 		}
 		
