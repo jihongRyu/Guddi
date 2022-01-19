@@ -105,7 +105,7 @@
 			        	<th>${list.gender}</th>
 						<th><c:if test="${list.mem_flg eq 0}">탈퇴회원</c:if>
 						<c:if test="${list.mem_flg ne 0}">
-						<select name="memFlg" id="memFlg" onchange="changeUseMemFlg('${list.idx}',this.value)">
+						<select name="memFlg" id="memFlg" onchange="changeUseMemFlg('${list.idx}',this.value)" >
 						<c:forEach items="${memFlgList}" var="memFlgList">
 						<option value="${memFlgList.idx}" <c:if test="${list.mem_flg eq memFlgList.idx}">selected</c:if>>${memFlgList.memFlg_name}</option>
 						<c:if test="${memFlgList.idx eq list.mem_flg}">${memFlgList.memFlg_name}</c:if>							
@@ -184,6 +184,7 @@
 </body>
 <script>
 
+$("#memFlg option[value='0']").remove();
 
 function enterkey() {	
     if (window.event.keyCode == 13) {

@@ -454,6 +454,7 @@ public class MemberController {
 						logger.info("session3 실행");
 						session.setAttribute("mem_flg", dto.getMem_flg());
 						logger.info("session에서 mem_flg가져오기");
+						session.setAttribute("u_idx", dto.getIdx());
 					
 					//logger.info("cartCnt 반환");
 
@@ -467,6 +468,7 @@ public class MemberController {
 					session.setAttribute("mem_flg", dto.getMem_flg());
 					logger.info("session에서 mem_flg가져오기");
 					session.setAttribute("u_idx", dto.getIdx());
+					
 				}
 				
 			}catch(Exception e){
@@ -481,6 +483,7 @@ public class MemberController {
 		
 		//로그인 end yonghyeon 2022.01.15 수량 수정 END
 		
+
 		//로그인페이지 findIdPassword 아이디/패스워드 찾기 START!!! -- > 임시비밀번호 유선화 2022.01.13
 		@RequestMapping(value = "/findIdPassword", method = RequestMethod.GET)
 		public String findidPassword(Model model) {		
@@ -527,13 +530,15 @@ public class MemberController {
 					
 					service.temppassloginPw(userId,temppw);
 					
-					page = "redirect:/member/tempPass"; // 여기서임시비밀번호를 뿌려주는 페이지로 이동한다. 
+					// 여기서임시비밀번호를 뿌려주는 페이지로 이동한다. 
 					
+					model.addAttribute("temppw", temppw);
 					session.setAttribute("loginId", loginId);
+					page = "member/tempPass";
 					
 				}else {
 					
-					page = "redirect:/findIdPassword";
+					page = "member/findIdPassword";
 				}
 				
 			}
@@ -560,21 +565,8 @@ public class MemberController {
 			return sb.toString();
 		}
 
-		@RequestMapping(value = "/member/tempPass", method = RequestMethod.GET)
-		public String tempPass(Model model,HttpSession session) {
-			logger.info("tempPass");
-			String userpass = (String) session.getAttribute("loginId");
-			
-			String temppw = service.tempPass(userpass);
-			model.addAttribute("temppw", temppw);
-			return "member/tempPass";
-		}
-
-		
-		
 		
 		//로그인페이지 findIdPassword 아이디/패스워드 찾기 END!!! -- > 임시비밀번호 유선화 2022.01.13
-		
 		
 		
 		

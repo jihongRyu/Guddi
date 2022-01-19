@@ -31,10 +31,10 @@
 
 <section class="ftco-section contact-section bg-light">
 	<div class="container">    
-	      <div class="col-md-12 ftco-animate text-center bg-light">
-	      	<p class="breadcrumbs"><span class="mr-2"><a href="./">홈</a></span>/<span>Q&A</span></p>
-	        <h1 class="mb-0 bread">Q&A</h1>
-	      </div>    
+	    <div class="col-md-12 ftco-animate text-center bg-light">
+	       <p class="breadcrumbs"><span class="mr-2"><a href="./">홈</a></span>/<span>Q&A</span></p>
+	       <h1 class="mb-0 bread">Q&A</h1>
+	    </div>    
 	</div>
 </section>
 

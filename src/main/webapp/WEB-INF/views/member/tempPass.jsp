@@ -78,10 +78,10 @@
 <script>
 
 
-var msg = "${msg2}";
+var msg = "${temppw}";
 
 if(msg != ""){
-	alert(msg2);
+	alert(temppw);
 }	
 
 
