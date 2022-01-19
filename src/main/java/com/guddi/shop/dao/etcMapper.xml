@@ -88,6 +88,7 @@
 		update mainimage set idx = #{param1} where newFileName = #{param2}
 	</update>
 	<!-- 배너이미지 관련  유지홍 2022.01.18 End -->
+	
 	<!-- 브랜드 카테고리 관리 김도연 start 2022.01.17 -->
 	<select id="getBrand" resultType="com.guddi.shop.dto.EtcDto">
 		SELECT brand_idx, use_flg, regdate, brand_name, brand_code FROM brand
@@ -105,6 +106,25 @@
 	<update id="doUpdateBrandUse">
 		UPDATE brand SET use_flg=#{param1} where brand_idx =#{param2}
 	</update>
-	<!-- 브랜드 카테고리 관리 김도연 end 2022.01.17 -->
+	<!-- 브랜드 카테고리 관리 김도연 end 2022.01.18 -->
+	
+	<!-- 브랜드 카테고리 관리 김도연 start 2022.01.19 -->
+	<select id="getType" resultType="com.guddi.shop.dto.EtcDto">
+		SELECT type_idx, use_flg, regdate, type_name, type_code FROM bagtype
+	</select>
+	
+	<select id="getTypeIdx" resultType="int">
+		SELECT type_idx FROM bagtype order by type_idx desc limit 1
+	</select>
+	
+	<insert id="doRegistType">
+		INSERT INTO bagtype (type_idx,use_flg,type_name, type_code)
+			VALUES (#{param1}, 1,#{param2},#{param3})
+	</insert>
+	
+	<update id="doUpdateTypeUse">
+		UPDATE bagtype SET use_flg=#{param1} where type_idx =#{param2}
+	</update>
+	<!-- 브랜드 카테고리 관리 김도연 end 2022.01.19 -->
 
 </mapper>
