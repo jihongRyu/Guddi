@@ -46,13 +46,12 @@
   </div>
   <div class="ftco-animate manager-table table-striped">
   	      	
-	  <form name = "mform" id = "mform" method="post">	                
+	  <form name = "mform" id = "mform" method="get">	                
 	      <div>		        
 	        <h3>회원 리스트</h3>
 	        <br><br>		
 	        <div class="row text-center search-form" id="memberList">
 			   <div class="col-md-4">
-		
 			       <div class="mb-4">	
 				   <select name="mem_flg" class="form-control" onchange="changeListByMember(this.value)">
 				   		<option value="3">전체</option>	
@@ -66,7 +65,7 @@
 			     <div class="mb-4">
 			     	<div class="form-group">                
 			             <a href="javascript:void(0);" onclick="changeListByPhone()" id="searchBtn"><span class="icon ion-ios-search"></span></a>
-			             <input type="text" class="form-control" id="keyword" name="keyword" value="${keyword}" placeholder="휴대폰 번호">
+			             <input onkeyup="enterkey()" type="text" class="form-control" id="keyword" name="keyword" value="${keyword}" placeholder="휴대폰 번호">
 			         </div>
 			   	</div>
 			   </div>
@@ -184,14 +183,11 @@
 <script src="resources/js/main.js"></script>
 
 </body>
-<script>
+<script type="text/javascript">
 
 $("#memFlg option[value='0']").remove();
 
- 
- 
- 
- 
+
 function enterkey() {	
     if (window.event.keyCode == 13) {
          // 엔터키가 눌렸을 때 실행할 내용
@@ -203,11 +199,13 @@ function DoSearch() {
 	 
 	  let keyword = $("#keyword").val();
 	  let phone = $("#phone").val();
+	  let mem_flg = $("#mem_flg").val();
 	  
 	  console.log(keyword);
-	  console.log(phone);	 	
+	  console.log(phone);
+	  console.log(mem_flg);
 	  
-	  location.href = "memberList?num=1&phone=" + phone + "&keyword=" + keyword;
+	  location.href = "memberList?num=1&phone=" + phone + "&mem_flg" + mem_flg + "&keyword=" + keyword;
 
 };
 
