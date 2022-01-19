@@ -23,6 +23,7 @@ import com.guddi.shop.dto.EtcDto;
 import com.guddi.shop.dto.ListPageDto;
 import com.guddi.shop.dto.PageDto;
 import com.guddi.shop.dto.ProductDto;
+import com.guddi.shop.dto.ReviewQnaDto;
 import com.guddi.shop.service.ManagerService;
 import com.guddi.shop.service.ProductService;
 
@@ -110,63 +111,105 @@ public class ProductController {
 	//2022.01.13 유지홍 제품 리스트 관련 소스 End
 	
 	//상세페이지 관련 충구형님 2022.01.17 Start
-	@RequestMapping(value = "/detail", method = RequestMethod.GET)
-	public String detail(Model model,HttpSession session,@RequestParam String idx/*제품idx*/ ,HttpServletRequest request) {
-		//Integer.parseInt() <- string 에서 int로 형변환 할때 사용
-		logger.info("상품정보 요청");
-		
-		session.setAttribute("userId", "liujihong");
-		model.addAttribute("userId", session);
-		
-		/*session.setAttribute("userId","liujihong");
-		String userId = (String) session.getAttribute("userId");
-		model.addAttribute("userId",userId);
-		logger.info((String) userId); */
-		
-		
-		ArrayList<ProductDto>detail = service.detail(idx);//제품 호출
-		logger.info("detail : {}",detail);
-		model.addAttribute("detail",detail);
-		
-		ArrayList<ProductDto>productimage = service.productimage();//이미지호출
-		model.addAttribute("productimage", productimage);
-		
-		ArrayList<EtcDto>reviewlist = service.review(idx);//리뷰호출
-		model.addAttribute("reviewlist", reviewlist.size());
-		model.addAttribute("reviewlist", reviewlist);
-		
-		return "product/detailproduct";
-	}
-	
-	@RequestMapping(value = "/doCartUpdate", method = RequestMethod.POST)
-	@ResponseBody
-	public HashMap<String, Object> cartupdate(Model model,HttpSession session,@RequestParam String product_name,@RequestParam String userId
-			,@RequestParam String product_code,@RequestParam int price,@RequestParam int quantity) {
-		
-		CartDto dto = new CartDto();
-		
-		dto.setProduct_name(product_name);
-		dto.setUserId(userId);
-		dto.setProduct_code(product_code);
-		dto.setPrice(String.valueOf(price));
-		dto.setQuantity(quantity);
-		
-		int result = service.cartupdate(dto);
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		logger.info("장바구니 담기 유무 : {}",result);
-				
-		return map;
-	}
-	
-	@RequestMapping(value = "/reviewdelete", method = RequestMethod.POST)
-	@ResponseBody
-	public HashMap<String, Object> reviewdelete(Model model,@RequestParam String product_name,@RequestParam String userId
-			,@RequestParam String product_code,@RequestParam int price,@RequestParam int quantity) {
-		
+		@RequestMapping(value = "/detail", method = RequestMethod.GET)
+		public String detail(Model model,HttpSession session,@RequestParam String idx/*제품idx*/ 
+				,@RequestParam int reviewNum) {
+			//Integer.parseInt() <- string 에서 int로 형변환 할때 사용
+			logger.info("상품정보 요청");
 
-		return null;
-	}
-	//상세페이지 관련 충구형님 2022.01.17 End
+			/*session.setAttribute("userId","liujihong");
+			String userId = (String) session.getAttribute("userId");
+			model.addAttribute("userId",userId);
+			logger.info((String) userId); */
+			logger.info("idx : "+idx);
+			
+			ArrayList<ProductDto>detail = service.detail(idx);//제품 호출
+			logger.info("detail : {}",detail);
+			model.addAttribute("detail",detail);
+			
+			ArrayList<ProductDto>productimage = service.productimage(idx);//이미지호출
+			model.addAttribute("productimage", productimage);
+			
+			PageDto reviewPage = new PageDto();
+			  
+			reviewPage.setNum(reviewNum);
+			reviewPage.setCount(service.searchReviewCount(idx));
+			
+			//ArrayList<ProductDto> list = service.listPageSearch(page.getDisplayPost(),page.getPostNum(),keyword, brand_idx, bag_name);
+			
+			ArrayList<ReviewQnaDto>reviewlist = service.reviewlist(idx, reviewPage.getDisplayPost(),reviewPage.getPostNum());//리뷰호출
+			logger.info("reviewlist : "+reviewlist);
+			model.addAttribute("reviewlist", reviewlist);
+			model.addAttribute("select", reviewNum);
+			model.addAttribute("num", reviewNum);
+			model.addAttribute("page", reviewPage);
+			model.addAttribute("idx", idx);
+			
+			return "product/detailproduct";
+		}
+		
+		@RequestMapping(value = "/doCartUpdate", method = RequestMethod.POST)
+		@ResponseBody
+		public HashMap<String, Object> doCartUpdate(HttpSession session,@RequestParam String product_name
+				,@RequestParam String product_code,@RequestParam int price,@RequestParam int quantity) {
+			
+			String userId = (String) session.getAttribute("userId");
+			logger.info("userId : {}", userId);
+			CartDto dto = new CartDto();
+			
+			dto.setProduct_name(product_name);
+			dto.setUserId(userId);
+			dto.setProduct_code(product_code);
+			dto.setPrice(String.valueOf(price));
+			dto.setQuantity(quantity);
+					
+			int result = service.doCartUpdate(dto);
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			logger.info("장바구니 담기 유무 : {}",result);
+			
+			map.put("success", result);
+			
+			return map;
+		}
+		
+		@RequestMapping(value = "/reviewupdate", method = RequestMethod.POST)
+		@ResponseBody
+		public HashMap<String, Object> reviewupdate(HttpSession session,
+				@RequestParam String reviewsubject,@RequestParam String reviewcontent,
+				@RequestParam String product_code) {
+			
+			String userId = (String) session.getAttribute("userId");
+			logger.info(userId,reviewsubject,reviewcontent);
+			ReviewQnaDto dto = new ReviewQnaDto();
+			dto.setSubject(reviewsubject);
+			dto.setContent(reviewcontent);
+			dto.setProduct_code(product_code);
+			dto.setUserId(userId);
+			
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			int  orderCount= service.checkOrder(product_code, userId);
+			
+			if (orderCount>0) {
+				int result = service.reviewupdate(dto);
+				map.put("success", result);
+			}
+			
+			
+			return map;
+		}
+		
+		@RequestMapping(value = "/reviewdelete", method = RequestMethod.GET)
+		public String reviewdelete(Model model,HttpSession session,@RequestParam int idx) {
+			//Integer.parseInt() <- string 에서 int로 형변환 할때 사용
+			logger.info("리뷰 삭제요청 idx : "+idx);
+			service.reviewdelete(idx);
+			
+			
+			return "product/detailproduct";
+		}
+		
+		
+		//상세페이지 관련 충구형님 2022.01.17 End
 	
 
 }

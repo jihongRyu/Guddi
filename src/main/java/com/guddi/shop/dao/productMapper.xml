@@ -43,7 +43,7 @@
 	</select> 
 	<!-- 2022.01.13 유지홍 제품 리스트 관련 소스 end -->
 	
-	<!-- 2022.01.17 충구형님 상세페이지 관련 Start -->
+<!-- 2022.01.17 충구형님 상세페이지 관련 Start -->
 	<select id="detail" resultType="com.guddi.shop.dto.ProductDto">
 		SELECT brand_name,product_name,product_code,price,product_content
 		 FROM product WHERE idx = #{idx};
@@ -51,20 +51,59 @@
 	
 	<select id="productimage" resultType="com.guddi.shop.dto.ProductDto">
 		SELECT oriFileName,newFileName FROM product_photo
-			WHERE b_idx = 1;
+			WHERE b_idx = #{idx};
 	</select>
 	
-	<insert id="cartupdate" parameterType="com.guddi.shop.dto.CartDto">
-		INSERT INTO cart(product_name,userId,product_code,price,quantity)
-		VALUES (#{product_name},#{userId},#{product_code},#{price},#{quantity});
+	<insert id="doCartUpdate" parameterType="com.guddi.shop.dto.CartDto">
+		INSERT INTO cart(product_name,u_idx,userId,product_code,price,quantity)
+		VALUES (#{product_name},(select idx from member where userId = #{userId}),
+		#{userId},#{product_code},#{price},#{quantity});
 	</insert>
 	
-	<select id="review" resultType="com.guddi.shop.dto.EtcDto">
-		SELECT userId,regdate,subject,content FROM
-		review WHERE b_idx = #{idx} ORDER by regdate asc limit 10
+	<select id="searchReviewCount" resultType="int">
+		
+		SELECT count(*) FROM
+		review WHERE b_idx = #{idx} AND del_flg = 0
+		
 	</select>
-	<!-- 2022.01.17 충구형님 상세페이지 관련 End -->
 	
+	<select id="reviewlist" parameterType="com.guddi.shop.dto.PageDto"   resultType="com.guddi.shop.dto.ReviewQnaDto">
+		
+		SELECT idx,userId,regdate,subject,content FROM
+		review WHERE b_idx = #{idx} AND del_flg =0 ORDER by regdate asc 
+		limit #{displayPost}, #{postNum}
+		
+	</select>
+	
+	<select id="reviewupdatedetail" resultType="com.guddi.shop.dto.ProductDto">
+		SELECT b_idx FROM product WHERE product_name = #{product_name}
+	</select>
+	
+	<insert id="reviewupdate" parameterType="com.guddi.shop.dto.ReviewQnaDto">
+		INSERT INTO review(b_idx,u_idx,subject,content,userId,regdate,del_flg,answer_flg)
+		VALUES((select idx from product where product_code = #{product_code}),
+		(select idx from member where userId = #{userId}),
+		#{subject},
+		#{content},
+		#{userId},
+		NOW(),
+		0,
+		0
+		)
+	</insert>
+	
+	<update id="reviewdelete">
+		UPDATE review SET
+			del_flg = 1
+		WHERE idx = #{idx};
+	</update>
+	
+	<select id="checkOrder" resultType="int">
+		select count(*) from tb_order
+		where product_code = #{param1}
+		and userId = #{param2}
+	</select>
+
 
 </mapper>
 

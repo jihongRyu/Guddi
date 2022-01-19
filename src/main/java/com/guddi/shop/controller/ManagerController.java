@@ -561,7 +561,7 @@ public class ManagerController {
 		model.addAttribute("bagCategoryList", bagCategoryList); 
 		model.addAttribute("brandCategoryList", brandCategoryList); 
 	
-		return "etc/reviewPage";
+		return "manager/reviewPage";
 	}
 	
 	@RequestMapping(value = "/toReviewDetail", method = RequestMethod.GET)
@@ -575,7 +575,7 @@ public class ManagerController {
 		model.addAttribute("review", dto);
 		model.addAttribute("answer", answer);
 		
-		return "etc/managerReviewDetail";
+		return "manager/managerReviewDetail";
 	}
 	@RequestMapping(value = "/doReviewAnswer", method = RequestMethod.POST)
 	public String doReviewAnswer(Model model, HttpSession session,
@@ -597,7 +597,7 @@ public class ManagerController {
 		model.addAttribute("review", review);
 		model.addAttribute("answer", reviewAnswer);		
 		
-		return "etc/managerReviewDetail";
+		return "manager/managerReviewDetail";
 	}
 	
 	@RequestMapping(value = "/doDelReviewAnswer", method = RequestMethod.GET)
@@ -614,7 +614,7 @@ public class ManagerController {
 		model.addAttribute("answer", reviewAnswer);	
 		
 		
-		return "etc/managerReviewDetail";
+		return "manager/managerReviewDetail";
 	}
 	@RequestMapping(value = "/updateReviewAnswer", method = RequestMethod.GET)
 	public String updateReviewAnswer(Model model, @RequestParam int r_idx, 
@@ -628,7 +628,7 @@ public class ManagerController {
 		model.addAttribute("review", review);
 		model.addAttribute("answer", reviewAnswer);
 		
-		return "etc/updateReviewAnswer";
+		return "manager/updateReviewAnswer";
 	}
 	
 	@RequestMapping(value = "/doUpdateReviewAnswer", method = RequestMethod.POST)
@@ -652,58 +652,10 @@ public class ManagerController {
 		model.addAttribute("review", review);
 		model.addAttribute("answer", reviewAnswer);		
 		
-		return "etc/managerReviewDetail";
+		return "manager/managerReviewDetail";
 	}
 	
 	// 리뷰 관련 Ryujihong 2022.01.17 End
-	
-	
-	//승혁님 문의타입 카테고리 제어관련 Start
-	@RequestMapping(value = "/toUpdateQnaCategory", method = RequestMethod.GET)
-	public String toUpdateQnaCategory(Model model, HttpSession session, @RequestParam String userIdx) {
-		logger.info("userIdx {}", userIdx);
-		logger.info("toUpdateQnaCategory 이동");		
-		ArrayList<EtcDto> qnaList = service.toUpdateQnaCategory();
-		model.addAttribute("qnaList", qnaList);
-		model.addAttribute("userIdx", userIdx);
-		for(EtcDto dto : qnaList) {
-			logger.info("타입명 : {}",dto.getTypename());
-			//logger.info("타입명 : {}",dto.getType_name());
-		}
-		return "etc/toUpdateQnaCategory";
-	}
-	
-	@RequestMapping(value = "/addQna", method = RequestMethod.GET)
-	@ResponseBody
-	public HashMap<String, Object> addQna(@RequestParam String userIdx, @RequestParam String keyword) {
-		logger.info("keyword : {}", keyword);
-		logger.info("userIdx : {}", userIdx);
-		int userIdxInt = Integer.parseInt(userIdx);
-		logger.info("userIdxInt : {}", userIdxInt);
-		service.addQna(userIdxInt, keyword);
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		ArrayList<EtcDto> qnaList = service.toUpdateQnaCategory();
-		logger.info("qnaList 사이즈 {}", qnaList.size());
-		map.put("qnaList", qnaList);
-		return map;
-	}
-	
-	@RequestMapping(value = "/changUseFlg", method = RequestMethod.GET)
-	@ResponseBody
-	public HashMap<String, Object> changUseFlg(@RequestParam String changUseFlg, @RequestParam String typename) {
-		logger.info("changUseFlg : {}", changUseFlg);
-		logger.info("typename : {}", typename);
-		int changUseFlgInt = Integer.parseInt(changUseFlg);
-		logger.info("userIdxInt : {}", changUseFlgInt);
-		service.changUseFlg(changUseFlgInt, typename);
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		ArrayList<EtcDto> qnaList = service.toUpdateQnaCategory();
-		logger.info("qnaList 사이즈 {}", qnaList.size());
-		map.put("qnaList", qnaList);
-		return map;
-	}
-
-	//승혁님 문의타입 카테고리 제어관련 End
 	
 	
 	
