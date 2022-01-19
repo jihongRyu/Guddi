@@ -300,7 +300,63 @@ public class EtcController {
 		
 		return map;
 	}
-	//브랜드 카테고리 김도연 start 2022.01.17 End
+	//브랜드 카테고리 김도연 2022.01.17 End
 	
+	//가방종류 카테고리 김도연 start 2022.01.19
+	@RequestMapping(value = "/tobagTypeCategory", method = RequestMethod.GET)
+	public String tobagTypeCategory(Model model , HttpSession session) {
+		logger.info("tobagTypeCategory 페이지 이동");
+		
+		ArrayList<EtcDto> dto = service.getType();
+		ArrayList<EtcDto> udto = service.getUseFlgInfo();
+		
+		model.addAttribute("typeList", dto);
+		model.addAttribute("useFlgList", udto);
+		
+		
+		return "etc/bagTypeCategory";
+	}
 	
+	@RequestMapping(value = "/doRegistType", method = RequestMethod.POST)
+	@ResponseBody
+	public HashMap<String, Object> doRegistType(Model model 
+			, @RequestParam String name, @RequestParam String code) {
+		logger.info("doRegistType 요청");
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int result = service.doRegistType(name,code);
+		
+		if(result>0) {
+			map.put("result", result);
+		}
+		
+		return map;
+	}
+	
+	@RequestMapping(value = "/doUpdateTypeUse", method = RequestMethod.POST)
+	@ResponseBody
+	public HashMap<String, Object> doUpdateTypeUse(Model model 
+			, @RequestParam String type_idx, @RequestParam String use_flgName) {
+		logger.info("doUpdateTypeUse 요청");
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		int useflg = 100;
+		ArrayList<EtcDto> uDto = service.getUseFlgInfo();
+		
+		for (int i = 0; i < uDto.size(); i++) {
+			if(uDto.get(i).getUseFlg_name().equals(use_flgName)) {
+				useflg = uDto.get(i).getIdx();
+			}
+		}
+		
+		if(useflg != 100) {
+			int result = service.doUpdateTypeUse(useflg, Integer.parseInt(type_idx));
+			map.put("result", result);
+		}
+	
+		
+		return map;
+	}
+	//종류 카테고리 김도연 end 2022.01.19
 }
