@@ -193,6 +193,13 @@
 
 
 <script>	
+
+var userId = "${sessionScope.userId}";
+
+if (userId=="") {
+	location.href="logout";
+}
+
 	
 	function enterkey() {	
 	    if (window.event.keyCode == 13) {

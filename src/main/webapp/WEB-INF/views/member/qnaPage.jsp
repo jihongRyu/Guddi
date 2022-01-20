@@ -5,6 +5,15 @@
 <meta charset="UTF-8">
 <title>Q&A</title>
 <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+<script type="text/javascript">
+var userId = "${sessionScope.userId}";
+
+if (userId=="") {
+	alert("로그인을 해주시기 바랍니다!");
+	location.href="logout";
+}
+
+</script>
 <link rel="icon" type="image/png" href="resources/photo/로고2.png">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -150,6 +159,7 @@
 
 </body>
 <script>
+
 
 
 var msg = "${msg}";

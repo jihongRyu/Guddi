@@ -75,7 +75,7 @@
 									<th>₩ <fmt:formatNumber value="${orderInfo.price}" pattern="#,###.##"/></th>
 									<th class="quantity">${orderInfo.quantity}</th>
 
-									<th class="totalPrice">${orderInfo.price *orderInfo.quantity }</th>
+									<th class="totalPrice">₩ <fmt:formatNumber value="${orderInfo.price *orderInfo.quantity }" pattern="#,###.##"/></th>
 								</tr>
 							</c:forEach>
 						</table>

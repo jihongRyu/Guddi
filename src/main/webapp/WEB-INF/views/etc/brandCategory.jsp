@@ -106,6 +106,12 @@
 	
 </body>
 <script>
+var userId = "${sessionScope.userId}";
+
+if (userId=="") {
+	location.href="logout";
+}
+
 	
 	function registBrand(){
 		//console.log("브랜드 추가하기");

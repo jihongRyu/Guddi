@@ -29,6 +29,11 @@ var idx = opener.document.getElementById("idx").value;
 
 $("#idx").val(idx);
 
+var userId = "${sessionScope.userId}";
+
+if (userId=="") {
+	location.href="logout";
+}
 
 
 
