@@ -353,8 +353,10 @@ function del(){
 		
 		console.log(delList);
 		$('input[type="checkbox"]:checked').each(function (idx,item){
-			//console.log(idx,$(this).val());	
+			//console.log(idx,$(this).val());
+			
 			delList.push($(this).val());
+		
 				
 		});
 		
@@ -370,7 +372,8 @@ function del(){
 				//ajax는 페이지를 새로고침 하지 않기 때문에, 적용된 내용을 확인하기 위해서는 리스트를 다시 그려야 한다.
 				//listCall();
 				//$("tbody").empty();
-				delList=[];
+				delList=[];				
+				location.href = "cart";
 			},
 			error:function(e){
 				console.log(e);

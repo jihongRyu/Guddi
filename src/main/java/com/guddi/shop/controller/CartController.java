@@ -130,11 +130,17 @@ public class CartController {
 		logger.info("chkdelete controller : {}",delList); 
 		
 		// 3. 1번과 2번이 같으면 완료
-		map.put("msg", delCnt+"개 요청 중 "+row+"개 를 삭제 하였습니다.");
-		String userId = (String) session.getAttribute("userId");
-		int cartCnt = service.getCart(userId);//카트수 가져오기
-		logger.info("카트 수 : {}", cartCnt);
-		session.setAttribute("cartCnt", cartCnt);
+		if (row>0) {
+			map.put("msg", (delCnt-1)+"개 요청 중 "+(row-1)+"개 를 삭제 하였습니다.");
+			String userId = (String) session.getAttribute("userId");
+			int cartCnt = service.getCart(userId);//카트수 가져오기
+			logger.info("카트 수 : {}", cartCnt);
+			session.setAttribute("cartCnt", cartCnt);
+		}
+		if (row==0) {
+			map.put("msg", "삭제할 제품이 존재하지 않습니다!");
+		}
+		
 		
 		
 		return map;
