@@ -35,6 +35,9 @@
 		text-align: center;
 	}
 	
+	.prd_info .photo li img{
+		width: 268.99px;
+	}
 </style>
 
 </head>
