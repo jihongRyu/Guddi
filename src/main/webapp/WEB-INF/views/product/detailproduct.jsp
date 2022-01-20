@@ -54,9 +54,9 @@
 <div class="container">
 	<section>
 		<div class="prd_info">
-			<ul class="photo">
+			<ul class="photo text-center">
 				<c:forEach items="${productimage}" var="productimage">
-					<li><img src="resources/photo/${productimage.newFileName}" width="250px"/></li>
+					<li><img src="resources/photo/${productimage.newFileName}" /></li>
 				</c:forEach>
 			</ul>
 			<div class="info">
