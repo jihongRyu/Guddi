@@ -305,7 +305,7 @@ public class MemberController {
 			
 			service.updateInfo(params);
 			
-			return "redirect:/myPage?userId="+params.get("userId");
+			return "redirect:/myPage?userId="+params.get("userId")+"&orderNum=1&reviewNum=1";
 		}
 			
 		@RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
