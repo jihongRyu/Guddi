@@ -55,27 +55,33 @@
 							<th>카테고리명</th>
 							<th>사용여부</th>
 						</tr>
-						<c:forEach items="${qnaList}" var="qnaList">
+						<c:if test="${qnaList.size() eq 0}">
 						<tr class="qnaTr">
-							<td>${qnaList.idx}</td>
-							<td>${qnaList.typename }</td>
+							<td colspan="3">카테고리를 추가해 주세요</td>
+						</c:if>
+						<c:if test="${qnaList.size() ne 0}">
+						<c:forEach items="${qnaList}" var="qnaList">
+							<tr class="qnaTr">
+								<td>${qnaList.idx}</td>
+								<td>${qnaList.typename }</td>
 							<td>
-								<c:if test="${qnaList.use_flg eq 1}">
-								<select class="form-control" style="text-align: center;" onchange="updateUseFlg('${qnaList.typename }')">
-									<option value="${qnaList.use_flg }">사용</option>
-									<option value="0">미사용</option>
-								</select>								
-								</c:if>
-								<c:if test="${qnaList.use_flg eq 0}">
-								<select class="form-control" style="text-align: center;" onchange="updateUseFlg('${qnaList.typename }')">
-									<option value="${qnaList.use_flg }">미사용</option>
-									<option value="1">사용</option>
-								</select>								
-								</c:if>
+							<c:if test="${qnaList.use_flg eq 1}">
+							<select class="form-control" style="text-align: center;" onchange="updateUseFlg('${qnaList.typename }')">
+								<option value="${qnaList.use_flg }">사용</option>
+								<option value="0">미사용</option>
+							</select>								
+							</c:if>
+							<c:if test="${qnaList.use_flg eq 0}">
+							<select class="form-control" style="text-align: center;" onchange="updateUseFlg('${qnaList.typename }')">
+								<option value="${qnaList.use_flg }">미사용</option>
+								<option value="1">사용</option>
+							</select>								
+							</c:if>
 							</td>
 						</tr>
 						</c:forEach>
-						</table>
+						</c:if>
+					</table>
 				</div>
 			</div>
 		</div>
