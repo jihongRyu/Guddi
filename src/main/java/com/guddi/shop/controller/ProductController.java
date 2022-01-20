@@ -111,6 +111,8 @@ public class ProductController {
 	//2022.01.13 유지홍 제품 리스트 관련 소스 End
 	
 	//상세페이지 관련 충구형님 2022.01.17 Start
+	
+	
 	/**
 	 * @param model
 	 * @param session
@@ -118,6 +120,9 @@ public class ProductController {
 	 * @param reviewNum
 	 * @return
 	 */
+	
+	
+	
 	@RequestMapping(value = "/detail", method = RequestMethod.GET)
 	public String detail(Model model,HttpSession session,@RequestParam String idx/*제품idx*/ 
 			,@RequestParam int reviewNum) {
@@ -217,7 +222,7 @@ public class ProductController {
 		@RequestMapping(value = "/reviewdelete", method = RequestMethod.GET)
 		@ResponseBody
 		public HashMap<String,Object> reviewdelete(Model model,@RequestParam String idx) {
-			//Integer.parseInt() <- string 에서 int로 형변환 할때 사용
+		//Integer.parseInt() <- string 에서 int로 형변환 할때 사용
 			logger.info("리뷰 삭제요청 idx : "+idx);
 			HashMap<String,Object>map = new HashMap<String,Object>();
 			int result = service.reviewdelete(idx);
@@ -229,8 +234,6 @@ public class ProductController {
 			}
 			return map;
 		}
-		
-		
 		//상세페이지 관련 충구형님 2022.01.17 End
 	
 
