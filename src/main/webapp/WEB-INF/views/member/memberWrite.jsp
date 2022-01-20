@@ -223,9 +223,9 @@ $(function(){
 	$('#inputPassword').keyup(function(){
 		
 		var pw = $('#inputPassword').val();
-	       var num = pw.search(/[0-9]/g);
-	       var eng = pw.search(/[a-z]/ig);
-	       var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+	    var num = pw.search(/[0-9]/g);
+	    var eng = pw.search(/[a-z]/ig);
+	    var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
 
  		$('font[name=pwdlengthcheck]').text('');		
  		
@@ -348,8 +348,16 @@ $(function(){
 //입력확인 경고창
 function check_input(){
 	
+	//비밀번호 조건
+	var pw = $('#inputPassword').val();
+    var num = pw.search(/[0-9]/g);
+    var eng = pw.search(/[a-z]/ig);
+    var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+	
 	var password = document.MemberWriteForm.password.value;
 	var passwordcheck = document.MemberWriteForm.passwordcheck.value;
+	var phone = document.MemberWriteForm.phone.value;
+	
 	console.log("idcheck_flg : " + idcheck_flg);
 	
 	
@@ -383,6 +391,11 @@ function check_input(){
 		document.MemberWriteForm.passwordcheck.focus();
 		return;
 	}
+	if(password == num < 0 || eng < 0 || spe < 0 || password.length<8){
+		alert("비밀번호는 숫자,영문,특수문자 포함 8자 이상으로 입력해주세요.");
+		document.MemberWriteForm.passwordcheck.focus();
+		return;
+	}
     if (!document.MemberWriteForm.address.value){
         alert("우편번호 찾기를 해주세요.");
         document.MemberWriteForm.zipcode.focus();
@@ -400,6 +413,11 @@ function check_input(){
     }
     if (!document.MemberWriteForm.phone.value){
         alert("휴대폰번호를 입력하세요!");
+        document.MemberWriteForm.phone.focus();
+        return;
+    }
+    if (phone.length < 11 ){
+        alert("휴대폰번호는 010부터 입력해주세요");
         document.MemberWriteForm.phone.focus();
         return;
     }
