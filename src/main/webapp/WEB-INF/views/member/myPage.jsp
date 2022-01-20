@@ -85,7 +85,6 @@
 				
 		        <button type="button" class="btn btn-primary" onclick="location.href='./'">뒤로</button>
 		        <button type="button" class="btn btn-primary" onclick="location.href='checkPassword?userId=${info.userId}'">정보수정하기</button>
-		        <button type="button" class="btn btn-primary" onclick="location.href='completeOrder/'">주문완료확인</button>
 		        <%-- <button type="button" id="btnUpdate" class="btn btn-primary">정보수정하기</button> --%>	    	
 		    </div>
    		</form>         
