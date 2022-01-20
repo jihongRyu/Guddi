@@ -124,6 +124,10 @@
 		delete from product where idx = #{idx}
 	</delete>
 	
+	<select id="countQnaAnswer" resultType="int">
+		select count(*) from qna_answer where q_idx = #{idx} and del_flg = 0
+	</select>
+	
 	<insert id="registQnaAnswer">
 		insert into qna_answer (q_idx, content, userId, del_flg) values(#{param1},#{param2},#{param3}, 0);
 	</insert>
@@ -283,6 +287,10 @@
 	select idx,  content, managerId, del_flg
 	from review_answer where r_idx = #{idx}
 	and del_flg = 0
+	</select>
+	
+	<select id="countReviewAnswer" resultType="int">
+		select count(*) from review_answer where r_idx = #{idx} and del_flg = 0
 	</select>
 	
 	<insert id="doReviewAnswer">
