@@ -23,6 +23,13 @@
 
 <script type="text/javascript">
 
+var userId = "${sessionScope.userId}";
+
+if (userId=="") {
+	location.href="logout";
+}
+
+
 function doRegist() {
 	
 	if (confirm("flg를 등록하시겠습니까?")) {			

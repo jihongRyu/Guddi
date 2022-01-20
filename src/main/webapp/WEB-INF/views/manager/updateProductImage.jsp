@@ -129,6 +129,12 @@
 
 
 <script>
+var userId = "${sessionScope.userId}";
+
+if (userId=="") {
+	location.href="logout";
+}
+
 
 //이미지 수를 가져와 4개인 경우 추가 버튼 비활성화
 var imageNum = "${imageDto.size()}";

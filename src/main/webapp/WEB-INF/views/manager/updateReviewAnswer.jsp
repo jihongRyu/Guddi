@@ -109,6 +109,13 @@
 
 <script>
 
+var userId = "${sessionScope.userId}";
+
+if (userId=="") {
+	location.href="logout";
+}
+
+
 function doAnswerRegist(){
 	
 	if (confirm('해당 답변을 수정하시겠습니까?')) {

@@ -185,6 +185,13 @@
 </body>
 <script type="text/javascript">
 
+var userId = "${sessionScope.userId}";
+
+if (userId=="") {
+	location.href="logout";
+}
+
+
 $("#memFlg option[value='0']").remove();
 
 

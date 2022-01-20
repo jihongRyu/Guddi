@@ -137,6 +137,13 @@
 
 <script>
 
+var userId = "${sessionScope.userId}";
+
+if (userId=="") {
+	location.href="logout";
+}
+
+
 function deleteQna(idx){
 	
 	if (confirm('해당 문의를 삭제하시겠습니까?')) {	

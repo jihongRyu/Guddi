@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -129,9 +130,9 @@
 			     	<th>${list.order_num }</th>
 			      	<th>${list.regdate}</th>
 			      	<th>${list.product_name}</th>
-			      	<th>${list.price}</th>
+			      	<th><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.price}" />원</th>
 			      	<th>${list.quantity}</th>	
-			      	<th>${list.totalPrice}</th>	             		           		     
+			      	<th><fmt:formatNumber type="number" maxFractionDigits="3" value="${list.totalPrice}" />원</th>	             		           		     
 			     </tr>  
 			     </c:forEach>        
 			 </table>
@@ -267,6 +268,13 @@
 
 </body>
 <script>
+var userId = "${sessionScope.userId}";
+
+if (userId=="") {
+	location.href="logout";
+}
+
+
 
 function delReview(idx) {
 	

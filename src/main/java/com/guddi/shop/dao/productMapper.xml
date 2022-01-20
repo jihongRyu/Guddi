@@ -46,18 +46,19 @@
 <!-- 2022.01.17 충구형님 상세페이지 관련 Start -->
 	<select id="detail" resultType="com.guddi.shop.dto.ProductDto">
 		SELECT brand_name,product_name,product_code,price,product_content
-		 FROM product WHERE idx = #{idx};
+		 FROM product WHERE idx = #{idx}
 	</select>
 	
 	<select id="productimage" resultType="com.guddi.shop.dto.ProductDto">
-		SELECT oriFileName,newFileName FROM product_photo
-			WHERE b_idx = #{idx};
+		SELECT oriFileName,newFileName, photo_num FROM product_photo
+			WHERE b_idx = #{idx}
+			order by photo_num asc
 	</select>
 	
 	<insert id="doCartUpdate" parameterType="com.guddi.shop.dto.CartDto">
 		INSERT INTO cart(product_name,u_idx,userId,product_code,price,quantity)
 		VALUES (#{product_name},(select idx from member where userId = #{userId}),
-		#{userId},#{product_code},#{price},#{quantity});
+		#{userId},#{product_code},#{price},#{quantity})
 	</insert>
 	
 	<select id="searchReviewCount" resultType="int">

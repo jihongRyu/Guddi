@@ -150,6 +150,11 @@
 
 </body>
 <script>
+var userId = "${sessionScope.userId}";
+
+if (userId=="") {
+	location.href="logout";
+}
 
 
 var msg = "${msg}";

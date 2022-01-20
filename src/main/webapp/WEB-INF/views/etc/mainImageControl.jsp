@@ -145,6 +145,11 @@
 
 <script>
 
+var userId = "${sessionScope.userId}";
+
+if (userId=="") {
+	location.href="logout";
+}
 
 
 //이미지 삭제관련

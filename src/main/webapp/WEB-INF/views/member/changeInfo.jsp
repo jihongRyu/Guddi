@@ -177,6 +177,11 @@
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script> 
 </body>
 <script>
+var userId = "${sessionScope.userId}";
+
+if (userId=="") {
+	location.href="logout";
+}
 
 
 

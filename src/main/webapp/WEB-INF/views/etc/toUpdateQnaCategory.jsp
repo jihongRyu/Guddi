@@ -41,9 +41,9 @@
 </section>
 
 <section class="ftco-section ftco-degree-bg" id="qnaList">
-	<div class="container" style="text-align: right; margin-bottom: 20px;">
+	<div class="container ftco-animate" style="text-align: right;padding:1%;">
       <input type="text" name="keyword" placeholder="카테고리명을 입력해주세요." style="width: 300px; height: 50px;"/>
-      <input type="button"value="카테고리 추가하기" class="btn btn-primary py-3 px-4" id="addQna" style="height: 50px;"/>
+      <input type="button"value="카테고리 추가하기" class="btn btn-primary" id="addQna" />
    </div>
 	<div class="container">
 		<div class="row">
@@ -112,6 +112,14 @@
 
 </body>
 <script>
+
+var userId = "${sessionScope.userId}";
+
+if (userId=="") {
+	location.href="logout";
+}
+
+
 	 /* function qnaTypeCall(data) {
 	   var content = "";
 	   for(var i = 0; i < data.length; i++){

@@ -102,6 +102,11 @@
 
 
 <script>
+var userId = "${sessionScope.userId}";
+
+if (userId=="") {
+	location.href="logout";
+}
 
 
 function doUpdateAnswer() {

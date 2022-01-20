@@ -157,6 +157,13 @@
 
 CKEDITOR.replace("content");
 
+var userId = "${sessionScope.userId}";
+
+if (userId=="") {
+	location.href="logout";
+}
+
+
 //제품코드 생성 함수
 function makeProductCode(){
 	
