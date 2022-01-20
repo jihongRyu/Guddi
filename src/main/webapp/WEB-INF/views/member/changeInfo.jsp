@@ -305,7 +305,13 @@ function goPostcode() {
        
 }
 
- function check_input() {	 
+ function check_input() {
+	 
+		//비밀번호 조건
+		var pw = $('#inputPassword').val();
+	    var num = pw.search(/[0-9]/g);
+	    var eng = pw.search(/[a-z]/ig);
+	    var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
 	 
 	 	var password =  document.changeInfoForm.password.value;
 	 	var passwordcheck = document.changeInfoForm.passwordcheck.value;
@@ -337,6 +343,12 @@ function goPostcode() {
 	        // 화면 커서 이동
 	        return;
 	    }
+	    if(password == num < 0 || eng < 0 || spe < 0 || password.length<8)
+	    {
+			alert("비밀번호는 숫자,영문,특수문자 포함 8자 이상으로 입력해주세요.");
+			//document.MemberWriteForm.passwordcheck.focus();
+			return;
+		}
 	    if (!document.changeInfoForm.username.value)
 	    {
 	        alert("성명을 입력하세요!");

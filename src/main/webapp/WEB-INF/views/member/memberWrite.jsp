@@ -64,7 +64,7 @@
 	            <font name="check" size="2" color="red"></font> 
 	          </div>
 			  <div class="form-group">
-			    <label for="inputtelNO">우편번호</label>
+			    <label for="inputZipcode">우편번호</label>
 			    <input type="text"  readonly class="form-control"
 			     	   id ="inputZipcode" name="zipcode"  placeholder="우편번호 찾기를 해주세요.">
 			    <br>
@@ -73,11 +73,11 @@
 			 	</div>
 			  </div>
 			   <div class="form-group">
-			    <label for="inputtelNO">주소</label>
+			    <label for="inputAddress">주소</label>
 			    <input type="text" class="form-control" readonly id="inputAddress"  name="address" placeholder="주소를 입력해 주세요">
 			  </div>
 			    <div class="form-group">
-			    <label for="inputtelNO">상세 주소</label>
+			    <label for="inputAddress_detail">상세 주소</label>
 			    <input type="text" class="form-control" id="inputAddress_detail" name = "address_detail"  placeholder="상세주소를 입력해 주세요">
 			  </div>
 			   <div class="form-group">
@@ -186,6 +186,11 @@ $(function(){
 			return;
 		}
 		
+		if (!userId.match(/^[A-Za-z0-9]{8,12}$/)) {
+			alert("아이디는 영문, 숫자조합으로만 입력가능합니다!");
+			return;
+		}
+		
 		$.ajax({
 			url:'idCheck',
 			method:'POST',
@@ -223,9 +228,9 @@ $(function(){
 	$('#inputPassword').keyup(function(){
 		
 		var pw = $('#inputPassword').val();
-	       var num = pw.search(/[0-9]/g);
-	       var eng = pw.search(/[a-z]/ig);
-	       var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+	    var num = pw.search(/[0-9]/g);
+	    var eng = pw.search(/[a-z]/ig);
+	    var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
 
  		$('font[name=pwdlengthcheck]').text('');		
  		
@@ -240,7 +245,7 @@ $(function(){
 	   } else {
 	  	 	$('font[name=pwdlengthcheck]').text('');
 	    	$('font[name=pwdlengthcheck]').html("이 비밀번호는 사용가능합니다.");
-	   }   
+	   }
 	});
 });
 	
@@ -345,17 +350,49 @@ $(function(){
 	});
 });
 
+
+
 //입력확인 경고창
 function check_input(){
 	
+	//비밀번호 조건
+	var pw = $('#inputPassword').val();
+    var num = pw.search(/[0-9]/g);
+    var eng = pw.search(/[a-z]/ig);
+    var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+	
 	var password = document.MemberWriteForm.password.value;
 	var passwordcheck = document.MemberWriteForm.passwordcheck.value;
+	var phone = document.MemberWriteForm.phone.value;
+	
+	//상세주소
+	var adress_detail = $('#inputAddress_detail').val();
+	var adeng = adress_detail.search(/[a-z]/ig);
+	var adspe = adress_detail.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+	//핸드폰
+	var telephone=  $('#inputMobile').val();
+    var phoneKorean = telephone.search(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g);
+    var phoneEng = telephone.search(/[a-z]/ig);
+    var phoneSpe = telephone.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+    //이름
+    var userName=  $('#inputName').val();    
+    //아이디
+    var idName=  $('#inputUserId').val();
+    var idKorean = idName.search(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g);
+    var idSpe = idName.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+	
+    
 	console.log("idcheck_flg : " + idcheck_flg);
 	
 	
 	if(!document.MemberWriteForm.username.value){
 		alert("성명을 입력해주세요.");
-		document.MemberWriteForm.passwordcheck.focus();
+		document.MemberWriteForm.username.focus();
+		return;
+	}
+	if(!userName.match(/^[가-힣]+$/) ){
+		alert("성함을 확인해주세요!");
+		document.MemberWriteForm.username.focus();
 		return;
 	}
 	if(!document.MemberWriteForm.userId.value){
@@ -363,6 +400,11 @@ function check_input(){
 		document.MemberWriteForm.userId.focus();
 		return;
 	}
+	if(idKorean != -1 || idSpe != -1){
+		alert("아이디는 영문, 숫자조합으로만 가능합니다.");
+		document.MemberWriteForm.userId.focus();
+		return;
+	}	
 	if(idcheck_flg != 1){
 		alert("아이디 중복여부를 확인해주세요.");
 		document.MemberWriteForm.userId.focus();
@@ -383,6 +425,11 @@ function check_input(){
 		document.MemberWriteForm.passwordcheck.focus();
 		return;
 	}
+	if(password == num < 0 || eng < 0 || spe < 0 || password.length<8){
+		alert("비밀번호는 숫자,영문,특수문자 포함 8자 이상으로 입력해주세요.");
+		document.MemberWriteForm.passwordcheck.focus();
+		return;
+	}
     if (!document.MemberWriteForm.address.value){
         alert("우편번호 찾기를 해주세요.");
         document.MemberWriteForm.zipcode.focus();
@@ -393,6 +440,11 @@ function check_input(){
         document.MemberWriteForm.address_detail.focus();
         return;
     }
+    if( adeng != -1 || adspe != -1 ){
+		alert("상세주소는 숫자와 한글로 작성해주세요!");
+		document.MemberWriteForm.address_detail.focus();
+		return;
+	}
     if (!document.MemberWriteForm.email.value){
         alert("이메일을 입력하세요!");
         document.MemberWriteForm.email.focus();
@@ -400,6 +452,16 @@ function check_input(){
     }
     if (!document.MemberWriteForm.phone.value){
         alert("휴대폰번호를 입력하세요!");
+        document.MemberWriteForm.phone.focus();
+        return;
+    }
+    if( phoneKorean != -1 || phoneEng != -1 || phoneSpe != -1 ){
+		alert("휴대폰번호는 숫자로 작성해주세요!");
+		document.MemberWriteForm.phone.focus();
+		return;
+	}
+    if (phone.length < 11 ){
+        alert("휴대폰번호는 010부터 입력해주세요");
         document.MemberWriteForm.phone.focus();
         return;
     }

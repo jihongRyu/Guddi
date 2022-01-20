@@ -40,7 +40,8 @@ button {
     margin-top: 10px;
 }
 .prd_info .photo li img {
-    width: 100%;
+   height: 100%;
+  
 }
 .prd_info .info {
     width: 50%;
