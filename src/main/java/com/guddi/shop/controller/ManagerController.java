@@ -320,12 +320,16 @@ public class ManagerController {
 		String answer = params.get("answer");
 		String userId = (String) session.getAttribute("userId");
 		String flg = "1";
-		
-		int success = service.registQnaAnswer(idx, answer, userId);
-		
-		if (success>0) {
-			service.updateAnswerFlg(idx,flg);			
+
+
+		int answerCount = service.countQnaAnswer(idx);
+		if (answerCount==0) {
+			int success = service.registQnaAnswer(idx, answer, userId);
+			if (success>0) {
+				service.updateAnswerFlg(idx,flg);			
+			}
 		}
+		
 		
 		return "redirect:/qnaDetail?idx="+idx;
 	}
@@ -588,10 +592,14 @@ public class ManagerController {
 		dto.setContent(answer);
 		dto.setManagerId(managerId);
 		
-		int result = service.doReviewAnswer(dto);
-		logger.info("idx :{}",idx);
-		int flg = 1;
-		service.updateReviewFlg(flg,Integer.parseInt(idx));
+		int count =  service.countReviewAnswer(idx);
+		if (count ==0) {
+			int result = service.doReviewAnswer(dto);
+			logger.info("idx :{}",idx);
+			int flg = 1;
+			service.updateReviewFlg(flg,Integer.parseInt(idx));
+		}
+		
 			
 		ReviewQnaDto review = service.getReviewDetail(Integer.parseInt(idx));
 		ReviewQnaDto reviewAnswer = service.getReviewAnswer(Integer.parseInt(idx));
@@ -603,6 +611,7 @@ public class ManagerController {
 		return "manager/managerReviewDetail";
 	}
 	
+
 	@RequestMapping(value = "/doDelReviewAnswer", method = RequestMethod.GET)
 	public String doDelReviewAnswer(Model model, @RequestParam int a_idx, @RequestParam int r_idx,@RequestParam String product_name) {
 		logger.info("doDelReviewAnswer 요청");

@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Q&A상세</title>
+<title>리뷰상세</title>
 <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 <script src="resources/css/bootstrap/bootstrap.min.js"></script>
 <link rel="icon" type="image/png" href="resources/photo/로고2.png">

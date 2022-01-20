@@ -117,7 +117,9 @@
 						</c:if>
 					</c:forEach>
 				</li>
-			<input type="button" onclick="detailreviewdelete('${review.idx}','${review.userId}')" value="삭제"/>
+			<div style="text-align:right;padding:1%;">
+			<input type="button" class="btn btn-primary" onclick="detailreviewdelete('${review.idx}','${review.userId}')" value="삭제하기" />
+			</div>
 			<!--  onclick="location.href='reviewdelete?idx=${review.idx}'"-->
 			</c:forEach>
 		</ul>

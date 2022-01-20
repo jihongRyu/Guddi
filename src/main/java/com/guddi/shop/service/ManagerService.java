@@ -533,6 +533,16 @@ public class ManagerService {
 		// TODO Auto-generated method stub
 		dao.updateReviewFlg(flg, idx);
 	}
+
+	public int countQnaAnswer(int idx) {
+		// TODO Auto-generated method stub
+		return dao.countQnaAnswer(idx);
+	}
+
+	public int countReviewAnswer(String idx) {
+		// TODO Auto-generated method stub
+		return dao.countReviewAnswer(idx);
+	}
 	
 	
 	// 주문정보내역 리스트 orderInfoList 유지홍 2022.01.18 End
