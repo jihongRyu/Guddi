@@ -139,8 +139,9 @@ public class MemberController {
 	@ResponseBody
 	public HashMap<String, Object> deleteQna(@RequestParam String idx) {		
 		
-		logger.info("deleteQna 요청");;
-
+		logger.info("deleteQna 요청");
+		logger.info("idx 요청 :{}",idx);
+		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		int result = service.deleteQna(idx);
 		if (result>0) {

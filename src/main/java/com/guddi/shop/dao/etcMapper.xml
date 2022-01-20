@@ -87,6 +87,15 @@
 	<update id="updateImageOrder">
 		update mainimage set idx = #{param1} where newFileName = #{param2}
 	</update>
+	
+	<select id="productMainImageInfo" resultType="com.guddi.shop.dto.EtcDto">
+		select idx, oriFileName, newFileName from mainimage		
+		order by idx asc
+	</select>
+	
+	<update id="updateMainPhotoNum">
+		update mainimage set idx = #{param1} where idx = #{param2}
+	</update>
 	<!-- 배너이미지 관련  유지홍 2022.01.18 End -->
 	
 	<!-- 브랜드 카테고리 관리 김도연 start 2022.01.17 -->

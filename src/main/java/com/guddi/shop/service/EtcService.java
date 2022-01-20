@@ -151,9 +151,9 @@ public class EtcService {
 		return dao.getU_idx(userId);
 	}
 
-	public void delMainImage(int idx) {
+	public int delMainImage(int idx) {
 		// TODO Auto-generated method stub
-		dao.delMainImage(idx);
+		return dao.delMainImage(idx);
 	}
 
 	public int doUpdateImageUseFlg(int use_flg, int idx) {
@@ -233,6 +233,17 @@ public class EtcService {
 	      // TODO Auto-generated method stub
 	      dao.changUseFlg(changUseFlgInt, typename, userIdxInt);
 	   }
+
+	public ArrayList<EtcDto> productMainImageInfo() {
+		// TODO Auto-generated method stub
+		return dao.productMainImageInfo();
+	}
+
+	public void updateMainPhotoNum(int newPhotoNum, int oriPhotoNum) {
+		// TODO Auto-generated method stub
+		dao.updateMainPhotoNum(newPhotoNum,oriPhotoNum);
+		
+	}
 
 	
 	//승혁님 문의타입 카테고리 제어관련 End

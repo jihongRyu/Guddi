@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.guddi.shop.dto.EtcDto;
 import com.guddi.shop.dto.MemberDto;
 import com.guddi.shop.dto.PageDto;
+import com.guddi.shop.dto.ProductDto;
 import com.guddi.shop.dto.ReviewQnaDto;
 
 public interface EtcDao {
@@ -52,7 +53,7 @@ public interface EtcDao {
 
 	int getU_idx(String userId);
 
-	void delMainImage(int idx);
+	int delMainImage(int idx);
 
 	int doUpdateImageUseFlg(int use_flg, int idx);
 
@@ -81,5 +82,9 @@ public interface EtcDao {
 
 	void changUseFlg(int changUseFlgInt, String typename, int userIdxInt);
 	//승혁님 문의타입 카테고리 제어관련 End
+
+	ArrayList<EtcDto> productMainImageInfo();
+
+	void updateMainPhotoNum(int newPhotoNum, int oriPhotoNum);
 	
 }

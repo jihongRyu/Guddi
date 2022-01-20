@@ -157,7 +157,7 @@ function delImage(idx, newFileName) {
 
 	 if (confirm("해당 이미지를 삭제하시겠습니까?")) {	
 		 alert("해당 이미지를 삭제하였습니다.");		 
-		 location.href = "delMainImage?idx="+idx;
+		 location.href = "delMainImage?idx="+idx+"&newFileName="+newFileName;
 	}
 };
  

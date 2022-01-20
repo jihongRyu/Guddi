@@ -1,9 +1,14 @@
 package com.guddi.shop.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -24,6 +29,7 @@ import com.guddi.shop.dto.CartDto;
 import com.guddi.shop.dto.EtcDto;
 import com.guddi.shop.dto.MemberDto;
 import com.guddi.shop.dto.PageDto;
+import com.guddi.shop.dto.ProductDto;
 import com.guddi.shop.dto.ReviewQnaDto;
 import com.guddi.shop.service.CartService;
 import com.guddi.shop.service.EtcService;
@@ -34,6 +40,7 @@ public class EtcController {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired EtcService service;
+	@Autowired ServletContext servletContext;
 	
 	// 신상여부, 판매여부 카테고리 관련  유지홍 2022.01.17 Start
 	@RequestMapping(value = "/toNewFlgCategory", method = RequestMethod.GET)
@@ -203,10 +210,32 @@ public class EtcController {
 		return map;
 	}	
 	@RequestMapping(value = "/delMainImage", method = RequestMethod.GET)
-	public String delMainImage(Model model, @RequestParam int idx) {
+	public String delMainImage(Model model, @RequestParam int idx, @RequestParam String newFileName) {
 		logger.info("delMainImage 요청");
 		
-		service.delMainImage(idx);
+		int result = service.delMainImage(idx);
+		
+		//실제 저장된 이미지 삭제처리
+		if (result>0) {			
+			String realPath = servletContext.getRealPath("/resources/photo");
+			
+			try {				
+				Path path = Paths.get(realPath +"/"+ newFileName);
+				logger.info("실제 경로 : {}",path);
+				Files.delete(path);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			//photo_num재설정
+			ArrayList<EtcDto> dto = service.productMainImageInfo();
+			for (int i = 0; i < dto.size(); i++) {
+				int newPhotoNum = i+1;
+				int oriPhotoNum = dto.get(i).getIdx();
+				service.updateMainPhotoNum(newPhotoNum,oriPhotoNum) ;				
+			}
+		}		
 		
 		return "redirect:/toMainImage";
 	}

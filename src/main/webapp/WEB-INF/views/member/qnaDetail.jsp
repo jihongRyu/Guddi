@@ -84,7 +84,7 @@
 	          <div class="text-center">
 	            <input type="button" value="뒤로가기" class="btn btn-primary " onclick="location.href='qnaPage?qnaNum=1&answer_flg=2&qnaType=0'">
 	            <input type="button" value="수정하기" class="btn btn-primary " onclick="updateQna('${dto.idx}')">
-	            <input type="button" value="삭제하기" class="btn btn-primary " onclick="deleteQna('${qDto.idx}')">
+	            <input type="button" value="삭제하기" class="btn btn-primary " onclick="deleteQna('${dto.idx}')">
 	          </div>
 	          </c:if>     
 	          <c:if test="${qDto eq null &&sessionScope.mem_flg eq 2 }">
