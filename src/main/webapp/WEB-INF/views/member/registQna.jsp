@@ -60,7 +60,7 @@
 			  </div>
 			  <br>
 			  <div class="ftco-animate text-center">
-			  	<button type="button" class="btn btn-primary" onclick="location.href='qnaPage?qnaNum=1&answer_flg=2'">뒤로</button>
+			  	<button type="button" class="btn btn-primary" onclick="location.href='qnaPage?qnaNum=1&answer_flg=2&qnaType=0'">뒤로</button>
 		        <button type="button" class="btn btn-primary" onclick="regist();">등록하기</button>
 			  </div>
 			  
