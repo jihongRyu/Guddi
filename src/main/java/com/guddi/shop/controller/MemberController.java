@@ -447,7 +447,7 @@ public class MemberController {
 				url = "member/getFindMemberId";
 			}
 			if(memberId.size() == 0) {
-				msg = "가입하신 아이디가 없습니다";
+				msg = "가입하신 아이디가 없습니다.";
 				model.addAttribute("msg", msg);
 			}
 			return url;
