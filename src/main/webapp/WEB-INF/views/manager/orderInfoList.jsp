@@ -178,9 +178,9 @@ function changeList() {
 
 	var searchType = $('#searchType').val();
 	var keyword = $('#keyword').val();
-	var num = "${select}";
+	
 
-	location.href="orderInfoList?num="+num+"&keyword="+keyword+"&searchType="+searchType;
+	location.href="orderInfoList?num=1&keyword="+keyword+"&searchType="+searchType;
 	
 }
 
