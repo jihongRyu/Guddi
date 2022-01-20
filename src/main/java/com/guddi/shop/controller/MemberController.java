@@ -436,17 +436,19 @@ public class MemberController {
 		@RequestMapping(value = "/doFindMemberId", method = RequestMethod.GET)
 		public String doFindMemberId(Model model, @RequestParam String name, @RequestParam String email) {
 			logger.info("아이디 찾기 기능");
-			String msg;
-			String url = "member/findMemberId";
+			String msg = "";
+			String url = "member/findIdPassword";
 			ArrayList<MemberDto> memberId = service.doFindMemberId(name, email);
-			if(memberId != null) {
+			if(memberId.size() > 0) {
 				msg = "아이디 찾기 성공";
 		
 				model.addAttribute("memberId", memberId);
 				model.addAttribute("msg", msg);
 				url = "member/getFindMemberId";
-			} else {
-				msg = "아이디와 찾기 실패";
+			}
+			if(memberId.size() == 0) {
+				msg = "가입하신 아이디가 없습니다";
+				model.addAttribute("msg", msg);
 			}
 			return url;
 		}
