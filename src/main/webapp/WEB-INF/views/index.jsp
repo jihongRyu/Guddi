@@ -76,7 +76,7 @@
 
 <section class="ftco-section">
   <div class="container">
-	<h3 id="Benefits" class="ftco-animate text-center">Benefits</h3><br>
+	<h3 id="Benefits" class="ftco-animate text-center">Benefits</h3><br><br>
 	<div class="row no-gutters ftco-services text-center" >
       <div class="col-md-4 text-center align-self-stretch ftco-animate">
         <div class="media block-6 services mb-md-0 mb-4">
@@ -117,7 +117,7 @@
 
 <section class="ftco-section ftco-category ftco-no-pt">
 	<div class="container">
-		<h3 id="newreleases" class="ftco-animate">NEW Releases</h3>
+		<h3 id="newreleases" class="ftco-animate">NEW Releases</h3><br>
 		<div class="row">
 			<div class="col-md-12 ftco-animate">
 				<div class="row">
