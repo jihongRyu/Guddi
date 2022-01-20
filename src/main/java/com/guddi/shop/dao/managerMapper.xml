@@ -299,7 +299,7 @@
 	</update>
 	
 	<update id="updateReviewFlg">
-		update review set answer_flg = #{param1} where idx=#{param2}
+		update review set answer_flg = #{param1} where idx = #{param2}
 	</update>
 	<!-- 리뷰관련 Ryujihong 2022.01.18 End  -->
 	

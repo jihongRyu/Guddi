@@ -50,13 +50,20 @@
 
 <section id="home-section" class="hero">
 	  <div class="home-slider owl-carousel">
+	  <c:if test="${photos.size()<1}">
+	  <div class="slider-item" >
+      	<div class="overlay"></div>
+        <div class="container text-center">
+          	<h3>등록된 메인이미지가 존재하지않습니다.</h3>
+        </div>
+      </div>
+	  </c:if>
 	  <c:if test="${photos.size()>0}">
 	  <c:forEach items="${photos}" var="photo">
 	  <div class="slider-item" style="background-image: url(resources/photo/${photo.newFileName});">
       	<div class="overlay"></div>
         <div class="container">
           <div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
-
           </div>
         </div>
       </div>
@@ -69,7 +76,7 @@
 
 <section class="ftco-section">
   <div class="container">
-	<h3 id="Benefits" class="ftco-animate text-center">Benefits</h3>
+	<h3 id="Benefits" class="ftco-animate text-center">Benefits</h3><br>
 	<div class="row no-gutters ftco-services text-center" >
       <div class="col-md-4 text-center align-self-stretch ftco-animate">
         <div class="media block-6 services mb-md-0 mb-4">
@@ -114,6 +121,12 @@
 		<div class="row">
 			<div class="col-md-12 ftco-animate">
 				<div class="row">
+				<c:if test="${rankList.size() < 1}">
+					<div class="text-center" style="margin:auto;">
+					<br>
+						<h3>등록된 제품이 존재하지않습니다.</h3>
+					</div>					
+				</c:if>
 				<c:forEach items="${rankList}" var="list">
 					<div class="col-md-3">
 					<div class="product">

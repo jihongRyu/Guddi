@@ -579,23 +579,22 @@ public class ManagerController {
 	}
 	@RequestMapping(value = "/doReviewAnswer", method = RequestMethod.POST)
 	public String doReviewAnswer(Model model, HttpSession session,
-			@RequestParam int idx, @RequestParam String answer, @RequestParam String product_name) {
+			@RequestParam String idx, @RequestParam String answer, @RequestParam String product_name) {
 		logger.info("toReviewDetail 요청");
 		
 		String managerId = (String) session.getAttribute("userId");
 		ReviewQnaDto dto = new ReviewQnaDto();
-		dto.setR_idx(idx);
+		dto.setR_idx(Integer.parseInt(idx));
 		dto.setContent(answer);
 		dto.setManagerId(managerId);
 		
 		int result = service.doReviewAnswer(dto);
-		if (result>0) {
-			int flg = 0;
-			service.updateReviewFlg(flg,idx);
-		}
-		
-		ReviewQnaDto review = service.getReviewDetail(idx);
-		ReviewQnaDto reviewAnswer = service.getReviewAnswer(idx);
+		logger.info("idx :{}",idx);
+		int flg = 1;
+		service.updateReviewFlg(flg,Integer.parseInt(idx));
+			
+		ReviewQnaDto review = service.getReviewDetail(Integer.parseInt(idx));
+		ReviewQnaDto reviewAnswer = service.getReviewAnswer(Integer.parseInt(idx));
 			
 		model.addAttribute("product_name", product_name);
 		model.addAttribute("review", review);
@@ -609,8 +608,9 @@ public class ManagerController {
 		logger.info("doDelReviewAnswer 요청");
 		
 		service.doDelReviewAnswer(a_idx);
-		int flg = 1;
-		service.updateReviewFlg(flg, a_idx);
+		logger.info("r_idx,a_idx :{}",r_idx+a_idx);
+		int flg = 0;
+		service.updateReviewFlg(flg, r_idx);
 		
 		ReviewQnaDto review = service.getReviewDetail(r_idx);
 		ReviewQnaDto reviewAnswer = service.getReviewAnswer(r_idx);

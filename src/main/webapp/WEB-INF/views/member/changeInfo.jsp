@@ -106,11 +106,11 @@
 					<tr>
 					    <td id="title">성별</td>
 					    <td>
-					    	<c:if test="${info.gender  eq '남성'}">
+					    	<c:if test="${info.gender  eq '남'}">
 						    <input type="radio" id="inputMan" name="gender" value="남성" checked onClick="return false;">  남성 &nbsp&nbsp
 						    <input type="radio" id="inputMan" name="gender" value="여성" onClick="return false;">  여성
 						    </c:if>
-						    <c:if test="${info.gender  eq '여성'}">	
+						    <c:if test="${info.gender  eq '여'}">	
 						    <input type="radio" id="inputMan" name="gender" value="남성" onClick="return false;">  남성 &nbsp&nbsp
 						    <input type="radio" id="inputMan" name="gender" value="여성" checked  onClick="return false;">  여성	
 						    </c:if>

@@ -35,10 +35,10 @@ public class HomeController {
 		
 		ArrayList<ProductDto> dto = service.rankList();
 		model.addAttribute("rankList",dto);
-		logger.info("dto.get(0).getNewFileName() : {}",dto.get(0).getNewFileName());
+		//logger.info("dto.get(0).getNewFileName() : {}",dto.get(0).getNewFileName());
 		
 		ArrayList<EtcDto> photos = service.photoList();
-		logger.info("사진 수 :{}",photos.get(0).getNewFileName());
+		//logger.info("사진 수 :{}",photos.get(0).getNewFileName());
 		model.addAttribute("photos",photos);
 		
 		

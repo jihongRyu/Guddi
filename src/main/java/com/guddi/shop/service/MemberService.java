@@ -237,8 +237,6 @@ public class MemberService {
 	}
 
 	
-	
-	
 	//고객정보수정,탈퇴관련, 마이페이지내 리뷰관련 End ryujihong 2022.01.10
 	
 	//로그인 Start yonghyeon 2022.01.11
@@ -304,7 +302,9 @@ public class MemberService {
 		dto.setBirthday(params.get("birthday"));
 		dto.setGender(params.get("gender"));
 		dto.setPersonInfo_flg(Integer.parseInt(params.get("personInfo_flg")));
-		dto.setMarketing_flg(Integer.parseInt(params.get("marketing_flg")));
+		if (params.get("marketing_flg")!=null) {
+			dto.setMarketing_flg(Integer.parseInt(params.get("marketing_flg")));
+		}		
 		dto.setMem_flg(1);
 		
 		logger.info("회원가입 정보 : {}"
@@ -343,10 +343,6 @@ public class MemberService {
 		return dao.tempPass(userpass);
 	}
 
-	
-
-
-
 	public  ArrayList<CartDto> getTotalPrice(String userId) {
 		// TODO Auto-generated method stub
 		return dao.getTotalPrice(userId);
@@ -360,8 +356,6 @@ public class MemberService {
 	//카트 수 가져오기 End yonghyeon 2022.01.14
 
 
-	
-	
 
 
 }

@@ -80,7 +80,7 @@
 	          <c:if test="${answer eq null &&sessionScope.mem_flg eq 2 }">
 	          <form action="doReviewAnswer" id="doAnswer" name="doAnswer" method="post">
 	          	  <input type="hidden" id="idx" name="idx" value="${review.idx}">
-	          	   <input type="hidden" id="product_name" name="product_name" value="${product_name}">
+	          	  <input type="hidden" id="product_name" name="product_name" value="${product_name}">
 		          <div class="bg-light p-5 contact-form">
 			          <div class="col-lg-12 pl-md-5 ftco-animate ">							 				
 						 <h5>답변 등록</h5>
@@ -159,7 +159,7 @@ function delAnswer(a_idx, r_idx) {
 	var product_name= "${product_name}";
 	
 	if (confirm('해당 답변을 삭제하시겠습니까?')) {
-		location.href = "doDelReviewAnswer?a_idx="+a_idx+"&r_idx="+a_idx+"&product_name="+product_name;		
+		location.href = "doDelReviewAnswer?a_idx="+a_idx+"&r_idx="+r_idx+"&product_name="+product_name;		
 	}
 	
 }
