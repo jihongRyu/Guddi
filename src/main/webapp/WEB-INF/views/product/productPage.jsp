@@ -27,6 +27,15 @@
 <link rel="stylesheet" href="resources/css/icomoon.css">
 <link rel="stylesheet" href="resources/css/style.css">
 
+<style>
+
+.img-fluid {
+  max-width: 100%;
+  height: 269px; 
+ }
+ 
+</style>
+
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/include/header.jsp"/>
