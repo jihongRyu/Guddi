@@ -23,6 +23,7 @@ public class EtcDto {
 	private int use_flg;
 	private Date regdate;
 	private String brand_name;
+	
 	private int type_idx;
 	private String type_name;
 	private String answername;

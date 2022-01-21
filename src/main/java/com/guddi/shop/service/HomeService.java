@@ -32,6 +32,13 @@ public class HomeService {
 	}
 
 
+
+	public ArrayList<EtcDto> brandList() {
+		// TODO Auto-generated method stub
+		return dao.brandList();
+	}
+
+
 	
 
 }

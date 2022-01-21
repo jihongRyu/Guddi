@@ -60,12 +60,10 @@
           <c:if test="${sessionScope.mem_flg ne 2}">          
           <li class="nav-item dropdown">
 	          <a class="nav-link dropdown-toggle" href="javascript:void(0);" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">카테고리</a>
-	          <div class="dropdown-menu" aria-labelledby="dropdown04">	         
-	          	<a class="dropdown-item" href="productPage?num=1&brand_idx=0&bag_type=0">전체</a>
-	          	<a class="dropdown-item" href="productPage?num=1&brand_idx=1&bag_type=0">루이비통</a>
-	            <a class="dropdown-item" href="productPage?num=1&brand_idx=2&bag_type=0">루이까또즈</a>
-	            <a class="dropdown-item" href="productPage?num=1&brand_idx=3&bag_type=0">구찌</a>
-	            <a class="dropdown-item" href="productPage?num=1&brand_idx=4&bag_type=0">생로랑</a>           
+	          <div class="dropdown-menu" aria-labelledby="dropdown04">
+	          	<c:forEach items="${sessionScope.brandList}" var="brandList">
+	          		<a class="dropdown-item" href="productPage?num=1&brand_idx=${brandList.brand_idx}&bag_type=0">${brandList.brand_name}</a>
+	          	</c:forEach>
 	          </div>
           </li>
           </c:if>         

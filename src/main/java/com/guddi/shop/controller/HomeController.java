@@ -33,6 +33,9 @@ public class HomeController {
 
 		logger.info("메인이미지 요청");
 		
+		ArrayList<EtcDto> brandList = service.brandList();
+		session.setAttribute("brandList", brandList);
+		
 		ArrayList<ProductDto> dto = service.rankList();
 		model.addAttribute("rankList",dto);
 		//logger.info("dto.get(0).getNewFileName() : {}",dto.get(0).getNewFileName());

@@ -11,6 +11,8 @@ public interface HomeDao {
 
 	ArrayList<ProductDto> rankList();
 
+	ArrayList<EtcDto> brandList();
+
 	
 
 }
