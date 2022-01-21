@@ -56,12 +56,6 @@
 							</tr>
 							<c:forEach items="${orderList}" var="orderInfo">
 								<tr>
-<%-- 
-									<th><img src='resources/photo/${orderInfo.newFileName}'style="width: 350px; height: 350px;" /></th>
-									<th>${orderInfo.product_name}</th>
-									<th>${orderInfo.price }</th>
-									<th>${orderInfo.quantity }</th>
- --%>
 									<th><img src='resources/photo/${orderInfo.newFileName }'style="width: 200px; height: 200px;" /></th>
 									<th class="productName">
 										<input type="hidden" name="product_code" value="${orderInfo.product_code}">
@@ -74,9 +68,9 @@
 									</th>
 									<th>₩ <fmt:formatNumber value="${orderInfo.price}" pattern="#,###.##"/></th>
 									<th class="quantity">${orderInfo.quantity}</th>
-
-									<th class="totalPrice">₩ <fmt:formatNumber value="${orderInfo.price *orderInfo.quantity }" pattern="#,###.##"/></th>
+									<th class="totalPrice">₩ <fmt:formatNumber value="${orderInfo.price*orderInfo.quantity}" pattern="#,###.##"/></th>
 								</tr>
+								<input type="hidden" class="getTotalPrice" value="${orderInfo.price*orderInfo.quantity}">
 							</c:forEach>
 						</table>
 					</div>
@@ -191,15 +185,15 @@
 	var totalPrice = 0;
 	var totalQuantity = 0;
 	var totalProductName = 0;
-	console.log($('.totalPrice').length);
-	console.log($('.totalPrice').eq(0).html());
+	console.log($('.getTotalPrice').length);
+	console.log($('.getTotalPrice').eq(0).val());
 	console.log("갯수",$('.quantity').length);
 	setTotal();
 	setQuantity();
 	serProductNames();
 	function setTotal() {
-		for(var i = 0; i<$('.totalPrice').length; i++){
-			totalPrice += parseInt($('.totalPrice').eq(i).html());
+		for(var i = 0; i<$('.getTotalPrice').length; i++){
+			totalPrice += parseInt($('.getTotalPrice').eq(i).val());
 			console.log(totalPrice);
 		}
 		$(".totalPrice_span").text(totalPrice.toLocaleString());
