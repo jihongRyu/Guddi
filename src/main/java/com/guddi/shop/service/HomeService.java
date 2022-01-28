@@ -24,14 +24,10 @@ public class HomeService {
 		return dao.photoList();
 	}
 
-
-
 	public ArrayList<ProductDto> rankList() {
 		
 		return dao.rankList();
 	}
-
-
 
 	public ArrayList<EtcDto> brandList() {
 		// TODO Auto-generated method stub

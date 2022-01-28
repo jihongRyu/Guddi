@@ -66,11 +66,6 @@ public interface ManagerDao {
 
 	void doUpdateAnswer(String content, String userId, int q_idx);
 
-
-	
-
-	//ArrayList<MemberDto> memberList(String keyword);
-
 	ArrayList<EtcDto> memFlgList();
 
 	ArrayList<EtcDto> marketingFlgList();
@@ -80,16 +75,8 @@ public interface ManagerDao {
 	ArrayList<MemberDto> memFlgList(PageDto dto);
 
 	ArrayList<MemberDto> memberList(PageDto dto);
-
 	
-
-	
-
-	
-
 	int doDelAnswer(String userId, int a_idx);
-
-
 	
 	//2022.01.15 유지홍 제품 삭제, 관리자 Qna 관련 소스 End
 	
@@ -98,19 +85,11 @@ public interface ManagerDao {
 	ArrayList<CartDto> orderInfoList(PageDto dto);
 	
 	ArrayList<CartDto> Mybatispage(ListPageDto listPageDto);
-	
-	
-	
-	//listPageDto 얘를 MyBatispageNum MyBatisamount 로 어떻게 보낼지 
-	
+		
 	int Mybatiscount();
 
 	List listPaging(int myBatispageNum, int endPage);
 
-	//ArrayList<CartDto> Mybatispage(int myBatispageNum, int myBatisamount);
-	
-	
-	
 	// 주문정보내역 리스트 orderInfoList yuSeonhwa 2022.01.17 END
 
 	// 리뷰 관련 Ryujihong 2022.01.17 Start

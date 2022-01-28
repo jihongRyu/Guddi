@@ -65,7 +65,6 @@ public interface MemberDao {
 	String idCheck(String param);
 	//회원가입 end 2022.01.12
 
-
 	ArrayList<MemberDto> doFindMemberId(String name, String email);
 
 	String temppasslogin(String userId, String email);
@@ -73,7 +72,6 @@ public interface MemberDao {
 	void temppassloginPw(String userId, String temppw);
 
 	//회원가입 end 2022.01.12
-	
 
 	String tempPass(String userpass);
 

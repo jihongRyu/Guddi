@@ -190,11 +190,6 @@
 			VALUES(#{userId},#{subject},#{quantity},#{price},#{unit},#{product_num})
 	</insert>
 
-
-
-	
-	
-
 	<!--getCartInfo 카트 리스트 불러오기 -->
 	<select id="getCartInfo" resultType="com.guddi.shop.dto.CartDto">
 		select distinct c.idx,c.userId ,c.u_idx,c.product_name,c.product_code,c.quantity,c.price,pp.photo_num
@@ -225,10 +220,6 @@
 		WHERE product_code = #{product_code} and userId=#{userId}
 	</update>
 	
-
-	
-	
-
 	<select id="getTotalPrice" resultType="com.guddi.shop.dto.CartDto">
 		select price, quantity from tb_order where userId = #{param1}
 	</select>

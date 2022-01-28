@@ -35,16 +35,6 @@ public class CartController {
 	
 	// =====cart controller 추가하기 수정 START YuSeonhwa===== 220112
 	
-	
-	
-//	@RequestMapping(value = "/cart", method = RequestMethod.GET)
-//	public String doRegistQna(Model model, @RequestParam HashMap<String, String> params, HttpSession session) {		
-//		
-//		logger.info("cart 요청");
-//		service.doRegistQna(params, session);
-//		return "/cart/userCart";
-//	}
-	
 	@RequestMapping(value = "/cart", method = RequestMethod.GET)
 	public String cart(Model model , HttpSession session) {
 		logger.info("cart 페이지 요청");
@@ -132,7 +122,7 @@ public class CartController {
 		// 3. 1번과 2번이 같으면 완료
 		if (row>0) {
 			//map.put("msg", (delCnt-1)+"개 요청 중 "+(row)+"개 를 삭제 하였습니다.");
-			map.put("msg", "선택하신 상품이 삭제 하였습니다.");
+			map.put("msg", "선택하신 상품을 삭제하였습니다.");
 			String userId = (String) session.getAttribute("userId");
 			int cartCnt = service.getCart(userId);//카트수 가져오기
 			logger.info("카트 수 : {}", cartCnt);
@@ -143,22 +133,12 @@ public class CartController {
 		}
 		
 		
-		
 		return map;
 	}
 	
 	//order 추가 21-01-14
 
 
-	/*
-	@RequestMapping(value = "toOrder", method = RequestMethod.GET)
-	public String toOrder(Model model) {
-		logger.info("toOrder Click");
-		
-		
-		return "cart/toOrder";
-	}
-	*/
 	@RequestMapping(value = "/checkout", method = RequestMethod.POST)
 	public HashMap<String, Object> toOrder(Model model,HashMap<String, Object> checkoutmap,@RequestParam String userId, @RequestParam String checkoutPrice) {
 		
@@ -187,26 +167,15 @@ public class CartController {
 		return resendMap;
 	}
 	
-	
-	
-	//
-	
-	
-	
-	
 	// 체크박스 실험 ysh START 220117
 	@RequestMapping(value = "/test_check", method = RequestMethod.POST)
 	@ResponseBody
 	public String testCheck(Model model,HttpServletRequest request) {
 	   
-		
-
-		
 	    logger.info("test_check");
 	
 	    String[] valueArrTest = request.getParameterValues("valueArrTest");
 	    
-    	
 		return "cart/toOrder";
 	    
 	}
@@ -221,8 +190,6 @@ public class CartController {
 		
 		return valueArrTest;
 	}
-
-
 
 	// =====cart controller 추가하기 수정 END YuSeonhwa===== 220115
 	
@@ -242,7 +209,7 @@ public class CartController {
 			return "cart/toOrder";
 		}
 		// 2022.01.17 end - 송승혁
-		
+		// 2022.01.19 Start 유지홍
 		@RequestMapping(value = "/doOrder", method = RequestMethod.POST)
 		public String doOrder(Model model , HttpSession session, @RequestParam HashMap<String, String> params, HttpServletRequest request) {
 			
@@ -296,7 +263,7 @@ public class CartController {
 			
 			return "cart/completeOrder";
 		}
-	
+		// 2022.01.19 End 유지홍
 }
 
 

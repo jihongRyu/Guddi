@@ -186,14 +186,6 @@
 
 	<!-- 주문정보내역 리스트 orderInfoList yuSeonhwa 2022.01.17 START  -->
 	
-	<!-- <select id="orderInfoList" resultType="com.guddi.shop.dto.CartDto">
- 		SELECT idx,phone,u_idx,userId,username,email,zipcode,address,address_detail,product_name,product_code,price,quantity,regdate,order_num,totalPrice
- 			FROM tb_order
- 		select t.idx, pc.brand_name,t.product_name,t.product_code,t.regdate,t.quantity,t.totalPrice,t.username,t.phone,t.order_num
-			from product pc inner join tb_order t  
-			on pc.product_code = t.product_code
-	</select> -->
-	
 	<select id="orderInfoList" parameterType="com.guddi.shop.dto.PageDto" resultType="com.guddi.shop.dto.CartDto">
  		
 		SELECT *

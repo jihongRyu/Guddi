@@ -374,78 +374,8 @@ public class ManagerService {
 	}
 
 
-	
-
-	
-
-	
-
-
 	//2022.01.15 유지홍 제품 삭제, 관리자 Qna 관련 소스 End
 	
-	
-	
-	
-	// 주문정보내역 리스트 orderInfoList yuSeonhwa 2022.01.17 START
-//	
-//	public ArrayList<CartDto> orderInfoList(int displayPost, int postNum) {
-//		logger.info("Mybatispage service");
-//		PageDto dto = new PageDto();
-//		dto.setPostNum(postNum);
-//		dto.setDisplayPost(displayPost);
-//		return dao.orderInfoList(dto);
-//	}
-//
-//	public int Mybatiscount() {
-//		return dao.Mybatiscount();
-//	}
-//
-//	@RequestMapping(value = "/orderInfoList", method = RequestMethod.GET)
-//	public String orderInfoList(Model model,@RequestParam("num") int num) {	
-//		logger.info("orderInfoList 요청");		
-//		CartDto cartDto = new CartDto(); 
-//		ListPageDto listPageDto = new ListPageDto(); 
-//		
-//		ArrayList<CartDto> orderInfoList = service.orderInfoList();
-//		model.addAttribute("orderInfoList", orderInfoList);
-//		
-//		//listPageDto.setMyBatispageNum(10);
-//		
-//		//페이지 번호를 추가 하면 
-//		logger.info("Mybatispage Controller : "+listPageDto);
-//		
-//		logger.info("Mybatispage Controller getMyBatisamount : "+listPageDto.getMyBatispageNum());
-//		// 페이지의 전체 갯수 총 갯수 
-//		int Mybatiscount = service.Mybatiscount();
-//		model.addAttribute("Mybatiscount", Mybatiscount);   
-//		logger.info("Mybatispage Controller Mybatiscount: "+Mybatiscount);
-//		// 한페이지에 출력할 갯수 
-//	
-//		int amount = 10;
-//		//하단 페이징 번호 ([게시물 총 갯수 / 한페이지에 출력할 갯수]) 의 올림 
-//		int endPage = (int)(Math.ceil((double)Mybatiscount/amount));
-//		
-//		//출력할 게시물
-//		int MyBatispageNum =((num) -1) * amount;
-//		
-//		
-//		listPageDto.setMyBatispageNum(MyBatispageNum);
-//		listPageDto.setMyBatisamount(10);
-//		ArrayList<CartDto> listpagedto = service.Mybatispage(listPageDto); // 넘겨 
-//		
-//		
-//		List<CartDto> list = service.listPaging(MyBatispageNum, endPage);
-//		 
-//		 
-//		model.addAttribute("listpagedto", listpagedto);
-//		model.addAttribute("endPage", endPage);
-//		
-//		
-//		return "manager/orderInfoList";
-//	}
-//
-//
-	// 주문정보내역 리스트 orderInfoList yuSeonhwa 2022.01.17 END
 	// 리뷰 관련 Ryujihong 2022.01.17 Start
 	public int reviewSearchCount(String keyword, int answer_flg, String brandName, String bagName) {
 		// TODO Auto-generated method stub

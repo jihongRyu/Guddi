@@ -126,13 +126,8 @@ public class ProductController {
 	@RequestMapping(value = "/detail", method = RequestMethod.GET)
 	public String detail(Model model,HttpSession session,@RequestParam String idx/*제품idx*/ 
 			,@RequestParam int reviewNum) {
-		//Integer.parseInt() <- string 에서 int로 형변환 할때 사용
+		
 		logger.info("상품정보 요청");
-
-		/*session.setAttribute("userId","liujihong");
-		String userId = (String) session.getAttribute("userId");
-		model.addAttribute("userId",userId);
-		logger.info((String) userId); */
 		logger.info("idx : "+idx);
 	
 		ArrayList<ProductDto>detail = service.detail(idx);//제품 호출

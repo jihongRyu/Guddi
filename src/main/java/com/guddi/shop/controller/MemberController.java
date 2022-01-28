@@ -384,7 +384,6 @@ public class MemberController {
 				}else if(dto.getUserId()!=null&&dto.getMem_flg()==1) {
 					page = "redirect:/";			
 					msg="";
-					//용현님 아래 코드 수정하셔야되요~
 
 						//int cartCnt = 0;
 						session.setAttribute("cartCnt", cartCnt);

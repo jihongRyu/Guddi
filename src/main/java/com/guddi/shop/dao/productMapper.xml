@@ -29,6 +29,7 @@
 	from product tp inner join product_photo tpp
 	ON tp.idx = tpp.b_idx	
 	where photo_num = 1
+	and sell_flg =1
 	<if test='brand_type!=0'>
   	and brand_idx = #{brand_type}
  	</if>	

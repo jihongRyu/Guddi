@@ -44,10 +44,6 @@ public class HomeController {
 		//logger.info("사진 수 :{}",photos.get(0).getNewFileName());
 		model.addAttribute("photos",photos);
 		
-		
-
-
-		
 		return "index";
 	}
 

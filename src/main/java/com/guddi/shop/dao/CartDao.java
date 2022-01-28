@@ -13,8 +13,6 @@ public interface CartDao {
 
 	int getCart(String userId);
 	
-	//int cartupdate(int quantity, String product_code, String userId);
-
 	int cartupdate(CartDto dto);
 
 	int chkdelete(String idx);
